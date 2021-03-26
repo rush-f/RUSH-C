@@ -2,8 +2,6 @@ import React from 'react';
 import {Map, GoogleApiWrapper, Marker} from "google-maps-react";
 import {CLIENT_ID} from "../constants/GoogleMapAuth";
 
-
-
 const GoogleMap = props => {
 
   const positions = [
