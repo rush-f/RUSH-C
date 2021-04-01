@@ -44,21 +44,27 @@ const Map = withScriptjs(withGoogleMap((props) => {
     }}
   />);
 
+  const defaultMapOptions = {
+    disableDefaultUI: true
+  };
+
   return (
-    <GoogleMap
-      defaultZoom={6}
-      defaultCenter={{lat: 37.397, lng: 127.644}}
-    >
-      <MarkerClusterer
-        onClick={props.onMarkerClustererClick}
-        averageCenter
-        enableRetinaIcons
-        gridSize={20}
-        minimumClusterSize={4}
+      <GoogleMap
+        defaultZoom={6}
+        defaultCenter={{lat: 37.397, lng: 127.644}}
+        defaultOptions={defaultMapOptions}
       >
-        {markers}
-      </MarkerClusterer>
-    </GoogleMap>);
+        <MarkerClusterer
+          onClick={props.onMarkerClustererClick}
+          averageCenter
+          enableRetinaIcons
+          gridSize={20}
+          minimumClusterSize={4}
+        >
+          {markers}
+        </MarkerClusterer>
+      </GoogleMap>
+  );
 }));
 
 export default Map;

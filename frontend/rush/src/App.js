@@ -5,7 +5,7 @@ function App() {
   return (<>
     <Map googleMapURL={CLIENT_ID}
       loadingElement={<div style={{height: `100%`}}/>}
-      containerElement={<div style={{height: `400px`}}/>}
+      containerElement={<div style={{height: `700px`}}/>}
       mapElement={<div style={{height: `100%`}}/>}
     />
   </>);
