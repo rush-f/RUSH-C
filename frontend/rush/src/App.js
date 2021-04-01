@@ -1,7 +1,9 @@
 import Map from "./components/Map";
 import {CLIENT_ID} from "./constants/GoogleMapAuth";
-import Menu from "./components/Menu";
+import Menu from "./components/button/MenuButton";
+import WriteButton from "./components/button/WriteButton";
 import React from "react";
+import LoginButton from "./components/button/LoginButton";
 
 function App() {
   return (<>
@@ -11,6 +13,8 @@ function App() {
       mapElement={<div style={{height: `100%`}}/>}
     />
     <Menu />
+    <LoginButton />
+    <WriteButton />
   </>);
 }
 
