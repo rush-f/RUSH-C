@@ -39,6 +39,9 @@ const Map = withScriptjs(withGoogleMap((props) => {
     key={index}
     position={position}
     animation={1}
+    icon={{
+      url: '/footprint.png',
+    }}
     onClick={() => {
       alert(index);
     }}
@@ -58,7 +61,7 @@ const Map = withScriptjs(withGoogleMap((props) => {
           onClick={props.onMarkerClustererClick}
           averageCenter
           enableRetinaIcons
-          gridSize={20}
+          gridSize={60}
           minimumClusterSize={4}
         >
           {markers}
