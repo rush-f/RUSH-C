@@ -1,6 +1,15 @@
 import React from 'react';
-import { slide as BurgerMenu } from "react-burger-menu";
+import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
+import styled from "styled-components";
+
+const BurgerMenuContents = styled.div`
+  width: 90%;
+  word-wrap: break-word;
+  margin-bottom: 16px;
+  font-size: 140%;
+  padding: 14px;
+`;
 
 const Menu = () => {
   const showSettings = event => {
@@ -8,11 +17,11 @@ const Menu = () => {
   };
 
   return (<>
-    <BurgerMenu>
-      <a id="home" className="menu-item" href="/">Home</a>
-      <a id="about" className="menu-item" href="/">About</a>
-      <a id="contact" className="menu-item" href="/">Contact</a>
-      <a onClick={ showSettings } className="menu-item--small" href="">Settings</a>
+    <BurgerMenu disableAutoFocus>
+      <BurgerMenuContents>마이페이지</BurgerMenuContents>
+      <BurgerMenuContents>전체지도</BurgerMenuContents>
+      <BurgerMenuContents>그룹지도</BurgerMenuContents>
+      <BurgerMenuContents>개인지도</BurgerMenuContents>
     </BurgerMenu>
   </>);
 };
