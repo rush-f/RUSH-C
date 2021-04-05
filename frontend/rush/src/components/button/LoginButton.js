@@ -1,7 +1,9 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const LoginButton = () => {
   return (
+      <Link to={"/login"}>
       <button style={{
         position: "fixed",
         zIndex: 10,
@@ -10,7 +12,7 @@ const LoginButton = () => {
         width: "100px",
         height: "50px",
         margin: "10px",
-      }}> 테스트 </button>
+      }}> 로그인 </button></Link>
   );
 };
 
