@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const LoginButton = () => {
   return (
-      <Link to={"/login"}>
+      <Link to="/login">
       <button style={{
         position: "fixed",
         zIndex: 10,

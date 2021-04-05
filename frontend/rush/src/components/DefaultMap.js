@@ -9,7 +9,7 @@ import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
 import React, {useState} from "react";
 
-const Map = withScriptjs(withGoogleMap((props) => {
+const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
 
@@ -91,4 +91,4 @@ const Map = withScriptjs(withGoogleMap((props) => {
   );
 }));
 
-export default Map;
+export default DefaultMap;
