@@ -7,7 +7,7 @@ import {
 } from "react-google-maps";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
-import {useState} from "react";
+import React, {useState} from "react";
 
 const Map = withScriptjs(withGoogleMap((props) => {
 
