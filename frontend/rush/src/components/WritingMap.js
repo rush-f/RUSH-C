@@ -8,8 +8,6 @@ import {
 import {useState} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
-  const [center, setCenter] = useState({lat: null, lng: null});
-
   const [map, setMap] = useState(null);
 
   const defaultMapOptions = {
@@ -25,11 +23,11 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             defaultOptions={defaultMapOptions}
             streetView
             onCenterChanged={() => {
-              setCenter(map.getCenter())
+              props.centerFunc(map.getCenter())
             }}
         >
           <Marker
-              position={center}
+              position={props.center}
               icon={{
                 url: '/footprint.png',
               }}
