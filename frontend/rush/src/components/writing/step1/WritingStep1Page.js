@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {CLIENT_ID} from "../../../constants/GoogleMapAuth";
-import WriteButton from "../../button/WriteButton";
-import WritingMap from "../../WritingMap";
+import WritingMap from "./WritingMap";
 
 const WritingStep1Page = () => {
   const [center, setCenter] = useState(null);
@@ -15,7 +14,6 @@ const WritingStep1Page = () => {
                     center={center}
                     centerFunc={setCenter}
         />
-        <WriteButton />
       </>
   );
 };

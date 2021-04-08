@@ -8,11 +8,12 @@ import {
 import {useState} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
-  const [map, setMap] = useState(null);
 
   const defaultMapOptions = {
     disableDefaultUI: true
   };
+
+  const [map, setMap] = useState(null);
 
   return (
       <>

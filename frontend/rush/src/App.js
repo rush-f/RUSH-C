@@ -1,8 +1,8 @@
 import React from "react";
-import DefaultMapPage from "./components/page/DefaultMapPage";
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
-import LoginPage from "./components/page/LoginPage";
-import WritingStep1Page from "./components/page/writingPage/WritingStep1Page";
+import DefaultMapPage from './components/home/DefaultMapPage';
+import LoginPage from './components/login/LoginPage';
+import WritingStep1Page from './components/writing/step1/WritingStep1Page';
 
 function App() {
   return (<Router>
