@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import CancelButton from "./CancleButton";
+import {StyledInput, StyledTextarea} from "./Cotents";
 
 const WritingStep2Modal = (props) => {
   return (
@@ -16,14 +17,18 @@ const WritingStep2Modal = (props) => {
               color: 'lightsteelblue',
               maxWidth: '500px',
               margin: 'auto',
+              backgroundColor: 'rgb(222, 235, 247)',
             }
           }}
           contentLabel="Example Modal"       //모달의 라벨
       >
-        <h2>Hello</h2>
-        <CancelButton/>
-        <div>I am a modal</div>
-
+        <div style={{
+          display: "flex",
+        }}>
+          <StyledInput placeholder={"제목"}/>
+          <CancelButton />
+        </div>
+        <StyledTextarea placeholder={"내용"}></StyledTextarea>
       </Modal>
   );
 };

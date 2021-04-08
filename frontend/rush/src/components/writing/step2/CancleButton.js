@@ -3,13 +3,10 @@ import styled from "styled-components";
 
 const StyledCancelButton = styled.div`
   display: inline-block;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   width: 30px;
-  height: 30px;
+  height: 20px;
   color: #446677;
-  font-size: 28px;
+  font-size: 36px;
   font-weight: bold;
   cursor: pointer;
 `;
@@ -20,7 +17,7 @@ const CancelButton = () => {
         if (window.confirm("hihi")) {
           window.location.href = "/";
         }
-      }}>X</StyledCancelButton>
+      }}>x</StyledCancelButton>
   );
 };
 
