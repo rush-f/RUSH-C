@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import {Motion, spring} from 'react-motion';
+import GroupContent from "./GroupContent";
 
 const GroupList = (props) => {
   const [height, setHeight] = useState(233);
@@ -14,12 +15,10 @@ const GroupList = (props) => {
         <Motion style={{height: spring(height)}}>
           {
             ({height}) => <div style={Object.assign({}, styles.menu, {height})}>
-              <div>하이하이</div>
-              <div>하이하이</div>
-              <div>하이하이</div>
-              <div>하이하이</div>
-              <div>하이하이</div>
-              <div>하이하이</div>
+              <GroupContent>하이하이</GroupContent>
+              <GroupContent>하이하이</GroupContent>
+              <GroupContent>하이하이</GroupContent>
+              <GroupContent>하이하이</GroupContent>
             </div>
           }
         </Motion>

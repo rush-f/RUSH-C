@@ -1,21 +1,17 @@
-import Map from "./components/Map";
-import {CLIENT_ID} from "./constants/GoogleMapAuth";
-import Menu from "./components/button/MenuButton";
-import WriteButton from "./components/button/WriteButton";
 import React from "react";
-import LoginButton from "./components/button/LoginButton";
+import DefaultMapPage from "./components/page/DefaultMapPage";
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import LoginPage from "./components/page/LoginPage";
+import WritingStep1Page from "./components/page/writingPage/WritingStep1Page";
 
 function App() {
-  return (<>
-    <Map googleMapURL={CLIENT_ID}
-      loadingElement={<div style={{height: `100%`}}/>}
-      containerElement={<div style={{height: `700px`}}/>}
-      mapElement={<div style={{height: `100%`}}/>}
-    />
-    <Menu />
-    <LoginButton />
-    <WriteButton />
-  </>);
+  return (<Router>
+    <Switch>
+      <Route path="/" exact component={DefaultMapPage} />
+      <Route path="/login" exact component={LoginPage} />
+      <Route path="/writing/step1" exact component={WritingStep1Page} />
+    </Switch>
+  </Router>);
 }
 
 export default App;
