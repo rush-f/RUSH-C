@@ -24,7 +24,7 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             defaultOptions={defaultMapOptions}
             streetView
             onCenterChanged={() => {
-              props.centerFunc(map.getCenter())
+              props.setCenter(map.getCenter())
             }}
         >
           <Marker
