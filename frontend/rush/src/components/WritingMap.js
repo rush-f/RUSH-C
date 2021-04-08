@@ -8,7 +8,9 @@ import {
 import {useState} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
-  const [position, setPosition] = useState({lat: 37.397, lng: 127.644});
+  const [center, setCenter] = useState({lat: null, lng: null});
+
+  const [map, setMap] = useState(null);
 
   const defaultMapOptions = {
     disableDefaultUI: true
@@ -17,21 +19,19 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
   return (
       <>
         <GoogleMap
+            ref={(map) => setMap(map)}
             defaultZoom={6}
             defaultCenter={{lat: 37.397, lng: 127.644}}
             defaultOptions={defaultMapOptions}
-            onClick={(e) => {
-              setPosition({lat: e.latLng.lat(), lng: e.latLng.lng()});
+            streetView
+            onCenterChanged={() => {
+              setCenter(map.getCenter())
             }}
         >
           <Marker
-              position={position}
-              animation={1}
+              position={center}
               icon={{
                 url: '/footprint.png',
-              }}
-              onClick={() => {
-                alert();
               }}
           />
         </GoogleMap>
