@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const WriteButton = () => {
-  return (
-      <Link to="/writing/step1">
-        <button style={{
+const ToStep2Button = (props) => {
+  return <>
+    {(props.step === 1) && <button
+        onClick={() => props.setStep(2)}
+        style={{
           position: "fixed",
           zIndex: 10,
           bottom: 0,
@@ -12,9 +13,10 @@ const WriteButton = () => {
           width: "100px",
           height: "50px",
           margin: "10px",
-        }}> 테스트 </button>
-      </Link>
-  );
+        }}
+    > 다음 </button>
+    }
+  </>;
 };
 
-export default WriteButton;
+export default ToStep2Button;

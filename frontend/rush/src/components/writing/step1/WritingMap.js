@@ -8,11 +8,12 @@ import {
 import {useState} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
-  const [map, setMap] = useState(null);
 
   const defaultMapOptions = {
     disableDefaultUI: true
   };
+
+  const [map, setMap] = useState(null);
 
   return (
       <>
@@ -23,7 +24,7 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             defaultOptions={defaultMapOptions}
             streetView
             onCenterChanged={() => {
-              props.centerFunc(map.getCenter())
+              props.setCenter(map.getCenter())
             }}
         >
           <Marker
