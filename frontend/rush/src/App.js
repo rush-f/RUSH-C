@@ -1,32 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-import {useEffect, useState} from "react";
+import React from "react";
+import DefaultMapPage from "./components/page/DefaultMapPage";
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import LoginPage from "./components/page/LoginPage";
+import WritingStep1Page from "./components/page/writingPage/WritingStep1Page";
 
 function App() {
-    const [message, setMessage] = useState("");
-    useEffect(() => {
-        fetch("http://localhost:8080/test")
-            .then(response => {
-                console.log(response)
-                return response.text()
-            })
-            .then(message => {
-                setMessage(message);
-            });
-    },[]);
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <h1 className="App-title">{message}</h1>
-            </header>
-            <p className="App-intro">
-                To get started, edit <code>src/App.js</code> and save to reload.
-            </p>
-        </div>
-    )
+  return (<Router>
+    <Switch>
+      <Route path="/" exact component={DefaultMapPage} />
+      <Route path="/login" exact component={LoginPage} />
+      <Route path="/writing/step1" exact component={WritingStep1Page} />
+    </Switch>
+  </Router>);
 }
-
-
 
 export default App;
