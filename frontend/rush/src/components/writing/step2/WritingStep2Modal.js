@@ -14,7 +14,6 @@ const WritingStep2Modal = (props) => {
               backgroundColor: '#00112255'
             },
             content: {
-              color: 'lightsteelblue',
               maxWidth: '500px',
               margin: 'auto',
               backgroundColor: 'rgb(222, 235, 247)',
