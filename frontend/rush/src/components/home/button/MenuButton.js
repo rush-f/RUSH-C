@@ -10,6 +10,7 @@ const BurgerMenuContents = styled.div`
   margin-bottom: 16px;
   font-size: 140%;
   padding: 14px;
+  cursor: pointer;
 `;
 
 const Menu = () => {
