@@ -9,7 +9,7 @@ function App() {
     <Switch>
       <Route path="/" exact component={DefaultMapPage} />
       <Route path="/login" exact component={LoginPage} />
-      <Route path="/writing/step1" exact component={WritingPage} />
+      <Route path="/writing" exact component={WritingPage} />
     </Switch>
   </Router>);
 }

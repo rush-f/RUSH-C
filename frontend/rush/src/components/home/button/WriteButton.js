@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const WriteButton = () => {
   return (
-      <Link to="/writing/step1">
+      <Link to="/writing">
         <button style={{
           position: "fixed",
           zIndex: 10,

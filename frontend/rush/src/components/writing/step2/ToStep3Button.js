@@ -3,7 +3,13 @@ import React from 'react';
 const ToStep3Button = (props) => {
   return <>
     {(props.step === 2) && <button
-        onClick={() => props.setStep(3)}
+        onClick={() => {
+          if (props.isWritingCompleted) {
+            props.setStep(3);
+            return;
+          }
+          alert("제목 또는 내용이 비어있습니다!");
+        }}
         style={{
           position: "absolute",
           bottom: 0,
