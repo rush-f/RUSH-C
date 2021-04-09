@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import CancelButton from "./CancleButton";
 import {StyledInput, StyledTextarea} from "./Cotents";
+import ToStep3Button from "./ToStep3Button";
 
 const WritingStep2Modal = (props) => {
   return (
@@ -28,6 +29,7 @@ const WritingStep2Modal = (props) => {
           <CancelButton />
         </div>
         <StyledTextarea placeholder={"내용"}></StyledTextarea>
+        <ToStep3Button setStep={props.setStep} step={props.step}/>
       </Modal>
   );
 };

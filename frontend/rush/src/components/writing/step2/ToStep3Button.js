@@ -1,14 +1,14 @@
 import React from 'react';
 
-const ToStep2Button = (props) => {
+const ToStep3Button = (props) => {
   return <>
-    {(props.step === 1) && <button
-        onClick={() => props.setStep(2)}
+    {(props.step === 2) && <button
+        onClick={() => props.setStep(3)}
         style={{
-          position: "fixed",
-          zIndex: 10,
+          position: "absolute",
           bottom: 0,
           right: 0,
+          backgroundColor: "#00000000",
           width: "100px",
           height: "50px",
           margin: "10px",
@@ -18,4 +18,4 @@ const ToStep2Button = (props) => {
   </>;
 };
 
-export default ToStep2Button;
+export default ToStep3Button;
