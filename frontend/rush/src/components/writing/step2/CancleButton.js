@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {withRouter} from "react-router-dom";
 
 const StyledCancelButton = styled.div`
   display: inline-block;
@@ -11,14 +12,14 @@ const StyledCancelButton = styled.div`
   cursor: pointer;
 `;
 
-const CancelButton = () => {
+const CancelButton = ({history}) => {
   return (
       <StyledCancelButton onClick={() => {
         if (window.confirm("hihi")) {
-          window.location.href = "/";
+          history.push("/");
         }
       }}>x</StyledCancelButton>
   );
 };
 
-export default CancelButton;
+export default withRouter(CancelButton);
