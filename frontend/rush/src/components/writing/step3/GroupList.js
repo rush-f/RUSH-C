@@ -19,8 +19,6 @@ const GroupList = (props) => {
       </GroupContent>
   );
 
-  useEffect(() => console.log(props.checkedGroups), [props.checkedGroups]);
-
   return (
       <div className="App">
         <Motion style={{height: spring(height)}}>

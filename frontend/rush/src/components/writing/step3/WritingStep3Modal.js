@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
-import GroupList from "./GroupList";
-import GroupListOpenButton from "./GroupListOpenButton";
+import SelectAllButton from "./SelectAllButton";
+import PublicMap from "./PublicMap";
+import GroupsMap from "./GroupsMap";
+import PrivateMap from "./PrivateMap";
 
 const WritingStep3Modal = (props) => {
   const groups = [
@@ -24,10 +26,9 @@ const WritingStep3Modal = (props) => {
   };
 
   return (
-      <Modal            //모달 태그 내부에 옵션을 넣고 태그 사이에 내용을 넣는다
-          isOpen={props.step === 3}        //모달의 오픈유무를 bool값으로 정한다.
-          shouldCloseOnOverlayClick={false}     //close버튼을 눌러야만 모달이 종료
-          //onRequestClose={closeModal}    // 모달이 닫히는 요청을 받으면 무엇을 할껀지
+      <Modal
+          isOpen={props.step === 3}
+          shouldCloseOnOverlayClick={false}
           style={{
             overlay: {
               backgroundColor: '#00112255'
@@ -38,49 +39,32 @@ const WritingStep3Modal = (props) => {
               backgroundColor: 'rgb(222, 235, 247)',
             }
           }}
-          contentLabel="Example Modal"       //모달의 라벨
+          contentLabel="Example Modal"
       >
-        <div>
-          <button onClick={()=>{
-
-            if(isPublicMapChecked || isPrivateMapChecked || checkedGroups.length > 0){
-              setCheckedGroups([]);
-              setIsPublicMapChecked(false);
-              setIsPrivateMapChecked(false);
-            }
-            else {
-              setCheckedGroups(groups.map(group => group.id));
-              setIsPublicMapChecked(true)
-              setIsPrivateMapChecked(true)
-            }
-            }} >전체선택</button>
-        </div>
-        <div>
-           <input type="checkbox"
-                  onChange={() => setIsPublicMapChecked(!isPublicMapChecked)}
-                  checked={isPublicMapChecked}
-           />
-           전체지도
-        </div>
-        <div>
-          그룹지도
-          <GroupListOpenButton
-              isGroupOpened={isGroupOpened}
-              setIsGroupOpened={setIsGroupOpened}
-          />
-        </div>
-        <GroupList
-            isGroupOpened={isGroupOpened}
+        <SelectAllButton
+            isPublicMapChecked={isPublicMapChecked}
+            isPrivateMapChecked={isPrivateMapChecked}
+            checkedGroups={checkedGroups}
+            setIsPublicMapChecked={setIsPublicMapChecked}
+            setIsPrivateMapChecked={setIsPrivateMapChecked}
+            setCheckedGroups={setCheckedGroups}
+            groups={groups}
+        />
+        <PublicMap
+            isPublicMapChecked={isPublicMapChecked}
+            setIsPublicMapChecked={setIsPublicMapChecked}
+        />
+        <GroupsMap
             groups={groups}
             checkedGroups={checkedGroups}
+            isGroupOpened={isGroupOpened}
+            setIsGroupOpened={setIsGroupOpened}
             onGroupCheckboxClicked={onGroupCheckboxClicked}
         />
-        <div>
-           <input type="checkbox"
-                  onChange={() => setIsPrivateMapChecked(!isPrivateMapChecked)}
-                  checked={isPrivateMapChecked}
-           />개인지도
-        </div>
+        <PrivateMap
+            isPrivateMapChecked={isPrivateMapChecked}
+            setIsPrivateMapChecked={setIsPrivateMapChecked}
+        />
       </Modal>
   );
 };
