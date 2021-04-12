@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
 import CancelButton from "../CancelButton";
-import {StyledInput, StyledTextarea} from "./Cotents";
+import StyledInput from "./StyledInput";
+import StyledTextarea from "./StyledTextarea";
 import ToStep3Button from "./ToStep3Button";
+import BackButton from "./BackButton";
 
 const WritingStep2Modal = (props) => {
 
@@ -39,6 +41,8 @@ const WritingStep2Modal = (props) => {
             step={props.step}
             isWritingCompleted={(props.title.length !== 0 && props.content.length !== 0)}
         />
+        <BackButton  setStep={props.setStep}
+                     step={props.step}/>
       </Modal>
   );
 };

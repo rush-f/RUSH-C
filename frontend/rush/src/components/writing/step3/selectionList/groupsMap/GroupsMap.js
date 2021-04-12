@@ -1,15 +1,20 @@
 import React from 'react';
 import GroupListOpenButton from "./GroupListOpenButton";
 import GroupList from "./GroupList";
+import StyledElement from "../StyledElement";
 
 const GroupsMap = (props) => {
   return (<>
-        <div>그룹지도
+        <StyledElement
+            onClick={() => props.setIsGroupOpened(!props.isGroupOpened)}
+            style={{marginTop: '19px' }}
+        >
+          그룹지도
           <GroupListOpenButton
               isGroupOpened={props.isGroupOpened}
               setIsGroupOpened={props.setIsGroupOpened}
           />
-        </div>
+        </StyledElement>
         <GroupList
             isGroupOpened={props.isGroupOpened}
             groups={props.groups}
