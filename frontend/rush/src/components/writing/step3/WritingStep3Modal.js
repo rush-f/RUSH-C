@@ -4,6 +4,7 @@ import SelectAllButton from "./SelectAllButton";
 import PublicMap from "./PublicMap";
 import GroupsMap from "./GroupsMap";
 import PrivateMap from "./PrivateMap";
+import CancelButton from "../CancelButton";
 
 const WritingStep3Modal = (props) => {
   const groups = [
@@ -41,6 +42,7 @@ const WritingStep3Modal = (props) => {
           }}
           contentLabel="Example Modal"
       >
+        <CancelButton />
         <SelectAllButton
             isPublicMapChecked={isPublicMapChecked}
             isPrivateMapChecked={isPrivateMapChecked}

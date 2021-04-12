@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
-import CancelButton from "./CancleButton";
+import CancelButton from "../CancelButton";
 import {StyledInput, StyledTextarea} from "./Cotents";
 import ToStep3Button from "./ToStep3Button";
 
@@ -23,16 +23,12 @@ const WritingStep2Modal = (props) => {
           }}
           contentLabel="Example Modal"       //모달의 라벨
       >
-        <div style={{
-          display: "flex",
-        }}>
-          <StyledInput
-              value={props.title}
-              onChange={e => props.setTitle(e.target.value)}
-              placeholder={"제목"}
-          />
-          <CancelButton />
-        </div>
+      <CancelButton />
+      <StyledInput
+            value={props.title}
+            onChange={e => props.setTitle(e.target.value)}
+            placeholder={"제목"}
+        />
         <StyledTextarea
             value={props.content}
             onChange={e => props.setContent(e.target.value)}
