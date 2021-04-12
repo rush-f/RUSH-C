@@ -5,14 +5,24 @@ import {
   withGoogleMap,
   withScriptjs
 } from "react-google-maps";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
-  const [map, setMap] = useState(null);
 
   const defaultMapOptions = {
     disableDefaultUI: true
   };
+
+  const [map, setMap] = useState(null);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+
+  useEffect(() => {
+    if (lat == null) {
+      setLat(37.397);
+      setLng(127.644);
+    }
+  });
 
   return (
       <>
@@ -23,11 +33,13 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             defaultOptions={defaultMapOptions}
             streetView
             onCenterChanged={() => {
-              props.centerFunc(map.getCenter())
+              props.setCenter(map.getCenter());
+              setLat(props.center.lat);
+              setLng(props.center.lng);
             }}
         >
           <Marker
-              position={props.center}
+              position={{lat: lat, lng: lng}}
               icon={{
                 url: '/footprint.png',
               }}

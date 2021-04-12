@@ -1,9 +1,9 @@
 import React from 'react';
-import DefaultMap from "../DefaultMap";
+import DefaultMap from "./DefaultMap";
 import {CLIENT_ID} from "../../constants/GoogleMapAuth";
-import Menu from "../button/MenuButton";
-import LoginButton from "../button/LoginButton";
-import WriteButton from "../button/WriteButton";
+import Menu from "./button/MenuButton";
+import LoginButton from "./button/LoginButton";
+import WriteButton from "./button/WriteButton";
 
 const DefaultMapPage = () => {
   return (<>
