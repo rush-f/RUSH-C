@@ -1,14 +1,10 @@
 import React from 'react';
 
-const ToStep3Button = (props) => {
+const CompleteButton = (props) => {
   return <>
-    {(props.step === 2) && <button
+    {(props.step === 3) && <button
         onClick={() => {
-          if (props.isWritingCompleted) {
-            props.setStep(3);
-            return;
-          }
-          alert("제목 또는 내용이 비어있습니다!");
+          alert('글쓰기완료');
         }}
         style={{
           position: "absolute",
@@ -19,9 +15,9 @@ const ToStep3Button = (props) => {
           height: "50px",
           margin: "10px",
         }}
-    > 다음 </button>
+    > 완료 </button>
     }
   </>;
 };
 
-export default ToStep3Button;
+export default CompleteButton;

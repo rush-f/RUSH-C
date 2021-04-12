@@ -10,7 +10,7 @@ const GroupContentStyle = styled.div`
 
 const GroupContent = (props) => {
   return (
-      <GroupContentStyle>
+      <GroupContentStyle onClick={props.onClick}>
         {props.children}
       </GroupContentStyle>
   );
