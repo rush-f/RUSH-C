@@ -8,12 +8,12 @@ import CancelButton from "../CancelButton";
 import styled from "styled-components";
 import CompleteButton from "./CompleteButton";
 import BackButton from "./BackButton";
+import WindowSize from "../../WindowSize";
 
 const StyledDiv = styled.div`
   padding: 15px;
   border: 2px solid rgb(90, 155, 213);
   overflow-y: scroll;
-  height: 70%;
 `;
 
 const WritingStep3Modal = (props) => {
@@ -60,7 +60,7 @@ const WritingStep3Modal = (props) => {
           contentLabel="Example Modal"
       >
         <CancelButton />
-        <StyledDiv>
+        <StyledDiv style={{height: WindowSize().height - 250}}>
         <SelectAllButton
             isPublicMapChecked={isPublicMapChecked}
             isPrivateMapChecked={isPrivateMapChecked}
