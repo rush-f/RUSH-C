@@ -4,6 +4,7 @@ import WritingMap from "./step1/WritingMap";
 import ToStep2Button from "./step1/ToStep2Button";
 import WritingStep2Modal from "./step2/WritingStep2Modal";
 import WritingStep3Modal from "./step3/WritingStep3Modal";
+import WindowSize from "../WindowSize";
 
 const WritingPage = () => {
   const [step, setStep] = useState(1);
@@ -16,7 +17,7 @@ const WritingPage = () => {
       <>
         <WritingMap googleMapURL={CLIENT_ID}
                     loadingElement={<div style={{height: `100%`}}/>}
-                    containerElement={<div style={{height: `800px`}}/>}
+                    containerElement={<div style={{height: WindowSize().height}}/>}
                     mapElement={<div style={{height: `100%`}}/>}
                     center={center}
                     setCenter={setCenter}

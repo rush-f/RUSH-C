@@ -4,12 +4,13 @@ import {CLIENT_ID} from "../../constants/GoogleMapAuth";
 import Menu from "./button/MenuButton";
 import LoginButton from "./button/LoginButton";
 import WriteButton from "./button/WriteButton";
+import WindowSize from "../WindowSize";
 
 const DefaultMapPage = () => {
   return (<>
       <DefaultMap googleMapURL={CLIENT_ID}
-                  loadingElement={<div style={{height: `100%`}}/>}
-                  containerElement={<div style={{height: `800px`}}/>}
+                  loadingElement={<div style={{width: `100%`}}/>}
+                  containerElement={<div style={{height: WindowSize().height}}/>}
                   mapElement={<div style={{height: `100%`}}/>}
       />
       <Menu />
