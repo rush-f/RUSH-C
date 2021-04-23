@@ -1,44 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
 import WindowSize from "../WindowSize";
-
-const Outside = styled.div`
-  max-width: 400px;
-  margin: auto;
-`;
-
-const DisplayBox = styled.div`
-  margin: 10px;
-  border: 2px solid rgb(90, 155, 213);
-  border-radius: 10px;
-  overflow-y: scroll;
-`;
-
-const PostBox = styled.div`
-  margin: 0;
-  border-bottom: 2px solid rgb(90, 155, 213);
-  padding: 10px;
-`;
-
-const CommentsBox = styled.div`
-  margin: 0;
-`;
-
-const CommentBox = styled.div`
-  margin: 0;
-  height: 100px;
-  border-bottom: 2px solid rgb(90, 155, 213);
-  padding: 10px;
-`;
+import { Outside, DisplayBox, PostBox, CommentsBox, CommentBox } from './Box';
+import PostMeta from "./PostMeta";
 
 const PostDetailPage = (props) => {
   const postId = props.match.params.postId;
+
+  const post = {
+    title: "여기 완전 맛있음!!",
+    content: "여기 완전 맛집임\nOO식당",
+    author: {
+      name: "홍길asa동",
+      imageUrl: ""
+    },
+    date: [ 2021, 9, 2 ],
+    likeCount: 10
+  };
 
   return (
       <Outside>
         <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
           <PostBox>
-            홍길동<br/><br/><br/><br/><br/><br/>
+            <PostMeta author={post.author}/>
+            <br/><br/>
             {postId}<br/><br/><br/><br/>
           </PostBox>
           <CommentsBox>
