@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,12 +28,12 @@ public class Article {
 
     @Lob
     @NotNull
-    private String contents;
-
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    private String content;
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    public Article(String title, String content) {
+        this(null, title, content, null);
+    }
 }
