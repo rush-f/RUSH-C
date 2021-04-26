@@ -1,0 +1,7 @@
+POST http://localhost:8080/articles
+Content-Type: application/json
+
+{
+  "title": "제목",
+  "content": "내용"
+}
