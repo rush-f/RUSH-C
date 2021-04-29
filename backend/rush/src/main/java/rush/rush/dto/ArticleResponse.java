@@ -1,18 +1,20 @@
 package rush.rush.dto;
 
+import java.sql.Timestamp;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class CreateArticleRequest {
+public class ArticleResponse {
 
+    private Long id;
     private String title;
     private String content;
-    private double latitude;    // 위도
-    private double longitude;   // 경도
+    private Double latitude;
+    private Double longitude;
+    private Timestamp createDate;
 }
