@@ -13,4 +13,6 @@ public class CreateArticleRequest {
 
     private String title;
     private String content;
+    private double latitude;    // 위도
+    private double longitude;   // 경도
 }

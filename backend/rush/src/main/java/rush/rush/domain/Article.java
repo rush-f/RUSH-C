@@ -30,18 +30,27 @@ public class Article {
     @NotNull
     private String content;
 
+    @NotNull
+    private Double latitude;    // 위도
+
+    @NotNull
+    private Double longitude;   // 경도
+
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(String title, String content) {
-        this(null, title, content, null);
+    public Article(String title, String content, double latitude, double longitude) {
+        this(null, title, content, latitude, longitude, null);
     }
 
-    public Article(Long id, String title, String content, Timestamp createDate) {
+    public Article(Long id, String title, String content, double latitude, double longitude,
+        Timestamp createDate) {
         validate(title, content);
         this.id = id;
         this.title = title;
         this.content = content;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.createDate = createDate;
     }
 

@@ -15,9 +15,12 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     public Long create(CreateArticleRequest createArticleRequest) {
-        Article article = new Article(createArticleRequest.getTitle(),
-            createArticleRequest.getContent());
-
+        Article article = new Article(
+            createArticleRequest.getTitle(),
+            createArticleRequest.getContent(),
+            createArticleRequest.getLatitude(),
+            createArticleRequest.getLongitude()
+        );
         return articleRepository.save(article)
             .getId();
     }
@@ -30,6 +33,8 @@ public class ArticleService {
             article.getId(),
             article.getTitle(),
             article.getContent(),
+            article.getLatitude(),
+            article.getLongitude(),
             article.getCreateDate()
         );
     }

@@ -35,7 +35,6 @@ public class ArticleAcceptanceTest {
      * when 쓴 글을 조회한다. then 글이 조회된다.
      */
     @Test
-    @DisplayName("글을 쓴다.")
     void useArticle() {
         Map<String, String> body = new HashMap<>();
 

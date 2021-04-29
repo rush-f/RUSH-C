@@ -14,5 +14,7 @@ public class ArticleResponse {
     private Long id;
     private String title;
     private String content;
+    private Double latitude;
+    private Double longitude;
     private Timestamp createDate;
 }

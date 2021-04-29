@@ -16,7 +16,7 @@ class ArticleServiceTest {
 
     @Test
     void create() {
-        CreateArticleRequest createArticleRequest = new CreateArticleRequest("af", "sdf");
+        CreateArticleRequest createArticleRequest = new CreateArticleRequest("af", "sdf", 0, 0);
         assertThat(articleService.create(createArticleRequest)).isNotNull();
     }
 }

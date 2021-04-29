@@ -12,7 +12,7 @@ class ArticleTest {
     @ParameterizedTest
     @MethodSource("constructorTestParameters")
     void constructor_IfIsEmpty_ExceptionThrown(String title, String content) {
-        assertThatThrownBy(() -> new Article(null, title, content, null))
+        assertThatThrownBy(() -> new Article(null, title, content, 0, 0, null))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
