@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-@Setter
 public class CreateArticleRequest {
 
     private String title;
