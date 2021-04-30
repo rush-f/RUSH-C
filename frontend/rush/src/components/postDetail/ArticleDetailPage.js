@@ -3,10 +3,10 @@ import WindowSize from "../WindowSize";
 import { Outside, DisplayBox, PostBox, CommentsBox, CommentBox } from './Box';
 import PostMeta from "./PostMeta";
 
-const PostDetailPage = (props) => {
-  const postId = props.match.params.postId;
+const ArticleDetailPage = (props) => {
+  const articleId = props.match.params.articleId;
 
-  const post = {
+  const article = {
     title: "여기 완전 맛있음!!",
     content: "여기 완전 맛집임\nOO식당",
     author: {
@@ -21,9 +21,9 @@ const PostDetailPage = (props) => {
       <Outside>
         <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
           <PostBox>
-            <PostMeta author={post.author}/>
+            <PostMeta author={article.author}/>
             <br/><br/>
-            {postId}<br/><br/><br/><br/>
+            {articleId}<br/><br/><br/><br/>
           </PostBox>
           <CommentsBox>
             <CommentBox>1</CommentBox>
@@ -40,4 +40,4 @@ const PostDetailPage = (props) => {
   );
 };
 
-export default PostDetailPage;
+export default ArticleDetailPage;
