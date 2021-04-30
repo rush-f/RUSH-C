@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
   border: 1px solid red;
 `;
 
-const PostMeta = (props) => {
+const ArticleMeta = (props) => {
   return (<>
     <CancelButton />
     <StyledDiv>
@@ -17,4 +17,4 @@ const PostMeta = (props) => {
   </>);
 };
 
-export default PostMeta;
+export default ArticleMeta;

@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from "axios";
-import {ADDRESS} from "../../../constants/BackendAddress";
+import {ADDRESS} from "../../constants/BackendAddress";
 import {withRouter} from "react-router-dom";
 
-const createWriting = (props) => {
+const createWritingApi = (props) => {
   const body = {
     title: props.title,
     content: props.content,
@@ -19,4 +19,4 @@ const createWriting = (props) => {
     });
 };
 
-export default createWriting;
+export default createWritingApi;

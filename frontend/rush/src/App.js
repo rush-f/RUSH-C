@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import DefaultMapPage from './components/home/DefaultMapPage';
 import LoginPage from './components/login/LoginPage';
 import WritingPage from './components/writing/WritingPage';
-import ArticleDetailPage from "./components/postDetail/ArticleDetailPage";
+import ArticleDetailPage from "./components/articleDetail/ArticleDetailPage";
 
 function App() {
   return (<Router>
