@@ -87,7 +87,12 @@ const WritingStep3Modal = (props) => {
         />
         </StyledDiv>
         <BackButton step={props.step} setStep={props.setStep}/>
-        <CompleteButton step={props.step}/>
+        <CompleteButton
+            step={props.step}
+            title={props.title}
+            content={props.content}
+            center={props.center}
+        />
       </Modal>
   );
 };

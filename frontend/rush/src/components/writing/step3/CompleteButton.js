@@ -1,10 +1,12 @@
 import React from 'react';
+import createWritingApi from "../CreateWritingApi";
+import {withRouter} from "react-router-dom";
 
 const CompleteButton = (props) => {
   return <>
     {(props.step === 3) && <button
         onClick={() => {
-          alert('글쓰기완료');
+          createWritingApi(props);
         }}
         style={{
           position: "absolute",
@@ -20,4 +22,4 @@ const CompleteButton = (props) => {
   </>;
 };
 
-export default CompleteButton;
+export default withRouter(CompleteButton);
