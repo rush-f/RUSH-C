@@ -3,6 +3,9 @@ import WindowSize from "../WindowSize";
 import { Outside, DisplayBox, PostBox, CommentsBox, CommentBox } from './Box';
 import ArticleMeta from "./ArticleMeta";
 import findWritingApi from "./FindWritingApi";
+import ArticleTitle from "./ArticleTitle";
+import ArticleContent from "./ArticleContent";
+import ArticleBody from "./ArticleBody";
 
 const ArticleDetailPage = (props) => {
   const articleId = props.match.params.articleId;
@@ -22,8 +25,7 @@ const ArticleDetailPage = (props) => {
                 author={{ name: "홍길동", imageUrl: "" }}
                 createDate={article? article.createDate:""}
             />
-            {article ? article.title : ""}
-            {article ? article.content : ""}
+            <ArticleBody article={article}/>
           </PostBox>
           <CommentsBox>
             <CommentBox>1</CommentBox>
