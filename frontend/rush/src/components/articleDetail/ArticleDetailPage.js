@@ -18,9 +18,12 @@ const ArticleDetailPage = (props) => {
       <Outside>
         <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
           <PostBox>
-            <ArticleMeta author={{ name: "홍길동", imageUrl: "" }}/>
-            <br/><br/>
-            {article.content}<br/><br/><br/><br/>
+            <ArticleMeta
+                author={{ name: "홍길동", imageUrl: "" }}
+                createDate={article? article.createDate:""}
+            />
+            {article ? article.title : ""}
+            {article ? article.content : ""}
           </PostBox>
           <CommentsBox>
             <CommentBox>1</CommentBox>
