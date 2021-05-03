@@ -8,13 +8,16 @@ import WindowSize from "../WindowSize";
 
 const WritingPage = () => {
   const [step, setStep] = useState(1);
-
   const [center, setCenter] = useState({
     lat: () => 37.397,
     lng: () => 127.644,
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const [isPublicMapChecked, setIsPublicMapChecked] = useState(false);
+  const [isPrivateMapChecked, setIsPrivateMapChecked] = useState(false);
+  const [checkedGroups, setCheckedGroups] = useState([]);
 
   return (
       <>
@@ -40,6 +43,12 @@ const WritingPage = () => {
             title={title}
             content={content}
             center={center}
+            isPublicMapChecked={isPublicMapChecked}
+            setIsPublicMapChecked={setIsPublicMapChecked}
+            isPrivateMapChecked={isPrivateMapChecked}
+            setIsPrivateMapChecked={setIsPrivateMapChecked}
+            checkedGroups={checkedGroups}
+            setCheckedGroups={setCheckedGroups}
         />
       </>
   );
