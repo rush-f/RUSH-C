@@ -15,9 +15,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
+    implementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured'
 }

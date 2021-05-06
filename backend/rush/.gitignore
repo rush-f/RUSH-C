@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Security ###
+/src/main/resources/application-oauth.*
+/src/test/resources/application-oauth.*
