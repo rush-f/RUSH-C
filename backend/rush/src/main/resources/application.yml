@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: oauth
   datasource:
     driverClassName: org.h2.Driver
     password: password
