@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,12 +39,12 @@ public class User {
     @NotNull
     private String password;
 
-    @Column(nullable = false, length = EMAIL_MAX_LENGTH)
+    @Column(nullable = false, length = EMAIL_MAX_LENGTH, unique = true)
     private String email;
 
     private String imageUrl;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String invitationCode;
 
     @CreationTimestamp
@@ -68,9 +69,17 @@ public class User {
         this.password = password;
         this.email = email;
         this.imageUrl = imageUrl;
-        this.invitationCode = invitationCode;
         this.joinDate = joinDate;
         this.visitDate = visitDate;
+        this.invitationCode = invitationCode;
+    }
+
+    public void alterImageUrl(String newImageUrl) {
+        imageUrl = newImageUrl;
+    }
+
+    public void alterNickName(String newNickName) {
+        nickName = newNickName;
     }
 
     private void validate(Long id, String nickName, String password, String email, String imageUrl,
