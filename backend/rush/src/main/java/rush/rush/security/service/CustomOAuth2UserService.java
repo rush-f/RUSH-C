@@ -1,5 +1,6 @@
 package rush.rush.security.service;
 
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -9,7 +10,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.repository.UserRepository;
@@ -46,7 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             oAuth2UserRequest.getClientRegistration().getRegistrationId(),
             oAuth2User.getAttributes());
 
-        if(StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
+        if (Objects.isNull(oAuth2UserInfo.getEmail()) || oAuth2UserInfo.getEmail().isEmpty()) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
