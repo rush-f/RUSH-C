@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -72,6 +71,8 @@ public class User {
         this.joinDate = joinDate;
         this.visitDate = visitDate;
         this.invitationCode = invitationCode;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 
     public void alterImageUrl(String newImageUrl) {
