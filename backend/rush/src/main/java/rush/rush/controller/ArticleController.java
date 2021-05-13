@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.CreateArticleRequest;
+import rush.rush.security.CurrentUser;
+import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.ArticleService;
 
 @RequiredArgsConstructor
@@ -29,8 +31,9 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CreateArticleRequest createArticleRequest) {
-        Long articleId = articleService.create(createArticleRequest);
+    public ResponseEntity<Void> create(@RequestBody CreateArticleRequest createArticleRequest,
+        @CurrentUser UserPrincipal userPrincipal) {
+        Long articleId = articleService.create(createArticleRequest, userPrincipal.getUser());
 
         return ResponseEntity.created(URI.create("/articles/" + articleId))
             .build();
