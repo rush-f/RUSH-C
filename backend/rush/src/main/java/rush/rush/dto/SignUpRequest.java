@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SignUpRequest {
 
     @NotBlank
-    private String name;
+    private String nickName;
 
     @NotBlank
     @Email

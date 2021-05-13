@@ -56,7 +56,7 @@ public class AuthController {
             throw new BadRequestException("이미 사용중인 이메일입니다.");
         }
         User user = User.builder()
-            .nickName(signUpRequest.getName())
+            .nickName(signUpRequest.getNickName())
             .email(signUpRequest.getEmail())
             .provider(AuthProvider.local)
             .password(passwordEncoder.encode(signUpRequest.getPassword()))

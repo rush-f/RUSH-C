@@ -1,5 +1,9 @@
+
+
+###
 POST http://localhost:8080/articles
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODg4MDU0LCJleHAiOjE2MjA4ODk4NTR9.gKiabkfYugF6l81JZndbgbFVMgXLrd1jTrnxe52QSDukyE7zkK22Gwbla8cfoNCGYH8ngOVYWDvhE-syANQXAQ
 
 {
   "title": "제목",
