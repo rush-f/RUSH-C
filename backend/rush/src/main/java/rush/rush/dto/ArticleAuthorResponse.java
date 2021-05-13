@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class CreateArticleRequest {
+public class ArticleAuthorResponse {
 
-    private String title;
-    private String content;
-    private double latitude;    // 위도
-    private double longitude;   // 경도
+    private Long id;
+    private String nickName;
+    private String imageUrl;
 }
