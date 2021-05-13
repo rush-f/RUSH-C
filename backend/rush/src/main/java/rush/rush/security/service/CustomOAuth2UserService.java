@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -26,6 +27,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private static final String DUMMY_PASSWORD = "무의미한 패스워드";
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -72,7 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             .nickName(oAuth2UserInfo.getName())
             .email(oAuth2UserInfo.getEmail())
             .provider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
-            .password(DUMMY_PASSWORD)
+            .password(passwordEncoder.encode(DUMMY_PASSWORD))
             .providerId(oAuth2UserInfo.getId())
             .imageUrl(oAuth2UserInfo.getImageUrl())
             .invitationCode(HashUtil.hash(oAuth2UserInfo.getEmail()))
