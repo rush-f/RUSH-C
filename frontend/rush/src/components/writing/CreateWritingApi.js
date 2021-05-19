@@ -27,6 +27,15 @@ const createWritingApi = (props) => {
          const uri = response.headers.location;
          props.history.push(uri);
       }
+    })
+    .catch(error => {
+      if (error.response.status === 401 || error.response.status === 403) {
+        alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        props.history.push("/login");
+        return;
+      }
+      alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
+      props.history.push("/");
     });
 };
 
