@@ -8,10 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class CreateArticleRequest {
+public class AuthResponse {
 
-    private String title;
-    private String content;
-    private double latitude;    // 위도
-    private double longitude;   // 경도
+    private String accessToken;
+    private String tokenType = "Bearer";
+
+    public AuthResponse(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+
 }

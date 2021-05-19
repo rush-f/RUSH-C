@@ -1,5 +1,7 @@
 package rush.rush.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class CreateArticleRequest {
+public class LoginRequest {
 
-    private String title;
-    private String content;
-    private double latitude;    // 위도
-    private double longitude;   // 경도
+    @NotBlank
+    @Email
+    private String email;
+
+    @NotBlank
+    private String password;
 }

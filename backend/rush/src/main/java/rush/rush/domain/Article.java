@@ -8,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import lombok.AllArgsConstructor;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,30 +37,38 @@ public class Article {
     @NotNull
     private Double longitude;   // 경도
 
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
+
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(String title, String content, double latitude, double longitude) {
-        this(null, title, content, latitude, longitude, null);
+    public Article(String title, String content, double latitude, double longitude, User user) {
+        this(null, title, content, latitude, longitude, user, null);
     }
 
     public Article(Long id, String title, String content, double latitude, double longitude,
-        Timestamp createDate) {
-        validate(title, content);
+        User user, Timestamp createDate) {
+        validate(title, content, user);
         this.id = id;
         this.title = title;
         this.content = content;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.user = user;
         this.createDate = createDate;
     }
 
-    private void validate(String title, String content) {
+    private void validate(String title, String content, User user) {
         if (Objects.isNull(title) || title.trim().isEmpty()) {
             throw new IllegalArgumentException("제목이 비어있습니다.");
         }
         if (Objects.isNull(content) || content.trim().isEmpty()) {
             throw new IllegalArgumentException("내용이 비어있습니다.");
+        }
+        if (Objects.isNull(user) || Objects.isNull(user.getId())) {
+            throw new IllegalArgumentException("작성자가 올바르게 지정되지 않았습니다.");
         }
     }
 }
