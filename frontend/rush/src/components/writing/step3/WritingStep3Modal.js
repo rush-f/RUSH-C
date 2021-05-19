@@ -8,12 +8,12 @@ import CancelButton from "../CancelButton";
 import styled from "styled-components";
 import CompleteButton from "./CompleteButton";
 import BackButton from "./BackButton";
+import WindowSize from "../../WindowSize";
 
 const StyledDiv = styled.div`
   padding: 15px;
   border: 2px solid rgb(90, 155, 213);
   overflow-y: scroll;
-  height: 70%;
 `;
 
 const WritingStep3Modal = (props) => {
@@ -31,15 +31,11 @@ const WritingStep3Modal = (props) => {
   ];
   const [isGroupOpened, setIsGroupOpened] = useState(false);
 
-  const [isPublicMapChecked, setIsPublicMapChecked] = useState(false);
-  const [isPrivateMapChecked, setIsPrivateMapChecked] = useState(false);
-  const [checkedGroups, setCheckedGroups] = useState([]);
-
   const onGroupCheckboxClicked = (groupId) => {
-    if (checkedGroups.includes(groupId)) {
-      setCheckedGroups(checkedGroups.filter(e => e !== groupId))
+    if (props.checkedGroups.includes(groupId)) {
+      props.setCheckedGroups(props.checkedGroups.filter(e => e !== groupId))
     } else {
-      setCheckedGroups([...checkedGroups, groupId]);
+      props.setCheckedGroups([...props.checkedGroups, groupId]);
     }
   };
 
@@ -60,34 +56,39 @@ const WritingStep3Modal = (props) => {
           contentLabel="Example Modal"
       >
         <CancelButton />
-        <StyledDiv>
+        <StyledDiv style={{height: WindowSize().height - 250}}>
         <SelectAllButton
-            isPublicMapChecked={isPublicMapChecked}
-            isPrivateMapChecked={isPrivateMapChecked}
-            checkedGroups={checkedGroups}
-            setIsPublicMapChecked={setIsPublicMapChecked}
-            setIsPrivateMapChecked={setIsPrivateMapChecked}
-            setCheckedGroups={setCheckedGroups}
+            isPublicMapChecked={props.isPublicMapChecked}
+            isPrivateMapChecked={props.isPrivateMapChecked}
+            checkedGroups={props.checkedGroups}
+            setIsPublicMapChecked={props.setIsPublicMapChecked}
+            setIsPrivateMapChecked={props.setIsPrivateMapChecked}
+            setCheckedGroups={props.setCheckedGroups}
             groups={groups}
         />
         <PublicMap
-            isPublicMapChecked={isPublicMapChecked}
-            setIsPublicMapChecked={setIsPublicMapChecked}
+            isPublicMapChecked={props.isPublicMapChecked}
+            setIsPublicMapChecked={props.setIsPublicMapChecked}
         />
         <GroupsMap
             groups={groups}
-            checkedGroups={checkedGroups}
+            checkedGroups={props.checkedGroups}
             isGroupOpened={isGroupOpened}
             setIsGroupOpened={setIsGroupOpened}
             onGroupCheckboxClicked={onGroupCheckboxClicked}
         />
         <PrivateMap
-            isPrivateMapChecked={isPrivateMapChecked}
-            setIsPrivateMapChecked={setIsPrivateMapChecked}
+            isPrivateMapChecked={props.isPrivateMapChecked}
+            setIsPrivateMapChecked={props.setIsPrivateMapChecked}
         />
         </StyledDiv>
         <BackButton step={props.step} setStep={props.setStep}/>
-        <CompleteButton step={props.step}/>
+        <CompleteButton
+            step={props.step}
+            title={props.title}
+            content={props.content}
+            center={props.center}
+        />
       </Modal>
   );
 };
