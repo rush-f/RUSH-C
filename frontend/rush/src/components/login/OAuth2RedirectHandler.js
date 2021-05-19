@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom'
+import {ACCESS_TOKEN} from "../../constants/LocalStorage";
 
 const OAuth2RedirectHandler = (props) => {
   const getUrlParameter = (name) => {
@@ -17,7 +18,7 @@ const OAuth2RedirectHandler = (props) => {
   console.log(props.location ? props.location : "")
 
   if(token) {
-    localStorage.setItem("token", token);
+    localStorage.setItem(ACCESS_TOKEN, token);
     return <Redirect to={{
       pathname: "/",
       state: { from: props.location ? props.location.state : "" }
