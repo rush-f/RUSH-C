@@ -1,0 +1,19 @@
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "nickName" : "하이하이",
+  "email" : "dsadsadas@naver.com",
+  "password": "dfsfasdsafds"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email" : "dsadsadas@naver.com",
+  "password": "dfsfasdsafds"
+}
+
+###

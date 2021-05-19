@@ -56,7 +56,7 @@ public class AuthController {
             throw new BadRequestException("이미 사용중인 이메일입니다.");
         }
         User user = User.builder()
-            .nickName(signUpRequest.getName())
+            .nickName(signUpRequest.getNickName())
             .email(signUpRequest.getEmail())
             .provider(AuthProvider.local)
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
@@ -66,7 +66,7 @@ public class AuthController {
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/user/me")
+                .fromCurrentContextPath().path("/users/me")
                 .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location)

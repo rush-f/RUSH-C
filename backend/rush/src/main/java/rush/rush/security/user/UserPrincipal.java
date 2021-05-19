@@ -37,6 +37,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return userPrincipal;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public Long getId() {
         return user.getId();
     }
