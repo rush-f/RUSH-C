@@ -32,10 +32,10 @@ const DefaultMapPage = () => {
       <Menu />
     {
       (accessToken === null || userImageUrl === null) ?
-        <LoginButton />
+        <LoginButton/>
           : <Profile/>
     }
-      <WriteButton />
+      <WriteButton accessToken={accessToken}/>
   </>);
 };
 

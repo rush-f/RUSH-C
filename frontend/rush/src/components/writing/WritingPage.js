@@ -5,6 +5,8 @@ import ToStep2Button from "./step1/ToStep2Button";
 import WritingStep2Modal from "./step2/WritingStep2Modal";
 import WritingStep3Modal from "./step3/WritingStep3Modal";
 import WindowSize from "../WindowSize";
+import {ACCESS_TOKEN} from "../../constants/LocalStorage";
+import {Redirect} from "react-router-dom";
 
 const WritingPage = () => {
   const [step, setStep] = useState(1);
@@ -19,6 +21,12 @@ const WritingPage = () => {
   const [isPrivateMapChecked, setIsPrivateMapChecked] = useState(false);
   const [checkedGroups, setCheckedGroups] = useState([]);
 
+
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    return <Redirect to={{
+      pathname: "/login"
+    }}/>
+  }
   return (
       <>
         <WritingMap googleMapURL={CLIENT_ID}
