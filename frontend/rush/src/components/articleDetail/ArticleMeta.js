@@ -5,7 +5,6 @@ import CancelButton from "../writing/CancelButton";
 import CreateDate from "./CreateDate";
 
 const StyledDiv = styled.div`
-  border: 1px solid red;
   display: flex;
   justify: center;
 `;
@@ -18,13 +17,12 @@ const ArticleMeta = (props) => {
   return (<>
     <CancelButton />
     <StyledDiv>
-      <Profile />
+      <Profile imageUrl={props.author? props.author.imageUrl : ""}/>
       <div style={{
         paddingTop: "5px",
-        border: "1px solid red",
       }}>
         <Name>
-          {props.author.name}
+          {props.author.nickName}
         </Name>
         <CreateDate iso8601format={props.createDate}/>
       </div>

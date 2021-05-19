@@ -6,6 +6,9 @@ const Profile = styled.div`
   height: 60px;
   border-radius: 100px;
   border: 2px solid black;
+  background-image: url("${props => props.imageUrl}");
+  background-size: contain;
+  margin-right: 10px;
 `;
 
 export default Profile;

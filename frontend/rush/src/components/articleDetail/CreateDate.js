@@ -5,7 +5,7 @@ const CreateDate = (props) => {
   const dateObj = new Date(props.iso8601format);
 
   const year = dateObj.getFullYear();
-  const month = dateObj.getMonth().toString().padStart(2, '0');
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
   const date = dateObj.getDate().toString().padStart(2, '0');
   const day = week[dateObj.getDay()];
   const hours = dateObj.getHours();

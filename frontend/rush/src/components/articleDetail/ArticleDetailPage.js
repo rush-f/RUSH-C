@@ -3,8 +3,6 @@ import WindowSize from "../WindowSize";
 import { Outside, DisplayBox, PostBox, CommentsBox, CommentBox } from './Box';
 import ArticleMeta from "./ArticleMeta";
 import findWritingApi from "./FindWritingApi";
-import ArticleTitle from "./ArticleTitle";
-import ArticleContent from "./ArticleContent";
 import ArticleBody from "./ArticleBody";
 
 const ArticleDetailPage = (props) => {
@@ -17,12 +15,20 @@ const ArticleDetailPage = (props) => {
     })
   }, [articleId]);
 
+  console.log(article)
+
   return (
       <Outside>
         <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
           <PostBox>
             <ArticleMeta
-                author={{ name: "홍길동", imageUrl: "" }}
+                author={article? {
+                  nickName: article.author? article.author.nickName : "",
+                  imageUrl: article.author? article.author.imageUrl : ""
+                } : {
+                  nickName: "",
+                  imageUrl: ""
+                }}
                 createDate={article? article.createDate:""}
             />
             <ArticleBody article={article}/>
