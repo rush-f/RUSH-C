@@ -16,5 +16,6 @@ public class ArticleResponse {
     private String content;
     private Double latitude;
     private Double longitude;
+    private ArticleAuthorResponse author;
     private Timestamp createDate;
 }

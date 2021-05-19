@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const WriteButton = () => {
+const WriteButton = (props) => {
+  const url = props.accessToken? "/writing" : "/login";
+
   return (
-      <Link to="/writing">
+      <Link to={url}>
         <button style={{
           position: "fixed",
           zIndex: 10,
