@@ -8,6 +8,7 @@ import {
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
 import React, {useState} from "react";
+import {withRouter} from "react-router-dom";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
@@ -37,7 +38,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div>{post.title}</div>
+      <div onClick={() => props.history.push('/articles/' + post.id)}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 
@@ -64,4 +65,4 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
   );
 }));
 
-export default DefaultMap;
+export default withRouter(DefaultMap);
