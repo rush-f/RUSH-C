@@ -27,9 +27,17 @@ const LoginButton = styled.a`
   }
 `;
 
+const HomeButton = styled.div`
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url('/home.png');
+  background-size: contain;
+`;
+
 const LoginPage = () => {
   return (<>
-    <Link to="/"><h1>홈</h1></Link>
+    <Link to="/"><HomeButton/></Link>
       <LoginPageBox>
         <LoginButton>네이버 로그인</LoginButton>
         <LoginButton href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth2/redirect">구글로그인</LoginButton>
