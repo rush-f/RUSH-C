@@ -21,7 +21,6 @@ const WritingPage = () => {
   const [isPrivateMapChecked, setIsPrivateMapChecked] = useState(false);
   const [checkedGroups, setCheckedGroups] = useState([]);
 
-
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return <Redirect to={{
       pathname: "/login"

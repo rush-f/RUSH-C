@@ -22,11 +22,4 @@ const CommentsBox = styled.div`
   margin: 0;
 `;
 
-const CommentBox = styled.div`
-  margin: 0;
-  height: 100px;
-  border-bottom: 2px solid rgb(90, 155, 213);
-  padding: 10px;
-`;
-
-export { Outside, DisplayBox, PostBox, CommentsBox, CommentBox };
+export { Outside, DisplayBox, PostBox, CommentsBox };

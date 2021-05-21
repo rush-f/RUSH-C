@@ -15,8 +15,6 @@ const OAuth2RedirectHandler = (props) => {
   const token = getUrlParameter('token');
   const error = getUrlParameter('error');
 
-  console.log(props.location ? props.location : "")
-
   if(token) {
     localStorage.setItem(ACCESS_TOKEN, token);
     return <Redirect to={{
