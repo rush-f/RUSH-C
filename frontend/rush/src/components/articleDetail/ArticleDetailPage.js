@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import WindowSize from "../WindowSize";
-import { Outside, DisplayBox, PostBox, CommentsBox, CommentBox } from './Box';
+import { Outside, DisplayBox, PostBox, CommentsBox } from './Box';
 import ArticleMeta from "./ArticleMeta";
 import findWritingApi from "./FindWritingApi";
 import ArticleBody from "./ArticleBody";
+import Comment from "./Comment";
 
 const ArticleDetailPage = (props) => {
   const articleId = props.match.params.articleId;
@@ -32,14 +33,13 @@ const ArticleDetailPage = (props) => {
             <ArticleBody article={article}/>
           </PostBox>
           <CommentsBox>
-            <CommentBox>1</CommentBox>
-            <CommentBox>2</CommentBox>
-            <CommentBox>3</CommentBox>
-            <CommentBox>4</CommentBox>
-            <CommentBox>5</CommentBox>
-            <CommentBox>6</CommentBox>
-            <CommentBox>7</CommentBox>
-            <CommentBox>8</CommentBox>
+            <Comment>우와 멋있어요~~~~</Comment>
+            <Comment>안녕하세요 ㅎㅎ</Comment>
+            <Comment>☆🤍🤍ㅁ🅱🅱🆎</Comment>
+            <Comment>댓글5</Comment>
+            <Comment>댓글6</Comment>
+            <Comment>댓글7</Comment>
+            <Comment>댓글8</Comment>
           </CommentsBox>
         </DisplayBox>
       </Outside>
