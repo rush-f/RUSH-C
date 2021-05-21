@@ -15,8 +15,6 @@ const ArticleDetailPage = (props) => {
     })
   }, [articleId]);
 
-  console.log(article)
-
   return (
       <Outside>
         <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>

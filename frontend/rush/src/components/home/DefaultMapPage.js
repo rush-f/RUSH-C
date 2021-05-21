@@ -23,6 +23,7 @@ const DefaultMapPage = () => {
       setUserImageUrl(userImageUrlPromise)
     })
   }, [accessToken]);
+
   return (<>
       <DefaultMap googleMapURL={CLIENT_ID}
                   loadingElement={<div style={{width: `100%`}}/>}
@@ -33,7 +34,7 @@ const DefaultMapPage = () => {
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>
-          : <Profile/>
+          : <Profile userImageUrl={userImageUrl? userImageUrl.imageUrl : ""}/>
     }
       <WriteButton accessToken={accessToken}/>
   </>);

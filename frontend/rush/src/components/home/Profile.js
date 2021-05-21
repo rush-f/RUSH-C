@@ -9,6 +9,8 @@ const Profile = styled.div`
   margin: 10px;
   width: 60px;
   height: 60px;
+  background-image: url("${props => props.userImageUrl}");
+  background-size: contain;
   border-radius: 100px;
   border: 2px solid black;
 `;
