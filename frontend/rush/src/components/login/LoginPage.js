@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import axios from "axios";
+import {BACKEND_ADDRESS, FRONTEND_ADDRESS} from "../../constants/ADDRESS";
 
 const LoginPageBox = styled.div`
   position:absolute;
@@ -40,7 +40,10 @@ const LoginPage = () => {
     <Link to="/"><HomeButton/></Link>
       <LoginPageBox>
         <LoginButton>네이버 로그인</LoginButton>
-        <LoginButton href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth2/redirect">구글로그인</LoginButton>
+        <LoginButton
+            href={ BACKEND_ADDRESS + "/oauth2/authorize/google?"
+            + "redirect_uri=" + FRONTEND_ADDRESS +"/oauth2/redirect" }
+        >구글로그인</LoginButton>
       </LoginPageBox>
   </>);
 };

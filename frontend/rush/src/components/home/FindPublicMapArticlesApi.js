@@ -1,8 +1,8 @@
 import axios from "axios";
-import {ADDRESS} from "../../constants/BackendAddress";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
 const findPublicMapArticles = (latitude, longitude) => {
-  return axios.get(ADDRESS + "/articles/public?latitude=" + latitude + "&longitude=" + longitude)
+  return axios.get(BACKEND_ADDRESS + "/articles/public?latitude=" + latitude + "&longitude=" + longitude)
     .then(response => response.data);
 };
 
