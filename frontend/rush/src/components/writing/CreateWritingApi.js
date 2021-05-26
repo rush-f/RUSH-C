@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import {ADDRESS} from "../../constants/BackendAddress";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 import {withRouter} from "react-router-dom";
 import {ACCESS_TOKEN} from "../../constants/LocalStorage";
 
@@ -21,7 +21,7 @@ const createWritingApi = (props) => {
       Authorization: "Bearer " + accessToken
     }
   }
-  axios.post(ADDRESS + "/articles", body, config)
+  axios.post(BACKEND_ADDRESS + "/articles", body, config)
     .then(response => {
       if (response.status === 201) {
          const uri = response.headers.location;

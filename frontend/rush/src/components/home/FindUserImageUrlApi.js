@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ADDRESS} from "../../constants/BackendAddress";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
 const findUserImageUrlApi = (accessToken) => {
    const config = {
@@ -7,7 +7,7 @@ const findUserImageUrlApi = (accessToken) => {
        "Authorization": "Bearer " + accessToken
      }
    };
-  return axios.get(ADDRESS + "/users/me/image", config)
+  return axios.get(BACKEND_ADDRESS + "/users/me/image", config)
   .then(response => response.data);
 };
 
