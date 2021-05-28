@@ -37,6 +37,11 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
               setLat(props.center.lat);
               setLng(props.center.lng);
             }}
+            onZoomChanged={() => {
+              props.setCenter(map.getCenter());
+              setLat(props.center.lat);
+              setLng(props.center.lng);
+            }}
         >
           <Marker
               position={{lat: lat, lng: lng}}
