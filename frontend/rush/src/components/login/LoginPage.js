@@ -39,7 +39,7 @@ const LoginPage = () => {
   return (<>
     <Link to="/"><HomeButton/></Link>
       <LoginPageBox>
-        <LoginButton>네이버 로그인</LoginButton>
+        <LoginButton onClick={() => alert("아직 개발중입니다!")}>네이버 로그인</LoginButton>
         <LoginButton
             href={ BACKEND_ADDRESS + "/oauth2/authorize/google?"
             + "redirect_uri=" + FRONTEND_ADDRESS +"/oauth2/redirect" }

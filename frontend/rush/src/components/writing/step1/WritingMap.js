@@ -19,8 +19,8 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
 
   useEffect(() => {
     if (lat == null) {
-      setLat(37.397);
-      setLng(127.644);
+      setLat(37.63185105917152);
+      setLng(127.07745984005722);
     }
   });
 
@@ -28,8 +28,8 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
       <>
         <GoogleMap
             ref={(map) => setMap(map)}
-            defaultZoom={6}
-            defaultCenter={{lat: 37.397, lng: 127.644}}
+            defaultZoom={16}
+            defaultCenter={{lat: 37.63185105917152, lng: 127.07745984005722}}
             defaultOptions={defaultMapOptions}
             streetView
             onCenterChanged={() => {
@@ -37,6 +37,12 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
               setLat(props.center.lat);
               setLng(props.center.lng);
             }}
+            onZoomChanged={() => {
+              props.setCenter(map.getCenter());
+              setLat(props.center.lat);
+              setLng(props.center.lng);
+            }}
+
         >
           <Marker
               position={{lat: lat, lng: lng}}
