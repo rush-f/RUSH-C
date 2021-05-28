@@ -6,11 +6,12 @@ const GroupContentStyle = styled.li`
   font-size: 110%;
   margin-bottom: 6px;
   margin-left: 20px;
+  cursor: pointer;
 `;
 
 const GroupContent = (props) => {
   return (
-      <GroupContentStyle>
+      <GroupContentStyle onClick={() => alert("아직 개발중입니다!")}>
         {props.children}
       </GroupContentStyle>
   );

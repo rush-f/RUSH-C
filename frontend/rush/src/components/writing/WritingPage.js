@@ -11,8 +11,8 @@ import {Redirect} from "react-router-dom";
 const WritingPage = () => {
   const [step, setStep] = useState(1);
   const [center, setCenter] = useState({
-    lat: () => 37.397,
-    lng: () => 127.644,
+    lat: () => 37.63185105917152,
+    lng: () => 127.07745984005722,
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

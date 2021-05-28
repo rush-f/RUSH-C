@@ -1,8 +1,8 @@
 import React from 'react';
 import Profile from "./Profile";
 import styled from "styled-components";
-import CancelButton from "../writing/CancelButton";
 import CreateDate from "./CreateDate";
+import CancelButton from "./CancelButton";
 
 const StyledDiv = styled.div`
   display: flex;

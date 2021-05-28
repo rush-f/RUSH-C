@@ -18,13 +18,13 @@ const Menu = () => {
 
   return (<>
     <BurgerMenu disableAutoFocus>
-      <BurgerMenuContents>마이페이지</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => alert("아직 개발중입니다!")}>마이페이지</BurgerMenuContents>
       <BurgerMenuContents>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
       </BurgerMenuContents>
       <GroupList isGroupOpened={isGroupOpened}/>
-      <BurgerMenuContents>개인지도</BurgerMenuContents>
+      <BurgerMenuContents  onClick={() => alert("아직 개발중입니다!")}>개인지도</BurgerMenuContents>
     </BurgerMenu>
   </>);
 }

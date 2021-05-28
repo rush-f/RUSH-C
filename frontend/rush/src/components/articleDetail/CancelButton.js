@@ -18,9 +18,7 @@ const StyledCancelButton = styled.div`
 const CancelButton = ({history}) => {
   return (<div style={{ position: "relative", width: "100%", height: "36px"}}>
       <StyledCancelButton onClick={() => {
-        if (window.confirm("글작성을 취소하겠습니까? 작성중이신 글은 저장되지 않습니다.")) {
-          history.push("/");
-        }
+        history.push("/");
       }}>x</StyledCancelButton>
   </div>
   );
