@@ -11,6 +11,7 @@ public class RushApplication {
 
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
         + "classpath:application.yml,"
+        + "classpath:application-oauth.yml,"
         + "classpath:application-local.yml,"
         + "optional:/app/config/application-real.yml";
 
