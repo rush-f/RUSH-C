@@ -20,14 +20,14 @@ const AuthorName = styled.div`
 const Comment = (props) => {
   return (
       <CommentBox>
-        <Profile imageUrl=""/>
+        <Profile imageUrl={props.author? props.author.imageUrl : ""}/>
         <div style={{
           paddingTop: "5px",
         }}>
           <AuthorName>
-            {"김해솔"}
+            {props.author? props.author.nickName : ""}
           </AuthorName>
-          <div>{props.children}</div>
+          <div>{props.content}</div>
         </div>
       </CommentBox>
   );

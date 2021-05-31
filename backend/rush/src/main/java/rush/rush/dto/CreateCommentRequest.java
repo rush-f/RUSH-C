@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class ArticleAuthorResponse {
+public class CreateCommentRequest {
 
-    private Long id;
-    private String nickName;
-    private String imageUrl;
+    private String content;
 }
