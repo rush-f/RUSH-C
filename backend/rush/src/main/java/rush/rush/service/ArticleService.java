@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rush.rush.domain.Article;
 import rush.rush.domain.User;
-import rush.rush.dto.ArticleAuthorResponse;
+import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.CreateArticleRequest;
@@ -48,7 +48,7 @@ public class ArticleService {
             .orElseThrow(() -> new IllegalArgumentException("id가 " + id + "인 article이 없습니다."));
 
         User user = article.getUser();
-        ArticleAuthorResponse articleAuthorResponse = new ArticleAuthorResponse(user.getId(),
+        AuthorResponse authorResponse = new AuthorResponse(user.getId(),
             user.getNickName(), user.getImageUrl());
 
         return new ArticleResponse(
@@ -57,7 +57,7 @@ public class ArticleService {
             article.getContent(),
             article.getLatitude(),
             article.getLongitude(),
-            articleAuthorResponse,
+            authorResponse,
             article.getCreateDate()
         );
     }

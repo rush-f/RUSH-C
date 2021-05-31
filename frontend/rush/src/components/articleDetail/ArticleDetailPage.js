@@ -5,15 +5,28 @@ import ArticleMeta from "./ArticleMeta";
 import findWritingApi from "./FindWritingApi";
 import ArticleBody from "./ArticleBody";
 import Comment from "./Comment";
+import CommentWriting from "./CommentWriting";
+import findCommentsApi from "./FindCommentsApi";
+import {ACCESS_TOKEN} from "../../constants/LocalStorage";
+import {withRouter} from "react-router-dom";
 
 const ArticleDetailPage = (props) => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const articleId = props.match.params.articleId;
   const [article, setArticle] = useState(null);
+  const [comments, setComments] = useState(null);
 
   useEffect(() => {
     findWritingApi(articleId).then(articlePromise => {
       setArticle(articlePromise)
     })
+  }, [articleId]);
+
+  useEffect(() => {
+    findCommentsApi(articleId).then(commentPromise => {
+      setComments(commentPromise)
+    });
+    console.log(comments)
   }, [articleId]);
 
   return (
@@ -33,17 +46,26 @@ const ArticleDetailPage = (props) => {
             <ArticleBody article={article}/>
           </PostBox>
           <CommentsBox>
-            <Comment>우와 멋있어요~~~~</Comment>
-            <Comment>안녕하세요 ㅎㅎ</Comment>
-            <Comment>☆🤍🤍ㅁ🅱🅱🆎</Comment>
-            <Comment>댓글5</Comment>
-            <Comment>댓글6</Comment>
-            <Comment>댓글7</Comment>
-            <Comment>댓글8</Comment>
+            <CommentWriting
+                articleId={articleId}
+                accessToken={accessToken}
+                history={props.history}
+                comments={comments}
+                setComments={setComments}
+            />
+            {
+              comments? comments.map((comment, idx) =>
+                <Comment
+                    key={idx}
+                    content={comment.content}
+                    author={comment.author}
+                />
+              ) : "아직 댓글이 없습니다 :)"
+            }
           </CommentsBox>
         </DisplayBox>
       </Outside>
   );
 };
 
-export default ArticleDetailPage;
+export default withRouter(ArticleDetailPage);

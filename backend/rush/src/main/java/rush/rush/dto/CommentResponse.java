@@ -9,13 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
-public class ArticleResponse {
+public class CommentResponse {
 
     private Long id;
-    private String title;
     private String content;
-    private Double latitude;
-    private Double longitude;
     private AuthorResponse author;
     private Timestamp createDate;
 }
