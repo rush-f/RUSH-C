@@ -9,6 +9,7 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.User;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CommentResponse;
+import rush.rush.dto.CreateCommentRequest;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 
@@ -18,6 +19,14 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository; // Todo : 없애기
+
+    public void create(Long articleId, CreateCommentRequest createCommentRequest, User user) {
+        Article article = articleRepository.findById(articleId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
+
+        Comment comment = new Comment(createCommentRequest.getContent(), user, article);
+        commentRepository.save(comment);
+    }
 
     public List<CommentResponse> findCommentsByArticleId(Long articleId) {
         // todo: 쿼리가 다음과 같이 한번만 나가도록 수정

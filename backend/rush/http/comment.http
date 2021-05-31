@@ -1,0 +1,13 @@
+POST http://localhost:8080/comments?article_id=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2LCJleHAiOjE2MjI0NjQzNTZ9.yKtW-MLyn84QcvYDw2yDq77p4m9Btwff-JQolf16taNA7LN2_p3_BWqUPHE5iJSgiJ4f5tTH0fF_uaZsqY6vMg
+
+{
+  "content" : "댓글 내용이다 ㅋㅋㅋㅋㅋㅋㅋ"
+}
+
+###
+GET http://localhost:8080/comments?article_id=1
+Content-Type: application/json
+
+###
