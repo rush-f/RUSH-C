@@ -24,13 +24,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestParam(value = "article_id") Long articleId,
+    public ResponseEntity<CommentResponse> create(@RequestParam(value = "article_id") Long articleId,
         @RequestBody CreateCommentRequest createCommentRequest,
         @CurrentUser UserPrincipal userPrincipal) {
-        commentService.create(articleId, createCommentRequest, userPrincipal.getUser());
+        CommentResponse commentResponse =
+            commentService.create(articleId, createCommentRequest, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .build();
+            .body(commentResponse);
     }
 
     @GetMapping
