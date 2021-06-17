@@ -10,13 +10,13 @@
 
 ## 기술 스택
 ### 언어
-Backend : Java
-Frontend : HTML/CSS/JS
-Database : SQL
+- Backend : Java
+- Frontend : HTML/CSS/JS
+- Database : SQL
 
 ### 프레임워크/API
-Backend  : Spring Boot, Spring Data JPA, junit, Spring Security
-Frontend : React, React-google-maps
+- Backend  : Spring Boot, Spring Data JPA, junit, Spring Security  
+- Frontend : React, React-google-maps  
 
 ### 데이터베이스
-MySQL(실서버), H2DB(테스트용)
+- MySQL(실서버), H2DB(테스트용)
