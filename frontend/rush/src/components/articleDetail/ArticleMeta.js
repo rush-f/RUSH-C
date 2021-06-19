@@ -15,7 +15,10 @@ const Name = styled.div`
 
 const ArticleMeta = (props) => {
   return (<>
-    <CancelButton />
+    <CancelButton
+        markerLat={props.markerLat}
+        markerLng={props.markerLng}
+    />
     <StyledDiv>
       <Profile imageUrl={props.author? props.author.imageUrl : ""}/>
       <div style={{

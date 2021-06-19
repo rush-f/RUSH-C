@@ -10,7 +10,7 @@ import {ACCESS_TOKEN} from "../../constants/LocalStorage";
 import Profile from "./Profile";
 import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
-const DefaultMapPage = () => {
+const DefaultMapPage = (props) => {
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -38,6 +38,7 @@ const DefaultMapPage = () => {
                   containerElement={<div style={{height: WindowSize().height}}/>}
                   mapElement={<div style={{height: `100%`}}/>}
                   publicMapArticles={publicMapArticles}
+                  markerCenter={props.location.state? props.location.state: {lat:  37.63185105917152, lng:127.07745984005722}}
       />
       <Menu />
     {

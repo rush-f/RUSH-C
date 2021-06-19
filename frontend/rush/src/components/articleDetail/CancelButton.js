@@ -15,10 +15,13 @@ const StyledCancelButton = styled.div`
   cursor: pointer;
 `;
 
-const CancelButton = ({history}) => {
+const CancelButton = (props) => {
   return (<div style={{ position: "relative", width: "100%", height: "36px"}}>
       <StyledCancelButton onClick={() => {
-        history.push("/");
+        props.history.push({
+          pathname:"/",
+          state: {lat:props.markerLat, lng:props.markerLng}
+        });
       }}>x</StyledCancelButton>
   </div>
   );

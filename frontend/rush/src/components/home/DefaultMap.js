@@ -10,9 +10,11 @@ import MarkerClusterer
 import React, {useState} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
+import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
+  const [defaultCenter,setDefaultCenter] = useState(props.markerCenter);
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
   const [map, setMap] = useState(null);
 
@@ -32,7 +34,6 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
       }}
       optimized={true}
       onClick={() => {
-        console.log(post.latitude + " " + post.longitude );
         turnOn(post.id)
       }}
   >
@@ -42,7 +43,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div onClick={() => props.history.push('/articles/' + post.id)}>{post.title}</div>
+      <div onClick={() => props.history.push({pathname:'/articles/' + post.id, state:{lat: post.latitude, lng: post.longitude}})}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 
@@ -54,7 +55,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
       <GoogleMap
           ref={(map) => setMap(map)}
           defaultZoom={16}
-          defaultCenter={{lat: 37.63185105917152, lng: 127.07745984005722}}
+          defaultCenter={defaultCenter}
           defaultOptions={defaultMapOptions}
           onClick={() => {
             setInfoWindowPostId(null);
