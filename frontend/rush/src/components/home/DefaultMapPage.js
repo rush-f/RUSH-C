@@ -6,13 +6,13 @@ import LoginButton from "./button/LoginButton";
 import WriteButton from "./button/WriteButton";
 import WindowSize from "../WindowSize";
 import findUserImageUrlApi from "./FindUserImageUrlApi";
-import {ACCESS_TOKEN} from "../../constants/LocalStorage";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
 const DefaultMapPage = (props) => {
 
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   const [userImageUrl, setUserImageUrl] = useState(null);
   const [publicMapArticles, setPublicMapArticles] = useState([]);

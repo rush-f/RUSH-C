@@ -7,11 +7,11 @@ import ArticleBody from "./ArticleBody";
 import Comment from "./Comment";
 import CommentWriting from "./CommentWriting";
 import findCommentsApi from "./FindCommentsApi";
-import {ACCESS_TOKEN} from "../../constants/LocalStorage";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 
 const ArticleDetailPage = (props) => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const articleId = props.match.params.articleId;
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState(null);
