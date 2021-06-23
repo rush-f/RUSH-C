@@ -19,7 +19,7 @@ const OAuth2RedirectHandler = (props) => {
     localStorage.setItem(ACCESS_TOKEN, token);
     return <Redirect to={{
       pathname: "/",
-      state: { from: props.location ? props.location.state : "" }
+      state: { from: props.location ? props.location.state : "", lat:37.63185105917152, lng:127.07745984005722 }
     }}/>;
   } else {
     return <Redirect to={{

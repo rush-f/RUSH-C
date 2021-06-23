@@ -26,7 +26,6 @@ const ArticleDetailPage = (props) => {
     findCommentsApi(articleId).then(commentPromise => {
       setComments(commentPromise)
     });
-    console.log(comments)
   }, [articleId]);
 
   return (
@@ -42,6 +41,8 @@ const ArticleDetailPage = (props) => {
                   imageUrl: ""
                 }}
                 createDate={article? article.createDate:""}
+                markerLat={props.location.state.lat}
+                markerLng={props.location.state.lng}
             />
             <ArticleBody article={article}/>
           </PostBox>
