@@ -1,6 +1,5 @@
 package rush.rush;
 
-import java.util.Arrays;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,22 +9,29 @@ import rush.rush.security.AppProperties;
 @SpringBootApplication
 public class RushApplication {
 
-    public static void main(String[] args) {
-        String locations;
+    private static final String REAL_SERVER_OPTION = "REAL";
+    private static final String REAL_SERVER_PROPERTY_LOCATION = "/app/config/";
+    private static final String LOCAL_SERVER_PROPERTY_LOCATION = "classpath:";
 
-        if (args.length > 0 && args[0].equalsIgnoreCase("real")) {
-            locations = "spring.config.location="
-                + "/app/config/application.yml,"
-                + "/app/config/application-oauth.yml,"
-                + "/app/config/application-real.yml";
-        } else {
-            locations = "spring.config.location="
-                + "classpath:application.yml,"
-                + "classpath:application-oauth.yml,"
-                + "classpath:application-local.yml";
-        }
+    public static void main(String[] args) {
+        final String PROPERTY_LOCATIONS = makeSApplicationLocations(args);
+
         new SpringApplicationBuilder(RushApplication.class)
-            .properties(locations)
+            .properties(PROPERTY_LOCATIONS)
             .run(args);
+    }
+
+    private static String makeSApplicationLocations(String[] mainMethodArguments) {
+        if (mainMethodArguments.length > 0
+                && mainMethodArguments[0].equalsIgnoreCase(REAL_SERVER_OPTION)) {
+            return "spring.config.location="
+                + REAL_SERVER_PROPERTY_LOCATION + "application.yml,"
+                + REAL_SERVER_PROPERTY_LOCATION + "application-oauth.yml,"
+                + REAL_SERVER_PROPERTY_LOCATION + "application-real.yml";
+        }
+        return "spring.config.location="
+            + LOCAL_SERVER_PROPERTY_LOCATION + "application.yml,"
+            + LOCAL_SERVER_PROPERTY_LOCATION + "application-oauth.yml,"
+            + LOCAL_SERVER_PROPERTY_LOCATION + "application-local.yml";
     }
 }
