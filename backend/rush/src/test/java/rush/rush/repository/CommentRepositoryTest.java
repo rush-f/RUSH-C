@@ -1,24 +1,27 @@
 package rush.rush.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
 class CommentRepositoryTest {
 
     public static final String COMMENT_CONTENT = "댓글내용임 ㅇㅇㅇㅇ";
+
     @Autowired
     private CommentRepository commentRepository;
 
@@ -26,6 +29,7 @@ class CommentRepositoryTest {
     private TestEntityManager testEntityManager;
 
     @Test
+    @Transactional
     void findAllByArticle() {
         // given
         User user = User.builder()

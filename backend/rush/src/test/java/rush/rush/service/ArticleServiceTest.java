@@ -1,17 +1,19 @@
 package rush.rush.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.repository.UserRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional
 class ArticleServiceTest {
 
     @Autowired

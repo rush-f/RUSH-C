@@ -1,7 +1,5 @@
 package rush.rush.security.service;
 
-import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -11,6 +9,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.repository.UserRepository;
@@ -19,6 +18,9 @@ import rush.rush.security.user.OAuth2UserInfo;
 import rush.rush.security.user.OAuth2UserInfoFactory;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.utils.HashUtil;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
 
@@ -87,5 +90,4 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         existingUser.alterImageUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(existingUser);
     }
-
 }
