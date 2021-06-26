@@ -2,6 +2,7 @@ package rush.rush.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.User;
 import rush.rush.dto.UserImageResponse;
 import rush.rush.repository.UserRepository;
@@ -13,6 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public UserImageResponse findUserImageUrl(UserPrincipal userPrincipal) {
         User user = userRepository.findById(userPrincipal.getId())
             .orElseThrow(() -> new IllegalArgumentException(
