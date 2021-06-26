@@ -25,8 +25,7 @@ const createWritingApi = (props) => {
     .then(response => {
       if (response.status === 201) {
          const uri = response.headers.location;
-
-         props.history.push({pathname:uri, state:{lat:props.center.lat(), lng:props.center.lng()}});
+         props.history.push(uri);
       }
     })
     .catch(error => {
