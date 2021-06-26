@@ -41,8 +41,8 @@ const ArticleDetailPage = (props) => {
                   imageUrl: ""
                 }}
                 createDate={article? article.createDate:""}
-                markerLat={props.location.state.lat}
-                markerLng={props.location.state.lng}
+                markerLat={article? article.latitude:""}
+                markerLng={article? article.longitude:""}
             />
             <ArticleBody article={article}/>
           </PostBox>

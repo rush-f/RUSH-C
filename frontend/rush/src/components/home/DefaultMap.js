@@ -43,7 +43,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div onClick={() => props.history.push({pathname:'/articles/' + post.id, state:{lat: post.latitude, lng: post.longitude}})}>{post.title}</div>
+      <div onClick={() => props.history.push('/articles/' + post.id)}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 
