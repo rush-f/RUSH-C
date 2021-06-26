@@ -29,7 +29,7 @@ class ArticleServiceTest {
         User user = User.builder()
             .email("test@test.com")
             .password("test password")
-            .invitationCode("test invitation Code")
+//            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
