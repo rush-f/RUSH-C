@@ -19,4 +19,4 @@
 - Frontend : React, React-google-maps  
 
 ### 데이터베이스
-- MySQL(실서버), H2DB(테스트용)
+- MariaDB(실서버), H2DB(테스트용)
