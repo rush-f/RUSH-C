@@ -33,19 +33,27 @@ class CommentRepositoryTest {
     void findAllByArticle() {
         // given
         User user = User.builder()
-            .email("test@test.com")
-            .password("test password")
+                .email("test@test.com")
+                .password("test password")
 //            .invitationCode("test invitation Code")
-            .nickName("test")
-            .provider(AuthProvider.local)
-            .build();
+                .nickName("test")
+                .provider(AuthProvider.local)
+                .build();
         user = testEntityManager.persist(user);
 
-        Article article = new Article("제목1", "내용내용", 37.14, 34.24, user);
+        Article article = Article.builder()
+                .title("제목1")
+                .content("내용내용")
+                .latitude(37.14)
+                .longitude(34.24)
+                .user(user)
+                .doesBelongToPrivate(true)
+                .doesBelongToPublic(true)
+                .build();
         article = testEntityManager.persist(article);
 
         Comment comment = new Comment(COMMENT_CONTENT, user, article);
-        comment = testEntityManager.persist(comment);
+        testEntityManager.persist(comment);
 
         // when
         List<Comment> comments = commentRepository.findAllByArticle(article);

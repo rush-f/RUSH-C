@@ -51,7 +51,15 @@ class CommentServiceTest {
     @Test
     void findCommentsByArticleId() {
         // given
-        Article article = new Article("title", "content", 0, 0, savedUser);
+        Article article = Article.builder()
+                .title("title")
+                .content("content")
+                .latitude(0.0)
+                .longitude(0.0)
+                .user(savedUser)
+                .doesBelongToPrivate(true)
+                .doesBelongToPublic(true)
+                .build();
         articleRepository.save(article);
 
         Comment comment = new Comment("댓글내용", savedUser, article);

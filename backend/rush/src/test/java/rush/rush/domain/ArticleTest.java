@@ -18,14 +18,21 @@ class ArticleTest {
             .id(1L)
             .email("test@test.com")
             .password("test password")
-//            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
 
         // when & then
-        assertThatThrownBy(() -> new Article(null, title, content, 0, 0, user, null))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Article.builder()
+                .title(title)
+                .content(content)
+                .latitude(0.0)
+                .longitude(0.0)
+                .user(user)
+                .doesBelongToPrivate(true)
+                .doesBelongToPublic(true)
+                .build()
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> constructorTestParameters() {

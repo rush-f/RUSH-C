@@ -36,13 +36,15 @@ public class ArticleService {
 
     @Transactional
     public Long create(CreateArticleRequest createArticleRequest, User user) {
-        Article article = new Article(
-            createArticleRequest.getTitle(),
-            createArticleRequest.getContent(),
-            createArticleRequest.getLatitude(),
-            createArticleRequest.getLongitude(),
-            user
-        );
+        Article article = Article.builder()
+                .title(createArticleRequest.getTitle())
+                .content(createArticleRequest.getContent())
+                .user(user)
+                .latitude(createArticleRequest.getLatitude())
+                .longitude(createArticleRequest.getLongitude())
+                .doesBelongToPublic(false)    // Todo: DTO 에서 가져오도록 수정할것
+                .doesBelongToPrivate(false)    // Todo: DTO 에서 가져오도록 수정할것
+                .build();
         return articleRepository.save(article)
             .getId();
     }
