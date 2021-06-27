@@ -1,5 +1,7 @@
 package rush.rush.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +13,6 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.dto.CreateCommentRequest;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +34,8 @@ public class CommentService {
 
     @Transactional
     public List<CommentResponse> findCommentsByArticleId(Long articleId) {
-        // todo: 쿼리가 다음과 같이 한번만 나가도록 수정
-        //       select * from Comment where articleId = {}
-        Article article = articleRepository.findById(articleId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
 
-        return commentRepository.findAllByArticle(article).stream()
+        return commentRepository.findAllByArticleId(articleId).stream()
             .map(this::toCommentResponse)
             .collect(Collectors.toList());
     }
