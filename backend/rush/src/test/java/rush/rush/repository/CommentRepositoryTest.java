@@ -1,5 +1,8 @@
 package rush.rush.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +14,6 @@ import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
@@ -48,7 +47,7 @@ class CommentRepositoryTest {
         comment = testEntityManager.persist(comment);
 
         // when
-        List<Comment> comments = commentRepository.findAllByArticle(article);
+        List<Comment> comments = commentRepository.findAllByArticleId(article.getId());
         assertThat(comments).isNotNull();
         assertThat(comments).hasSize(1);
         assertThat(comments.get(0).getContent()).isEqualTo(COMMENT_CONTENT);
