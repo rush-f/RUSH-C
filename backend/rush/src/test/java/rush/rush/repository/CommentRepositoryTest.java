@@ -38,20 +38,24 @@ class CommentRepositoryTest {
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
-        user = testEntityManager.persist(user);
+        testEntityManager.persist(user);
 
         Article article = new Article("제목1", "내용내용", 37.14, 34.24, user);
-        article = testEntityManager.persist(article);
+        testEntityManager.persist(article);
 
-        Comment comment = new Comment(COMMENT_CONTENT, user, article);
-        comment = testEntityManager.persist(comment);
+        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment1);
+        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment2);
 
         // when
-        List<Comment> comments = commentRepository.findAllByArticleId(article.getId());
+        List<Comment> comments = commentRepository.findAllByArticleIdOrderByCreateDateDesc(article.getId());
         assertThat(comments).isNotNull();
-        assertThat(comments).hasSize(1);
+        assertThat(comments).hasSize(2);
         assertThat(comments.get(0).getContent()).isEqualTo(COMMENT_CONTENT);
         assertThat(comments.get(0).getUser().getId()).isEqualTo(user.getId());
         assertThat(comments.get(0).getArticle().getId()).isEqualTo(article.getId());
+        assertThat(comments.get(0).getId()).isEqualTo(comment2.getId());
+        assertThat(comments.get(1).getId()).isEqualTo(comment1.getId());
     }
 }
