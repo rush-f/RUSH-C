@@ -55,8 +55,12 @@ public class GroupService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public GroupResponse findOne(User user) {
-        return null;
+    public GroupResponse findOne(Long groupId, User user) {
+        UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
+                        + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
+        Group group = userGroup.getGroup();
+        return new GroupResponse(group.getId(), group.getName(), group.getInvitationCode(), group.getCreateDate());
     }
 
     private Group saveGroup(String groupName) {

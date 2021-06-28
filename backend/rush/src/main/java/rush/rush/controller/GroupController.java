@@ -21,7 +21,7 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping
-    public ResponseEntity<Void> create(CreateGroupRequest createGroupRequest, @CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<Void> create(@RequestBody CreateGroupRequest createGroupRequest, @CurrentUser UserPrincipal userPrincipal) {
         Long groupId = groupService.createGroup(createGroupRequest, userPrincipal.getUser());
 
         return ResponseEntity.created(URI.create("/groups/" + groupId))
@@ -45,8 +45,8 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupResponse> findOne(@PathVariable Long id, @CurrentUser UserPrincipal userPrincipal) {
-        GroupResponse groupResponse = groupService.findOne(userPrincipal.getUser());
+    public ResponseEntity<GroupResponse> findOne(@PathVariable("id") Long groupId, @CurrentUser UserPrincipal userPrincipal) {
+        GroupResponse groupResponse = groupService.findOne(groupId, userPrincipal.getUser());
 
         return ResponseEntity.ok()
                 .body(groupResponse);
