@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rush.rush.dto.CreateGroupRequest;
+import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.GroupService;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,8 +35,11 @@ public class GroupController {
                 .build();
     }
 
-    @GetMapping
-    public ResponseEntity<Void> findMyGroups(@CurrentUser UserPrincipal userPrincipal) {
-        return null;
+    @GetMapping("/mine")
+    public ResponseEntity<List<GroupSummaryResponse>> findMyGroups(@CurrentUser UserPrincipal userPrincipal) {
+        List<GroupSummaryResponse> groupSummaryResponses = groupService.findAllByUser(userPrincipal.getUser());
+
+        return ResponseEntity.ok()
+                .body(groupSummaryResponses);
     }
 }

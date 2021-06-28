@@ -23,30 +23,30 @@ public class Group {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String invitationCode;
 
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Group(String name, String invitationCode) {
-        this(null, name, invitationCode, null);
-    }
-
     public Group(Long id, String name, String invitationCode, Timestamp createDate) {
-        validate(name, invitationCode);
+        validate(name);
         this.id = id;
         this.name = name;
         this.invitationCode = invitationCode;
         this.createDate = createDate;
     }
 
-    private void validate(String name, String invitationCode) {
+    private void validate(String name) {
         if (Objects.isNull(name)) {
             throw new IllegalArgumentException("그룹이름이 null 일 수 없습니다.");
         }
-        if (Objects.isNull(invitationCode)) {
-            throw new IllegalArgumentException("초대코드가 null 일 수 없습니다.");
+    }
+
+    public void setInvitationCode(String invitationCode) {
+        if (Objects.nonNull(this.invitationCode) && !this.invitationCode.isEmpty()) {
+            throw new IllegalArgumentException("초대코드는 처음 한번만 정할 수 있습니다. 이미 부여된 초대코드가 존재합니다.");
         }
+        this.invitationCode = invitationCode;
     }
 }

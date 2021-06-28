@@ -1,0 +1,18 @@
+###
+POST http://localhost:8080/groups
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+
+{
+  "name": "그룹이름"
+}
+
+###
+POST http://localhost:8080/groups/join?invitation_code=aklsjdf2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+
+###
+GET http://localhost:8080/groups/mine
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ

@@ -61,7 +61,6 @@ public class AuthController {
             .email(signUpRequest.getEmail())
             .provider(AuthProvider.local)
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
-//            .invitationCode(HashUtil.hash(signUpRequest.getEmail()))
             .build();
 
         User result = userRepository.save(user);

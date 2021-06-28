@@ -35,7 +35,6 @@ class CommentRepositoryTest {
         User user = User.builder()
                 .email("test@test.com")
                 .password("test password")
-//            .invitationCode("test invitation Code")
                 .nickName("test")
                 .provider(AuthProvider.local)
                 .build();

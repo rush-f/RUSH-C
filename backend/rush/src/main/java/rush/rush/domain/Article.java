@@ -46,10 +46,6 @@ public class Article {
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(String title, String content, double latitude, double longitude, User user, boolean doesBelongToPublic, boolean doesBelongToPrivate) {
-        this(null, title, content, latitude, longitude, user, doesBelongToPublic, doesBelongToPrivate, null);
-    }
-
     public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean doesBelongToPublic, boolean doesBelongToPrivate, Timestamp createDate) {
         validate(title, content, user);
         this.id = id;
