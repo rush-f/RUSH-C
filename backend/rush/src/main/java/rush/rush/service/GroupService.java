@@ -25,6 +25,15 @@ public class GroupService {
         return savedGroup.getId();
     }
 
+    public Long join(String invitationCode, User user) {
+        Group group = groupRepository.findByInvitationCode(invitationCode)
+                .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
+
+        saveUserGroup(group, user);
+
+        return group.getId();
+    }
+
     private Group saveGroup(String groupName, String invitationCode) {
         Group group = Group.builder()
                 .name(groupName)

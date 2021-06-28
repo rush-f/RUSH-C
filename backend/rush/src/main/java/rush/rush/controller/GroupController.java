@@ -26,8 +26,11 @@ public class GroupController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> join(@RequestParam(value = "invitation_code") String invitationCode) {
-        return null;
+    public ResponseEntity<Void> join(@RequestParam(value = "invitation_code") String invitationCode, @CurrentUser UserPrincipal userPrincipal) {
+        Long groupId = groupService.join(invitationCode, userPrincipal.getUser());
+
+        return ResponseEntity.created(URI.create("/groups/" + groupId))
+                .build();
     }
 
     @GetMapping
