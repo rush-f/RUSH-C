@@ -6,6 +6,7 @@ import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
 import rush.rush.dto.CreateGroupRequest;
+import rush.rush.dto.GroupResponse;
 import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
@@ -52,6 +53,10 @@ public class GroupService {
                     return new GroupSummaryResponse(group.getId(), group.getName());
                 })
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public GroupResponse findOne(User user) {
+        return null;
     }
 
     private Group saveGroup(String groupName) {

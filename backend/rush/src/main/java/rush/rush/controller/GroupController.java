@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rush.rush.dto.CreateGroupRequest;
+import rush.rush.dto.GroupResponse;
 import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
@@ -41,5 +42,13 @@ public class GroupController {
 
         return ResponseEntity.ok()
                 .body(groupSummaryResponses);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GroupResponse> findOne(@PathVariable Long id, @CurrentUser UserPrincipal userPrincipal) {
+        GroupResponse groupResponse = groupService.findOne(userPrincipal.getUser());
+
+        return ResponseEntity.ok()
+                .body(groupResponse);
     }
 }
