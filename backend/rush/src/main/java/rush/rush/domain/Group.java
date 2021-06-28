@@ -13,6 +13,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Builder
+@Table(name = "GROUP_TABLE")
 public class Group {
 
     @Id
