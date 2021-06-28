@@ -2,9 +2,7 @@ package rush.rush.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rush.rush.dto.CreateGroupRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
@@ -20,10 +18,20 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping
-    public ResponseEntity<Void> createGroup(CreateGroupRequest createGroupRequest, @CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<Void> create(CreateGroupRequest createGroupRequest, @CurrentUser UserPrincipal userPrincipal) {
         Long groupId = groupService.createGroup(createGroupRequest, userPrincipal.getUser());
 
         return ResponseEntity.created(URI.create("/groups/" + groupId))
                 .build();
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<Void> join(@RequestParam(value = "invitation_code") String invitationCode) {
+        return null;
+    }
+
+    @GetMapping
+    public ResponseEntity<Void> findMyGroups(@CurrentUser UserPrincipal userPrincipal) {
+        return null;
     }
 }
