@@ -13,6 +13,7 @@ import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,6 +47,35 @@ class UserGroupRepositoryTest {
 
         // then
         assertThat(userGroups.size()).isEqualTo(2);
+    }
+
+    @Test
+    void findByUserIdAndGroupId() {
+        // given
+        User user = persistUser("user@email.com");
+        Group group = persistGroup();
+        persistUserGroup(user, group);
+
+        // when
+        Optional<UserGroup> userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), group.getId());
+
+        // then
+        assertThat(userGroup.isPresent()).isTrue();
+        assertThat(userGroup.get().getGroup().getId()).isEqualTo(group.getId());
+        assertThat(userGroup.get().getUser().getId()).isEqualTo(user.getId());
+    }
+
+    @Test
+    void findByUserIdAndGroupId_IfNotExist_ReturnEmpty() {
+        // given
+        User user = persistUser("user@email.com");
+        Group group = persistGroup();
+
+        // when
+        Optional<UserGroup> userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), group.getId());
+
+        // then
+        assertThat(userGroup.isPresent()).isFalse();
     }
 
     private User persistUser(String email) {
