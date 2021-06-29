@@ -1,5 +1,7 @@
 package rush.rush.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +13,6 @@ import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.repository.ArticleRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -21,9 +20,14 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double longitude) {
-        // Todo : 주변 일부만 가져오도록 바꿔야함.
-        List<Article> allArticles = articleRepository.findAll();
+    public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
+        double lowerLatitude = latitude - latitudeRange;
+        double upperLatitude = latitude + latitudeRange;
+        double lowerLongitude = longitude - latitudeRange;
+        double upperLongitude = longitude + longitudeRange;
+
+        List<Article> allArticles = articleRepository.findAllByLatitudeBetweenAndLongitudeBetween(
+            lowerLatitude, upperLatitude, lowerLongitude, upperLongitude);
 
         return allArticles.stream()
             .map(article -> new ArticleSummaryResponse(
@@ -37,14 +41,14 @@ public class ArticleService {
     @Transactional
     public Long create(CreateArticleRequest createArticleRequest, User user) {
         Article article = Article.builder()
-                .title(createArticleRequest.getTitle())
-                .content(createArticleRequest.getContent())
-                .user(user)
-                .latitude(createArticleRequest.getLatitude())
-                .longitude(createArticleRequest.getLongitude())
-                .doesBelongToPublic(false)    // Todo: DTO 에서 가져오도록 수정할것
-                .doesBelongToPrivate(false)    // Todo: DTO 에서 가져오도록 수정할것
-                .build();
+            .title(createArticleRequest.getTitle())
+            .content(createArticleRequest.getContent())
+            .user(user)
+            .latitude(createArticleRequest.getLatitude())
+            .longitude(createArticleRequest.getLongitude())
+            .doesBelongToPublic(false)    // Todo: DTO 에서 가져오도록 수정할것
+            .doesBelongToPrivate(false)    // Todo: DTO 에서 가져오도록 수정할것
+            .build();
         return articleRepository.save(article)
             .getId();
     }

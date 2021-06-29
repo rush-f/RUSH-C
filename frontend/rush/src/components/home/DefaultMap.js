@@ -7,16 +7,15 @@ import {
 } from "react-google-maps";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
-import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
+  const mapRef = useRef(null)
   const [defaultCenter,setDefaultCenter] = useState(props.markerCenter);
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
-  const [map, setMap] = useState(null);
 
   const turnOn = (postId) => {
     if (postId === infoWindowPostId) {
@@ -43,23 +42,42 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div onClick={() => props.history.push({pathname:'/articles/' + post.id, state:{lat: post.latitude, lng: post.longitude}})}>{post.title}</div>
+      <div onClick={() => props.history.push('/articles/' + post.id)}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 
-  const defaultMapOptions = {
-    disableDefaultUI: true
-  };
 
   return (
       <GoogleMap
-          ref={(map) => setMap(map)}
+          ref={mapRef}
           defaultZoom={16}
           defaultCenter={defaultCenter}
-          defaultOptions={defaultMapOptions}
+          defaultOptions={{
+            disableDefaultUI:true,
+            maxZoom:21,
+            minZoom:3,
+            restriction: {
+              latLngBounds: {
+                north: 85,
+                south: -85,
+                west: -180,
+                east: 180,
+              },
+            },
+          }}
           onClick={() => {
             setInfoWindowPostId(null);
           }}
+          onZoomChanged={()=>{
+            props.setZoom(mapRef.current.getZoom());
+            props.setCenter(mapRef.current.getCenter());
+          }}
+          onCenterChanged={() =>{
+            let latChangeRange= Math.abs(props.center.lat()-mapRef.current.getCenter().lat())>(5*props.latitudeRange/12);
+            let lngChangeRange= Math.abs(props.center.lng()-mapRef.current.getCenter().lng())>(5*props.longitudeRange/12);
+            let dummy= (latChangeRange || lngChangeRange)?props.setCenter(mapRef.current.getCenter()): "";
+          }}
+
       >
         <MarkerClusterer
             averageCenter
