@@ -12,6 +12,11 @@ import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
 const DefaultMapPage = (props) => {
 
+  const LatRangeRatio = 0.561906;
+  const LngRangeRatio = 0.70378;
+
+  const [windowSize,setWindowSize] = useState(WindowSize());
+
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const [zoom,setZoom] = useState(16);
   const [center, setCenter] = useState({
@@ -20,12 +25,21 @@ const DefaultMapPage = (props) => {
   });
   const [userImageUrl, setUserImageUrl] = useState(null);
   const [publicMapArticles, setPublicMapArticles] = useState([]);
+  const [latitudeRange,setLatitudeRange]=useState(0.0095);
+  const [longitudeRange,setLongitudeRange]=useState(0.025);
+
+
+  useEffect(()=>{
+    setLatitudeRange(LatRangeRatio * windowSize.height * Math.pow(0.5,zoom-1));
+    setLongitudeRange(LngRangeRatio * windowSize.width * Math.pow(0.5,zoom-1));
+  },[zoom]);
 
   useEffect(() => {
-    findPublicMapArticles(36, 127).then(publicMapArticlesPromise => {
+
+    findPublicMapArticles(center.lat(), latitudeRange, center.lng(), longitudeRange).then(publicMapArticlesPromise => {
       setPublicMapArticles(publicMapArticlesPromise)
     })
-  }, []);
+  }, [zoom,center]);
 
   useEffect(() => {
     if (!accessToken) {
