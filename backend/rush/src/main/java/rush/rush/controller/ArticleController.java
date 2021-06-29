@@ -27,14 +27,13 @@ public class ArticleController {
 
     @GetMapping("/public")
     public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
-        @RequestParam(value = "latitude", defaultValue = "37.631686026257206") Double latitude,
-        @RequestParam(value = "longitude", defaultValue = "127.07747664827662") Double longitude
+        @RequestParam(value = "latitude", defaultValue = "37.63") Double latitude,
+        @RequestParam(value = "latitudeRange", defaultValue = "0.0095") Double latitudeRange,
+        @RequestParam(value = "longitude", defaultValue = "127.07") Double longitude,
+        @RequestParam(value = "longitudeRange", defaultValue = "0.0250") Double longitudeRange
         ) {
         List<ArticleSummaryResponse> publicMapArticles =
-            articleService.findPublicMapArticles(latitude, longitude);
-
-        // Todo:지울것
-        System.out.println("위도 : " + latitude + ", 경도 : " + longitude);
+            articleService.findPublicMapArticles(latitude, latitudeRange, longitude, longitudeRange);
 
         return ResponseEntity.ok()
             .body(publicMapArticles);
