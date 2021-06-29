@@ -10,7 +10,6 @@ import MarkerClusterer
 import React, {useState} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
-import findPublicMapArticles from "./FindPublicMapArticlesApi";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
@@ -60,6 +59,14 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           onClick={() => {
             setInfoWindowPostId(null);
           }}
+          onZoomChanged={()=>{
+            props.setZoom(map.getZoom());
+            props.setCenter(map.getCenter());
+          }}
+          onCenterChanged={() => {
+            props.setCenter(map.getCenter());
+          }}
+
       >
         <MarkerClusterer
             averageCenter
