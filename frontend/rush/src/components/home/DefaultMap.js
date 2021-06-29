@@ -47,16 +47,25 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
     </InfoWindow>}
   </Marker>);
 
-  const defaultMapOptions = {
-    disableDefaultUI: true
-  };
 
   return (
       <GoogleMap
           ref={(map) => setMap(map)}
           defaultZoom={16}
           defaultCenter={defaultCenter}
-          defaultOptions={defaultMapOptions}
+          defaultOptions={{
+            disableDefaultUI:true,
+            maxZoom:21,
+            minZoom:3,
+            restriction: {
+              latLngBounds: {
+                north: 85,
+                south: -85,
+                west: -180,
+                east: 180,
+              },
+            },
+          }}
           onClick={() => {
             setInfoWindowPostId(null);
           }}
