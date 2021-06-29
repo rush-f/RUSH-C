@@ -58,7 +58,10 @@ const DefaultMapPage = (props) => {
                   publicMapArticles={publicMapArticles}
                   markerCenter={props.location.state? props.location.state: {lat:  37.63185105917152, lng:127.07745984005722}}
                   setZoom={setZoom}
+                  center={center}
                   setCenter={setCenter}
+                  latitudeRange={latitudeRange}
+                  longitudeRange={longitudeRange}
       />
       <Menu />
     {

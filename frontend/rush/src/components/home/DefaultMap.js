@@ -7,7 +7,7 @@ import {
 } from "react-google-maps";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useRef} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
@@ -63,8 +63,10 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
             props.setZoom(mapRef.current.getZoom());
             props.setCenter(mapRef.current.getCenter());
           }}
-          onCenterChanged={() => {
-            props.setCenter(mapRef.current.getCenter());
+          onCenterChanged={() =>{
+            let latChangeRange= Math.abs(props.center.lat()-mapRef.current.getCenter().lat())>(5*props.latitudeRange/12);
+            let lngChangeRange= Math.abs(props.center.lng()-mapRef.current.getCenter().lng())>(5*props.longitudeRange/12);
+            let dummy= (latChangeRange || lngChangeRange)?props.setCenter(mapRef.current.getCenter()): "";
           }}
 
       >
