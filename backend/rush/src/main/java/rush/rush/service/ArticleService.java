@@ -21,9 +21,15 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double longitude) {
-        // Todo : 주변 일부만 가져오도록 바꿔야함.
-        List<Article> allArticles = articleRepository.findAll();
+    public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
+
+        double lowerLatitude = latitude-latitudeRange;
+        double upperLatitude = latitude+latitudeRange;
+        double lowerLongitude = longitude-latitudeRange;
+        double upperLongitude = longitude+longitudeRange;
+
+
+        List<Article> allArticles = articleRepository.findAllByLatitudeBetweenAndLongitudeBetween(lowerLatitude,upperLatitude,lowerLongitude, upperLongitude);
 
         return allArticles.stream()
             .map(article -> new ArticleSummaryResponse(
