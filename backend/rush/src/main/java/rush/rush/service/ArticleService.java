@@ -22,7 +22,7 @@ public class ArticleService {
 
     @Transactional
     public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
-        // Todo : 주변 일부만 가져오도록 바꿔야함.
+
         double lowerLatitude = latitude-latitudeRange;
         double upperLatitude = latitude+latitudeRange;
         double lowerLongitude = longitude-latitudeRange;

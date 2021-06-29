@@ -7,15 +7,15 @@ import {
 } from "react-google-maps";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
+  const mapRef = useRef(null)
   const [defaultCenter,setDefaultCenter] = useState(props.markerCenter);
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
-  const [map, setMap] = useState(null);
 
   const turnOn = (postId) => {
     if (postId === infoWindowPostId) {
@@ -52,7 +52,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
   return (
       <GoogleMap
-          ref={(map) => setMap(map)}
+          ref={mapRef}
           defaultZoom={16}
           defaultCenter={defaultCenter}
           defaultOptions={defaultMapOptions}
@@ -60,11 +60,11 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
             setInfoWindowPostId(null);
           }}
           onZoomChanged={()=>{
-            props.setZoom(map.getZoom());
-            props.setCenter(map.getCenter());
+            props.setZoom(mapRef.current.getZoom());
+            props.setCenter(mapRef.current.getCenter());
           }}
           onCenterChanged={() => {
-            props.setCenter(map.getCenter());
+            props.setCenter(mapRef.current.getCenter());
           }}
 
       >
