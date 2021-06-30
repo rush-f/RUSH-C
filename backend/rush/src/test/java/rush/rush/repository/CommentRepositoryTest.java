@@ -1,6 +1,8 @@
 package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistUser;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
-import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
 
@@ -31,24 +32,10 @@ class CommentRepositoryTest {
     @Transactional
     void findAllByArticle() {
         // given
-        User user = User.builder()
-                .email("test@test.com")
-                .password("test password")
-                .nickName("test")
-                .provider(AuthProvider.local)
-                .build();
-        user = testEntityManager.persist(user);
+        User user = persistUser(testEntityManager, "test@email.com");
 
-        Article article = Article.builder()
-                .title("제목1")
-                .content("내용내용")
-                .latitude(37.14)
-                .longitude(34.24)
-                .user(user)
-                .doesBelongToPrivate(true)
-                .doesBelongToPublic(true)
-                .build();
-        article = testEntityManager.persist(article);
+        Article article = persistArticle(testEntityManager,
+            user, true, true, 37.14, 34.24);
 
         Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment1);

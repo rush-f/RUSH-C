@@ -1,5 +1,9 @@
 package rush.rush.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistGroup;
+
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Group;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
@@ -27,7 +27,7 @@ class GroupRepositoryTest {
     @Transactional
     void findByInvitationCode() {
         // given
-        Group group = createGroup();
+        Group group = persistGroup(testEntityManager);
 
         // when
         Optional<Group> result = groupRepository.findByInvitationCode(group.getInvitationCode());
@@ -42,14 +42,5 @@ class GroupRepositoryTest {
         assertThat(resultGroup.getInvitationCode()).isNotNull();
         assertThat(resultGroup.getInvitationCode()).isEqualTo(group.getInvitationCode());
         assertThat(resultGroup.getCreateDate()).isEqualTo(group.getCreateDate());
-    }
-
-    private Group createGroup() {
-        Group group = Group.builder()
-                .name(Constants.TEST_GROUP_NAME)
-                .build();
-        group = testEntityManager.persist(group);
-        group.setInvitationCode("ABCDE" + group.getId());
-        return group;
     }
 }

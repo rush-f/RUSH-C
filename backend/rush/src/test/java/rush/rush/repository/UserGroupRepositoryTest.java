@@ -1,5 +1,10 @@
 package rush.rush.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistUser;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
@@ -31,14 +30,14 @@ class UserGroupRepositoryTest {
     @Transactional
     void findAllByUserId() {
         // given
-        User me = persistUser("me@email.com");
+        User me = persistUser(testEntityManager, "me@email.com");
         Group group1 = persistGroup();
         Group group2 = persistGroup();
 
         persistUserGroup(me, group1);
         persistUserGroup(me, group2);
 
-        User another = persistUser("another@email.com");
+        User another = persistUser(testEntityManager, "another@email.com");
         Group group3 = persistGroup();
         persistUserGroup(another, group3);
 
@@ -52,7 +51,7 @@ class UserGroupRepositoryTest {
     @Test
     void findByUserIdAndGroupId() {
         // given
-        User user = persistUser("user@email.com");
+        User user = persistUser(testEntityManager, "user@email.com");
         Group group = persistGroup();
         persistUserGroup(user, group);
 
@@ -68,7 +67,7 @@ class UserGroupRepositoryTest {
     @Test
     void findByUserIdAndGroupId_IfNotExist_ReturnEmpty() {
         // given
-        User user = persistUser("user@email.com");
+        User user = persistUser(testEntityManager, "user@email.com");
         Group group = persistGroup();
 
         // when
@@ -76,16 +75,6 @@ class UserGroupRepositoryTest {
 
         // then
         assertThat(userGroup.isPresent()).isFalse();
-    }
-
-    private User persistUser(String email) {
-        User user = User.builder()
-                .email(email)
-                .password("test password")
-                .nickName("test")
-                .provider(AuthProvider.local)
-                .build();
-        return testEntityManager.persist(user);
     }
 
     private Group persistGroup() {
