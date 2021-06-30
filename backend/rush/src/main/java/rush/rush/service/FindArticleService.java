@@ -20,19 +20,6 @@ public class FindArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public List<ArticleSummaryResponse> findPublicMapArticles(
-            Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
-        LocationRange locationRange = new LocationRange
-            (latitude, latitudeRange, longitude, longitudeRange);
-
-        List<Article> articles = articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
-            locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
-            locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
-
-        return toResponses(articles);
-    }
-
-    @Transactional
     public ArticleResponse findPublicArticle(Long id) {
         Article article = articleRepository.findByPublicMapTrueAndId(id)
             .orElseThrow(() -> new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
@@ -50,6 +37,26 @@ public class FindArticleService {
             authorResponse,
             article.getCreateDate()
         );
+    }
+
+    @Transactional
+    public List<ArticleSummaryResponse> findPublicMapArticles(
+            Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
+        LocationRange locationRange = new LocationRange(latitude, latitudeRange, longitude, longitudeRange);
+
+        List<Article> articles = articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
+            locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
+            locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
+
+        return toResponses(articles);
+    }
+
+    @Transactional
+    public List<ArticleSummaryResponse> findPrivateMapArticles(Double latitude,
+            Double latitudeRange, Double longitude, Double longitudeRange, User user) {
+        LocationRange locationRange = new LocationRange(latitude, latitudeRange, longitude, longitudeRange);
+
+        return null;
     }
 
     private List<ArticleSummaryResponse> toResponses(List<Article> articles) {
