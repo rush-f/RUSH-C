@@ -8,11 +8,10 @@ import WindowSize from "../WindowSize";
 import findUserImageUrlApi from "./FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
-import findPublicMapArticles from "./FindPublicMapArticlesApi";
+import findMapArticles from "./FindPublicMapArticlesApi";
 import {PUBLIC} from "../../constants/MapType";
 
 const DefaultMapPage = (props) => {
-
   const LatRangeRatio = 0.561906;
   const LngRangeRatio = 0.70378;
 
@@ -38,12 +37,11 @@ const DefaultMapPage = (props) => {
   }, [zoom]);
 
   useEffect(() => {
-    if (mapType === PUBLIC) {
-      findPublicMapArticles(center.lat(), latitudeRange, center.lng(),
-        longitudeRange).then(publicMapArticlesPromise => {
-        setArticles(publicMapArticlesPromise)
-      })
-    }
+    findMapArticles(center.lat(), latitudeRange,
+        center.lng(), longitudeRange, mapType)
+      .then(mapArticlesPromise => {
+      setArticles(mapArticlesPromise)
+    })
   }, [zoom, center, mapType]);
 
   useEffect(() => {
