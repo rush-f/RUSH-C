@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
-import {withRouter} from "react-router-dom";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 
 const createWritingApi = (props) => {
@@ -14,7 +13,10 @@ const createWritingApi = (props) => {
     title: props.title,
     content: props.content,
     latitude: props.center.lat(),
-    longitude: props.center.lng()
+    longitude: props.center.lng(),
+    publicMap: props.publicMap,
+    privateMap: props.privateMap,
+    groups: props.groups
   };
   const config = {
     headers: {
