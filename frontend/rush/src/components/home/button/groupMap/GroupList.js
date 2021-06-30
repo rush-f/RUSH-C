@@ -25,13 +25,18 @@ const GroupList = (props) => {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    findMyGroupsApi(props.history).then(groupsPromise => {
-      setGroups(groupsPromise)
-    });
-  }, []);
+    if (props.isGroupOpened) {
+      findMyGroupsApi(props.history).then(groupsPromise => {
+        setGroups(groupsPromise)
+      }).catch(() => {
+        alert("로그인이 필요한 서비스입니다.")
+        props.history.push('/login');
+      })
+    }
+  }, [props.isGroupOpened]);
 
   useEffect(() => {
-    setHeight(props.isGroupOpened ? (50 * (groups.length + 2)) : 0);
+    setHeight(props.isGroupOpened ? (50 * (groups.length + 2) + 30) : 0);
   }, [props.isGroupOpened, groups]);
 
   return (
