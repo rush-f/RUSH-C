@@ -1,7 +1,7 @@
 ###
 POST http://localhost:8080/groups
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1NzE2LCJleHAiOjE2MjUwMTc1MTZ9.na3aN-n30YbZpObk8yEymrOhKM-MNu6lOwV8E-h7OACeDWlj4xJuNA-FMEMMBcMpzRABThAOAjFwRYsLddf2fQ
 
 {
   "name": "그룹이름"

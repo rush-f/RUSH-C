@@ -1,0 +1,42 @@
+### 전체지도에만 글쓰기
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+
+{
+  "title": "only 전체지도",
+  "content": "전체지도에만 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "doesBelongToPublic": true,
+  "doesBelongToPrivate": false
+}
+
+### 개인지도에만 글쓰기
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+
+{
+  "title": "only 개인지도",
+  "content": "개인지도에만 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "doesBelongToPublic": false,
+  "doesBelongToPrivate": true
+}
+
+### 특정 그룹에만 쓴 글
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1MzM5LCJleHAiOjE2MjUwMTcxMzl9.tX2sPbBJc-xSXhm9Sk4AYpVDXQtg8xpUapIBWih6bEQ_CO3GjWkq0QEbOHVXtYKFDhaJSf-ldorUPwPrfHfwtA
+
+{
+  "title": "only 그룹지도",
+  "content": "그룹지도 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "doesBelongToPublic": false,
+  "doesBelongToPrivate": false,
+  "groupIdsToBeIncluded": [1]
+}
