@@ -60,6 +60,8 @@ public class Article {
         this.latitude = latitude;
         this.longitude = longitude;
         this.user = user;
+        this.isPublic = isPublic;
+        this.isPrivate = isPrivate;
         this.createDate = createDate;
     }
 
