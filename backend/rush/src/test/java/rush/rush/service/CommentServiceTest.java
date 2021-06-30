@@ -1,5 +1,9 @@
 package rush.rush.service;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.List;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +16,6 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
-
-import javax.transaction.Transactional;
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -57,8 +56,8 @@ class CommentServiceTest {
                 .latitude(0.0)
                 .longitude(0.0)
                 .user(savedUser)
-                .doesBelongToPrivate(true)
-                .doesBelongToPublic(true)
+                .isPublic(true)
+                .isPrivate(true)
                 .build();
         articleRepository.save(article);
 

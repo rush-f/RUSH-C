@@ -8,8 +8,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5L
   "content": "전체지도에만 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "doesBelongToPublic": true,
-  "doesBelongToPrivate": false
+  "isPublic": true,
+  "isPrivate": false
 }
 
 ### 개인지도에만 글쓰기
@@ -22,8 +22,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5L
   "content": "개인지도에만 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "doesBelongToPublic": false,
-  "doesBelongToPrivate": true
+  "isPublic": false,
+  "isPrivate": true
 }
 
 ### 특정 그룹에만 쓴 글
@@ -36,7 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1MzM5L
   "content": "그룹지도 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "doesBelongToPublic": false,
-  "doesBelongToPrivate": false,
+  "isPublic": false,
+  "isPrivate": false,
   "groupIdsToBeIncluded": [1]
 }

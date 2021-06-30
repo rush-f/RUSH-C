@@ -15,7 +15,7 @@ public class CreateArticleRequest {
     private String content;
     private double latitude;    // 위도
     private double longitude;   // 경도
-    private boolean doesBelongToPublic;
-    private boolean doesBelongToPrivate;
+    private boolean isPublic;
+    private boolean isPrivate;
     private List<Long> groupIdsToBeIncluded;
 }

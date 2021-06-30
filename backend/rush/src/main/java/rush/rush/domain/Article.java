@@ -1,14 +1,20 @@
 package rush.rush.domain;
 
 import com.sun.istack.NotNull;
+import java.sql.Timestamp;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -38,15 +44,15 @@ public class Article {
     private User user;
 
     @Column(nullable = false)
-    private boolean doesBelongToPublic;
+    private boolean isPublic;
 
     @Column(nullable = false)
-    private boolean doesBelongToPrivate;
+    private boolean isPrivate;
 
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean doesBelongToPublic, boolean doesBelongToPrivate, Timestamp createDate) {
+    public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean isPublic, boolean isPrivate, Timestamp createDate) {
         validate(title, content, user);
         this.id = id;
         this.title = title;

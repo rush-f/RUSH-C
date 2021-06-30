@@ -46,8 +46,8 @@ public class CreateArticleService {
             .user(user)
             .latitude(createArticleRequest.getLatitude())
             .longitude(createArticleRequest.getLongitude())
-            .doesBelongToPublic(createArticleRequest.isDoesBelongToPublic())
-            .doesBelongToPrivate(createArticleRequest.isDoesBelongToPrivate())
+            .isPublic(createArticleRequest.isPublic())
+            .isPrivate(createArticleRequest.isPrivate())
             .build();
     }
 
