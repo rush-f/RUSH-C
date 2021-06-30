@@ -41,7 +41,7 @@ public class SetUpMethods {
     }
 
     public static Article persistArticle(TestEntityManager testEntityManager, User user,
-            boolean isPublic, boolean isPrivate,
+            boolean isPublicMap, boolean isPrivateMap,
             Double latitude, Double longitude) {
         Article article = Article.builder()
             .user(user)
@@ -49,8 +49,8 @@ public class SetUpMethods {
             .content("내용내용")
             .latitude(latitude)
             .longitude(longitude)
-            .isPublic(isPublic)
-            .isPrivate(isPrivate)
+            .publicMap(isPublicMap)
+            .privateMap(isPrivateMap)
             .build();
         article = testEntityManager.persist(article);
         testEntityManager.flush();

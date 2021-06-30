@@ -56,8 +56,8 @@ class CommentServiceTest {
                 .latitude(0.0)
                 .longitude(0.0)
                 .user(savedUser)
-                .isPublic(true)
-                .isPrivate(true)
+                .publicMap(true)
+                .privateMap(true)
                 .build();
         articleRepository.save(article);
 

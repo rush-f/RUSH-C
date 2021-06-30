@@ -1,4 +1,3 @@
 ###
 GET http://localhost:8080/articles/public/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE5MTE5LCJleHAiOjE2MjUwMjA5MTl9.l9Gmc5Oi9LV3F3MtH3z4FBjgOpZxbuAeym7_6WFJjQiNvOPIfocjIWg317a95jYwvzHBn0KGpR3oluTdaiyo7g

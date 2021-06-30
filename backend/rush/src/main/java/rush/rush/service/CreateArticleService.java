@@ -27,7 +27,7 @@ public class CreateArticleService {
     private final UserGroupRepository userGroupRepository;
 
     @Transactional
-    public Long create(CreateArticleRequest createArticleRequest, User user) {
+    public Article create(CreateArticleRequest createArticleRequest, User user) {
         Article article = articleRepository.save(buildArticle(createArticleRequest, user));
 
         List<Long> groupIds = createArticleRequest.getGroupIdsToBeIncluded();
@@ -36,7 +36,7 @@ public class CreateArticleService {
         for (Group group : groups) {
             articleGroupRepository.save(buildArticleGroup(article, group));
         }
-        return article.getId();
+        return article;
     }
 
     private Article buildArticle(CreateArticleRequest createArticleRequest, User user) {
@@ -46,8 +46,8 @@ public class CreateArticleService {
             .user(user)
             .latitude(createArticleRequest.getLatitude())
             .longitude(createArticleRequest.getLongitude())
-            .isPublic(createArticleRequest.isPublic())
-            .isPrivate(createArticleRequest.isPrivate())
+            .publicMap(createArticleRequest.isPublicMap())
+            .privateMap(createArticleRequest.isPrivateMap())
             .build();
     }
 

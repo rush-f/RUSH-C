@@ -1,15 +1,15 @@
 ### 전체지도에만 글쓰기
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIwNDc5LCJleHAiOjE2MjUwMjIyNzl9.PJLrQNDyhhu28GFGYuQQDlNRc2GL2pJeR-ZNTz-RryHkNXnJ_6P-4ZTR3TER1UbY5awG7Ti2WS0Dhsl8qWyBHA
 
 {
   "title": "only 전체지도",
   "content": "전체지도에만 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "isPublic": true,
-  "isPrivate": false
+  "publicMap": "true",
+  "privateMap": "false"
 }
 
 ### 개인지도에만 글쓰기
@@ -36,7 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1MzM5L
   "content": "그룹지도 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "isPublic": false,
-  "isPrivate": false,
+  "publicMap": false,
+  "privateMap": false,
   "groupIdsToBeIncluded": [1]
 }

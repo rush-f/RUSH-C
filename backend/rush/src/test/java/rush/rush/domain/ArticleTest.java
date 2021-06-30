@@ -28,8 +28,8 @@ class ArticleTest {
                 .latitude(0.0)
                 .longitude(0.0)
                 .user(user)
-                .isPrivate(true)
-                .isPublic(true)
+                .privateMap(true)
+                .publicMap(true)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }

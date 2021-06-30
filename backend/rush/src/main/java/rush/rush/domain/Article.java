@@ -44,15 +44,15 @@ public class Article {
     private User user;
 
     @Column(nullable = false)
-    private boolean isPublic;
+    private boolean publicMap;
 
     @Column(nullable = false)
-    private boolean isPrivate;
+    private boolean privateMap;
 
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean isPublic, boolean isPrivate, Timestamp createDate) {
+    public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean publicMap, boolean privateMap, Timestamp createDate) {
         validate(title, content, user);
         this.id = id;
         this.title = title;
@@ -60,8 +60,8 @@ public class Article {
         this.latitude = latitude;
         this.longitude = longitude;
         this.user = user;
-        this.isPublic = isPublic;
-        this.isPrivate = isPrivate;
+        this.publicMap = publicMap;
+        this.privateMap = privateMap;
         this.createDate = createDate;
     }
 

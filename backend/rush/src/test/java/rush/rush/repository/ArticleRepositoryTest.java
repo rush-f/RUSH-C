@@ -27,7 +27,7 @@ class ArticleRepositoryTest {
 
     @Test
     @Transactional
-    void findAllByIsPublicTrueAndLatitudeBetweenAndLongitudeBetween() {
+    void findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween() {
         // given
         User user = SetUpMethods.persistUser(testEntityManager, "test@email.com");
 
@@ -42,7 +42,7 @@ class ArticleRepositoryTest {
 
         // when
         List<Article> articles =
-            articleRepository.findAllByIsPublicTrueAndLatitudeBetweenAndLongitudeBetween(
+            articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
                 35.0, 45.0, 125.0, 128.0);
 
         // then
@@ -51,13 +51,13 @@ class ArticleRepositoryTest {
 
     @Test
     @Transactional
-    void findByIsPublicTrueAndId() {
+    void findByPublicMapTrueAndId() {
         // given
         User user = SetUpMethods.persistUser(testEntityManager, "test@email.com");
         Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
 
         // when
-        Optional<Article> foundArticle = articleRepository.findByIsPublicTrueAndId(article.getId());
+        Optional<Article> foundArticle = articleRepository.findByPublicMapTrueAndId(article.getId());
 
         // then
         assertThat(foundArticle.isPresent()).isTrue();

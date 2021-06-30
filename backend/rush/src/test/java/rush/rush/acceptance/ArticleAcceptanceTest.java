@@ -1,6 +1,11 @@
 package rush.rush.acceptance;
 
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.restassured.RestAssured;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,12 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.AuthResponse;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -30,23 +29,23 @@ public class ArticleAcceptanceTest {
     }
 
     /**
-     * feature : 글을 쓴다
+     * feature : 전체지도에 글을 쓴다
      *
      * when 회원가입 한다. then 회원가입된다.
      *
      * when 로그인한다. then 로그인된다.
      *
-     * when 글을 쓴다. then 글이 저장된다.
+     * when 전체지도에 글을 쓴다. then 글이 저장된다.
      *
      * when 쓴 글을 조회한다. then 글이 조회된다.
      */
     @Test
-    void useArticle() {
+    void usePublicArticle() {
         signUp();
         String token = login();
-        String location = write(token);
+        String location = writePublicArticle(token);
 
-        ArticleResponse articleResponse = findOne(location);
+        ArticleResponse articleResponse = findArticle(location);
 
         Long expectedId = extractIdFromLocation(location);
 
@@ -88,11 +87,15 @@ public class ArticleAcceptanceTest {
         return authResponse.getAccessToken();
     }
 
-    private String write(String accessToken) {
+    private String writePublicArticle(String accessToken) {
         Map<String, String> body = new HashMap<>();
 
         body.put("title", "제목제목");
         body.put("content", "내용내용");
+        body.put("latitude", "37");
+        body.put("longitude", "127");
+        body.put("publicMap", "true");
+        body.put("privateMap", "false");
 
         return given()
                 .header("Authorization", "Bearer " + accessToken)
@@ -107,10 +110,10 @@ public class ArticleAcceptanceTest {
                 .header("location");
     }
 
-    private ArticleResponse findOne(String location) {
+    private ArticleResponse findArticle(String location) {
         return given()
             .when()
-                .get(location)
+                .get(location + "?latitude=35&latitudeRange=10&longitude=125&longitudeRange=10")
             .then()
                 .statusCode(HttpStatus.OK.value())
                 .extract()

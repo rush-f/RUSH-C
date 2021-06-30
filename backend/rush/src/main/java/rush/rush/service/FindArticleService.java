@@ -25,7 +25,7 @@ public class FindArticleService {
         LocationRange locationRange = new LocationRange
             (latitude, latitudeRange, longitude, longitudeRange);
 
-        List<Article> articles = articleRepository.findAllByIsPublicTrueAndLatitudeBetweenAndLongitudeBetween(
+        List<Article> articles = articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
             locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
             locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
 
@@ -34,7 +34,7 @@ public class FindArticleService {
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
-        Article article = articleRepository.findByIsPublicTrueAndId(id)
+        Article article = articleRepository.findByPublicMapTrueAndId(id)
             .orElseThrow(() -> new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
         User user = article.getUser();
