@@ -26,7 +26,7 @@ const DefaultMapPage = (props) => {
     lng: () => 127.07745984005722,
   });
   const [userImageUrl, setUserImageUrl] = useState(null);
-  const [publicMapArticles, setPublicMapArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [latitudeRange, setLatitudeRange] = useState(0.0095);
   const [longitudeRange, setLongitudeRange] = useState(0.025);
 
@@ -41,7 +41,7 @@ const DefaultMapPage = (props) => {
     if (mapType === PUBLIC) {
       findPublicMapArticles(center.lat(), latitudeRange, center.lng(),
         longitudeRange).then(publicMapArticlesPromise => {
-        setPublicMapArticles(publicMapArticlesPromise)
+        setArticles(publicMapArticlesPromise)
       })
     }
   }, [zoom, center, mapType]);
@@ -61,7 +61,7 @@ const DefaultMapPage = (props) => {
                 containerElement={<div style={{height: WindowSize().height}}/>}
                 mapElement={<div style={{height: `100%`}}/>}
                 mapType={mapType}
-                publicMapArticles={publicMapArticles}
+                articles={articles}
                 markerCenter={props.location.state ? props.location.state
                   : {lat: 37.63185105917152, lng: 127.07745984005722}}
                 setZoom={setZoom}

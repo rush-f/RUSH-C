@@ -24,7 +24,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
     setInfoWindowPostId(postId);
   };
 
-  const markers = postPositionSpreader(props.publicMapArticles).map((post, index) => <Marker
+  const markers = postPositionSpreader(props.articles).map((post, index) => <Marker
       key={index}
       position={{lat: post.latitude, lng: post.longitude}}
       animation={1}
