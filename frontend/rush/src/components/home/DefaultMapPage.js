@@ -9,6 +9,7 @@ import findUserImageUrlApi from "./FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import findPublicMapArticles from "./FindPublicMapArticlesApi";
+import {PUBLIC} from "../../constants/MapType";
 
 const DefaultMapPage = (props) => {
 
@@ -18,6 +19,7 @@ const DefaultMapPage = (props) => {
   const [windowSize, setWindowSize] = useState(WindowSize());
 
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
+  const [mapType, setMapType] = useState(PUBLIC);
   const [zoom, setZoom] = useState(16);
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
@@ -36,11 +38,13 @@ const DefaultMapPage = (props) => {
   }, [zoom]);
 
   useEffect(() => {
-    findPublicMapArticles(center.lat(), latitudeRange, center.lng(),
-      longitudeRange).then(publicMapArticlesPromise => {
-      setPublicMapArticles(publicMapArticlesPromise)
-    })
-  }, [zoom, center]);
+    if (mapType === PUBLIC) {
+      findPublicMapArticles(center.lat(), latitudeRange, center.lng(),
+        longitudeRange).then(publicMapArticlesPromise => {
+        setPublicMapArticles(publicMapArticlesPromise)
+      })
+    }
+  }, [zoom, center, mapType]);
 
   useEffect(() => {
     if (!accessToken) {
@@ -56,6 +60,7 @@ const DefaultMapPage = (props) => {
                 loadingElement={<div style={{width: `100%`}}/>}
                 containerElement={<div style={{height: WindowSize().height}}/>}
                 mapElement={<div style={{height: `100%`}}/>}
+                mapType={mapType}
                 publicMapArticles={publicMapArticles}
                 markerCenter={props.location.state ? props.location.state
                   : {lat: 37.63185105917152, lng: 127.07745984005722}}

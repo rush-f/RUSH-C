@@ -12,9 +12,7 @@ function App() {
       <Route path="/" exact component={DefaultMapPage} />
       <Route path="/login" exact component={LoginPage} />
       <Route path="/writing" exact component={WritingPage} />
-      <Route path="/articles/public/:articleId" exact component={ArticleDetailPage} />
-      <Route path="/articles/private/:articleId" exact component={ArticleDetailPage} />
-      <Route path="/articles/grouped/:articleId" exact component={ArticleDetailPage} />
+      <Route path="/articles/:mapType/:articleId" exact component={ArticleDetailPage} />
       <Route path="/oauth2/redirect" exact component={OAuth2RedirectHandler}/>
     </Switch>
   </Router>);
