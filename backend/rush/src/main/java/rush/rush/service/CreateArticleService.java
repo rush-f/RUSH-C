@@ -28,6 +28,8 @@ public class CreateArticleService {
 
     @Transactional
     public Article create(CreateArticleRequest createArticleRequest, User user) {
+        validateMapType(createArticleRequest);
+
         Article article = articleRepository.save(buildArticle(createArticleRequest, user));
 
         List<Long> groupIds = createArticleRequest.getGroupIdsToBeIncluded();
@@ -37,6 +39,15 @@ public class CreateArticleService {
             articleGroupRepository.save(buildArticleGroup(article, group));
         }
         return article;
+    }
+
+    void validateMapType(CreateArticleRequest request) {
+        List<Long> groups = request.getGroupIdsToBeIncluded();
+
+        if (!request.isPublicMap() && !request.isPrivateMap()
+                && (Objects.isNull(groups) || groups.isEmpty())) {
+            throw new IllegalArgumentException("전체지도, 그룹지도, 개인지도 중 하나는 포함해야합니다.");
+        }
     }
 
     private Article buildArticle(CreateArticleRequest createArticleRequest, User user) {
