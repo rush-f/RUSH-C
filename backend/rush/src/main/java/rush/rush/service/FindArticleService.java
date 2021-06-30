@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
+import rush.rush.domain.LocationRange;
 import rush.rush.domain.User;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
@@ -19,16 +20,16 @@ public class FindArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public List<ArticleSummaryResponse> findPublicMapArticles(Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
-        double lowerLatitude = latitude - latitudeRange;
-        double upperLatitude = latitude + latitudeRange;
-        double lowerLongitude = longitude - latitudeRange;
-        double upperLongitude = longitude + longitudeRange;
+    public List<ArticleSummaryResponse> findPublicMapArticles(
+            Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
+        LocationRange locationRange = new LocationRange
+            (latitude, latitudeRange, longitude, longitudeRange);
 
-        List<Article> allArticles = articleRepository.findAllByLatitudeBetweenAndLongitudeBetween(
-            lowerLatitude, upperLatitude, lowerLongitude, upperLongitude);
+        List<Article> articles = articleRepository.findAllByLatitudeBetweenAndLongitudeBetween(
+            locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
+            locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
 
-        return allArticles.stream()
+        return articles.stream()
             .map(article -> new ArticleSummaryResponse(
                 article.getId(),
                 article.getLatitude(),
