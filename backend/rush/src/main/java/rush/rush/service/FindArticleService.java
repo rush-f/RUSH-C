@@ -25,7 +25,7 @@ public class FindArticleService {
         LocationRange locationRange = new LocationRange
             (latitude, latitudeRange, longitude, longitudeRange);
 
-        List<Article> articles = articleRepository.findAllByLatitudeBetweenAndLongitudeBetween(
+        List<Article> articles = articleRepository.findAllByIsPublicTrueAndLatitudeBetweenAndLongitudeBetween(
             locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
             locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
 
