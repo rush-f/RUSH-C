@@ -1,21 +1,19 @@
 package rush.rush.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Getter
+@Setter
 public class FindMapArticlesRequest {
 
-    private final Double latitude;
-    private final Double latitudeRange;
-    private final Double longitude;
-    private final Double longitudeRange;
-
-    private FindMapArticlesRequest() {
-        this.latitude = 37.63;
-        this.latitudeRange = 0.0095;
-        this.longitude = 127.07;
-        this.longitudeRange = 0.0250;
-    }
+    private Double latitude;
+    private Double latitudeRange;
+    private Double longitude;
+    private Double longitudeRange;
 }

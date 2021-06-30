@@ -1,7 +1,7 @@
 ### 전체지도에만 글쓰기
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIwNDc5LCJleHAiOjE2MjUwMjIyNzl9.PJLrQNDyhhu28GFGYuQQDlNRc2GL2pJeR-ZNTz-RryHkNXnJ_6P-4ZTR3TER1UbY5awG7Ti2WS0Dhsl8qWyBHA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
 {
   "title": "only 전체지도",
@@ -15,21 +15,21 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIwNDc5L
 ### 개인지도에만 글쓰기
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1MTl9.xQozBghivWmstc6SV4wHkmetsEHf0UloN6ZPaQTlvwTz8jrIwtHHXxuO3K0BjNqoRcJpPGMsNtGDM9bP0u-LXQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
 {
   "title": "only 개인지도",
   "content": "개인지도에만 쓴 글",
   "latitude": 0,
   "longitude": 0,
-  "isPublic": false,
-  "isPrivate": true
+  "publicMap": false,
+  "privateMap": true
 }
 
 ### 특정 그룹에만 쓴 글
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1MzM5LCJleHAiOjE2MjUwMTcxMzl9.tX2sPbBJc-xSXhm9Sk4AYpVDXQtg8xpUapIBWih6bEQ_CO3GjWkq0QEbOHVXtYKFDhaJSf-ldorUPwPrfHfwtA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
 {
   "title": "only 그룹지도",

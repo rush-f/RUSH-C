@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
-import rush.rush.dto.FindMapArticlesRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.FindArticleService;
@@ -24,10 +23,12 @@ public class FindArticleController {
 
     @GetMapping("/public")
     public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
-            @RequestParam FindMapArticlesRequest findMapArticlesRequest) {
+            @RequestParam(value = "latitude") Double latitude,
+            @RequestParam(value = "latitudeRange") Double latitudeRange,
+            @RequestParam(value = "longitude") Double longitude,
+            @RequestParam(value = "longitudeRange") Double longitudeRange) {
         List<ArticleSummaryResponse> publicMapArticles = findArticleService.findPublicMapArticles(
-            findMapArticlesRequest.getLatitude(), findMapArticlesRequest.getLatitudeRange(),
-            findMapArticlesRequest.getLongitude(), findMapArticlesRequest.getLongitudeRange()
+            latitude, latitudeRange,longitude, longitudeRange
         );
         return ResponseEntity.ok()
             .body(publicMapArticles);
@@ -35,13 +36,13 @@ public class FindArticleController {
 
     @GetMapping("/private")
     public ResponseEntity<List<ArticleSummaryResponse>> findPrivateMapArticles(
-        @RequestParam FindMapArticlesRequest findMapArticlesRequest,
-        @CurrentUser UserPrincipal userPrincipal) {
+            @RequestParam(value = "latitude") Double latitude,
+            @RequestParam(value = "latitudeRange") Double latitudeRange,
+            @RequestParam(value = "longitude") Double longitude,
+            @RequestParam(value = "longitudeRange") Double longitudeRange,
+            @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> privateMapArticles = findArticleService.findPrivateMapArticles(
-            findMapArticlesRequest.getLatitude(), findMapArticlesRequest.getLatitudeRange(),
-            findMapArticlesRequest.getLongitude(), findMapArticlesRequest.getLongitudeRange(),
-            userPrincipal.getUser()
-        );
+            latitude, latitudeRange,longitude, longitudeRange, userPrincipal.getUser());
         return ResponseEntity.ok()
             .body(privateMapArticles);
     }
