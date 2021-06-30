@@ -2,6 +2,7 @@ package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ class ArticleRepositoryTest {
     @Transactional
     void findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween() {
         // given
-        User user = SetUpMethods.persistUser(testEntityManager, "test@email.com");
+        User user = persistUser(testEntityManager, "test@email.com");
 
         // 이것만 해당
         persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
@@ -51,9 +52,32 @@ class ArticleRepositoryTest {
 
     @Test
     @Transactional
+    void findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween() {
+        // given
+        User me = persistUser(testEntityManager, "me@email.com");
+        User another = persistUser(testEntityManager, "another@email.com");
+
+        persistArticle(testEntityManager, me, true, true, 37.63, 127.07);
+        persistArticle(testEntityManager, me, false, true, 40.63, 127.0);
+        persistArticle(testEntityManager, me, true, false, 40.63, 127.0);
+        persistArticle(testEntityManager, me, true, true, 0.0, 126.99);
+        persistArticle(testEntityManager, me, true, false, 39.95, 5.0);
+        persistArticle(testEntityManager, another, false, true, 40.63, 127.0);
+
+        // when
+        List<Article> articles =
+            articleRepository.findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween(
+                me.getId(), 35.0, 45.0, 125.0, 128.0);
+
+        // then
+        assertThat(articles.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
     void findByPublicMapTrueAndId() {
         // given
-        User user = SetUpMethods.persistUser(testEntityManager, "test@email.com");
+        User user = persistUser(testEntityManager, "test@email.com");
         Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
 
         // when

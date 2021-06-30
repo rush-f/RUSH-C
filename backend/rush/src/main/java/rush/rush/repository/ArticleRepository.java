@@ -10,5 +10,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
+    List<Article> findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween(Long userId,
+        Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
+
     Optional<Article> findByPublicMapTrueAndId(Long articleId);
 }
