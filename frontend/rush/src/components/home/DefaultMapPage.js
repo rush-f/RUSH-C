@@ -74,7 +74,6 @@ const DefaultMapPage = (props) => {
       setUserImageUrl(userImageUrlPromise)
     })
   }, [accessToken]);
-  console.log(accessToken)
 
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
