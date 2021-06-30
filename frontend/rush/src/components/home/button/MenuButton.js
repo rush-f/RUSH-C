@@ -28,6 +28,7 @@ const Menu = (props) => {
         isGroupOpened={isGroupOpened}
         setMapType={props.setMapType}
         setGroupId={props.setGroupId}
+        history={props.history}
       />
       <BurgerMenuContents onClick={() => props.setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
     </BurgerMenu>

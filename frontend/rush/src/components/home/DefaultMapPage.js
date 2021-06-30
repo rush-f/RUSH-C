@@ -74,6 +74,7 @@ const DefaultMapPage = (props) => {
       setUserImageUrl(userImageUrlPromise)
     })
   }, [accessToken]);
+  console.log(accessToken)
 
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
@@ -93,6 +94,7 @@ const DefaultMapPage = (props) => {
     <Menu
       setMapType={setMapType}
       setGroupId={setGroupId}
+      history={props.history}
     />
     {
       (accessToken === null || userImageUrl === null) ?

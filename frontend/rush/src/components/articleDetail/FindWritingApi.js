@@ -15,7 +15,6 @@ const findWritingApi = (articleId, mapType, history) => {
       "Authorization": "Bearer " + accessToken
     }
   };
-  console.log(accessToken)
   return axios.get(BACKEND_ADDRESS + "/articles/" + mapType + "/" + articleId, config)
   .then(response => response.data)
     .catch(error => {
