@@ -88,4 +88,20 @@ class ArticleRepositoryTest {
         assertThat(foundArticle.get().getId()).isEqualTo(article.getId());
         assertThat(foundArticle.get().getContent()).isEqualTo(article.getContent());
     }
+
+    @Test
+    @Transactional
+    void findByPrivateMapTrueAndIdAndUserId() {
+        // given
+        User me = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, me, false, true, 0.0, 0.0);
+
+        // when
+        Optional<Article> foundArticle = articleRepository.findByPrivateMapTrueAndIdAndUserId(article.getId(), me.getId());
+
+        // then
+        assertThat(foundArticle.isPresent()).isTrue();
+        assertThat(foundArticle.get().getId()).isEqualTo(article.getId());
+        assertThat(foundArticle.get().getContent()).isEqualTo(article.getContent());
+    }
 }

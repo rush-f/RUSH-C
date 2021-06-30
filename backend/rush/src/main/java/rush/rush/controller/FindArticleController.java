@@ -54,4 +54,14 @@ public class FindArticleController {
         return ResponseEntity.ok()
             .body(articleResponse);
     }
+
+    @GetMapping("/private/{id}")
+    public ResponseEntity<ArticleResponse> findPrivateArticle(@PathVariable Long id,
+            @CurrentUser UserPrincipal userPrincipal) {
+        ArticleResponse articleResponse= findArticleService.findPrivateArticle(id,
+            userPrincipal.getUser());
+
+        return ResponseEntity.ok()
+            .body(articleResponse);
+    }
 }

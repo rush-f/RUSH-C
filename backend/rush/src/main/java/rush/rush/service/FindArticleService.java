@@ -31,6 +31,23 @@ public class FindArticleService {
         AuthorResponse authorResponse = new AuthorResponse(user.getId(),
             user.getNickName(), user.getImageUrl());
 
+        return toResponse(article);
+    }
+
+    @Transactional
+    public ArticleResponse findPrivateArticle(Long id, User me) {
+        Article article = articleRepository.findByPrivateMapTrueAndIdAndUserId(id, me.getId())
+            .orElseThrow(() ->
+                new IllegalArgumentException("id가 " + id + "인 article이 개인지도에 없습니다."));
+
+        return toResponse(article);
+    }
+
+    private ArticleResponse toResponse(Article article) {
+        User author = article.getUser();
+        AuthorResponse authorResponse = new AuthorResponse(author.getId(),
+            author.getNickName(), author.getImageUrl());
+
         return new ArticleResponse(
             article.getId(),
             article.getTitle(),
