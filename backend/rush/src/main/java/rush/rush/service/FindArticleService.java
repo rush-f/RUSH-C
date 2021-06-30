@@ -33,9 +33,9 @@ public class FindArticleService {
     }
 
     @Transactional
-    public ArticleResponse findOne(Long id) {
-        Article article = articleRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("id가 " + id + "인 article이 없습니다."));
+    public ArticleResponse findPublicArticle(Long id) {
+        Article article = articleRepository.findByIsPublicTrueAndId(id)
+            .orElseThrow(() -> new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
         User user = article.getUser();
         AuthorResponse authorResponse = new AuthorResponse(user.getId(),

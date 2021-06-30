@@ -41,9 +41,9 @@ public class ArticleController {
             .body(publicMapArticles);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ArticleResponse> findOne(@PathVariable Long id) {
-        ArticleResponse articleResponse = findArticleService.findOne(id);
+    @GetMapping("/public/{id}")
+    public ResponseEntity<ArticleResponse> findPublicArticle(@PathVariable Long id) {
+        ArticleResponse articleResponse = findArticleService.findPublicArticle(id);
 
         return ResponseEntity.ok()
             .body(articleResponse);
