@@ -8,8 +8,13 @@ import WindowSize from "../WindowSize";
 import findUserImageUrlApi from "./FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
-import findMapArticles from "./FindPublicMapArticlesApi";
-import {PUBLIC} from "../../constants/MapType";
+import {
+  findGroupedMapArticles,
+  findPrivateMapArticles,
+  findPublicMapArticles
+} from "./FindMapArticlesApi";
+import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
+import {withRouter} from "react-router-dom";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
@@ -19,6 +24,7 @@ const DefaultMapPage = (props) => {
 
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const [mapType, setMapType] = useState(PUBLIC);
+  const [groupId, setGroupId] = useState(0);
   const [zoom, setZoom] = useState(16);
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
@@ -37,11 +43,27 @@ const DefaultMapPage = (props) => {
   }, [zoom]);
 
   useEffect(() => {
-    findMapArticles(center.lat(), latitudeRange,
-        center.lng(), longitudeRange, mapType)
+    if (mapType === PUBLIC) {
+      findPublicMapArticles(center.lat(), latitudeRange,
+          center.lng(), longitudeRange)
+        .then(mapArticlesPromise => {
+        setArticles(mapArticlesPromise)
+      })
+    }
+    else if (mapType === PRIVATE) {
+      findPrivateMapArticles(center.lat(), latitudeRange,
+        center.lng(), longitudeRange, props.history)
       .then(mapArticlesPromise => {
-      setArticles(mapArticlesPromise)
-    })
+        setArticles(mapArticlesPromise)
+      })
+    }
+    else if (mapType === GROUPED && groupId > 0) {
+        findGroupedMapArticles(groupId, center.lat(), latitudeRange,
+          center.lng(), longitudeRange, props.history)
+        .then(mapArticlesPromise => {
+          setArticles(mapArticlesPromise)
+        });
+    }
   }, [zoom, center, mapType]);
 
   useEffect(() => {
@@ -68,7 +90,10 @@ const DefaultMapPage = (props) => {
                 latitudeRange={latitudeRange}
                 longitudeRange={longitudeRange}
     />
-    <Menu/>
+    <Menu
+      setMapType={setMapType}
+      setGroupId={setGroupId}
+    />
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>
@@ -78,4 +103,4 @@ const DefaultMapPage = (props) => {
   </>);
 };
 
-export default DefaultMapPage;
+export default withRouter(DefaultMapPage);

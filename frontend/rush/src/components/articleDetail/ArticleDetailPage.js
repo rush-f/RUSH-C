@@ -20,7 +20,7 @@ const ArticleDetailPage = (props) => {
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
-      findWritingApi(articleId, mapType).then(articlePromise => {
+      findWritingApi(articleId, mapType, props.history).then(articlePromise => {
         setArticle(articlePromise);
       })
     }
