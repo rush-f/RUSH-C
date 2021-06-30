@@ -1,0 +1,69 @@
+package rush.rush.service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.Group;
+import rush.rush.domain.User;
+import rush.rush.dto.CreateArticleRequest;
+import rush.rush.repository.ArticleGroupRepository;
+import rush.rush.repository.ArticleRepository;
+import rush.rush.repository.GroupRepository;
+
+@Service
+@RequiredArgsConstructor
+public class CreateArticleService {
+
+    private final ArticleRepository articleRepository;
+    private final ArticleGroupRepository articleGroupRepository;
+    private final GroupRepository groupRepository;
+
+    @Transactional
+    public Long create(CreateArticleRequest createArticleRequest, User user) {
+        Article article = articleRepository.save(buildArticle(createArticleRequest, user));
+
+        List<Long> groupIds = createArticleRequest.getGroupIdsToBeIncluded();
+        List<Group> groups = findGroups(groupIds);
+
+        for (Group group : groups) {
+            articleGroupRepository.save(buildArticleGroup(article, group));
+        }
+        return article.getId();
+    }
+
+    private Article buildArticle(CreateArticleRequest createArticleRequest, User user) {
+        return Article.builder()
+            .title(createArticleRequest.getTitle())
+            .content(createArticleRequest.getContent())
+            .user(user)
+            .latitude(createArticleRequest.getLatitude())
+            .longitude(createArticleRequest.getLongitude())
+            .doesBelongToPublic(createArticleRequest.isDoesBelongToPublic())
+            .doesBelongToPrivate(createArticleRequest.isDoesBelongToPrivate())
+            .build();
+    }
+
+    private List<Group> findGroups(List<Long> groupIds) {
+        if (Objects.isNull(groupIds) || groupIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<Group> groups = groupRepository.findAllById(groupIds);
+
+        if (groups.size() != groupIds.size()) {
+            throw new IllegalArgumentException("그룹 id 목록이 잘못됐습니다.");
+        }
+        return Collections.unmodifiableList(groups);
+    }
+
+    private ArticleGroup buildArticleGroup(Article article, Group group) {
+        return ArticleGroup.builder()
+            .group(group)
+            .article(article)
+            .build();
+    }
+}

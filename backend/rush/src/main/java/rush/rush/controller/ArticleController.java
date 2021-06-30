@@ -16,14 +16,16 @@ import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.ArticleService;
+import rush.rush.service.CreateArticleService;
+import rush.rush.service.FindArticleService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
 
-    private final ArticleService articleService;
+    private final CreateArticleService createArticleService;
+    private final FindArticleService findArticleService;
 
     @GetMapping("/public")
     public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
@@ -32,8 +34,8 @@ public class ArticleController {
         @RequestParam(value = "longitude", defaultValue = "127.07") Double longitude,
         @RequestParam(value = "longitudeRange", defaultValue = "0.0250") Double longitudeRange
         ) {
-        List<ArticleSummaryResponse> publicMapArticles =
-            articleService.findPublicMapArticles(latitude, latitudeRange, longitude, longitudeRange);
+        List<ArticleSummaryResponse> publicMapArticles = findArticleService.findPublicMapArticles(
+            latitude, latitudeRange, longitude, longitudeRange);
 
         return ResponseEntity.ok()
             .body(publicMapArticles);
@@ -41,7 +43,7 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse> findOne(@PathVariable Long id) {
-        ArticleResponse articleResponse = articleService.findOne(id);
+        ArticleResponse articleResponse = findArticleService.findOne(id);
 
         return ResponseEntity.ok()
             .body(articleResponse);
@@ -50,7 +52,7 @@ public class ArticleController {
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody CreateArticleRequest createArticleRequest,
         @CurrentUser UserPrincipal userPrincipal) {
-        Long articleId = articleService.create(createArticleRequest, userPrincipal.getUser());
+        Long articleId = createArticleService.create(createArticleRequest, userPrincipal.getUser());
 
         return ResponseEntity.created(URI.create("/articles/" + articleId))
             .build();

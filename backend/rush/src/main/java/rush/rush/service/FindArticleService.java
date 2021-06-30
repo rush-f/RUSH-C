@@ -10,12 +10,11 @@ import rush.rush.domain.User;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.AuthorResponse;
-import rush.rush.dto.CreateArticleRequest;
 import rush.rush.repository.ArticleRepository;
 
 @Service
 @RequiredArgsConstructor
-public class ArticleService {
+public class FindArticleService {
 
     private final ArticleRepository articleRepository;
 
@@ -36,21 +35,6 @@ public class ArticleService {
                 article.getLongitude(),
                 article.getTitle()))
             .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public Long create(CreateArticleRequest createArticleRequest, User user) {
-        Article article = Article.builder()
-            .title(createArticleRequest.getTitle())
-            .content(createArticleRequest.getContent())
-            .user(user)
-            .latitude(createArticleRequest.getLatitude())
-            .longitude(createArticleRequest.getLongitude())
-            .doesBelongToPublic(false)    // Todo: DTO 에서 가져오도록 수정할것
-            .doesBelongToPrivate(false)    // Todo: DTO 에서 가져오도록 수정할것
-            .build();
-        return articleRepository.save(article)
-            .getId();
     }
 
     @Transactional
