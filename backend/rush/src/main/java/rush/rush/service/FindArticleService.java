@@ -29,13 +29,7 @@ public class FindArticleService {
             locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
             locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
 
-        return articles.stream()
-            .map(article -> new ArticleSummaryResponse(
-                article.getId(),
-                article.getLatitude(),
-                article.getLongitude(),
-                article.getTitle()))
-            .collect(Collectors.toList());
+        return toResponses(articles);
     }
 
     @Transactional
@@ -56,5 +50,15 @@ public class FindArticleService {
             authorResponse,
             article.getCreateDate()
         );
+    }
+
+    private List<ArticleSummaryResponse> toResponses(List<Article> articles) {
+        return articles.stream()
+            .map(article -> new ArticleSummaryResponse(
+                article.getId(),
+                article.getLatitude(),
+                article.getLongitude(),
+                article.getTitle()))
+            .collect(Collectors.toUnmodifiableList());
     }
 }
