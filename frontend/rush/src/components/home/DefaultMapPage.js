@@ -8,38 +8,63 @@ import WindowSize from "../WindowSize";
 import findUserImageUrlApi from "./FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
-import findPublicMapArticles from "./FindPublicMapArticlesApi";
+import {
+  findGroupedMapArticles,
+  findPrivateMapArticles,
+  findPublicMapArticles
+} from "./FindMapArticlesApi";
+import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
+import {withRouter} from "react-router-dom";
 
 const DefaultMapPage = (props) => {
-
   const LatRangeRatio = 0.561906;
   const LngRangeRatio = 0.70378;
 
-  const [windowSize,setWindowSize] = useState(WindowSize());
+  const [windowSize, setWindowSize] = useState(WindowSize());
 
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
-  const [zoom,setZoom] = useState(16);
+  const [mapType, setMapType] = useState(PUBLIC);
+  const [groupId, setGroupId] = useState(0);
+  const [zoom, setZoom] = useState(16);
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
     lng: () => 127.07745984005722,
   });
   const [userImageUrl, setUserImageUrl] = useState(null);
-  const [publicMapArticles, setPublicMapArticles] = useState([]);
-  const [latitudeRange,setLatitudeRange]=useState(0.0095);
-  const [longitudeRange,setLongitudeRange]=useState(0.025);
-
-
-  useEffect(()=>{
-    setLatitudeRange(LatRangeRatio * windowSize.height * Math.pow(0.5,zoom-1));
-    setLongitudeRange(LngRangeRatio * windowSize.width * Math.pow(0.5,zoom-1));
-  },[zoom]);
+  const [articles, setArticles] = useState([]);
+  const [latitudeRange, setLatitudeRange] = useState(0.0095);
+  const [longitudeRange, setLongitudeRange] = useState(0.025);
 
   useEffect(() => {
+    setLatitudeRange(
+      LatRangeRatio * windowSize.height * Math.pow(0.5, zoom - 1));
+    setLongitudeRange(
+      LngRangeRatio * windowSize.width * Math.pow(0.5, zoom - 1));
+  }, [zoom]);
 
-    findPublicMapArticles(center.lat(), latitudeRange, center.lng(), longitudeRange).then(publicMapArticlesPromise => {
-      setPublicMapArticles(publicMapArticlesPromise)
-    })
-  }, [zoom,center]);
+  useEffect(() => {
+    if (mapType === PUBLIC) {
+      findPublicMapArticles(center.lat(), latitudeRange,
+          center.lng(), longitudeRange)
+        .then(mapArticlesPromise => {
+        setArticles(mapArticlesPromise)
+      })
+    }
+    else if (mapType === PRIVATE) {
+      findPrivateMapArticles(center.lat(), latitudeRange,
+        center.lng(), longitudeRange, props.history)
+      .then(mapArticlesPromise => {
+        setArticles(mapArticlesPromise)
+      })
+    }
+    else if (mapType === GROUPED && groupId > 0) {
+        findGroupedMapArticles(groupId, center.lat(), latitudeRange,
+          center.lng(), longitudeRange, props.history)
+        .then(mapArticlesPromise => {
+          setArticles(mapArticlesPromise)
+        });
+    }
+  }, [zoom, center, mapType]);
 
   useEffect(() => {
     if (!accessToken) {
@@ -51,26 +76,32 @@ const DefaultMapPage = (props) => {
   }, [accessToken]);
 
   return (<>
-      <DefaultMap googleMapURL={CLIENT_ID}
-                  loadingElement={<div style={{width: `100%`}}/>}
-                  containerElement={<div style={{height: WindowSize().height}}/>}
-                  mapElement={<div style={{height: `100%`}}/>}
-                  publicMapArticles={publicMapArticles}
-                  markerCenter={props.location.state? props.location.state: {lat:  37.63185105917152, lng:127.07745984005722}}
-                  setZoom={setZoom}
-                  center={center}
-                  setCenter={setCenter}
-                  latitudeRange={latitudeRange}
-                  longitudeRange={longitudeRange}
-      />
-      <Menu />
+    <DefaultMap googleMapURL={CLIENT_ID}
+                loadingElement={<div style={{width: `100%`}}/>}
+                containerElement={<div style={{height: WindowSize().height}}/>}
+                mapElement={<div style={{height: `100%`}}/>}
+                mapType={mapType}
+                articles={articles}
+                markerCenter={props.location.state ? props.location.state
+                  : {lat: 37.63185105917152, lng: 127.07745984005722}}
+                setZoom={setZoom}
+                center={center}
+                setCenter={setCenter}
+                latitudeRange={latitudeRange}
+                longitudeRange={longitudeRange}
+    />
+    <Menu
+      setMapType={setMapType}
+      setGroupId={setGroupId}
+      history={props.history}
+    />
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>
-          : <Profile userImageUrl={userImageUrl? userImageUrl.imageUrl : ""}/>
+        : <Profile userImageUrl={userImageUrl ? userImageUrl.imageUrl : ""}/>
     }
-      <WriteButton accessToken={accessToken}/>
+    <WriteButton accessToken={accessToken}/>
   </>);
 };
 
-export default DefaultMapPage;
+export default withRouter(DefaultMapPage);

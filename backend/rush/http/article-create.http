@@ -1,0 +1,42 @@
+### 전체지도에만 글쓰기
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+
+{
+  "title": "only 전체지도",
+  "content": "전체지도에만 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "publicMap": "true",
+  "privateMap": "false"
+}
+
+### 개인지도에만 글쓰기
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+
+{
+  "title": "only 개인지도",
+  "content": "개인지도에만 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "publicMap": false,
+  "privateMap": true
+}
+
+### 특정 그룹에만 쓴 글
+POST http://localhost:8080/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+
+{
+  "title": "only 그룹지도",
+  "content": "그룹지도 쓴 글",
+  "latitude": 0,
+  "longitude": 0,
+  "publicMap": false,
+  "privateMap": false,
+  "groupIdsToBeIncluded": [1]
+}

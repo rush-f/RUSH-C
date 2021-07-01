@@ -12,7 +12,7 @@ const GroupContentStyle = styled.li`
 const GroupContent = (props) => {
   return (
       <GroupContentStyle onClick={() => alert("아직 개발중입니다!")}>
-        {props.children}
+        {props.groupName}
       </GroupContentStyle>
   );
 };

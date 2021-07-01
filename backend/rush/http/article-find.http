@@ -1,0 +1,17 @@
+### 전체지도 글 목록 조회
+GET http://localhost:8080/articles/public?latitude=-0.1&latitudeRange=50.0&longitude=-0.1&longitudeRange=10.0
+Content-Type: application/json
+
+### 개인지도 글 목록 조회
+GET http://localhost:8080/articles/private?latitude=-0.1&latitudeRange=10.0&longitude=-0.1&longitudeRange=10.0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI0MjE1LCJleHAiOjE2MjUwMjYwM
+
+### 전체지도 글상세 조회
+GET http://localhost:8080/articles/public/1
+Content-Type: application/json
+
+### 개인지도 글상세 조회
+GET http://localhost:8080/articles/private/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwLCJleHAiOjE2MjUwMjU0O

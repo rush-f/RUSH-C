@@ -1,0 +1,23 @@
+###
+POST http://localhost:8080/groups
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1NzE2LCJleHAiOjE2MjUwMTc1M
+
+{
+  "name": "그룹이름"
+}
+
+###
+POST http://localhost:8080/groups/join?invitation_code=aklsjdf2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1M
+
+###
+GET http://localhost:8080/groups/mine
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1M
+
+###
+GET http://localhost:8080/groups/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI0ODcxMzY2LCJleHAiOjE2MjQ4NzMxN

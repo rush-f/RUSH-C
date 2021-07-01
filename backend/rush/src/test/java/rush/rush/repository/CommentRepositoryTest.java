@@ -1,6 +1,8 @@
 package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistUser;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
-import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
 
@@ -31,17 +32,10 @@ class CommentRepositoryTest {
     @Transactional
     void findAllByArticle() {
         // given
-        User user = User.builder()
-            .email("test@test.com")
-            .password("test password")
-            .invitationCode("test invitation Code")
-            .nickName("test")
-            .provider(AuthProvider.local)
-            .build();
-        testEntityManager.persist(user);
+        User user = persistUser(testEntityManager, "test@email.com");
 
-        Article article = new Article("제목1", "내용내용", 37.14, 34.24, user);
-        testEntityManager.persist(article);
+        Article article = persistArticle(testEntityManager,
+            user, true, true, 37.14, 34.24);
 
         Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment1);
@@ -55,7 +49,7 @@ class CommentRepositoryTest {
         assertThat(comments.get(0).getContent()).isEqualTo(COMMENT_CONTENT);
         assertThat(comments.get(0).getUser().getId()).isEqualTo(user.getId());
         assertThat(comments.get(0).getArticle().getId()).isEqualTo(article.getId());
-        assertThat(comments.get(0).getId()).isEqualTo(comment2.getId());
-        assertThat(comments.get(1).getId()).isEqualTo(comment1.getId());
+        assertThat(comments.get(0).getCreateDate()).isEqualTo(comment2.getCreateDate());
+        assertThat(comments.get(1).getCreateDate()).isEqualTo(comment1.getCreateDate());
     }
 }

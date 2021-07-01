@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
+@Builder
 public class Article {
 
     @Id
@@ -41,15 +43,16 @@ public class Article {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
+    @Column(nullable = false)
+    private boolean publicMap;
+
+    @Column(nullable = false)
+    private boolean privateMap;
+
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Article(String title, String content, double latitude, double longitude, User user) {
-        this(null, title, content, latitude, longitude, user, null);
-    }
-
-    public Article(Long id, String title, String content, double latitude, double longitude,
-        User user, Timestamp createDate) {
+    public Article(Long id, String title, String content, double latitude, double longitude, User user, boolean publicMap, boolean privateMap, Timestamp createDate) {
         validate(title, content, user);
         this.id = id;
         this.title = title;
@@ -57,6 +60,8 @@ public class Article {
         this.latitude = latitude;
         this.longitude = longitude;
         this.user = user;
+        this.publicMap = publicMap;
+        this.privateMap = privateMap;
         this.createDate = createDate;
     }
 

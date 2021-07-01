@@ -1,5 +1,7 @@
 package rush.rush.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +12,12 @@ import rush.rush.domain.User;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.repository.UserRepository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class ArticleServiceTest {
+class CreateArticleServiceTest {
 
     @Autowired
-    private ArticleService articleService;
+    private CreateArticleService createArticleService;
 
     @Autowired
     private UserRepository userRepository;
@@ -29,7 +29,6 @@ class ArticleServiceTest {
         User user = User.builder()
             .email("test@test.com")
             .password("test password")
-            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
@@ -38,7 +37,8 @@ class ArticleServiceTest {
 
     @Test
     void create() {
-        CreateArticleRequest createArticleRequest = new CreateArticleRequest("af", "sdf", 0, 0);
-        assertThat(articleService.create(createArticleRequest, savedUser)).isNotNull();
+        CreateArticleRequest createArticleRequest = new CreateArticleRequest(
+            "af", "sdf", 0, 0, true, true, null);
+        assertThat(createArticleService.create(createArticleRequest, savedUser)).isNotNull();
     }
 }

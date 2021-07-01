@@ -100,9 +100,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/oauth2/**", "/h2-console/**") // Todo: h2-console 지울것
             .permitAll()
-            .antMatchers(HttpMethod.GET, "/articles/**")
+            .antMatchers(HttpMethod.GET, "/articles/public/**")
             .permitAll()
-            .antMatchers(HttpMethod.GET, "/comments/**")
+            .antMatchers(HttpMethod.GET, "/comments/**")  // Todo: 지울것
             .permitAll()
             .antMatchers(HttpMethod.POST, "/auth/**")
             .permitAll()

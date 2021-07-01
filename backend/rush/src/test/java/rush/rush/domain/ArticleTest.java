@@ -1,12 +1,11 @@
 package rush.rush.domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ArticleTest {
 
@@ -18,14 +17,21 @@ class ArticleTest {
             .id(1L)
             .email("test@test.com")
             .password("test password")
-            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
 
         // when & then
-        assertThatThrownBy(() -> new Article(null, title, content, 0, 0, user, null))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Article.builder()
+                .title(title)
+                .content(content)
+                .latitude(0.0)
+                .longitude(0.0)
+                .user(user)
+                .privateMap(true)
+                .publicMap(true)
+                .build()
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> constructorTestParameters() {

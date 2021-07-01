@@ -1,5 +1,6 @@
 package rush.rush.dto;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,4 +15,7 @@ public class CreateArticleRequest {
     private String content;
     private double latitude;    // 위도
     private double longitude;   // 경도
+    private boolean publicMap;
+    private boolean privateMap;
+    private List<Long> groupIdsToBeIncluded;
 }

@@ -1,7 +1,5 @@
 package rush.rush.controller;
 
-import java.net.URI;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +20,9 @@ import rush.rush.dto.SignUpRequest;
 import rush.rush.repository.UserRepository;
 import rush.rush.security.BadRequestException;
 import rush.rush.security.TokenProvider;
-import rush.rush.utils.HashUtil;
+
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
@@ -50,6 +50,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
+    // Todo: 컨트롤러 - 리포지토리 의존 제거할것 (서비스에 맡길것)
     @PostMapping("/signup")
     public ResponseEntity<Void> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -60,7 +61,6 @@ public class AuthController {
             .email(signUpRequest.getEmail())
             .provider(AuthProvider.local)
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
-            .invitationCode(HashUtil.hash(signUpRequest.getEmail()))
             .build();
 
         User result = userRepository.save(user);

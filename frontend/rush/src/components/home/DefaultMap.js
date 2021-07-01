@@ -1,13 +1,13 @@
 import {
-  withScriptjs,
-  withGoogleMap,
   GoogleMap,
+  InfoWindow,
   Marker,
-  InfoWindow
+  withGoogleMap,
+  withScriptjs
 } from "react-google-maps";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
-import React, {useState, useRef} from "react";
+import React, {useRef, useState} from "react";
 import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
@@ -24,7 +24,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
     setInfoWindowPostId(postId);
   };
 
-  const markers = postPositionSpreader(props.publicMapArticles).map((post, index) => <Marker
+  const markers = postPositionSpreader(props.articles).map((post, index) => <Marker
       key={index}
       position={{lat: post.latitude, lng: post.longitude}}
       animation={1}
@@ -42,7 +42,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div onClick={() => props.history.push('/articles/' + post.id)}>{post.title}</div>
+      <div onClick={() => props.history.push('/articles/' + props.mapType + '/' + post.id)}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 

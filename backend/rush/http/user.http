@@ -1,4 +1,4 @@
 ###
 GET http://localhost:8080/users/me/image
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1Njd9.8cu9PiaLFp2ebi9YZ6ALnvurfyFvbHbfwKObxr4byAPbPquFud9RXCGCGFP8H3oGjOp8ogPglr69pe77bLHqgA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N

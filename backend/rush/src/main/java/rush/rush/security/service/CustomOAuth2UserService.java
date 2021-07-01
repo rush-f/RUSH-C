@@ -17,7 +17,6 @@ import rush.rush.security.OAuth2AuthenticationProcessingException;
 import rush.rush.security.user.OAuth2UserInfo;
 import rush.rush.security.user.OAuth2UserInfoFactory;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.utils.HashUtil;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -80,7 +79,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             .password(passwordEncoder.encode(DUMMY_PASSWORD))
             .providerId(oAuth2UserInfo.getId())
             .imageUrl(oAuth2UserInfo.getImageUrl())
-            .invitationCode(HashUtil.hash(oAuth2UserInfo.getEmail()))
             .build();
         return userRepository.save(user);
     }

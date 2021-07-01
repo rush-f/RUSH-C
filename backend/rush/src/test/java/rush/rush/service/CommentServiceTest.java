@@ -1,5 +1,9 @@
 package rush.rush.service;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.List;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +16,6 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
-
-import javax.transaction.Transactional;
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -41,7 +40,7 @@ class CommentServiceTest {
         User user = User.builder()
             .email("test@test.com")
             .password("test password")
-            .invitationCode("test invitation Code")
+//            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
@@ -51,7 +50,15 @@ class CommentServiceTest {
     @Test
     void findCommentsByArticleId() {
         // given
-        Article article = new Article("title", "content", 0, 0, savedUser);
+        Article article = Article.builder()
+                .title("title")
+                .content("content")
+                .latitude(0.0)
+                .longitude(0.0)
+                .user(savedUser)
+                .publicMap(true)
+                .privateMap(true)
+                .build();
         articleRepository.save(article);
 
         Comment comment = new Comment("댓글내용", savedUser, article);
