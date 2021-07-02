@@ -30,8 +30,19 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             ref={(map) => setMap(map)}
             defaultZoom={16}
             defaultCenter={{lat: 37.63185105917152, lng: 127.07745984005722}}
-            defaultOptions={defaultMapOptions}
-            streetView
+            defaultOptions={{
+              disableDefaultUI:true,
+              maxZoom:21,
+              minZoom:3,
+              restriction: {
+                latLngBounds: {
+                  north: 85,
+                  south: -85,
+                  west: -180,
+                  east: 180,
+                },
+              },
+            }}
             onCenterChanged={() => {
               props.setCenter(map.getCenter());
               setLat(props.center.lat);
