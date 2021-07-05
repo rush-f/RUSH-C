@@ -5,7 +5,7 @@ import LoginPage from './components/login/LoginPage';
 import WritingPage from './components/writing/WritingPage';
 import ArticleDetailPage from "./components/articleDetail/ArticleDetailPage";
 import OAuth2RedirectHandler from "./components/login/OAuth2RedirectHandler";
-import MyPage from "./components/home/button/Menu/MyPage";
+import MyPage from "./components/home/button/Menu/MyPage/MyPage";
 
 function App() {
   return (<Router>
