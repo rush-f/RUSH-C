@@ -5,7 +5,7 @@ import CancelButton from "./CancelButton";
 import GroupNameInput from "./GroupNameInput";
 import CompleteButton from "./CompleteButton";
 
-const CreateGroupModal = ({isCreateGroupModalOpen}) => {
+const CreateGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) => {
   const [groupName, setGroupName] = useState("");
 
   return (
@@ -24,7 +24,10 @@ const CreateGroupModal = ({isCreateGroupModalOpen}) => {
       }}
       contentLabel="create group"       //모달의 라벨
     >
-      <CancelButton/>
+      <CancelButton
+        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+        setGroupName={setGroupName}
+      />
       <GroupNameInput
         value={groupName}
         onChange={e => setGroupName(e.target.value)}
@@ -32,7 +35,7 @@ const CreateGroupModal = ({isCreateGroupModalOpen}) => {
         style={{height: WindowSize().height - 300}}
       />
       <CompleteButton
-        isCreateGroupModalOpen={isCreateGroupModalOpen}
+        isCreateGroupModalOpen={setIsCreateGroupModalOpen}
         groupName={groupName}
       />
     </Modal>

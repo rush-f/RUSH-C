@@ -101,7 +101,10 @@ const DefaultMapPage = (props) => {
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
       history={props.history}
     />
-    <CreateGroupModal isCreateGroupModalOpen={isCreateGroupModalOpen}/>
+    <CreateGroupModal
+      isCreateGroupModalOpen={isCreateGroupModalOpen}
+      setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+    />
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>

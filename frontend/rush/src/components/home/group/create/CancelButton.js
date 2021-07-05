@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import {withRouter} from "react-router-dom";
 
 const StyledCancelButton = styled.div`
   display: inline-block;
@@ -15,15 +14,14 @@ const StyledCancelButton = styled.div`
   cursor: pointer;
 `;
 
-const CancelButton = ({history}) => {
+const CancelButton = ({setIsCreateGroupModalOpen, setGroupName}) => {
   return (<div style={{ position: "relative", width: "100%", height: "36px"}}>
       <StyledCancelButton onClick={() => {
-        if (window.confirm("그룹 만들기를 취소하겠습니까?")) {
-          history.push("/");
-        }
+        setIsCreateGroupModalOpen(false);
+        setGroupName("");
       }}>x</StyledCancelButton>
     </div>
   );
 };
 
-export default withRouter(CancelButton);
+export default CancelButton;
