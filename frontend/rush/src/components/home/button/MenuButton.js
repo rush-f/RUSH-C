@@ -16,10 +16,10 @@ const BurgerMenuContents = styled.div`
 
 const Menu = (props) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
-
+  const url = props.accessToken? "/mypage" : "/login";
   return (<>
     <BurgerMenu disableAutoFocus>
-      <BurgerMenuContents onClick={()=> props.history.push('/mypage')}>마이페이지</BurgerMenuContents>
+      <BurgerMenuContents onClick={()=> props.history.push(url)}>마이페이지</BurgerMenuContents>
       <BurgerMenuContents onClick={() => props.setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
