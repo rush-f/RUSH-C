@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Outside, DisplayBox, StyledDiv, Name,Email} from "./Box";
+import {Outside, DisplayBox, StyledDiv} from "./Box";
 import WindowSize from "../../../../WindowSize";
 import CancelButton from "./CancelButton";
 import findUserApi from "./findUserApi";
@@ -7,12 +7,11 @@ import findMyArticlesApi from "./findMyArticlesApi";
 import {ACCESS_TOKEN} from "../../../../../constants/SessionStorage";
 import Profile from "./Profile";
 import Info from "./Info";
-import GroupsMap
-  from "../../../../writing/step3/selectionList/groupsMap/GroupsMap";
+import MyArticles from "./articlesList/MyArticles";
 
 const MyPage = (props) => {
 
-  const [isGroupOpened, setIsGroupOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
   const [user, setUser] = useState(null);
   const [myArticles, setMyArticles] = useState(null);
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -38,7 +37,11 @@ const MyPage = (props) => {
             {<Profile userImageUrl={user ? user.imageUrl : ""}/>}
             {<Info user={user ? user : ""}/>}
           </StyledDiv>
-
+          <MyArticles
+              myArticles={myArticles}
+              isOpened={isOpened}
+              setIsOpened={setIsOpened}
+          />
         </DisplayBox>
       </Outside>
   );
