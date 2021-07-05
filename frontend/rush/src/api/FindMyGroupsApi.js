@@ -1,6 +1,6 @@
-import {ACCESS_TOKEN} from "../../constants/SessionStorage";
+import {ACCESS_TOKEN} from "../constants/SessionStorage";
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
 const findMyGroupsApi = (history) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);

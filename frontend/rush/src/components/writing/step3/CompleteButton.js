@@ -1,5 +1,5 @@
 import React from 'react';
-import createWritingApi from "../CreateWritingApi";
+import createWritingApi from "../../../api/CreateWritingApi";
 import {withRouter} from "react-router-dom";
 
 const CompleteButton = (props) => {

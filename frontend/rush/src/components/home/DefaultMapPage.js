@@ -5,14 +5,14 @@ import Menu from "./button/MenuButton";
 import LoginButton from "./button/LoginButton";
 import WriteButton from "./button/WriteButton";
 import WindowSize from "../WindowSize";
-import findUserImageUrlApi from "./FindUserImageUrlApi";
+import findUserImageUrlApi from "../../api/FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import {
   findGroupedMapArticles,
   findPrivateMapArticles,
   findPublicMapArticles
-} from "./FindMapArticlesApi";
+} from "../../api/FindMapArticlesApi";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import {withRouter} from "react-router-dom";
 import CreateGroupModal from "./group/create/CreateGroupModal";
