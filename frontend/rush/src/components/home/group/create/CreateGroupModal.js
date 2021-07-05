@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Modal from "react-modal";
-import WindowSize from "../../../WindowSize";
 import CancelButton from "./CancelButton";
 import GroupNameInput from "./GroupNameInput";
 import CompleteButton from "./CompleteButton";
@@ -32,7 +31,6 @@ const CreateGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) =
         value={groupName}
         onChange={e => setGroupName(e.target.value)}
         placeholder={"그룹이름"}
-        style={{height: WindowSize().height - 300}}
       />
       <CompleteButton
         isCreateGroupModalOpen={setIsCreateGroupModalOpen}

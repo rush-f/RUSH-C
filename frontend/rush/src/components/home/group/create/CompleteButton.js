@@ -13,15 +13,12 @@ const CompleteButton = ({isCreateGroupModalOpen, groupName, history}) => {
         createGroupApi({groupName, history});
       }}
       style={{
-        position: "absolute",
-        bottom: 0,
-        right: 0,
         backgroundColor: "#00000000",
         width: "100px",
         height: "50px",
         margin: "10px",
       }}
-    > 다음 </button>
+    > 그룹만들기 </button>
     }
   </>;
 };
