@@ -15,12 +15,13 @@ const ArticleContentStyle = styled.div`
 `;
 
 const ArticleContent = (props) => {
+  console.log(props.article)
   return (
       <ArticleContentStyle onClick={()=>{props.history.push('/')}}>
         {props.article.title}&nbsp;&nbsp;&nbsp;
         {props.article.publicMap? " 전체지도":""}
         {props.article.privateMap? " 개인지도":""}
-        {props.article.groups? " 그룹리스트나열할예정":""}
+        {props.article.groups.length>=1? " 그룹리스트나열할예정":""}
       </ArticleContentStyle>
   );
 };
