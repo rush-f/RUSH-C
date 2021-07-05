@@ -8,18 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.LocationRange;
 import rush.rush.domain.User;
+import rush.rush.domain.UserGroup;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.AuthorResponse;
+import rush.rush.repository.ArticleGroupRepository;
 import rush.rush.repository.ArticleRepository;
+import rush.rush.repository.UserGroupRepository;
 
 @Service
 @RequiredArgsConstructor
 public class FindArticleService {
 
     private final ArticleRepository articleRepository;
+    private final UserGroupRepository userGroupRepository;
+    private final ArticleGroupRepository articleGroupRepository;
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
@@ -28,8 +34,6 @@ public class FindArticleService {
                 new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
         User user = article.getUser();
-        AuthorResponse authorResponse = new AuthorResponse(user.getId(),
-            user.getNickName(), user.getImageUrl());
 
         return toResponse(article);
     }
@@ -84,6 +88,22 @@ public class FindArticleService {
                 locationRange.getLowerLatitude(), locationRange.getUpperLatitude(),
                 locationRange.getLowerLongitude(), locationRange.getUpperLongitude());
 
+        return toResponses(articles);
+    }
+
+    @Transactional
+    public List<ArticleSummaryResponse> findGroupedMapArticles(Long groupId,
+            Double latitude, Double latitudeRange, Double longitude, Double longitudeRange, User user) {
+        UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
+            .orElseThrow(() -> new IllegalArgumentException(
+                "ID=" + user.getId() + "인 사용자가 ID=" + groupId + "인 그룹에 속해있지 않습니다."));
+
+        // Todo: 일부분만 가져오도록 구현
+        List<ArticleGroup> articleGroups = articleGroupRepository.findAllByGroupId(groupId);
+
+        List<Article> articles = articleGroups.stream()
+            .map(ArticleGroup::getArticle)
+            .collect(Collectors.toUnmodifiableList());
         return toResponses(articles);
     }
 

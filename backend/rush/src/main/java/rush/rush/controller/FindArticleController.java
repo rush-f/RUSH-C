@@ -42,9 +42,23 @@ public class FindArticleController {
             @RequestParam(value = "longitudeRange") Double longitudeRange,
             @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> privateMapArticles = findArticleService.findPrivateMapArticles(
-            latitude, latitudeRange,longitude, longitudeRange, userPrincipal.getUser());
+            latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
         return ResponseEntity.ok()
             .body(privateMapArticles);
+    }
+
+    @GetMapping("/grouped")
+    public ResponseEntity<List<ArticleSummaryResponse>> findGroupedMapArticles(
+        @RequestParam(value = "groupId") Long groupId,
+        @RequestParam(value = "latitude") Double latitude,
+        @RequestParam(value = "latitudeRange") Double latitudeRange,
+        @RequestParam(value = "longitude") Double longitude,
+        @RequestParam(value = "longitudeRange") Double longitudeRange,
+        @CurrentUser UserPrincipal userPrincipal) {
+        List<ArticleSummaryResponse> groupMapArticles = findArticleService.findGroupedMapArticles(
+            groupId, latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
+        return ResponseEntity.ok()
+            .body(groupMapArticles);
     }
 
     @GetMapping("/public/{id}")
