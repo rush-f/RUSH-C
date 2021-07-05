@@ -1,7 +1,7 @@
 ### 전체지도에만 글쓰기
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDg0ODI4LCJleHAiOjE2MjU0ODY2Mjh9.hhsqm2fqH2Px7J3IydjRXVYo7F23KbDAv0GrTzQxuzPTn7wHLdSdEl-j7vqo0mLd0vWakZA2I7kbO1AzntKg_Q
 
 {
   "title": "only 전체지도",
@@ -15,7 +15,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1L
 ### 개인지도에만 글쓰기
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDg0ODI4LCJleHAiOjE2MjU0ODY2Mjh9.hhsqm2fqH2Px7J3IydjRXVYo7F23KbDAv0GrTzQxuzPTn7wHLdSdEl-j7vqo0mLd0vWakZA2I7kbO1AzntKg_Q
 
 {
   "title": "only 개인지도",
@@ -29,7 +29,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1L
 ### 특정 그룹에만 쓴 글
 POST http://localhost:8080/articles
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDg0ODI4LCJleHAiOjE2MjU0ODY2Mjh9.hhsqm2fqH2Px7J3IydjRXVYo7F23KbDAv0GrTzQxuzPTn7wHLdSdEl-j7vqo0mLd0vWakZA2I7kbO1AzntKg_Q
 
 {
   "title": "only 그룹지도",
