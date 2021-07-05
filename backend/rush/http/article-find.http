@@ -20,3 +20,8 @@ Content-Type: application/json
 GET http://localhost:8080/articles/private/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwLCJleHAiOjE2MjUwMjU0O
+
+### 그룹지도 글상세 조회
+GET http://localhost:8080/articles/grouped/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwLCJleHAiOjE2MjUwMjU0O

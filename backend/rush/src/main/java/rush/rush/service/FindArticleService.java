@@ -47,6 +47,28 @@ public class FindArticleService {
         return toResponse(article);
     }
 
+    @Transactional
+    public ArticleResponse findGroupArticle(Long id, User me) {
+        Article article = articleRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("ID=" + id + "인 글이 존재하지 않습니다."));
+
+        List<ArticleGroup> articleGroups = articleGroupRepository.findAllByArticleId(id);
+        List<UserGroup> userGroups = userGroupRepository.findAllByUserId(me.getId());
+
+        List<Long> groupIdsOfArticle = articleGroups.stream()
+            .map(articleGroup -> articleGroup.getGroup().getId())
+            .collect(Collectors.toUnmodifiableList());
+
+        boolean hasAuthority = userGroups.stream()
+            .anyMatch(userGroup -> groupIdsOfArticle.contains(userGroup.getGroup().getId()));
+
+        if (!hasAuthority) {
+            throw new IllegalArgumentException(
+                "ID=" + me.getId() + "인 사용자는 ID=" + id + "인 글을 볼 권한이 없습니다.");
+        }
+        return toResponse(article);
+    }
+
     private ArticleResponse toResponse(Article article) {
         User author = article.getUser();
         AuthorResponse authorResponse = new AuthorResponse(author.getId(),
@@ -94,7 +116,7 @@ public class FindArticleService {
     @Transactional
     public List<ArticleSummaryResponse> findGroupedMapArticles(Long groupId,
             Double latitude, Double latitudeRange, Double longitude, Double longitudeRange, User user) {
-        UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
+        userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
             .orElseThrow(() -> new IllegalArgumentException(
                 "ID=" + user.getId() + "인 사용자가 ID=" + groupId + "인 그룹에 속해있지 않습니다."));
 
