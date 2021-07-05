@@ -26,7 +26,8 @@ public class UserController {
             .body(userImageResponse);
     }
 
-
+    @GetMapping("/users/me")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserResponse> findUser(@CurrentUser UserPrincipal userPrincipal){
             UserResponse userResponse = userService.findUser(userPrincipal);
 
