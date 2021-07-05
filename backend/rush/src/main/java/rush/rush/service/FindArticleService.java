@@ -99,4 +99,5 @@ public class FindArticleService {
                 article.getTitle()))
             .collect(Collectors.toUnmodifiableList());
     }
+
 }

@@ -15,6 +15,6 @@ public class MyPageArticleResponse {
     private String title;
     private boolean publicMap;
     private boolean privateMap;
-    private List<Long> groupIdsToBeIncluded;
+    private List<GroupSummaryResponse> groups;
 
 }

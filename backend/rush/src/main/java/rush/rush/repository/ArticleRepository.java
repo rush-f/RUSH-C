@@ -7,6 +7,8 @@ import rush.rush.domain.Article;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+    List<Article> findAllByUserId(Long userId);
+
     List<Article> findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
