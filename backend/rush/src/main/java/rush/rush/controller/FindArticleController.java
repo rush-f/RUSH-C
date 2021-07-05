@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
+import rush.rush.dto.MyPageArticleResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.FindArticleService;
