@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.User;
 import rush.rush.dto.UserImageResponse;
+import rush.rush.dto.UserResponse;
 import rush.rush.repository.UserRepository;
 import rush.rush.security.user.UserPrincipal;
 
@@ -20,5 +21,17 @@ public class UserService {
             .orElseThrow(() -> new IllegalArgumentException(
                 "userId가 " + userPrincipal.getId() + "인 user를 찾지 못했습니다."));
         return new UserImageResponse(user.getId(), user.getImageUrl());
+    }
+
+    public UserResponse findUser(UserPrincipal userPrincipal) {
+        User user = userRepository.findById(userPrincipal.getId())
+            .orElseThrow(() -> new IllegalArgumentException(
+                "userId가 " + userPrincipal.getId() + "인 user를 찾지 못했습니다."));
+        return new UserResponse(
+            user.getId(),
+            user.getImageUrl(),
+            user.getNickName(),
+            user.getEmail(),
+            user.getVisitDate());
     }
 }

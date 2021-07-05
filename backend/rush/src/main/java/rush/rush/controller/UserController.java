@@ -1,6 +1,5 @@
 package rush.rush.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,10 +27,11 @@ public class UserController {
     }
 
 
-    public ResponseEntity<List<UserResponse>> findUser(@CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<UserResponse> findUser(@CurrentUser UserPrincipal userPrincipal){
+            UserResponse userResponse = userService.findUser(userPrincipal);
 
-
-
+            return ResponseEntity.ok().
+                body(userResponse);
     }
 
 
