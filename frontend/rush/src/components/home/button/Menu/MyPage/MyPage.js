@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Outside, DisplayBox, StyledDiv, Info, Name,Email} from "./Box";
+import {Outside, DisplayBox, StyledDiv, Name,Email} from "./Box";
 import WindowSize from "../../../../WindowSize";
 import CancelButton from "./CancelButton";
 import findUserApi from "./findUserApi";
 import {ACCESS_TOKEN} from "../../../../../constants/SessionStorage";
 import Profile from "./Profile";
 import CreateDate from "../../../../../util/CreateDate";
+import Info from "./Info";
 
 const MyPage = (props) => {
 
@@ -27,15 +28,7 @@ const MyPage = (props) => {
           <CancelButton/>
           <StyledDiv>
             {<Profile userImageUrl={user ? user.imageUrl : ""}/>}
-            <Info>
-              <Name>
-                {user.nickName}
-              </Name>
-              <Email>
-                {user.email}
-              </Email>
-              <CreateDate iso8601format={user.visitDate}/>
-            </Info>
+            {<Info user={user ? user : ""}/>}
           </StyledDiv>
 
         </DisplayBox>

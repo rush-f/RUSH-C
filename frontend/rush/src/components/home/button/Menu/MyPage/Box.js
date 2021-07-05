@@ -17,10 +17,7 @@ const StyledDiv = styled.div`
   justify: center;
   margin-top: 40px;
 `;
-const Info = styled.div`
-  padding-Top: 2px;
-  margin-left:20px
-`;
+
 const Name = styled.div`
   font-size: 20px;
 
@@ -31,4 +28,4 @@ const Email = styled.div`
 
 `;
 
-export { Outside, DisplayBox, StyledDiv,Info, Name, Email};
+export { Outside, DisplayBox, StyledDiv, Name, Email};
