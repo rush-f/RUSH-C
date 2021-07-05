@@ -17,7 +17,6 @@ public class SetUpMethods {
             .provider(AuthProvider.local)
             .build();
         user = testEntityManager.persist(user);
-        testEntityManager.flush();
         return user;
     }
 
@@ -27,7 +26,6 @@ public class SetUpMethods {
             .build();
         group = testEntityManager.persist(group);
         group.setInvitationCode("ABCDE" + group.getId());
-        testEntityManager.flush();
         return group;
     }
 
@@ -37,7 +35,6 @@ public class SetUpMethods {
             .user(user)
             .build();
         testEntityManager.persist(userGroup);
-        testEntityManager.flush();
     }
 
     public static Article persistArticle(TestEntityManager testEntityManager, User user,
@@ -53,7 +50,6 @@ public class SetUpMethods {
             .privateMap(isPrivateMap)
             .build();
         article = testEntityManager.persist(article);
-        testEntityManager.flush();
         return article;
     }
 }
