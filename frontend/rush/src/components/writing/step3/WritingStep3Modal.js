@@ -88,7 +88,7 @@ const WritingStep3Modal = (props) => {
             center={props.center}
             publicMap={props.isPublicMapChecked}
             privateMap={props.isPrivateMapChecked}
-            groups={props.checkedGroups}
+            groupIds={props.checkedGroups.map(group => group.id)}
         />
       </Modal>
   );

@@ -3,22 +3,23 @@ import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 import {ACCESS_TOKEN} from "../constants/SessionStorage";
 
-const createWritingApi = (props) => {
+const createWritingApi = ({title, content, center, publicMap, privateMap,
+    groupIds, history}) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
-    props.history.push('/login');
+    history.push('/login');
     return Promise.reject("토큰이 없음");
   }
   const body = {
-    title: props.title,
-    content: props.content,
-    latitude: props.center.lat(),
-    longitude: props.center.lng(),
-    publicMap: props.publicMap,
-    privateMap: props.privateMap,
-    groups: props.groups
+    title: title,
+    content: content,
+    latitude: center.lat(),
+    longitude: center.lng(),
+    publicMap: publicMap,
+    privateMap: privateMap,
+    groupIdsToBeIncluded: groupIds
   };
   const config = {
     headers: {
@@ -29,17 +30,17 @@ const createWritingApi = (props) => {
     .then(response => {
       if (response.status === 201) {
          const uri = response.headers.location;
-         props.history.push(uri);
+         history.push(uri);
       }
     })
     .catch(error => {
       if (error.response.status === 401 || error.response.status === 403) {
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
-        props.history.push("/login");
+        history.push("/login");
         return;
       }
       alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
-      props.history.push("/");
+      history.push("/");
     });
 };
 
