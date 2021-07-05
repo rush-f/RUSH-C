@@ -12,5 +12,23 @@ const DisplayBox = styled.div`
   overflow-y: scroll;
 `;
 
+const StyledDiv = styled.div`
+  display: flex;
+  justify: center;
+  margin-top: 40px;
+`;
+const Info = styled.div`
+  padding-Top: 2px;
+  margin-left:20px
+`;
+const Name = styled.div`
+  font-size: 20px;
 
-export { Outside, DisplayBox };
+`;
+
+const Email = styled.div`
+  font-size: 20px;
+
+`;
+
+export { Outside, DisplayBox, StyledDiv,Info, Name, Email};
