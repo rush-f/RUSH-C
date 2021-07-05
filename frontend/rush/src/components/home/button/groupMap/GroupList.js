@@ -28,10 +28,7 @@ const GroupList = (props) => {
     if (props.isGroupOpened) {
       findMyGroupsApi(props.history).then(groupsPromise => {
         setGroups(groupsPromise)
-      }).catch(() => {
-        alert("로그인이 필요한 서비스입니다.")
-        props.history.push('/login');
-      })
+      });
     }
   }, [props.isGroupOpened]);
 

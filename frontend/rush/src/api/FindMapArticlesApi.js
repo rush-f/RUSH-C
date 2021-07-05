@@ -16,7 +16,9 @@ export const findPrivateMapArticles = (latitude, latitudeRange, longitude, longi
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken) {
-    return Promise.reject("로그인이 필요합니다.");
+    alert("로그인이 필요한 서비스입니다.")
+    history.push('/login');
+    return Promise.reject("토큰이 없음");
   }
   const config = {
     headers: {
