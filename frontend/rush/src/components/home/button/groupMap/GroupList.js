@@ -52,7 +52,9 @@ const GroupList = (props) => {
                 />
               ) : []
             }
-            <GroupSetting>그룹 만들기</GroupSetting>
+            <GroupSetting onClick={() => props.setIsCreateGroupModalOpen(true)}>
+              그룹 만들기
+            </GroupSetting>
             <GroupSetting>그룹 가입하기</GroupSetting>
           </div>
         }

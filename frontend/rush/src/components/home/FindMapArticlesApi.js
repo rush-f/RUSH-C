@@ -14,6 +14,10 @@ export const findPublicMapArticles = (latitude, latitudeRange, longitude, longit
 
 export const findPrivateMapArticles = (latitude, latitudeRange, longitude, longitudeRange, history) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
+
+  if (!accessToken) {
+    return Promise.reject("로그인이 필요합니다.");
+  }
   const config = {
     headers: {
       "Authorization": "Bearer " + accessToken

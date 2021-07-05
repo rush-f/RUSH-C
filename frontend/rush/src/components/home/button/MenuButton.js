@@ -14,23 +14,24 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = (props) => {
+const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen, history}) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
 
   return (<>
     <BurgerMenu disableAutoFocus>
       <BurgerMenuContents onClick={() => alert("아직 개발중입니다!")}>마이페이지</BurgerMenuContents>
-      <BurgerMenuContents onClick={() => props.setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
       </BurgerMenuContents>
       <GroupList
         isGroupOpened={isGroupOpened}
-        setMapType={props.setMapType}
-        setGroupId={props.setGroupId}
-        history={props.history}
+        setMapType={setMapType}
+        setGroupId={setGroupId}
+        history={history}
+        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
       />
-      <BurgerMenuContents onClick={() => props.setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
     </BurgerMenu>
   </>);
 }

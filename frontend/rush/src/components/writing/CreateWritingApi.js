@@ -7,7 +7,7 @@ const createWritingApi = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken) {
-    return Promise.reject("토큰이 이상함");
+    return Promise.reject("로그인이 필요합니다.");
   }
   const body = {
     title: props.title,

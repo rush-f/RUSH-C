@@ -15,22 +15,26 @@ import {
 } from "./FindMapArticlesApi";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import {withRouter} from "react-router-dom";
+import CreateGroupModal from "./group/create/CreateGroupModal";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
   const LngRangeRatio = 0.70378;
 
   const [windowSize, setWindowSize] = useState(WindowSize());
-
+  // 사용자 관련
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
+  const [userImageUrl, setUserImageUrl] = useState(null);
+  // 메뉴 관련
   const [mapType, setMapType] = useState(PUBLIC);
   const [groupId, setGroupId] = useState(0);
   const [zoom, setZoom] = useState(16);
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  // 지도 관련
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
     lng: () => 127.07745984005722,
   });
-  const [userImageUrl, setUserImageUrl] = useState(null);
   const [articles, setArticles] = useState([]);
   const [latitudeRange, setLatitudeRange] = useState(0.0095);
   const [longitudeRange, setLongitudeRange] = useState(0.025);
@@ -93,8 +97,11 @@ const DefaultMapPage = (props) => {
     <Menu
       setMapType={setMapType}
       setGroupId={setGroupId}
+      isCreateGroupModalOpen={isCreateGroupModalOpen}
+      setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
       history={props.history}
     />
+    <CreateGroupModal isCreateGroupModalOpen={isCreateGroupModalOpen}/>
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>
