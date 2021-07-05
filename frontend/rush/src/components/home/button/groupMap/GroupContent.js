@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {GROUPED} from "../../../../constants/MapType";
 
 const GroupContentStyle = styled.li`
   height: 50px;
@@ -9,10 +10,15 @@ const GroupContentStyle = styled.li`
   cursor: pointer;
 `;
 
-const GroupContent = (props) => {
+const GroupContent = ({groupName, groupId, setMapType, setGroupId}) => {
+  const onClick = () => {
+    setMapType(GROUPED);
+    setGroupId(groupId);
+  };
+
   return (
-      <GroupContentStyle onClick={() => alert("아직 개발중입니다!")}>
-        {props.groupName}
+      <GroupContentStyle onClick={() => onClick()}>
+        {groupName}
       </GroupContentStyle>
   );
 };

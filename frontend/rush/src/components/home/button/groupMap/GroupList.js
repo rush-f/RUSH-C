@@ -46,6 +46,8 @@ const GroupList = (props) => {
                 <GroupContent
                   groupName={group.name}
                   groupId={group.id}
+                  setMapType={props.setMapType}
+                  setGroupId={props.setGroupId}
                 />
               ) : []
             }
