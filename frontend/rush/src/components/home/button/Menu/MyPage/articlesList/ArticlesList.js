@@ -10,7 +10,10 @@ const ArticlesList = (props) => {
   }, [props]);
 
   const articlePresent = props.myArticles ? props.myArticles.map((article) =>
-      <ArticleContent article={article}/>
+      <ArticleContent
+          article={article}
+          hitsory={props.history}
+      />
   ) : "";
 
   const styles = {
