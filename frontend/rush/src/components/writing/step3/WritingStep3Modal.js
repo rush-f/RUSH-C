@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import SelectAllButton from "./SelectAllButton";
 import PublicMap from "./selectionList/PublicMap";
-import GroupsMap from "./selectionList/groupsMap/GroupsMap";
+import GroupsMap from "./selectionList/groups/GroupsMap";
 import PrivateMap from "./selectionList/PrivateMap";
 import CancelButton from "../CancelButton";
 import styled from "styled-components";
 import CompleteButton from "./CompleteButton";
 import BackButton from "./BackButton";
 import WindowSize from "../../WindowSize";
+import findMyGroupsApi from "../../../api/FindMyGroupsApi";
 
 const StyledDiv = styled.div`
   padding: 15px;
@@ -17,19 +18,16 @@ const StyledDiv = styled.div`
 `;
 
 const WritingStep3Modal = (props) => {
-  const groups = [
-    {id: 1, name: "그룹A"},
-    {id: 3, name: "그룹C"},
-    {id: 4, name: "그룹D"},
-    {id: 5, name: "그룹D"},
-    {id: 6, name: "그룹D"},
-    {id: 7, name: "그룹D"},
-    {id: 8, name: "그룹D"},
-    {id: 9, name: "그룹D"},
-    {id: 11, name: "그룹D"},
-    {id: 24, name: "그룹D"},
-  ];
   const [isGroupOpened, setIsGroupOpened] = useState(false);
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    if (isGroupOpened) {
+      findMyGroupsApi(props.history).then(groupsPromise => {
+        setGroups(groupsPromise)
+      });
+    }
+  }, [isGroupOpened]);
 
   const onGroupCheckboxClicked = (groupId) => {
     if (props.checkedGroups.includes(groupId)) {
