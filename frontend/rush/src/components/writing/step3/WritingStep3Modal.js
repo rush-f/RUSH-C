@@ -30,10 +30,10 @@ const WritingStep3Modal = (props) => {
   }, [isGroupOpened]);
 
   const onGroupCheckboxClicked = (groupId) => {
-    if (props.checkedGroups.includes(groupId)) {
-      props.setCheckedGroups(props.checkedGroups.filter(e => e !== groupId))
+    if (props.checkedGroupIds.includes(groupId)) {
+      props.setCheckedGroups(props.checkedGroupIds.filter(e => e !== groupId))
     } else {
-      props.setCheckedGroups([...props.checkedGroups, groupId]);
+      props.setCheckedGroups([...props.checkedGroupIds, groupId]);
     }
   };
 
@@ -58,7 +58,7 @@ const WritingStep3Modal = (props) => {
         <SelectAllButton
             isPublicMapChecked={props.isPublicMapChecked}
             isPrivateMapChecked={props.isPrivateMapChecked}
-            checkedGroups={props.checkedGroups}
+            checkedGroups={props.checkedGroupIds}
             setIsPublicMapChecked={props.setIsPublicMapChecked}
             setIsPrivateMapChecked={props.setIsPrivateMapChecked}
             setCheckedGroups={props.setCheckedGroups}
@@ -70,7 +70,7 @@ const WritingStep3Modal = (props) => {
         />
         <GroupsMap
             groups={groups}
-            checkedGroups={props.checkedGroups}
+            checkedGroups={props.checkedGroupIds}
             isGroupOpened={isGroupOpened}
             setIsGroupOpened={setIsGroupOpened}
             onGroupCheckboxClicked={onGroupCheckboxClicked}
@@ -88,7 +88,7 @@ const WritingStep3Modal = (props) => {
             center={props.center}
             publicMap={props.isPublicMapChecked}
             privateMap={props.isPrivateMapChecked}
-            groupIds={props.checkedGroups.map(group => group.id)}
+            groupIds={props.checkedGroupIds}
         />
       </Modal>
   );
