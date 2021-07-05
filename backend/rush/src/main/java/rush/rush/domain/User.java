@@ -1,16 +1,21 @@
 package rush.rush.domain;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -65,7 +70,6 @@ public class User {
         this.imageUrl = imageUrl;
         this.joinDate = joinDate;
         this.visitDate = visitDate;
-//        this.invitationCode = invitationCode;
         this.provider = provider;
         this.providerId = providerId;
     }
@@ -83,7 +87,6 @@ public class User {
         String providerId) {
         validateNickName(nickName);
         validatePassword(password);
-//        validateInvitationCode(invitationCode);
         validateAuthProvider(provider);
         validateEmail(email);
     }
@@ -113,12 +116,6 @@ public class User {
             throw new IllegalArgumentException("비밀번호가 잘못되었습니다.");
         }
     }
-
-//    private void validateInvitationCode(String invitationCode) {
-//        if (Objects.isNull(invitationCode) || invitationCode.isEmpty()) {
-//            throw new IllegalArgumentException("초대코드가 잘못되었습니다.");
-//        }
-//    }
 
     private void validateAuthProvider(AuthProvider provider) {
         if (Objects.isNull(provider)) {
