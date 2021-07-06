@@ -23,6 +23,7 @@ public class UserService {
         return new UserImageResponse(user.getId(), user.getImageUrl());
     }
 
+    @transactional
     public UserResponse findUser(UserPrincipal userPrincipal) {
         User user = userRepository.findById(userPrincipal.getId())
             .orElseThrow(() -> new IllegalArgumentException(
