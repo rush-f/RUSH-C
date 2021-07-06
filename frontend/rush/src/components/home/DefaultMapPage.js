@@ -68,7 +68,7 @@ const DefaultMapPage = (props) => {
           setArticles(mapArticlesPromise)
         });
     }
-  }, [zoom, center, mapType]);
+  }, [zoom, center, mapType, groupId]);
 
   useEffect(() => {
     if (!accessToken) {
