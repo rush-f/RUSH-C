@@ -16,5 +16,4 @@ public class MyPageArticleResponse {
     private boolean publicMap;
     private boolean privateMap;
     private List<GroupSummaryResponse> groups;
-
 }
