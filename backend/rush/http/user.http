@@ -1,9 +1,9 @@
 ###
 GET http://localhost:8080/users/me/image
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDc1NTA1LCJleHAiOjE2MjU0NzczMDV9.Dyv7gMRBKI3w2SjUyQoZmzuq0KkMM_IFhiAAia3NfShMBbc9Nt0dYVVw92CeLNpmZqxTwDFgjx5b1hrBfFCvFQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
 
 ###
 GET http://localhost:8080/users/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDc1NTA1LCJleHAiOjE2MjU0NzczMDV9.Dyv7gMRBKI3w2SjUyQoZmzuq0KkMM_IFhiAAia3NfShMBbc9Nt0dYVVw92CeLNpmZqxTwDFgjx5b1hrBfFCvFQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
