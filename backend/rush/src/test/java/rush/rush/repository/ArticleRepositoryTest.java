@@ -32,7 +32,6 @@ class ArticleRepositoryTest {
         // given
         User user = persistUser(testEntityManager, "test@email.com");
 
-
         persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         persistArticle(testEntityManager, user, false, false, 40.63, 127.0);
         persistArticle(testEntityManager, user, false, true, 40.63, 127.0);
