@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
@@ -18,7 +19,8 @@ public class FindMyArticlesService {
 
     final private ArticleRepository articleRepository;
     final private ArticleGroupRepository articleGroupRepository;
-
+    
+    @Transactional
     public List<MyPageArticleResponse> findMyArticles(Long userId) {
 
         List<Article> articles = articleRepository.findAllByUserId(userId);
@@ -36,7 +38,7 @@ public class FindMyArticlesService {
             .collect(Collectors.toUnmodifiableList());
     }
 
-
+    @Transactional
     public List<GroupSummaryResponse> findAllByArticle(Article article) {
 
         List<ArticleGroup> articleGroups = articleGroupRepository.findAllByArticleId(article.getId());
