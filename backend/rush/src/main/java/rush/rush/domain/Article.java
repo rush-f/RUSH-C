@@ -40,7 +40,7 @@ public class Article {
     private Double longitude;   // 경도
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID",nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @Column(nullable = false)
