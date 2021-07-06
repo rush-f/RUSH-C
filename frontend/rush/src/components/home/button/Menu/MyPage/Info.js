@@ -8,6 +8,7 @@ const StyledInfo = styled.div`
   margin-left:20px
 `;
 const Info = (props) => {
+  
   return (
       <StyledInfo>
         <Name>
