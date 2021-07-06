@@ -16,6 +16,4 @@ public class UserResponse {
     private String nickName;
     private String email;
     private Timestamp visitDate;
-
-
 }
