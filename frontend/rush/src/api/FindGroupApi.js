@@ -1,10 +1,7 @@
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
 
-const findGroupApi = (groupId) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
-
+const findGroupApi = ({ groupId, accessToken, history }) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
