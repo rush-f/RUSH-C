@@ -5,7 +5,7 @@ Content-Type: application/json
 ### 개인지도 글 목록 조회
 GET http://localhost:8080/articles/private?latitude=-0.1&latitudeRange=10.0&longitude=-0.1&longitudeRange=10.0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDg0ODI4LCJleHAiOjE2MjU0ODY2Mjh9.hhsqm2fqH2Px7J3IydjRXVYo7F23KbDAv0GrTzQxuzPTn7wHLdSdEl-j7vqo0mLd0vWakZA2I7kbO1AzntKg_Q
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
 ### 전체지도 글상세 조회
 GET http://localhost:8080/articles/public/1
@@ -19,4 +19,4 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwL
 ### 마이페이지 나의 글 목록 조회
 GET http://localhost:8080/articles/mine
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1NDg0ODI4LCJleHAiOjE2MjU0ODY2Mjh9.hhsqm2fqH2Px7J3IydjRXVYo7F23KbDAv0GrTzQxuzPTn7wHLdSdEl-j7vqo0mLd0vWakZA2I7kbO1AzntKg_Q
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
