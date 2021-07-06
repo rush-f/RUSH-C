@@ -44,7 +44,6 @@ public class ArticleGroupRepositoryTest {
         persistArticleGroup(article1, group2);
         persistArticleGroup(article2, group2);
 
-
         // when
         List<ArticleGroup> ArticleGroup1 = articleGroupRepository.findAllByArticleId(article1.getId());
         List<ArticleGroup> ArticleGroup2 = articleGroupRepository.findAllByArticleId(article2.getId());
