@@ -25,6 +25,7 @@ const MyArticles = (props) => {
         myArticles={props.myArticles}
     />
   </>
-  )};
+  )
+};
 
 export default MyArticles;
