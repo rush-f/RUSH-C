@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import WindowSize from "../WindowSize";
-import {CommentsBox, DisplayBox, Outside, PostBox} from './Box';
+import {CommentsBox, DisplayBox, Outside, PostBox} from '../common/Box';
 import ArticleMeta from "./ArticleMeta";
 import findWritingApi from "../../api/FindWritingApi";
 import ArticleBody from "./ArticleBody";

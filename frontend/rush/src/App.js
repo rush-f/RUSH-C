@@ -5,6 +5,7 @@ import LoginPage from './components/login/LoginPage';
 import WritingPage from './components/writing/WritingPage';
 import ArticleDetailPage from "./components/articleDetail/ArticleDetailPage";
 import OAuth2RedirectHandler from "./components/login/OAuth2RedirectHandler";
+import GroupPage from "./components/group/GroupPage";
 
 function App() {
   return (<Router>
@@ -14,6 +15,7 @@ function App() {
       <Route path="/writing" exact component={WritingPage} />
       <Route path="/articles/:mapType/:articleId" exact component={ArticleDetailPage} />
       <Route path="/oauth2/redirect" exact component={OAuth2RedirectHandler}/>
+      <Route path="/groups/:groupId" exact component={GroupPage}/>
     </Switch>
   </Router>);
 }
