@@ -94,6 +94,7 @@ const DefaultMapPage = (props) => {
       setMapType={setMapType}
       setGroupId={setGroupId}
       history={props.history}
+      accessToken={accessToken}
     />
     {
       (accessToken === null || userImageUrl === null) ?

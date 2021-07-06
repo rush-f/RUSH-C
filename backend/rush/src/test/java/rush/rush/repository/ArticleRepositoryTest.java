@@ -28,6 +28,24 @@ class ArticleRepositoryTest {
 
     @Test
     @Transactional
+    void findAllByUserId() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+
+        persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        persistArticle(testEntityManager, user, false, false, 40.63, 127.0);
+        persistArticle(testEntityManager, user, false, true, 40.63, 127.0);
+        persistArticle(testEntityManager, user, false, false, 40.63, 127.0);
+        // when
+        List<Article> articles =
+            articleRepository.findAllByUserId(user.getId());
+
+        // then
+        assertThat(articles.size()).isEqualTo(4);
+    }
+
+    @Test
+    @Transactional
     void findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween() {
         // given
         User user = persistUser(testEntityManager, "test@email.com");

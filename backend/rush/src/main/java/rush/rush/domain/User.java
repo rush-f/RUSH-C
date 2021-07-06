@@ -43,9 +43,6 @@ public class User {
 
     private String imageUrl;
 
-//    @Column(nullable = false, unique = true)
-//    private String invitationCode;
-
     @CreationTimestamp
     private Timestamp joinDate;
 

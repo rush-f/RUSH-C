@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from "./Profile";
 import styled from "styled-components";
-import CreateDate from "./CreateDate";
+import CreateDate from "../../util/CreateDate";
 import CancelButton from "./CancelButton";
 
 const StyledDiv = styled.div`
