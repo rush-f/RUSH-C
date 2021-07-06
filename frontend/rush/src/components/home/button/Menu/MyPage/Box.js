@@ -20,12 +20,10 @@ const StyledDiv = styled.div`
 
 const Name = styled.div`
   font-size: 20px;
-
 `;
 
 const Email = styled.div`
   font-size: 20px;
-
 `;
 
 export { Outside, DisplayBox, StyledDiv, Name, Email};
