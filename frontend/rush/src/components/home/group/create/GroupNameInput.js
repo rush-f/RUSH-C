@@ -7,7 +7,7 @@ const GroupNameInput = styled.input`
   width: 85%;
   background-color: #00000000;
   padding: 10px;
-  height: 50px;
+  height: 40px;
 `;
 
 export default GroupNameInput;

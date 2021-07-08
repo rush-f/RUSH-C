@@ -14,11 +14,14 @@ const CompleteButton = ({isCreateGroupModalOpen, groupName, history}) => {
       }}
       style={{
         backgroundColor: "#00000000",
-        width: "100px",
+        width: "60%",
         height: "50px",
         margin: "10px",
+        borderRadius: "20px",
+        fontSize: "18px",
+        color: "#445566"
       }}
-    > 그룹만들기 </button>
+    > 그룹 만들기 </button>
     }
   </>;
 };

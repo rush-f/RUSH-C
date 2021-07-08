@@ -19,6 +19,8 @@ const CreateGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) =
           maxWidth: '500px',
           margin: 'auto',
           backgroundColor: 'rgb(222, 235, 247)',
+          maxHeight: '300px',
+          textAlign: 'center'
         }
       }}
       contentLabel="create group"       //모달의 라벨
@@ -30,7 +32,7 @@ const CreateGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) =
       <GroupNameInput
         value={groupName}
         onChange={e => setGroupName(e.target.value)}
-        placeholder={"그룹이름"}
+        placeholder={"새 그룹 이름"}
       />
       <CompleteButton
         isCreateGroupModalOpen={setIsCreateGroupModalOpen}
