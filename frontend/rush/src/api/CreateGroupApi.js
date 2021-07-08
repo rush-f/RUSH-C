@@ -31,7 +31,6 @@ const createGroupApi = ({groupName, history}) => {
       history.push("/login");
       return;
     }
-    console.log(error.response);
     alert("그룹 가입 실패");
   });
 };
