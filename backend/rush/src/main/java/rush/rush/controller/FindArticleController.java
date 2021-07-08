@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
+import rush.rush.dto.MyPageArticleResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.FindArticleService;
+import rush.rush.service.FindMyArticlesService;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,6 +22,7 @@ import rush.rush.service.FindArticleService;
 public class FindArticleController {
 
     private final FindArticleService findArticleService;
+    private final FindMyArticlesService findMyArticlesService;
 
     @GetMapping("/public")
     public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
@@ -87,5 +90,13 @@ public class FindArticleController {
 
         return ResponseEntity.ok()
             .body(articleResponse);
+    }
+
+    @GetMapping("/mine")
+    public ResponseEntity<List<MyPageArticleResponse>> findMyArticles(@CurrentUser UserPrincipal userPrincipal){
+        List<MyPageArticleResponse> myPageArticleResponse = findMyArticlesService.findMyArticles(userPrincipal.getId());
+
+        return ResponseEntity.ok()
+            .body(myPageArticleResponse);
     }
 }

@@ -100,6 +100,7 @@ const DefaultMapPage = (props) => {
       isCreateGroupModalOpen={isCreateGroupModalOpen}
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
       history={props.history}
+      accessToken={accessToken}
     />
     <CreateGroupModal
       isCreateGroupModalOpen={isCreateGroupModalOpen}

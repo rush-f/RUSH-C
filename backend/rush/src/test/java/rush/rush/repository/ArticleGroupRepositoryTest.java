@@ -32,26 +32,42 @@ class ArticleGroupRepositoryTest {
     @Transactional
     void findAllByArticleId() {
         // given
-        User user = persistUser(testEntityManager, "test@email.com");
-        Group group = persistGroup(testEntityManager);
-        Article article = persistArticle(testEntityManager, user, false, false, 50.5, 50.5);
-        ArticleGroup articleGroup = persistArticleGroup(group, article);
+        User me = persistUser(testEntityManager, "me@email.com");
+
+        Article article1 = persistArticle(testEntityManager, me, true, true, 37.63, 127.07);
+        Article article2 = persistArticle(testEntityManager, me, false, false, 40.63, 127.0);
+        Article article3 = persistArticle(testEntityManager, me, false, false, 40.63, 127.0);
+
+        Group group1 = persistGroup();
+        Group group2 = persistGroup();
+
+        persistArticleGroup(article1, group1);
+        persistArticleGroup(article1, group2);
+        persistArticleGroup(article2, group2);
 
         // when
-        List<ArticleGroup> articleGroups = articleGroupRepository.findAllByArticleId(article.getId());
+        List<ArticleGroup> ArticleGroup1 = articleGroupRepository.findAllByArticleId(article1.getId());
+        List<ArticleGroup> ArticleGroup2 = articleGroupRepository.findAllByArticleId(article2.getId());
+        List<ArticleGroup> ArticleGroup3 = articleGroupRepository.findAllByArticleId(article3.getId());
 
         // then
-        assertThat(articleGroups.size()).isEqualTo(1);
-        assertThat(articleGroups.get(0).getId()).isEqualTo(articleGroup.getId());
-        assertThat(articleGroups.get(0).getGroup().getId()).isEqualTo(group.getId());
-        assertThat(articleGroups.get(0).getArticle().getId()).isEqualTo(article.getId());
+        assertThat(ArticleGroup1.size()).isEqualTo(2);
+        assertThat(ArticleGroup2.size()).isEqualTo(1);
+        assertThat(ArticleGroup3.size()).isEqualTo(0);
     }
 
-    private ArticleGroup persistArticleGroup(Group group, Article article) {
-        ArticleGroup articleGroup = ArticleGroup.builder()
-            .article(article)
-            .group(group)
+    private Group persistGroup() {
+        Group group = Group.builder()
+            .name(Constants.TEST_GROUP_NAME)
             .build();
-        return testEntityManager.persist(articleGroup);
+        return testEntityManager.persist(group);
+    }
+
+    private void persistArticleGroup(Article article, Group group) {
+        ArticleGroup articleGroup = ArticleGroup.builder()
+            .group(group)
+            .article(article)
+            .build();
+        testEntityManager.persist(articleGroup);
     }
 }

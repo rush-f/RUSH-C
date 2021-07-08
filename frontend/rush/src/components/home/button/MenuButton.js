@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
-import GroupList from './groupMap/GroupList';
 import {PRIVATE, PUBLIC} from "../../../constants/MapType";
+import GroupList from "./Menu/groupMap/GroupList";
 
 const BurgerMenuContents = styled.div`
   width: 90%;
@@ -14,12 +14,13 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen, history}) => {
+const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen, accessToken, history}) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
+  const url = accessToken? "/mypage" : "/login";
 
   return (<>
     <BurgerMenu disableAutoFocus>
-      <BurgerMenuContents onClick={() => alert("아직 개발중입니다!")}>마이페이지</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도

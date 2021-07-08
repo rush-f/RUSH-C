@@ -12,6 +12,11 @@ GET http://localhost:8080/articles/grouped?groupId=1&latitude=-0.1&latitudeRange
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI0MjE1LCJleHAiOjE2MjUwMjYwM
 
+### 내 글 목록 조회
+GET http://localhost:8080/articles/mine
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+
 ### 전체지도 글상세 조회
 GET http://localhost:8080/articles/public/1
 Content-Type: application/json
