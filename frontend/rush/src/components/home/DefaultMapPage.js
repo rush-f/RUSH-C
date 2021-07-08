@@ -16,6 +16,7 @@ import {
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import {withRouter} from "react-router-dom";
 import CreateGroupModal from "./group/create/CreateGroupModal";
+import JoinGroupModal from "./group/join/JoinGroupModal";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
@@ -30,6 +31,7 @@ const DefaultMapPage = (props) => {
   const [groupId, setGroupId] = useState(0);
   const [zoom, setZoom] = useState(16);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isJoinGroupModalOpen, setIsJoinGroupModalOpen] = useState(false);
   // 지도 관련
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
@@ -97,14 +99,18 @@ const DefaultMapPage = (props) => {
     <Menu
       setMapType={setMapType}
       setGroupId={setGroupId}
-      isCreateGroupModalOpen={isCreateGroupModalOpen}
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+      setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       history={props.history}
       accessToken={accessToken}
     />
     <CreateGroupModal
       isCreateGroupModalOpen={isCreateGroupModalOpen}
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+    />
+    <JoinGroupModal
+      isJoinGroupModalOpen={isJoinGroupModalOpen}
+      setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
     />
     {
       (accessToken === null || userImageUrl === null) ?

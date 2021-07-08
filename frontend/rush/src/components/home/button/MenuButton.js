@@ -14,7 +14,7 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen, accessToken, history}) => {
+const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
   const url = accessToken? "/mypage" : "/login";
 
@@ -31,6 +31,7 @@ const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen, accessToken, h
         setGroupId={setGroupId}
         history={history}
         setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+        setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       />
       <BurgerMenuContents onClick={() => setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
     </BurgerMenu>

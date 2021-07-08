@@ -1,5 +1,5 @@
 import React from "react";
-import createGroupApi from "./CreateGroupApi";
+import createGroupApi from "../../../../api/CreateGroupApi";
 import {withRouter} from "react-router-dom";
 
 const CompleteButton = ({isCreateGroupModalOpen, groupName, history}) => {
