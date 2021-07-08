@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Outside, DisplayBox, StyledDiv} from "./Box";
-import WindowSize from "../../../../WindowSize";
+import {DisplayBox, Outside, StyledDiv} from "./Box";
+import WindowSize from "../WindowSize";
 import CancelButton from "./CancelButton";
-import findUserApi from "./findUserApi";
-import findMyArticlesApi from "./findMyArticlesApi";
-import {ACCESS_TOKEN} from "../../../../../constants/SessionStorage";
+import findUserApi from "../../api/findUserApi";
+import findMyArticlesApi from "../../api/findMyArticlesApi";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import Info from "./Info";
-import MyArticles from "./articlesList/MyArticles";
+import MyArticles from "./articles/MyArticles";
 
 const MyPage = (props) => {
 

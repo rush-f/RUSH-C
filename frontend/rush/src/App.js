@@ -6,7 +6,7 @@ import WritingPage from './components/writing/WritingPage';
 import ArticleDetailPage from "./components/articleDetail/ArticleDetailPage";
 import OAuth2RedirectHandler from "./components/login/OAuth2RedirectHandler";
 import GroupPage from "./components/group/GroupPage";
-import MyPage from "./components/home/button/Menu/MyPage/MyPage";
+import MyPage from "./components/myPage/MyPage";
 
 function App() {
   return (<Router>

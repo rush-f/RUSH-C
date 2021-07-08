@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {Email, Name} from "./Box";
-import CreateDate from "../../../../../util/CreateDate";
+import CreateDate from "../../util/CreateDate";
 
 const StyledInfo = styled.div`
   padding-Top: 2px;
