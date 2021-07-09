@@ -4,6 +4,9 @@ import {DisplayBox, Outside} from "../common/Box";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import findGroupApi from "../../api/FindGroupApi";
 import {withRouter} from "react-router-dom";
+import Name from "./Name";
+import CancelButton from "./CancelButton";
+import InvitationCode from "./InvitationCode";
 
 const GroupPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -25,9 +28,9 @@ const GroupPage = (props) => {
   return (
     <Outside>
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
-        <div>{groupId}</div>
-        <div>{group.name}</div>
-        <div>{group.invitationCode}</div>
+        <CancelButton/>
+        <Name>{group.name}</Name>
+        <InvitationCode invitationCode={group.invitationCode}/>
       </DisplayBox>
     </Outside>
   );
