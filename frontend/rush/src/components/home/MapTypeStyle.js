@@ -29,7 +29,7 @@ const MapType = ({mapType, groupId, groupName, history}) => {
     return <Style>전체지도</Style>;
   }
   if (mapType === PRIVATE) {
-    return <Style>부분지도</Style>;
+    return <Style>개인지도</Style>;
   }
 };
 
