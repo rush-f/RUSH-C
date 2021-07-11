@@ -18,6 +18,7 @@ import {withRouter} from "react-router-dom";
 import CreateGroupModal from "./group/create/CreateGroupModal";
 import JoinGroupModal from "./group/join/JoinGroupModal";
 import MapType from "./MapTypeStyle";
+import findGroupApi from "../../api/FindGroupApi";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
@@ -71,7 +72,11 @@ const DefaultMapPage = (props) => {
         .then(mapArticlesPromise => {
           setArticles(mapArticlesPromise)
         });
-        // todo
+        findGroupApi({
+          groupId: groupId,
+          accessToken: accessToken,
+          history: props.history
+        }).then(groupPromise => setGroupName(groupPromise.name))
     }
   }, [zoom, center, mapType, groupId]);
 
