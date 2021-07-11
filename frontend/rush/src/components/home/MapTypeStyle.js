@@ -5,13 +5,12 @@ import styled from "styled-components";
 const Style = styled.div`
   display: inline-block;
   font-size: 15px;
-  background: rgba(222, 235, 247, 0.6);
   border-radius: 20px;
   cursor: pointer;
   position: fixed;
   zIndex: 10;
   top: 5px;
-  right: 110px;
+  right: 100px;
   width: 100px;
   margin: 10px;
   text-align: center;
