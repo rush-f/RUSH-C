@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Motion, spring} from 'react-motion';
 import GroupContent from "./GroupContent";
 import styled from "styled-components";
-import findMyGroupsApi from "../../../../../api/FindMyGroupsApi";
+import findMyGroupsApi from "../../../api/FindMyGroupsApi";
 
 const GroupSetting = styled.li`
   height: 50px;
