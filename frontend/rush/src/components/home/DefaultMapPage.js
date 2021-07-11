@@ -120,12 +120,23 @@ const DefaultMapPage = (props) => {
       isJoinGroupModalOpen={isJoinGroupModalOpen}
       setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
     />
-    <MapType
-      mapType={mapType}
-      groupId={groupId}
-      groupName={groupName}
-      history={props.history}
-    />
+    {
+      (accessToken === null || userImageUrl === null) ?
+        <MapType
+          mapType={mapType}
+          groupId={groupId}
+          groupName={groupName}
+          history={props.history}
+          rightMargin="100px"
+        /> :
+        <MapType
+          mapType={mapType}
+          groupId={groupId}
+          groupName={groupName}
+          history={props.history}
+          rightMargin="60px"
+        />
+    }
     {
       (accessToken === null || userImageUrl === null) ?
         <LoginButton/>

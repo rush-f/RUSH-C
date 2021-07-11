@@ -10,7 +10,7 @@ const Style = styled.div`
   position: fixed;
   zIndex: 10;
   top: 5px;
-  right: 100px;
+  right: ${props => props.rightMargin};
   width: 100px;
   margin: 10px;
   text-align: center;
@@ -18,17 +18,17 @@ const Style = styled.div`
   font-weight: bold;
 `;
 
-const MapType = ({mapType, groupId, groupName, history}) => {
+const MapType = ({mapType, groupId, groupName, rightMargin, history}) => {
   if (mapType === GROUPED) {
-    return <Style onClick={() => history.push("/groups/" + groupId)}>
+    return <Style rightMargin={rightMargin} onClick={() => history.push("/groups/" + groupId)}>
       {groupName}
     </Style>
   }
   if (mapType === PUBLIC) {
-    return <Style>전체지도</Style>;
+    return <Style rightMargin={rightMargin}>전체지도</Style>;
   }
   if (mapType === PRIVATE) {
-    return <Style>개인지도</Style>;
+    return <Style rightMargin={rightMargin}>개인지도</Style>;
   }
 };
 
