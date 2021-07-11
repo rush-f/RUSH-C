@@ -17,6 +17,7 @@ import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import {withRouter} from "react-router-dom";
 import CreateGroupModal from "./group/create/CreateGroupModal";
 import JoinGroupModal from "./group/join/JoinGroupModal";
+import MapType from "./MapTypeStyle";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
@@ -26,13 +27,11 @@ const DefaultMapPage = (props) => {
   // 사용자 관련
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const [userImageUrl, setUserImageUrl] = useState(null);
-  // 메뉴 관련
+  // 지도 관련
   const [mapType, setMapType] = useState(PUBLIC);
   const [groupId, setGroupId] = useState(0);
+  const [groupName, setGroupName] = useState("");
   const [zoom, setZoom] = useState(16);
-  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
-  const [isJoinGroupModalOpen, setIsJoinGroupModalOpen] = useState(false);
-  // 지도 관련
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
     lng: () => 127.07745984005722,
@@ -40,6 +39,9 @@ const DefaultMapPage = (props) => {
   const [articles, setArticles] = useState([]);
   const [latitudeRange, setLatitudeRange] = useState(0.0095);
   const [longitudeRange, setLongitudeRange] = useState(0.025);
+  // 메뉴 관련
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isJoinGroupModalOpen, setIsJoinGroupModalOpen] = useState(false);
 
   useEffect(() => {
     setLatitudeRange(
@@ -69,6 +71,7 @@ const DefaultMapPage = (props) => {
         .then(mapArticlesPromise => {
           setArticles(mapArticlesPromise)
         });
+        // todo
     }
   }, [zoom, center, mapType, groupId]);
 
@@ -111,6 +114,12 @@ const DefaultMapPage = (props) => {
     <JoinGroupModal
       isJoinGroupModalOpen={isJoinGroupModalOpen}
       setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
+    />
+    <MapType
+      mapType={mapType}
+      groupId={groupId}
+      groupName={groupName}
+      history={props.history}
     />
     {
       (accessToken === null || userImageUrl === null) ?
