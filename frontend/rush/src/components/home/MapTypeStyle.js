@@ -10,8 +10,8 @@ const Style = styled.div`
   cursor: pointer;
   position: fixed;
   zIndex: 10;
-  top: 0;
-  right: 80px;
+  top: 5px;
+  right: 110px;
   width: 100px;
   margin: 10px;
   text-align: center;

@@ -10,8 +10,13 @@ const LoginButton = () => {
         top: 0,
         right: 0,
         width: "100px",
-        height: "50px",
+        height: "40px",
         margin: "10px",
+        border: "2px solid black",
+        background: "rgb(222, 235, 247)",
+        borderRadius: "50px",
+        fontSize: "110%",
+        fontWeight: "bold"
       }}> 로그인 </button></Link>
   );
 };
