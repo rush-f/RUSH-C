@@ -16,8 +16,7 @@ public class SetUpMethods {
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
-        user = testEntityManager.persist(user);
-        return user;
+        return testEntityManager.persist(user);
     }
 
     public static Group persistGroup(TestEntityManager testEntityManager) {
@@ -49,7 +48,6 @@ public class SetUpMethods {
             .publicMap(isPublicMap)
             .privateMap(isPrivateMap)
             .build();
-        article = testEntityManager.persist(article);
-        return article;
+        return testEntityManager.persist(article);
     }
 }

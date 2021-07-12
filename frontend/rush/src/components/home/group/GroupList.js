@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import {Motion, spring} from 'react-motion';
 import GroupContent from "./GroupContent";
-import findMyGroupsApi from "../../../FindMyGroupsApi";
 import styled from "styled-components";
+import findMyGroupsApi from "../../../api/FindMyGroupsApi";
 
 const GroupSetting = styled.li`
   height: 50px;
@@ -28,10 +28,7 @@ const GroupList = (props) => {
     if (props.isGroupOpened) {
       findMyGroupsApi(props.history).then(groupsPromise => {
         setGroups(groupsPromise)
-      }).catch(() => {
-        alert("로그인이 필요한 서비스입니다.")
-        props.history.push('/login');
-      })
+      });
     }
   }, [props.isGroupOpened]);
 
@@ -49,11 +46,15 @@ const GroupList = (props) => {
                 <GroupContent
                   groupName={group.name}
                   groupId={group.id}
+                  setMapType={props.setMapType}
+                  setGroupId={props.setGroupId}
                 />
               ) : []
             }
-            <GroupSetting>그룹 만들기</GroupSetting>
-            <GroupSetting>그룹 가입하기</GroupSetting>
+            <GroupSetting onClick={() => props.setIsCreateGroupModalOpen(true)}>
+              그룹 만들기
+            </GroupSetting>
+            <GroupSetting onClick={() => props.setIsJoinGroupModalOpen(true)}>그룹 가입하기</GroupSetting>
           </div>
         }
       </Motion>

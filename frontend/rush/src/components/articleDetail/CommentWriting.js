@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import createCommentApi from "./CreateCommentApi";
+import createCommentApi from "../../api/CreateCommentApi";
 
 const StyledDiv = styled.div`
   padding: 5px;

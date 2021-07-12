@@ -54,7 +54,7 @@ const WritingPage = () => {
             setIsPublicMapChecked={setIsPublicMapChecked}
             isPrivateMapChecked={isPrivateMapChecked}
             setIsPrivateMapChecked={setIsPrivateMapChecked}
-            checkedGroups={checkedGroups}
+            checkedGroupIds={checkedGroups}
             setCheckedGroups={setCheckedGroups}
         />
       </>

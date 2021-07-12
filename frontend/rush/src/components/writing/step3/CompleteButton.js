@@ -1,12 +1,12 @@
 import React from 'react';
-import createWritingApi from "../CreateWritingApi";
+import createWritingApi from "../../../api/CreateWritingApi";
 import {withRouter} from "react-router-dom";
 
-const CompleteButton = (props) => {
+const CompleteButton = ({step, title, content, center, publicMap, privateMap, groupIds, history}) => {
   return <>
-    {(props.step === 3) && <button
+    {(step === 3) && <button
         onClick={() => {
-          createWritingApi(props);
+          createWritingApi({title, content, center, publicMap, privateMap, groupIds, history});
         }}
         style={{
           position: "absolute",

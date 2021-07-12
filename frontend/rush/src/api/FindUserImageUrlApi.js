@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
 const findUserImageUrlApi = (accessToken) => {
    const config = {

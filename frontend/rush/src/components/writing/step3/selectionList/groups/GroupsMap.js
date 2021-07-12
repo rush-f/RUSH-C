@@ -7,7 +7,7 @@ const GroupsMap = (props) => {
   return (<>
         <StyledElement
             onClick={() => props.setIsGroupOpened(!props.isGroupOpened)}
-            style={{marginTop: '19px' }}
+            style={{marginTop: '19px'}}
         >
           그룹지도
           <GroupListOpenButton

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import {Email, Name} from "./Box";
-import CreateDate from "../../../../../util/CreateDate";
-import {ACCESS_TOKEN} from "../../../../../constants/SessionStorage";
+import CreateDate from "../../util/CreateDate";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 
 const StyledInfo = styled.div`
   padding-Top: 2px;
@@ -19,7 +19,6 @@ const StyledButton = styled.button`
 `;
 
 const Info = (props) => {
-  
   return (
       <StyledInfo>
         <Box>

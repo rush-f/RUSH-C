@@ -12,9 +12,15 @@ const WriteButton = (props) => {
           bottom: 0,
           right: 0,
           width: "100px",
-          height: "50px",
+          height: "100px",
           margin: "10px",
-        }}> 글쓰기 </button>
+          background: "rgb(222, 235, 247)",
+          borderRadius: "100px",
+          border: "2px solid black",
+          fontSize: "110%",
+          fontWeight: "bold",
+          cursor: "pointer"
+        }}>글쓰기</button>
       </Link>
   );
 };

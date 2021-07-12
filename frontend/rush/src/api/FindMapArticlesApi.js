@@ -1,7 +1,7 @@
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
-import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
-import {ACCESS_TOKEN} from "../../constants/SessionStorage";
+import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {GROUPED, PRIVATE, PUBLIC} from "../constants/MapType";
+import {ACCESS_TOKEN} from "../constants/SessionStorage";
 
 export const findPublicMapArticles = (latitude, latitudeRange, longitude, longitudeRange) => {
   return axios.get(BACKEND_ADDRESS + "/articles/" + PUBLIC
@@ -14,6 +14,12 @@ export const findPublicMapArticles = (latitude, latitudeRange, longitude, longit
 
 export const findPrivateMapArticles = (latitude, latitudeRange, longitude, longitudeRange, history) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
+
+  if (!accessToken) {
+    alert("로그인이 필요한 서비스입니다.")
+    history.push('/login');
+    return Promise.reject("토큰이 없음");
+  }
   const config = {
     headers: {
       "Authorization": "Bearer " + accessToken

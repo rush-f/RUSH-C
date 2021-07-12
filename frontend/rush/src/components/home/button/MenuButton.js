@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
-import GroupList from './Menu/groupMap/GroupList';
 import {PRIVATE, PUBLIC} from "../../../constants/MapType";
+import GroupList from "../group/GroupList";
 
 const BurgerMenuContents = styled.div`
   width: 90%;
@@ -14,23 +14,26 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = (props) => {
+const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
-  const url = props.accessToken? "/mypage" : "/login";
+  const url = accessToken? "/mypage" : "/login";
+
   return (<>
     <BurgerMenu disableAutoFocus>
-      <BurgerMenuContents onClick={()=> props.history.push(url)}>마이페이지</BurgerMenuContents>
-      <BurgerMenuContents onClick={() => props.setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
       </BurgerMenuContents>
       <GroupList
         isGroupOpened={isGroupOpened}
-        setMapType={props.setMapType}
-        setGroupId={props.setGroupId}
-        history={props.history}
+        setMapType={setMapType}
+        setGroupId={setGroupId}
+        history={history}
+        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+        setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       />
-      <BurgerMenuContents onClick={() => props.setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
     </BurgerMenu>
   </>);
 }

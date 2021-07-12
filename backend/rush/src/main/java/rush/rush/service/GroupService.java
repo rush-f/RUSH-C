@@ -1,6 +1,7 @@
 package rush.rush.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,6 @@ import rush.rush.domain.UserGroup;
 import rush.rush.dto.CreateGroupRequest;
 import rush.rush.dto.GroupResponse;
 import rush.rush.dto.GroupSummaryResponse;
-import rush.rush.repository.ArticleGroupRepository;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.utils.RandomStringGenerator;
@@ -22,7 +22,6 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final UserGroupRepository userGroupRepository;
-    private final ArticleGroupRepository articleGroupRepository;
 
     @Transactional
     public Long createGroup(CreateGroupRequest createGroupRequest, User creator) {
@@ -39,6 +38,8 @@ public class GroupService {
     public Long join(String invitationCode, User user) {
         Group group = groupRepository.findByInvitationCode(invitationCode)
                 .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
+
+        validateIfAlreadyJoined(group, user);
 
         saveUserGroup(group, user);
 
@@ -73,6 +74,15 @@ public class GroupService {
 
     private String generateInvitationCode(Long groupId) {
         return RandomStringGenerator.generate(5) + groupId;
+    }
+
+    private void validateIfAlreadyJoined(Group group, User user) {
+        Optional<UserGroup> userGroup = userGroupRepository
+            .findByUserIdAndGroupId(user.getId(), group.getId());
+
+        if (userGroup.isPresent()) {
+            throw new IllegalArgumentException("이미 가입된 그룹입니다.");
+        }
     }
 
     private void saveUserGroup(Group group, User user) {

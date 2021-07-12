@@ -2,6 +2,7 @@ package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 
 import java.util.List;
@@ -19,13 +20,13 @@ import rush.rush.domain.User;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
-public class ArticleGroupRepositoryTest {
+class ArticleGroupRepositoryTest {
 
     @Autowired
     private ArticleGroupRepository articleGroupRepository;
 
     @Autowired
-    TestEntityManager testEntityManager;
+    private TestEntityManager testEntityManager;
 
     @Test
     @Transactional

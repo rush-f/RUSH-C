@@ -1,19 +1,18 @@
-import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const findMyGroupsApi = (history) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
-
+const findGroupApi = ({ groupId, accessToken, history }) => {
   if (!accessToken) {
-    return Promise.reject("토큰이 이상함");
+    alert("로그인이 필요한 서비스입니다.")
+    history.push('/login');
+    return Promise.reject("토큰이 없음");
   }
   const config = {
     headers: {
       Authorization: "Bearer " + accessToken
     }
   }
-  return axios.get(BACKEND_ADDRESS + "/groups/mine", config)
+  return axios.get(BACKEND_ADDRESS + "/groups/" + groupId, config)
   .then(response => {
     if (response.status === 200) {
       return response.data
@@ -29,4 +28,4 @@ const findMyGroupsApi = (history) => {
   });
 };
 
-export default findMyGroupsApi;
+export default findGroupApi;
