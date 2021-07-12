@@ -35,7 +35,10 @@ const MyPage = (props) => {
           <CancelButton/>
           <StyledDiv>
             {<Profile userImageUrl={user ? user.imageUrl : ""}/>}
-            {<Info user={user ? user : ""}/>}
+            {<Info
+                user={user ? user : ""}
+                history={props.history}
+            />}
           </StyledDiv>
           <MyArticles
               myArticles={myArticles}
