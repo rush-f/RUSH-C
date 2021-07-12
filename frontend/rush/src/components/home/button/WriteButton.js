@@ -18,7 +18,8 @@ const WriteButton = (props) => {
           borderRadius: "100px",
           border: "2px solid black",
           fontSize: "110%",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          cursor: "pointer"
         }}>글쓰기</button>
       </Link>
   );

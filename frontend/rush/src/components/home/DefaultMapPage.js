@@ -139,8 +139,11 @@ const DefaultMapPage = (props) => {
     }
     {
       (accessToken === null || userImageUrl === null) ?
-        <LoginButton/>
-        : <Profile userImageUrl={userImageUrl ? userImageUrl.imageUrl : ""}/>
+        <LoginButton/> :
+        <Profile
+          userImageUrl={userImageUrl ? userImageUrl.imageUrl : ""}
+          history={props.history}
+        />
     }
     <WriteButton accessToken={accessToken}/>
   </>);
