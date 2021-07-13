@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Motion, spring} from "react-motion";
 import GroupContent from "./GroupContent";
 
-
 const GroupsList = (props) => {
   const [height, setHeight] = useState(0);
 
