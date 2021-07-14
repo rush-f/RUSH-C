@@ -8,12 +8,16 @@ import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import Info from "./Info";
 import MyArticles from "./articles/MyArticles";
+import MyGroups from "./groups/MyGroups";
+import findMyGroupsApi from "../../api/FindMyGroupsApi";
 
 const MyPage = (props) => {
 
-  const [isOpened, setIsOpened] = useState(false);
+  const [isGroupsOpened, setIsGroupsOpened] = useState(false);
+  const [isArticlesOpened, setIsArticlesOpened] = useState(false);
   const [user, setUser] = useState(null);
   const [myArticles, setMyArticles] = useState(null);
+  const [myGroups, setMyGroups] = useState(null);
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   useEffect(() => {
@@ -21,11 +25,14 @@ const MyPage = (props) => {
       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
       props.history.push("/login");
     }
+    findMyGroupsApi(accessToken).then(groupsPromise=>{
+      setMyGroups(groupsPromise)
+    })
     findUserApi(accessToken).then(userPromise => {
     setUser(userPromise)
     });
-    findMyArticlesApi(accessToken).then(userPromise => {
-      setMyArticles(userPromise)
+    findMyArticlesApi(accessToken).then(articlesPromise => {
+      setMyArticles(articlesPromise)
     });
   }, [accessToken]);
 
@@ -42,8 +49,13 @@ const MyPage = (props) => {
           </StyledDiv>
           <MyArticles
               myArticles={myArticles}
-              isOpened={isOpened}
-              setIsOpened={setIsOpened}
+              isOpened={isArticlesOpened}
+              setIsOpened={setIsArticlesOpened}
+          />
+          <MyGroups
+              myGroups={myGroups}
+              isOpened={isGroupsOpened}
+              setIsOpened={setIsGroupsOpened}
           />
         </DisplayBox>
       </Outside>
