@@ -14,14 +14,17 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
-  const [isGroupOpened, setIsGroupOpened] = useState(false);
+const Menu = ({isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
+
   const url = accessToken? "/mypage" : "/login";
   const [isMenuOpen,setIsMenuOpen] = useState(false);
   return (<>
     <BurgerMenu
         onOpen={()=>setIsMenuOpen(true)}
-        onClose={()=>setIsMenuOpen(false)}
+        onClose={()=>{
+          setIsMenuOpen(false);
+          setIsGroupOpened(false);
+        }}
         isOpen={isMenuOpen}
         disableAutoFocus>
       <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>

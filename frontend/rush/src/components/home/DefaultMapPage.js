@@ -43,6 +43,7 @@ const DefaultMapPage = (props) => {
   // 메뉴 관련
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isJoinGroupModalOpen, setIsJoinGroupModalOpen] = useState(false);
+  const [isGroupOpened, setIsGroupOpened] = useState(false);
 
   useEffect(() => {
     setLatitudeRange(
@@ -105,6 +106,8 @@ const DefaultMapPage = (props) => {
                 longitudeRange={longitudeRange}
     />
     <Menu
+      isGroupOpened={isGroupOpened}
+      setIsGroupOpened={setIsGroupOpened}
       setMapType={setMapType}
       setGroupId={setGroupId}
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
@@ -115,10 +118,12 @@ const DefaultMapPage = (props) => {
     <CreateGroupModal
       isCreateGroupModalOpen={isCreateGroupModalOpen}
       setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+      setIsGroupOpened={setIsGroupOpened}
     />
     <JoinGroupModal
       isJoinGroupModalOpen={isJoinGroupModalOpen}
       setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
+      setIsGroupOpened={setIsGroupOpened}
     />
     {
       (accessToken === null || userImageUrl === null) ?
