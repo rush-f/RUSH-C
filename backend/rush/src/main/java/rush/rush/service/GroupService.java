@@ -15,6 +15,7 @@ import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.dto.SimpleUserResponse;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
+import rush.rush.repository.UserRepository;
 import rush.rush.utils.RandomStringGenerator;
 
 @Service
@@ -23,6 +24,7 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final UserGroupRepository userGroupRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long createGroup(CreateGroupRequest createGroupRequest, User creator) {
@@ -41,8 +43,9 @@ public class GroupService {
         Group group = groupRepository.findByInvitationCode(invitationCode)
                 .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
 
-        validateIfAlreadyJoined(group, user);
-
+        if (hasJoined(group.getId(), user.getId())) {
+            throw new IllegalArgumentException("이미 가입된 그룹입니다.");
+        }
         saveUserGroup(group, user);
 
         return group.getId();
@@ -65,6 +68,19 @@ public class GroupService {
         return new GroupResponse(group.getId(), group.getName(), group.getInvitationCode(), group.getCreateDate());
     }
 
+    @Transactional
+    public List<SimpleUserResponse> findMembers(Long groupId, User user) {
+        if (!hasJoined(groupId, user.getId())) {
+            throw new IllegalArgumentException("userId=" + user.getId() + "인 사용자가 "
+                + "groupId=" + groupId + "인 그룹의 회원목록을 조회할 권한이 없습니다.");
+        }
+        return userRepository.findAllByGroupId(groupId)
+            .stream()
+            .map(member -> new SimpleUserResponse(
+                member.getId(), member.getNickName(), member.getImageUrl()))
+            .collect(Collectors.toUnmodifiableList());
+    }
+
     private Group saveGroup(String groupName) {
         Group group = Group.builder()
                 .name(groupName)
@@ -76,13 +92,11 @@ public class GroupService {
         return RandomStringGenerator.generate(5) + groupId;
     }
 
-    private void validateIfAlreadyJoined(Group group, User user) {
+    private boolean hasJoined(Long groupId, Long userId) {
         Optional<UserGroup> userGroup = userGroupRepository
-            .findByUserIdAndGroupId(user.getId(), group.getId());
+            .findByUserIdAndGroupId(userId, groupId);
 
-        if (userGroup.isPresent()) {
-            throw new IllegalArgumentException("이미 가입된 그룹입니다.");
-        }
+        return userGroup.isPresent();
     }
 
     private void saveUserGroup(Group group, User user) {
@@ -91,9 +105,5 @@ public class GroupService {
                 .user(user)
                 .build();
         userGroupRepository.save(userGroup);
-    }
-
-    public List<SimpleUserResponse> findMembers(Long groupId, User user) {
-        return null;
     }
 }
