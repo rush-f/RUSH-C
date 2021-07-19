@@ -12,6 +12,7 @@ import rush.rush.domain.UserGroup;
 import rush.rush.dto.CreateGroupRequest;
 import rush.rush.dto.GroupResponse;
 import rush.rush.dto.GroupSummaryResponse;
+import rush.rush.dto.SimpleUserResponse;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.utils.RandomStringGenerator;
@@ -91,5 +92,9 @@ public class GroupService {
                 .user(user)
                 .build();
         userGroupRepository.save(userGroup);
+    }
+
+    public List<SimpleUserResponse> findMembers(Long groupId, User user) {
+        return null;
     }
 }
