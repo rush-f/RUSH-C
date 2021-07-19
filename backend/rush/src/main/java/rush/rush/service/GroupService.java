@@ -3,9 +3,9 @@ package rush.rush.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
@@ -35,6 +35,7 @@ public class GroupService {
         return savedGroup.getId();
     }
 
+    @Transactional
     public Long join(String invitationCode, User user) {
         Group group = groupRepository.findByInvitationCode(invitationCode)
                 .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
@@ -46,6 +47,7 @@ public class GroupService {
         return group.getId();
     }
 
+    @Transactional
     public List<GroupSummaryResponse> findAllByUser(User user) {
         List<UserGroup> userGroups = userGroupRepository.findAllByUserId(user.getId());
 
@@ -57,6 +59,7 @@ public class GroupService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    @Transactional
     public GroupResponse findOne(Long groupId, User user) {
         UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
