@@ -50,6 +50,23 @@ class GroupRepositoryTest {
 
     @Test
     @Transactional
+    void findByGroupIdAndUserId() {
+        // given
+        User user = persistUser(testEntityManager, "test@seoultech.com");
+        Group group = persistGroup(testEntityManager);
+        persistUserGroup(testEntityManager, user, group);
+
+        // when
+        Optional<Group> result = groupRepository
+            .findByGroupIdAndUserId(group.getId(), user.getId());
+
+        // then
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getId()).isEqualTo(group.getId());
+    }
+
+    @Test
+    @Transactional
     void findAllByUserId() {
         // given
         User user1 = persistUser(testEntityManager, "test@seoultech.com");

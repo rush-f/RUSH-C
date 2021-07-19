@@ -14,6 +14,12 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("select distinct g from Group g "
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user user "
+        + "where user.id = :userId and g.id = :groupId")
+    Optional<Group> findByGroupIdAndUserId(@Param("groupId") Long groupId, @Param("userId") Long userId);
+
+    @Query("select distinct g from Group g "
+        + "inner join g.userGroups usergroup "
+        + "inner join usergroup.user user "
         + "where user.id = :userId")
     List<Group> findAllByUserId(@Param("userId") Long userId);
 }

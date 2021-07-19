@@ -59,10 +59,9 @@ public class GroupService {
 
     @Transactional
     public GroupResponse findOne(Long groupId, User user) {
-        UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
-                        + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
-        Group group = userGroup.getGroup();
+        Group group = groupRepository.findByGroupIdAndUserId(groupId, user.getId())
+            .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
+                + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
         return new GroupResponse(group.getId(), group.getName(), group.getInvitationCode(), group.getCreateDate());
     }
 
