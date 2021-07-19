@@ -49,14 +49,11 @@ public class GroupService {
 
     @Transactional
     public List<GroupSummaryResponse> findAllByUser(User user) {
-        List<UserGroup> userGroups = userGroupRepository.findAllByUserId(user.getId());
+        List<Group> groups = groupRepository.findAllByUserId(user.getId());
 
-        return userGroups.stream()
-                .map(userGroup -> {
-                    Group group = userGroup.getGroup();
-                    return new GroupSummaryResponse(group.getId(), group.getName());
-                })
-                .collect(Collectors.toUnmodifiableList());
+        return groups.stream()
+            .map(group -> new GroupSummaryResponse(group.getId(), group.getName()))
+            .collect(Collectors.toUnmodifiableList());
     }
 
     @Transactional

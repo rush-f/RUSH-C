@@ -2,7 +2,10 @@ package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistGroup;
+import static rush.rush.repository.SetUpMethods.persistUser;
+import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Group;
+import rush.rush.domain.User;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
 @DataJpaTest
@@ -42,5 +46,22 @@ class GroupRepositoryTest {
         assertThat(resultGroup.getInvitationCode()).isNotNull();
         assertThat(resultGroup.getInvitationCode()).isEqualTo(group.getInvitationCode());
         assertThat(resultGroup.getCreateDate()).isEqualTo(group.getCreateDate());
+    }
+
+    @Test
+    @Transactional
+    void findAllByUserId() {
+        // given
+        User user1 = persistUser(testEntityManager, "test@seoultech.com");
+        Group group1 = persistGroup(testEntityManager);
+        Group group2 = persistGroup(testEntityManager);
+        persistUserGroup(testEntityManager, user1, group1);
+        persistUserGroup(testEntityManager, user1, group2);
+
+        // when
+        List<Group> groups = groupRepository.findAllByUserId(user1.getId());
+
+        // then
+        assertThat(groups.size()).isEqualTo(2);
     }
 }
