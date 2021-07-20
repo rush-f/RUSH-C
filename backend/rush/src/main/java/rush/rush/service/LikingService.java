@@ -27,6 +27,12 @@ public class LikingService {
         articleLikingRepository.save(new ArticleLiking(user, article));
     }
 
+    @Transactional
+    public void DeleteArticleLiking(Long articleId, Long userId) {
+
+        articleLikingRepository.delete(findArticleLiking(articleId,userId));
+    }
+
     private User findUser(Long userId){
         return userRepository.findById(userId)
             .orElseThrow(()-> new IllegalArgumentException("해당하는 유저가 없습니다!"));
@@ -34,5 +40,10 @@ public class LikingService {
     private Article findArticle(Long articleId){
         return articleRepository.findById(articleId)
             .orElseThrow(()-> new IllegalArgumentException("해당하는 게시글이 없습니다"));
+    }
+
+    private ArticleLiking findArticleLiking(Long articleId, Long userId){
+        return  articleLikingRepository.findByUserIdAndArticleId(userId, articleId)
+            .orElseThrow(()-> new IllegalArgumentException("해당하는 좋아요는 없습니다"));
     }
 }

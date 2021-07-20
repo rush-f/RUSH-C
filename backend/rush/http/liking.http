@@ -1,3 +1,9 @@
+###
 POST http://localhost:8080/liking/article/Add?article_id=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzU1NDA5LCJleHAiOjE2MjY3NTcyMDl9.QuCQR8s4H5VaEbRkXpkEA2BMEeYAUAmqB_s_FQ6OsUnMtdKp8GgFjtSva4zpq_YO9HtyvZy4EYDMoaYMmLRGAw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzU3NDU3LCJleHAiOjE2MjY3NTkyNTd9.QzvS5c679u9ZH5Qztgv-Yz1Q36JEYe23Gc948bPxQoOvq7ZUO0nrJBGBodIvQV5ssWQo7kSuXE9Iqo--5M4T1w
+
+###
+DELETE http://localhost:8080/liking/article/delete?article_id=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzU3NDU3LCJleHAiOjE2MjY3NTkyNTd9.QzvS5c679u9ZH5Qztgv-Yz1Q36JEYe23Gc948bPxQoOvq7ZUO0nrJBGBodIvQV5ssWQo7kSuXE9Iqo--5M4T1w
