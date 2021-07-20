@@ -21,10 +21,9 @@ public class ArticleLikingController {
     @PostMapping("/add")
     public ResponseEntity<Void> AddArticleLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
-        articleLikingService.addArticleLiking(articleId, userPrincipal);
+        articleLikingService.addArticleLiking(articleId, userPrincipal.getId());
 
-        return ResponseEntity
-            .noContent()
+        return ResponseEntity.noContent()
             .build();
     }
 
@@ -33,9 +32,7 @@ public class ArticleLikingController {
         @CurrentUser UserPrincipal userPrincipal){
         articleLikingService.deleteArticleLiking(articleId, userPrincipal.getId());
 
-        return ResponseEntity
-            .noContent()
+        return ResponseEntity.noContent()
             .build();
     }
-
 }
