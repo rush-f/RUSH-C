@@ -3,6 +3,7 @@ package rush.rush.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,5 +35,14 @@ public class ArticleLikingController {
 
         return ResponseEntity.noContent()
             .build();
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> CheckArticleMyLiking(@RequestParam(value = "article_id") Long articleId,
+        @CurrentUser UserPrincipal userPrincipal){
+        boolean result= articleLikingService.checkArticleMyLiking(articleId, userPrincipal.getId());
+
+        return ResponseEntity.ok()
+            .body(result);
     }
 }

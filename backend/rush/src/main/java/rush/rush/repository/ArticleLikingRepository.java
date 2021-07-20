@@ -10,4 +10,6 @@ public interface ArticleLikingRepository extends JpaRepository<ArticleLiking,Lon
 
     Integer countByArticleId(Long articleId);
 
+    Integer countByUserIdAndArticleId(Long userId, Long ArticleId);
+
 }

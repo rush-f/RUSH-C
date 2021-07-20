@@ -32,6 +32,14 @@ public class ArticleLikingService {
         articleLikingRepository.delete(findArticleLiking(articleId,userId));
     }
 
+    @Transactional
+    public boolean checkArticleMyLiking(Long articleId, Long userId) {
+
+        int count = articleLikingRepository.countByUserIdAndArticleId(userId,articleId);
+
+        return count>=1 ? true : false;
+    }
+
     private User findUser(Long userId){
         return userRepository.findById(userId)
             .orElseThrow(()-> new IllegalArgumentException("해당하는 유저가 없습니다!"));
