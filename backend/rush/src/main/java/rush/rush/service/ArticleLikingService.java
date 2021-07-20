@@ -13,14 +13,14 @@ import rush.rush.security.user.UserPrincipal;
 
 @Service
 @RequiredArgsConstructor
-public class LikingService {
+public class ArticleLikingService {
 
     private final ArticleLikingRepository articleLikingRepository;
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
 
     @Transactional
-    public void AddArticleLiking(Long articleId, UserPrincipal userPrincipal) {
+    public void addArticleLiking(Long articleId, UserPrincipal userPrincipal) {
         User user = findUser(userPrincipal.getId());
         Article article = findArticle(articleId);
 
@@ -28,7 +28,7 @@ public class LikingService {
     }
 
     @Transactional
-    public void DeleteArticleLiking(Long articleId, Long userId) {
+    public void deleteArticleLiking(Long articleId, Long userId) {
 
         articleLikingRepository.delete(findArticleLiking(articleId,userId));
     }

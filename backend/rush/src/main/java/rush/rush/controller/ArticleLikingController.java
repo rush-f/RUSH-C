@@ -9,32 +9,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.LikingService;
+import rush.rush.service.ArticleLikingService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/liking")
-public class LikingController {
+@RequestMapping("/liking/article")
+public class ArticleLikingController {
 
-    private final LikingService likingService;
+    private final ArticleLikingService articleLikingService;
 
-    @PostMapping("/article/Add")
+    @PostMapping("/add")
     public ResponseEntity<Void> AddArticleLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
-        likingService.AddArticleLiking(articleId, userPrincipal);
+        articleLikingService.addArticleLiking(articleId, userPrincipal);
 
         return ResponseEntity
             .noContent()
             .build();
     }
 
-    @DeleteMapping("article/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> DeleteArticleLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
-        likingService.DeleteArticleLiking(articleId, userPrincipal.getId());
+        articleLikingService.deleteArticleLiking(articleId, userPrincipal.getId());
 
         return ResponseEntity
             .noContent()
             .build();
     }
+
 }
