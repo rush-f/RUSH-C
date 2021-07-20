@@ -38,14 +38,16 @@ public class ArticleLiking {
         validate(user);
         validate(article);
         this.id = id;
+        this.user=user;
+        this.article=article;
     }
 
     private void validate(User user) {
         if (Objects.isNull(user)) {
-            throw new IllegalArgumentException("group이 null일 수 없습니다.");
+            throw new IllegalArgumentException("user가 null일 수 없습니다.");
         }
         if (Objects.isNull(user.getId())) {
-            throw new IllegalArgumentException("group에 id가 없습니다.");
+            throw new IllegalArgumentException("user에 id가 없습니다.");
         }
     }
 

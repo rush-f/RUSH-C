@@ -2,6 +2,7 @@ package rush.rush.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleLiking;
 import rush.rush.domain.User;
@@ -18,6 +19,7 @@ public class LikingService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void AddArticleLiking(Long articleId, UserPrincipal userPrincipal) {
         User user = findUser(userPrincipal.getId());
         Article article = findArticle(articleId);

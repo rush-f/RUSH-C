@@ -1,0 +1,3 @@
+POST http://localhost:8080/liking/article/Add?article_id=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzU1NDA5LCJleHAiOjE2MjY3NTcyMDl9.QuCQR8s4H5VaEbRkXpkEA2BMEeYAUAmqB_s_FQ6OsUnMtdKp8GgFjtSva4zpq_YO9HtyvZy4EYDMoaYMmLRGAw

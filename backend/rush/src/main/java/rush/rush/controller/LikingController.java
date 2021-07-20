@@ -1,7 +1,6 @@
 package rush.rush.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,8 @@ public class LikingController {
         @CurrentUser UserPrincipal userPrincipal){
         likingService.AddArticleLiking(articleId, userPrincipal);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+            .noContent()
             .build();
     }
 }
