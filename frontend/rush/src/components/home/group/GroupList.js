@@ -51,10 +51,17 @@ const GroupList = (props) => {
                 />
               ) : []
             }
-            <GroupSetting onClick={() => props.setIsCreateGroupModalOpen(true)}>
+            <GroupSetting onClick={() => {
+              props.setIsCreateGroupModalOpen(true);
+              props.setIsMenuOpen(false);
+            }}>
               그룹 만들기
             </GroupSetting>
-            <GroupSetting onClick={() => props.setIsJoinGroupModalOpen(true)}>그룹 가입하기</GroupSetting>
+            <GroupSetting onClick={() => {
+              props.setIsJoinGroupModalOpen(true);
+              props.setIsMenuOpen(false);
+            }}>
+              그룹 가입하기</GroupSetting>
           </div>
         }
       </Motion>

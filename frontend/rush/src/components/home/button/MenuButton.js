@@ -14,24 +14,32 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
-  const [isGroupOpened, setIsGroupOpened] = useState(false);
-  const url = accessToken? "/mypage" : "/login";
+const Menu = ({isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
 
+  const url = accessToken? "/mypage" : "/login";
+  const [isMenuOpen,setIsMenuOpen] = useState(false);
   return (<>
-    <BurgerMenu disableAutoFocus>
+    <BurgerMenu
+        onOpen={()=>setIsMenuOpen(true)}
+        onClose={()=>{
+          setIsMenuOpen(false);
+          setIsGroupOpened(false);
+        }}
+        isOpen={isMenuOpen}
+        disableAutoFocus>
       <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
       </BurgerMenuContents>
       <GroupList
-        isGroupOpened={isGroupOpened}
-        setMapType={setMapType}
-        setGroupId={setGroupId}
-        history={history}
-        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
-        setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          isGroupOpened={isGroupOpened}
+          setMapType={setMapType}
+          setGroupId={setGroupId}
+          history={history}
+          setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+          setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       />
       <BurgerMenuContents onClick={() => setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
     </BurgerMenu>

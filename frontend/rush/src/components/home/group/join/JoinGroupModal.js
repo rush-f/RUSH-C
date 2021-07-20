@@ -5,7 +5,7 @@ import InvitationCodeInput from "./InvitationCodeInput";
 import CompleteButton from "./CompleteButton";
 import {withRouter} from "react-router-dom";
 
-const JoinGroupModal = ({isJoinGroupModalOpen, setIsJoinGroupModalOpen, history}) => {
+const JoinGroupModal = ({isJoinGroupModalOpen, setIsJoinGroupModalOpen, setIsGroupOpened, history}) => {
   const [invitationCode, setInvitationCode] = useState("");
 
   return (
@@ -29,6 +29,7 @@ const JoinGroupModal = ({isJoinGroupModalOpen, setIsJoinGroupModalOpen, history}
       <CancelButton
         setIsCreateGroupModalOpen={setIsJoinGroupModalOpen}
         setGroupName={setInvitationCode}
+        setIsGroupOpened={setIsGroupOpened}
       />
       <InvitationCodeInput
         value={invitationCode}

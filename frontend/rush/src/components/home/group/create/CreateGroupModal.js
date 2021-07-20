@@ -4,7 +4,7 @@ import CancelButton from "./CancelButton";
 import GroupNameInput from "./GroupNameInput";
 import CompleteButton from "./CompleteButton";
 
-const JoinGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) => {
+const JoinGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen, setIsGroupOpened}) => {
   const [groupName, setGroupName] = useState("");
 
   return (
@@ -28,6 +28,7 @@ const JoinGroupModal = ({isCreateGroupModalOpen, setIsCreateGroupModalOpen}) => 
       <CancelButton
         setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
         setGroupName={setGroupName}
+        setIsGroupOpened={setIsGroupOpened}
       />
       <GroupNameInput
         value={groupName}

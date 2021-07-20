@@ -14,11 +14,12 @@ const StyledCancelButton = styled.div`
   cursor: pointer;
 `;
 
-const CancelButton = ({setIsCreateGroupModalOpen, setGroupName}) => {
+const CancelButton = ({setIsCreateGroupModalOpen, setGroupName, setIsGroupOpened}) => {
   return (<div style={{ position: "relative", width: "100%", height: "36px"}}>
       <StyledCancelButton onClick={() => {
         setIsCreateGroupModalOpen(false);
         setGroupName("");
+        setIsGroupOpened(false);
       }}>x</StyledCancelButton>
     </div>
   );
