@@ -84,8 +84,8 @@ public class CommentService {
 
     @Transactional
     public List<CommentResponse> findCommentsOfGroupedArticle(Long articleId, User user) {
-        // Todo: 구현
-        return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId).stream()
+        return commentRepository.findAllOfGroupedArticle(articleId, user.getId())
+            .stream()
             .map(this::toCommentResponse)
             .collect(Collectors.toList());
     }
