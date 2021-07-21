@@ -25,8 +25,30 @@ public class CommentService {
     @Transactional
     public CommentResponse create(Long articleId, MapType mapType, CreateCommentRequest createCommentRequest, User user) {
         // Todo: 권한검사
+        if (mapType == MapType.PUBLIC) {
+            return createOnPublicArticle(articleId, user, createCommentRequest);
+        }
+        if (mapType == MapType.PRIVATE) {
+            return createOnPrivateArticle(articleId, user, createCommentRequest);
+        }
+        if (mapType == MapType.GROUPED) {
+        }
+        throw new IllegalStateException("MapType 오류 - " + mapType.name());
+    }
+
+    private CommentResponse createOnPublicArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
         Article article = articleRepository.findById(articleId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
+
+        Comment savedComment = commentRepository.save(
+            new Comment(createCommentRequest.getContent(), user, article));
+
+        return toCommentResponse(savedComment);
+    }
+
+    private CommentResponse createOnPrivateArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
+        Article article = articleRepository.findByPrivateMapTrueAndIdAndUserId(articleId, user.getId())
+            .orElseThrow(() -> new IllegalArgumentException("해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
             new Comment(createCommentRequest.getContent(), user, article));

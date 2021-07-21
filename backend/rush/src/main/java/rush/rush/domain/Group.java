@@ -1,13 +1,21 @@
 package rush.rush.domain;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,12 +37,20 @@ public class Group {
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Group(Long id, String name, String invitationCode, Timestamp createDate) {
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    private List<UserGroup> userGroups = new ArrayList<>();
+
+
+    public Group(Long id, String name, String invitationCode, Timestamp createDate,
+            List<UserGroup> userGroups) {
         validate(name);
         this.id = id;
         this.name = name;
         this.invitationCode = invitationCode;
         this.createDate = createDate;
+        if (Objects.nonNull(userGroups)) {
+            this.userGroups = userGroups;
+        }
     }
 
     private void validate(String name) {
