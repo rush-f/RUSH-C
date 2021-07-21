@@ -35,33 +35,6 @@ class CommentRepositoryTest {
 
     @Test
     @Transactional
-    void findAllByArticle() {
-        // given
-        User user = persistUser(testEntityManager, "test@email.com");
-
-        Article article = persistArticle(testEntityManager,
-            user, true, true, 37.14, 34.24);
-
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
-
-        // when
-        List<Comment> comments = commentRepository.findAllByArticleIdOrderByCreateDateDesc(article.getId());
-
-        // then
-        assertThat(comments).isNotNull();
-        assertThat(comments).hasSize(2);
-        assertThat(comments.get(0).getContent()).isEqualTo(COMMENT_CONTENT);
-        assertThat(comments.get(0).getUser().getId()).isEqualTo(user.getId());
-        assertThat(comments.get(0).getArticle().getId()).isEqualTo(article.getId());
-        assertThat(comments.get(0).getCreateDate()).isEqualTo(comment2.getCreateDate());
-        assertThat(comments.get(1).getCreateDate()).isEqualTo(comment1.getCreateDate());
-    }
-
-    @Test
-    @Transactional
     @DisplayName("전체지도 댓글 조회")
     void findAllOfPublicArticle() {
         // given

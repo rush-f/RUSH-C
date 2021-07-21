@@ -7,8 +7,6 @@ import rush.rush.domain.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findAllByArticleIdOrderByCreateDateDesc(Long articleId);
-
     @Query("select comment from Comment comment "
         + "where comment.article.id = :articleId "
         + "and comment.article.publicMap = true "
