@@ -102,8 +102,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .antMatchers(HttpMethod.GET, "/articles/public/**")
             .permitAll()
-            .antMatchers(HttpMethod.GET, "/comments/**")  // Todo: 지울것
-            .permitAll()
             .antMatchers(HttpMethod.POST, "/auth/**")
             .permitAll()
             .anyRequest().authenticated()
