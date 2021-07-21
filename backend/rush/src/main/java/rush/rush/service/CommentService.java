@@ -67,8 +67,24 @@ public class CommentService {
     }
 
     @Transactional
-    public List<CommentResponse> findCommentsByArticleId(Long articleId) {
+    public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {
 
+        return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId).stream()
+            .map(this::toCommentResponse)
+            .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CommentResponse> findCommentsOfPrivateArticle(Long articleId, User user) {
+        // Todo: 구현
+        return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId).stream()
+            .map(this::toCommentResponse)
+            .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CommentResponse> findCommentsOfGroupedArticle(Long articleId, User user) {
+        // Todo: 구현
         return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId).stream()
             .map(this::toCommentResponse)
             .collect(Collectors.toList());

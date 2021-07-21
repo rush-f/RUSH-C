@@ -22,7 +22,7 @@ public class FindCommentController {
     @GetMapping("/public/{articleId}/comments")
     public ResponseEntity<List<CommentResponse>> findCommentsOfPublicArticle(
             @PathVariable("articleId") Long articleId) {
-        List<CommentResponse> comments = commentService.findCommentsByArticleId(articleId);
+        List<CommentResponse> comments = commentService.findCommentsOfPublicArticle(articleId);
 
         return ResponseEntity.ok()
             .body(comments);
@@ -32,7 +32,8 @@ public class FindCommentController {
     public ResponseEntity<List<CommentResponse>> findCommentsOfPrivateArticle(
             @PathVariable("articleId") Long articleId,
             @CurrentUser UserPrincipal userPrincipal) {
-        List<CommentResponse> comments = commentService.findCommentsByArticleId(articleId);
+        List<CommentResponse> comments = commentService.findCommentsOfPrivateArticle(articleId,
+            userPrincipal.getUser());
 
         return ResponseEntity.ok()
             .body(comments);
@@ -42,7 +43,8 @@ public class FindCommentController {
     public ResponseEntity<List<CommentResponse>> findCommentsOfGroupedArticle(
             @PathVariable("articleId") Long articleId,
             @CurrentUser UserPrincipal userPrincipal) {
-        List<CommentResponse> comments = commentService.findCommentsByArticleId(articleId);
+        List<CommentResponse> comments = commentService.findCommentsOfGroupedArticle(articleId,
+            userPrincipal.getUser());
 
         return ResponseEntity.ok()
             .body(comments);

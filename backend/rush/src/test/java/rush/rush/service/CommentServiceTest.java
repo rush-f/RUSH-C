@@ -65,7 +65,7 @@ class CommentServiceTest {
         comment = commentRepository.save(comment);
 
         // when & then
-        List<CommentResponse> comments = commentService.findCommentsByArticleId(article.getId());
+        List<CommentResponse> comments = commentService.findCommentsOfPublicArticle(article.getId());
 
         assertThat(comments).isNotNull();
         assertThat(comments.size()).isEqualTo(1);
