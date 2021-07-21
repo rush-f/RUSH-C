@@ -17,6 +17,18 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         @Param("articleId") Long articleId);
 
     @Query("select comment from Comment comment "
+        + "inner join comment.article article "
+        + "inner join article.articleGroups articlegroup "
+        + "inner join articlegroup.group g "
+        + "inner join g.userGroups usergroup "
+        + "inner join usergroup.user user "
+        + "where article.id = :articleId "
+        + "and user.id = :userId "
+        + "order by comment.createDate desc")
+    List<Comment> findAllOfGroupedArticle(
+        @Param("articleId") Long articleId, @Param("userId") Long userId);
+
+    @Query("select comment from Comment comment "
         + "inner join comment.article "
         + "where comment.article.id = :articleId "
         + "and comment.article.user.id = :userId "
