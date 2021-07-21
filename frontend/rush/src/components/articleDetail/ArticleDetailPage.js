@@ -16,7 +16,7 @@ const ArticleDetailPage = (props) => {
   const articleId = props.match.params.articleId;
   const mapType = props.match.params.mapType;
   const [article, setArticle] = useState(null);
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
@@ -31,8 +31,13 @@ const ArticleDetailPage = (props) => {
   }, [articleId, mapType]);
 
   useEffect(() => {
-    findCommentsApi(articleId).then(commentPromise => {
+    findCommentsApi({
+      articleId: articleId,
+      mapType: mapType,
+      history: props.history}
+    ).then(commentPromise => {
       setComments(commentPromise)
+      console.log(commentPromise)
     });
   }, [articleId]);
 
