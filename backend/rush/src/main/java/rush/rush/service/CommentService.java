@@ -20,11 +20,10 @@ import rush.rush.repository.CommentRepository;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final ArticleRepository articleRepository; // Todo : 없애기
+    private final ArticleRepository articleRepository;
 
     @Transactional
     public CommentResponse create(Long articleId, MapType mapType, CreateCommentRequest createCommentRequest, User user) {
-        // Todo: 권한검사
         if (mapType == MapType.PUBLIC) {
             return createOnPublicArticle(articleId, user, createCommentRequest);
         }
@@ -32,12 +31,13 @@ public class CommentService {
             return createOnPrivateArticle(articleId, user, createCommentRequest);
         }
         if (mapType == MapType.GROUPED) {
+            return createOnGroupedArticle(articleId, user, createCommentRequest);
         }
         throw new IllegalStateException("MapType 오류 - " + mapType.name());
     }
 
     private CommentResponse createOnPublicArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
-        Article article = articleRepository.findById(articleId)
+        Article article = articleRepository.findByPublicMapTrueAndId(articleId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
@@ -48,6 +48,16 @@ public class CommentService {
 
     private CommentResponse createOnPrivateArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
         Article article = articleRepository.findByPrivateMapTrueAndIdAndUserId(articleId, user.getId())
+            .orElseThrow(() -> new IllegalArgumentException("해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
+
+        Comment savedComment = commentRepository.save(
+            new Comment(createCommentRequest.getContent(), user, article));
+
+        return toCommentResponse(savedComment);
+    }
+
+    private CommentResponse createOnGroupedArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
+        Article article = articleRepository.findAsGroupMapArticle(articleId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
