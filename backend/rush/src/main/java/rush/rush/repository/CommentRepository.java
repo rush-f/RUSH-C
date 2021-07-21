@@ -10,6 +10,13 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByArticleIdOrderByCreateDateDesc(Long articleId);
 
     @Query("select comment from Comment comment "
+        + "where comment.article.id = :articleId "
+        + "and comment.article.publicMap = true "
+        + "order by comment.createDate desc")
+    List<Comment> findAllOfPublicArticle(
+        @Param("articleId") Long articleId);
+
+    @Query("select comment from Comment comment "
         + "inner join comment.article "
         + "where comment.article.id = :articleId "
         + "and comment.article.user.id = :userId "

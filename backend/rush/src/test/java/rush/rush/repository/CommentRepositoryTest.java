@@ -58,6 +58,29 @@ class CommentRepositoryTest {
 
     @Test
     @Transactional
+    @DisplayName("전체지도 댓글 조회")
+    void findAllOfPublicArticle() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+
+        Article article = persistArticle(testEntityManager,
+            user, true, false, 37.14, 34.24);
+
+        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment1);
+        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment2);
+
+        // when
+        List<Comment> comments = commentRepository.findAllOfPublicArticle(article.getId());
+
+        // then
+        assertThat(comments).isNotNull();
+        assertThat(comments).hasSize(2);
+    }
+
+    @Test
+    @Transactional
     @DisplayName("개인지도 댓글 조회")
     void findAllOfPrivateArticle() {
         // given
