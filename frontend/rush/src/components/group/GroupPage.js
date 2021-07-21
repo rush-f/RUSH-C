@@ -33,7 +33,6 @@ const GroupPage = (props) => {
       accessToken: accessToken,
       history: props.history
     }).then(groupMembersPromise => {
-      console.log(groupMembersPromise)
       setGroupMembers(groupMembersPromise)
     });
   }, [groupId, accessToken]);

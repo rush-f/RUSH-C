@@ -21,7 +21,6 @@ const InvitationCode = ({invitationCode}) => {
   const onCopyButtonClicked = (e) => {
     e.preventDefault();
     const tempInput = tempTextInput.current;
-    console.log(tempInput)
     tempInput.select();
     document.execCommand("copy");
     alert("초대코드가 복사되었습니다! 초대할 상대에게 공유해주세요!");
