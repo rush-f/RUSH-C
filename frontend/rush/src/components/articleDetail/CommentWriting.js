@@ -24,7 +24,7 @@ const CommentWritingButton = styled.button`
   padding: 7px;
 `;
 
-const CommentWriting = (props) => {
+const CommentWriting = ({articleId, comments, setComments, mapType, accessToken, history}) => {
   const [inputValue, setInputValue] = useState([]);
 
   return (
@@ -37,11 +37,12 @@ const CommentWriting = (props) => {
         />
         <CommentWritingButton onClick={() => {
           createCommentApi(inputValue,
-              props.articleId,
-              props.accessToken,
-              props.history
+              articleId,
+              mapType,
+              accessToken,
+              history
           ).then(commentPromise => {
-            props.setComments(new Array(commentPromise).concat(props.comments))
+            setComments(new Array(commentPromise).concat(comments))
           })
         }}>
           등록

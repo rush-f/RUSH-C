@@ -1,7 +1,7 @@
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const createCommentApi = (content, articleId, accessToken, history) => {
+const createCommentApi = (content, articleId, mapType, accessToken, history) => {
   const config = {
     headers: {
       "Authorization": "Bearer " + accessToken
@@ -10,7 +10,8 @@ const createCommentApi = (content, articleId, accessToken, history) => {
   const body = {
     'content': content
   };
-  return axios.post(BACKEND_ADDRESS + "/comments?article_id=" + articleId, body, config)
+  return axios.post(BACKEND_ADDRESS + "/articles/" + mapType + "/" + articleId + "/comments",
+      body, config)
     .then(response => {
       if (response.status === 201) {
         return response.data;
