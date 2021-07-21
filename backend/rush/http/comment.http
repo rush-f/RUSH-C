@@ -1,4 +1,4 @@
-POST http://localhost:8080/comments?article_id=1
+POST http://localhost:8080/articles/public/1/comments
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2LCJleHAiOjE2MjI0NjQzN
 

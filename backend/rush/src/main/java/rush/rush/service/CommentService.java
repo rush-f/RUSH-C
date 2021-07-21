@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.Comment;
+import rush.rush.domain.MapType;
 import rush.rush.domain.User;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CommentResponse;
@@ -22,7 +23,8 @@ public class CommentService {
     private final ArticleRepository articleRepository; // Todo : 없애기
 
     @Transactional
-    public CommentResponse create(Long articleId, CreateCommentRequest createCommentRequest, User user) {
+    public CommentResponse create(Long articleId, MapType mapType, CreateCommentRequest createCommentRequest, User user) {
+        // Todo: 권한검사
         Article article = articleRepository.findById(articleId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
 
