@@ -13,14 +13,14 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.dto.CreateCommentRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.CommentService;
+import rush.rush.service.CreateCommentService;
 
 @RestController
 @RequestMapping("/articles")
 @RequiredArgsConstructor
 public class CreateCommentController {
 
-    private final CommentService commentService;
+    private final CreateCommentService createCommentService;
 
     @PostMapping("/{mapType}/{articleId}/comments")
     public ResponseEntity<CommentResponse> createOnPublicArticle(
@@ -29,7 +29,8 @@ public class CreateCommentController {
             @RequestBody CreateCommentRequest createCommentRequest,
             @CurrentUser UserPrincipal userPrincipal) {
         CommentResponse commentResponse =
-            commentService.create(articleId, MapType.from(mapType), createCommentRequest, userPrincipal.getUser());
+            createCommentService
+                .create(articleId, MapType.from(mapType), createCommentRequest, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(commentResponse);

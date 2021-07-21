@@ -1,7 +1,5 @@
 package rush.rush.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +15,7 @@ import rush.rush.repository.CommentRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CreateCommentService {
 
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository;
@@ -64,30 +62,6 @@ public class CommentService {
             new Comment(createCommentRequest.getContent(), user, article));
 
         return toCommentResponse(savedComment);
-    }
-
-    @Transactional
-    public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {
-        return commentRepository.findAllOfPublicArticle(articleId)
-            .stream()
-            .map(this::toCommentResponse)
-            .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<CommentResponse> findCommentsOfPrivateArticle(Long articleId, User user) {
-        return commentRepository.findAllOfPrivateArticle(articleId, user.getId())
-            .stream()
-            .map(this::toCommentResponse)
-            .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<CommentResponse> findCommentsOfGroupedArticle(Long articleId, User user) {
-        return commentRepository.findAllOfGroupedArticle(articleId, user.getId())
-            .stream()
-            .map(this::toCommentResponse)
-            .collect(Collectors.toList());
     }
 
     private CommentResponse toCommentResponse(Comment comment){

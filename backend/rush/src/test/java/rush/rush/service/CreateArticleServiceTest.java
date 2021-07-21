@@ -2,7 +2,6 @@ package rush.rush.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,21 +21,19 @@ class CreateArticleServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User savedUser;
-
-    @BeforeEach
-    void setUp() {
+    @Test
+    @Transactional
+    void create() {
+        // given
         User user = User.builder()
             .email("test@test.com")
             .password("test password")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
-        savedUser = userRepository.save(user);
-    }
+        User savedUser = userRepository.save(user);
 
-    @Test
-    void create() {
+        // when
         CreateArticleRequest createArticleRequest = new CreateArticleRequest(
             "af", "sdf", 0, 0, true, true, null);
         assertThat(createArticleService.create(createArticleRequest, savedUser)).isNotNull();

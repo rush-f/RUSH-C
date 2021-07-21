@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
 import javax.transaction.Transactional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +18,7 @@ import rush.rush.repository.UserRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class CommentServiceTest {
+class FindCommentServiceTest {
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -31,42 +30,38 @@ class CommentServiceTest {
     private CommentRepository commentRepository;
 
     @Autowired
-    private CommentService commentService;
+    private FindCommentService findCommentService;
 
-    private User savedUser;
-
-    @BeforeEach
-    void setUp() {
+    @Test
+    @Transactional
+    void findCommentsByArticleId() {
+        // given
         User user = User.builder()
             .email("test@test.com")
             .password("test password")
-//            .invitationCode("test invitation Code")
             .nickName("test")
             .provider(AuthProvider.local)
             .build();
-        savedUser = userRepository.save(user);
-    }
+        User savedUser = userRepository.save(user);
 
-    @Test
-    void findCommentsByArticleId() {
-        // given
         Article article = Article.builder()
-                .title("title")
-                .content("content")
-                .latitude(0.0)
-                .longitude(0.0)
-                .user(savedUser)
-                .publicMap(true)
-                .privateMap(true)
-                .build();
+            .title("title")
+            .content("content")
+            .latitude(0.0)
+            .longitude(0.0)
+            .user(savedUser)
+            .publicMap(true)
+            .privateMap(true)
+            .build();
         articleRepository.save(article);
 
         Comment comment = new Comment("댓글내용", savedUser, article);
         comment = commentRepository.save(comment);
 
-        // when & then
-        List<CommentResponse> comments = commentService.findCommentsOfPublicArticle(article.getId());
+        // when
+        List<CommentResponse> comments = findCommentService.findCommentsOfPublicArticle(article.getId());
 
+        // then
         assertThat(comments).isNotNull();
         assertThat(comments.size()).isEqualTo(1);
         assertThat(comments.get(0).getId()).isEqualTo(comment.getId());
