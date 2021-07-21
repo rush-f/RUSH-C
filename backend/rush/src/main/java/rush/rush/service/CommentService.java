@@ -68,7 +68,7 @@ public class CommentService {
 
     @Transactional
     public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {
-        return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId)
+        return commentRepository.findAllOfPublicArticle(articleId)
             .stream()
             .map(this::toCommentResponse)
             .collect(Collectors.toList());
