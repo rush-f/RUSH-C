@@ -2,22 +2,22 @@ import React from 'react';
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const addArticleLikingApi = (accessToken, articleId,history) => {
-
+const changeMyLikeApi = (accessToken, hasILiked, articleId,history) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
     return Promise.reject("토큰이 없음");
   }
+
   const config = {
     headers: {
       Authorization: "Bearer " + accessToken
     }
   }
 
-  axios.post(BACKEND_ADDRESS + "/like/article?article_id="+articleId,{}, config)
+  axios.post(BACKEND_ADDRESS + "/articles/"+articleId+"/like?hasiliked="+hasILiked,{}, config)
   .then(response => {
-    if (response.status === 204) {
+    if (response.status === 201) {
     }
   })
   .catch(error => {
@@ -31,4 +31,4 @@ const addArticleLikingApi = (accessToken, articleId,history) => {
   });
 };
 
-export default addArticleLikingApi;
+export default changeMyLikeApi;

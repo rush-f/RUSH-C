@@ -10,7 +10,7 @@ import findCommentsApi from "../../api/FindCommentsApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
-import checkArticleMyLikingApi from "../../api/CheckArticleMyLikingApi";
+import CheckHasIlikedApi from "../../api/CheckHasIlikedApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -18,14 +18,14 @@ const ArticleDetailPage = (props) => {
   const mapType = props.match.params.mapType;
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState(null);
-  const [MyLiking,setMyLiking] = useState(false);
-  const [articleTotalLiking, setArticleTotalLiking] = useState(0);
+  const [hasILiked,setHasILiked] = useState(false);
+  const [articleTotalLikes, setArticleTotalLikes] = useState(0);
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
       findWritingApi(articleId, mapType, props.history).then(articlePromise => {
         setArticle(articlePromise);
-        setArticleTotalLiking(articlePromise.totalLiking);
+        setArticleTotalLikes(articlePromise.totalLikes);
       })
     }
     else {
@@ -36,10 +36,10 @@ const ArticleDetailPage = (props) => {
 
   useEffect(()=>{
     if(accessToken)
-    checkArticleMyLikingApi(accessToken, articleId).then(checkLiking =>{
-      setMyLiking(checkLiking);
+    CheckHasIlikedApi(accessToken, articleId).then(hasILiked =>{
+      setHasILiked(hasILiked);
     })
-  },[MyLiking]);
+  },[]);
 
   useEffect(() => {
     findCommentsApi(articleId).then(commentPromise => {
@@ -67,10 +67,10 @@ const ArticleDetailPage = (props) => {
             accessToken={accessToken}
             articleId={articleId}
             article={article}
-            articleTotalLiking={articleTotalLiking}
-            setArticleTotalLiking={setArticleTotalLiking}
-            checkMyLiking={MyLiking}
-            setCheckMyLiking={setMyLiking}
+            articleTotalLikes={articleTotalLikes}
+            setArticleTotalLikes={setArticleTotalLikes}
+            hasILiked={hasILiked}
+            setHasILiked={setHasILiked}
             history={props.history}
           />
         </PostBox>
