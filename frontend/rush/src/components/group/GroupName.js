@@ -7,7 +7,7 @@ const NameStyle = styled.div`
   margin-bottom: 15px;
 `;
 
-const Name = (props) => {
+const GroupName = (props) => {
   return (
     <NameStyle>
       {props.children}
@@ -15,4 +15,4 @@ const Name = (props) => {
   );
 };
 
-export default Name;
+export default GroupName;

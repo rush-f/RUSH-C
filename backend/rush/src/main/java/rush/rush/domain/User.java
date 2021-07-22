@@ -2,6 +2,8 @@ package rush.rush.domain;
 
 import com.sun.istack.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,9 +11,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,11 +59,13 @@ public class User {
 
     private String providerId;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserGroup> userGroups = new ArrayList<>();
+
     public User(Long id, String nickName, String password, String email, String imageUrl,
-        Timestamp joinDate, Timestamp visitDate, AuthProvider provider,
-        String providerId) {
-        validate(id, nickName, password, email, imageUrl, joinDate, visitDate,
-            provider, providerId);
+        Timestamp joinDate, Timestamp visitDate, AuthProvider provider, String providerId,
+        List<UserGroup> userGroups) {
+        validate(id, nickName, password, email, imageUrl, joinDate, visitDate, provider, providerId);
         this.id = id;
         this.nickName = nickName;
         this.password = password;
@@ -69,6 +75,7 @@ public class User {
         this.visitDate = visitDate;
         this.provider = provider;
         this.providerId = providerId;
+        this.userGroups = userGroups;
     }
 
     public void alterImageUrl(String newImageUrl) {

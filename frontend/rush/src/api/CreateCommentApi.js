@@ -20,7 +20,7 @@ const createCommentApi = (content, articleId, accessToken, history) => {
       if (error.response.status === 401 || error.response.status === 403) {
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         history.push("/login");
-        return true;
+        return Promise.reject();
       }
       alert("이유가 뭔지 모르겠지만 댓글작성 실패했음.");
     });
