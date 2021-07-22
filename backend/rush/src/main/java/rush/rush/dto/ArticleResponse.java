@@ -18,5 +18,5 @@ public class ArticleResponse {
     private Double longitude;
     private AuthorResponse author;
     private Timestamp createDate;
-    private int totalLiking;
+    private int totalLikes;
 }

@@ -16,7 +16,7 @@ import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.repository.ArticleGroupRepository;
-import rush.rush.repository.ArticleLikingRepository;
+import rush.rush.repository.ArticleLikeRepository;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserGroupRepository;
 
@@ -27,7 +27,7 @@ public class FindArticleService {
     private final ArticleRepository articleRepository;
     private final UserGroupRepository userGroupRepository;
     private final ArticleGroupRepository articleGroupRepository;
-    private final ArticleLikingRepository articleLikingRepository;
+    private final ArticleLikeRepository articleLikeRepository;
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
@@ -75,7 +75,7 @@ public class FindArticleService {
         User author = article.getUser();
         AuthorResponse authorResponse = new AuthorResponse(author.getId(),
             author.getNickName(), author.getImageUrl());
-        int likingCount = articleLikingRepository.countByArticleId(article.getId());
+        int totalLikes = articleLikeRepository.countByArticleId(article.getId());
 
         return new ArticleResponse(
             article.getId(),
@@ -85,7 +85,7 @@ public class FindArticleService {
             article.getLongitude(),
             authorResponse,
             article.getCreateDate(),
-            likingCount
+            totalLikes
         );
     }
 

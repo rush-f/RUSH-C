@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Builder
-public class ArticleLiking {
+public class ArticleLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class ArticleLiking {
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
-    public ArticleLiking(Long id, User user,Article article) {
+    public ArticleLike(Long id, User user,Article article) {
         validate(user);
         validate(article);
         this.id = id;

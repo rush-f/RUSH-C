@@ -1,22 +1,9 @@
 ###
-POST http://localhost:8080/liking/article/add?article_id=1
+POST http://localhost:8080/articles/1/like?hasiliked=false
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjI2Nzg4MzM1LCJleHAiOjE2MjY3OTAxMzV9.nVO1NxyAmNCl2cdZRcOeM3RHgMnLwAM1rncNHSOaKtXr3sB6IaweGkyHk7wKCE-AphSWAb21uXi4v7i54Qnkew
-
-{
-  "title": "only 전체지도",
-  "content": "전체지도에만 쓴 글",
-  "latitude": 0,
-  "longitude": 0,
-  "publicMap": "true",
-  "privateMap": "false"
-}
-###
-DELETE http://localhost:8080/liking/article/delete?article_id=1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzcyNjc1LCJleHAiOjE2MjY3NzQ0NzV9.1AYw2Jl9stV_FHn8MCjj3LQ4WUVcJNGIo1c6fw1Wto9RREDFxrWdfS-n0kEyO7zGk-ZEFboWcznA6X0fYJl2SA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwMDV9.ChV6cXV-P_xweNxxpeg25bmDN9sQcoanYgNGsmxxktcF_VgZNryXz2YsMgxMyC6P_o4Ml05Fv7AGK-mMSmbYpA
 
 ###
-GET http://localhost:8080/liking/article/check?article_id=1
+GET http://localhost:8080/articles/1/like
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NzcyNjc1LCJleHAiOjE2MjY3NzQ0NzV9.1AYw2Jl9stV_FHn8MCjj3LQ4WUVcJNGIo1c6fw1Wto9RREDFxrWdfS-n0kEyO7zGk-ZEFboWcznA6X0fYJl2SA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwMDV9.ChV6cXV-P_xweNxxpeg25bmDN9sQcoanYgNGsmxxktcF_VgZNryXz2YsMgxMyC6P_o4Ml05Fv7AGK-mMSmbYpA
