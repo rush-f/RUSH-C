@@ -6,11 +6,11 @@ import changeMyLikeApi from "../../api/ChangeMyLikeApi";
 const ArticleContent = styled.div`
   font-size: 24px;
   margin-top: 10px;
-`
+`;
 
 const ArticleLike = styled.div`
   display: flex;
-`
+`;
 
 const LikeHeart = styled.div`
   font-size: 40px;
@@ -24,7 +24,7 @@ const LikeHeart = styled.div`
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
- `
+ `;
 
 const LikeLetter = styled.div`
   font-size: 17px;
