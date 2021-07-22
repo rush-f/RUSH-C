@@ -14,22 +14,22 @@ import rush.rush.service.ArticleLikingService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/liking/article")
+@RequestMapping("/like/articles")
 public class ArticleLikingController {
 
     private final ArticleLikingService articleLikingService;
 
-    @PostMapping("/add")
-    public ResponseEntity<Void> AddArticleLiking(@RequestParam(value = "article_id") Long articleId,
+    @PostMapping
+    public ResponseEntity<Void> addArticleLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
-        articleLikingService.addArticleLiking(articleId, userPrincipal.getId());
+        articleLikingService.addArticleLiking(articleId, userPrincipal.getUser());
 
         return ResponseEntity.noContent()
             .build();
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> DeleteArticleLiking(@RequestParam(value = "article_id") Long articleId,
+    @DeleteMapping
+    public ResponseEntity<Void> deleteArticleLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
         articleLikingService.deleteArticleLiking(articleId, userPrincipal.getId());
 
@@ -37,8 +37,8 @@ public class ArticleLikingController {
             .build();
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<Boolean> CheckArticleMyLiking(@RequestParam(value = "article_id") Long articleId,
+    @GetMapping
+    public ResponseEntity<Boolean> checkArticleMyLiking(@RequestParam(value = "article_id") Long articleId,
         @CurrentUser UserPrincipal userPrincipal){
         boolean result= articleLikingService.checkArticleMyLiking(articleId, userPrincipal.getId());
 

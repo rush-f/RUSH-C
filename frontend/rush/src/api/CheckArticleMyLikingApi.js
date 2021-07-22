@@ -7,7 +7,7 @@ const checkArticleMyLikingApi = (accessToken, articleId) => {
       "Authorization": "Bearer " + accessToken
     }
   };
-  return axios.get(BACKEND_ADDRESS + "/liking/article/check?article_id="+articleId, config)
+  return axios.get(BACKEND_ADDRESS + "/like/article?article_id="+articleId, config)
   .then(response => response.data);
 };
 

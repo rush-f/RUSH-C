@@ -15,7 +15,7 @@ const addArticleLikingApi = (accessToken, articleId,history) => {
     }
   }
 
-  axios.post(BACKEND_ADDRESS + "/liking/article/add?article_id="+articleId,{}, config)
+  axios.post(BACKEND_ADDRESS + "/like/article?article_id="+articleId,{}, config)
   .then(response => {
     if (response.status === 204) {
     }
@@ -26,7 +26,7 @@ const addArticleLikingApi = (accessToken, articleId,history) => {
       history.push("/login");
       return Promise.reject();
     }
-    alert("이유가 뭔지 모르겠지만 댓글작성 실패했음.");
+    alert("이유가 뭔지 모르겠지만 좋아요 실패했음.");
     history.push("/");
   });
 };

@@ -30,10 +30,6 @@ public class ArticleLiking {
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
-    public ArticleLiking(User user, Article article){
-        this(null, user, article);
-    }
-
     public ArticleLiking(Long id, User user,Article article) {
         validate(user);
         validate(article);
