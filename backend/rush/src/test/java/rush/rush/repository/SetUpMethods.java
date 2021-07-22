@@ -2,6 +2,7 @@ package rush.rush.repository;
 
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
@@ -49,5 +50,13 @@ public class SetUpMethods {
             .privateMap(isPrivateMap)
             .build();
         return testEntityManager.persist(article);
+    }
+
+    public static void persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
+        ArticleGroup articleGroup = ArticleGroup.builder()
+            .article(article)
+            .group(group)
+            .build();
+        testEntityManager.persist(articleGroup);
     }
 }

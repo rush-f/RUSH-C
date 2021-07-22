@@ -40,14 +40,17 @@ public class Group {
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<UserGroup> userGroups = new ArrayList<>();
 
+
     public Group(Long id, String name, String invitationCode, Timestamp createDate,
-        List<UserGroup> userGroups) {
+            List<UserGroup> userGroups) {
         validate(name);
         this.id = id;
         this.name = name;
         this.invitationCode = invitationCode;
         this.createDate = createDate;
-        this.userGroups = userGroups;
+        if (Objects.nonNull(userGroups)) {
+            this.userGroups = userGroups;
+        }
     }
 
     private void validate(String name) {

@@ -2,7 +2,10 @@ package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
+import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
+import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
@@ -121,5 +125,36 @@ class ArticleRepositoryTest {
         assertThat(foundArticle.isPresent()).isTrue();
         assertThat(foundArticle.get().getId()).isEqualTo(article.getId());
         assertThat(foundArticle.get().getContent()).isEqualTo(article.getContent());
+    }
+
+    @Test
+    @Transactional
+    void findAsGroupMapArticle() {
+        // given
+        User user1 = persistUser(testEntityManager, "test1@email.com");
+        User user2 = persistUser(testEntityManager, "test2@email.com");
+        User anotherGroupUser = persistUser(testEntityManager, "test3@email.com");
+
+        Group group = persistGroup(testEntityManager);
+
+        persistUserGroup(testEntityManager, user1, group);
+        persistUserGroup(testEntityManager, user2, group);
+
+        Article article = persistArticle(testEntityManager, user1, false, false, 0.0, 0.0);
+
+        persistArticleGroup(testEntityManager, article, group);
+
+        // when
+        Optional<Article> foundArticle1 = articleRepository.findAsGroupMapArticle(
+            article.getId(), user2.getId());
+        // then
+        assertThat(foundArticle1.isPresent()).isTrue();
+        assertThat(foundArticle1.get().getId()).isEqualTo(article.getId());
+
+        // when
+        Optional<Article> foundArticle2 = articleRepository.findAsGroupMapArticle(
+            article.getId(), anotherGroupUser.getId());
+        // then
+        assertThat(foundArticle2.isPresent()).isFalse();
     }
 }

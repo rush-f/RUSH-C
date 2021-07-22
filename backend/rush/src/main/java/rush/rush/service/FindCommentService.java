@@ -5,37 +5,40 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.Article;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CommentResponse;
-import rush.rush.dto.CreateCommentRequest;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class FindCommentService {
 
     private final CommentRepository commentRepository;
-    private final ArticleRepository articleRepository; // Todo : 없애기
+    private final ArticleRepository articleRepository;
 
     @Transactional
-    public CommentResponse create(Long articleId, CreateCommentRequest createCommentRequest, User user) {
-        Article article = articleRepository.findById(articleId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
-
-        Comment savedComment = commentRepository.save(
-            new Comment(createCommentRequest.getContent(), user, article));
-
-        return toCommentResponse(savedComment);
+    public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {
+        return commentRepository.findAllOfPublicArticle(articleId)
+            .stream()
+            .map(this::toCommentResponse)
+            .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<CommentResponse> findCommentsByArticleId(Long articleId) {
+    public List<CommentResponse> findCommentsOfPrivateArticle(Long articleId, User user) {
+        return commentRepository.findAllOfPrivateArticle(articleId, user.getId())
+            .stream()
+            .map(this::toCommentResponse)
+            .collect(Collectors.toList());
+    }
 
-        return commentRepository.findAllByArticleIdOrderByCreateDateDesc(articleId).stream()
+    @Transactional
+    public List<CommentResponse> findCommentsOfGroupedArticle(Long articleId, User user) {
+        return commentRepository.findAllOfGroupedArticle(articleId, user.getId())
+            .stream()
             .map(this::toCommentResponse)
             .collect(Collectors.toList());
     }
