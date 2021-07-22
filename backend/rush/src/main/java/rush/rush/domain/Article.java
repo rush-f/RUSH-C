@@ -43,7 +43,7 @@ public class Article {
     @NotNull
     private Double longitude;   // 경도
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 

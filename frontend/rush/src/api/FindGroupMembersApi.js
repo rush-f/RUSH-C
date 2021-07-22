@@ -1,28 +1,21 @@
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const createGroupApi = ({groupName, history}) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
-
+const findGroupMembersApi = ({ groupId, accessToken, history }) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
     return Promise.reject("토큰이 없음");
   }
-  const body = {
-    name: groupName
-  };
   const config = {
     headers: {
       Authorization: "Bearer " + accessToken
     }
   }
-  axios.post(BACKEND_ADDRESS + "/groups", body, config)
+  return axios.get(BACKEND_ADDRESS + "/groups/" + groupId + "/members", config)
   .then(response => {
-    if (response.status === 201) {
-      const uri = response.headers.location;
-      history.push(uri);
+    if (response.status === 200) {
+      return response.data
     }
   })
   .catch(error => {
@@ -31,8 +24,8 @@ const createGroupApi = ({groupName, history}) => {
       history.push("/login");
       return Promise.reject();
     }
-    alert("그룹 가입 실패");
+    alert("이유가 뭔지 모르겠지만 그룹원 목록을 불러오는데 실패했음...");
   });
 };
 
-export default createGroupApi;
+export default findGroupMembersApi;
