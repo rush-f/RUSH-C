@@ -66,7 +66,7 @@ public class AuthController {
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/me")
+                .fromCurrentContextPath().path("/api/api/users/me")
                 .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location)

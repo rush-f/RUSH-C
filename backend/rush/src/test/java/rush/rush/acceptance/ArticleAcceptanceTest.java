@@ -63,7 +63,7 @@ public class ArticleAcceptanceTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON_VALUE)
         .when()
-            .post("/auth/signup")
+            .post("/api/auth/signup")
         .then()
             .statusCode(HttpStatus.CREATED.value());
     }
@@ -78,7 +78,7 @@ public class ArticleAcceptanceTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .post("/auth/login")
+            .post("/api/auth/login")
             .then()
             .extract()
             .body()
@@ -103,7 +103,7 @@ public class ArticleAcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
-                .post("/articles")
+                .post("/api/articles")
             .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .extract()

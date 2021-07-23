@@ -26,12 +26,12 @@ public class CreateArticleController {
         Article article = createArticleService.create(createArticleRequest, userPrincipal.getUser());
 
         if (article.isPublicMap()) {
-            return buildArticleCreateResponse("/articles/public/" + article.getId());
+            return buildArticleCreateResponse("/api/articles/public/" + article.getId());
         }
         if (article.isPrivateMap()) {
-            return buildArticleCreateResponse("/articles/private/" + article.getId());
+            return buildArticleCreateResponse("/api/articles/private/" + article.getId());
         }
-        return buildArticleCreateResponse("/articles/grouped/" + article.getId());
+        return buildArticleCreateResponse("/api/articles/grouped/" + article.getId());
     }
 
     private ResponseEntity<Void> buildArticleCreateResponse(String uri) {

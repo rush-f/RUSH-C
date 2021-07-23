@@ -1,5 +1,5 @@
 ### 전체지도 글에 댓글 작성
-POST http://localhost:8080/articles/public/1/comments
+POST http://localhost:8080/api/articles/public/1/comments
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2LCJleHAiOjE2MjI0NjQzN
 
@@ -8,7 +8,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2L
 }
 
 ### 개인지도 글에 댓글 작성
-POST http://localhost:8080/articles/private/1/comments
+POST http://localhost:8080/api/articles/private/1/comments
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2LCJleHAiOjE2MjI0NjQzN
 
@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2L
 }
 
 ### 그룹지도 글에 댓글 작성
-POST http://localhost:8080/articles/grouped/1/comments
+POST http://localhost:8080/api/articles/grouped/1/comments
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIyNDYyNTU2LCJleHAiOjE2MjI0NjQzN
 

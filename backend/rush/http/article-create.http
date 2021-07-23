@@ -1,5 +1,5 @@
 ### 전체지도에만 글쓰기
-POST http://localhost:8080/articles
+POST http://localhost:8080/api/articles
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
@@ -13,7 +13,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1L
 }
 
 ### 개인지도에만 글쓰기
-POST http://localhost:8080/articles
+POST http://localhost:8080/api/articles
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 
@@ -27,7 +27,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1L
 }
 
 ### 특정 그룹에만 쓴 글
-POST http://localhost:8080/articles
+POST http://localhost:8080/api/articles
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
 

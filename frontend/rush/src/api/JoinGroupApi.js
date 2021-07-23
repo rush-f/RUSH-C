@@ -18,8 +18,11 @@ const joinGroupApi = ({invitationCode, history}) => {
   axios.post(BACKEND_ADDRESS + "/groups/join?invitation_code=" + invitationCode, null, config)
   .then(response => {
     if (response.status === 201) {
-      const uri = response.headers.location;
-      history.push(uri);
+      const backGroupUri = response.headers.location;
+      const split = backGroupUri.split('/');
+      const groupId = split[split.length - 1];
+
+      history.push("/groups/" + groupId);
     }
   })
   .catch(error => {

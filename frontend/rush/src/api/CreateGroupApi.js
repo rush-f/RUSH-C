@@ -21,8 +21,11 @@ const createGroupApi = ({groupName, history}) => {
   axios.post(BACKEND_ADDRESS + "/groups", body, config)
   .then(response => {
     if (response.status === 201) {
-      const uri = response.headers.location;
-      history.push(uri);
+      const backGroupUri = response.headers.location;
+      const split = backGroupUri.split('/');
+      const groupId = split[split.length - 1];
+
+      history.push("/groups/" + groupId);
     }
   })
   .catch(error => {
