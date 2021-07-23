@@ -24,6 +24,7 @@ const MyPage = (props) => {
     if (!accessToken) {
       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
       props.history.push("/login");
+      return;
     }
     findMyGroupsApi(accessToken).then(groupsPromise=>{
       setMyGroups(groupsPromise)

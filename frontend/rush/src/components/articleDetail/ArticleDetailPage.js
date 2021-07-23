@@ -17,10 +17,10 @@ const ArticleDetailPage = (props) => {
   const articleId = props.match.params.articleId;
   const mapType = props.match.params.mapType;
   const [article, setArticle] = useState(null);
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
   const [hasILiked,setHasILiked] = useState(false);
   const [articleTotalLikes, setArticleTotalLikes] = useState(0);
-
+  
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
       findWritingApi(articleId, mapType, props.history).then(articlePromise => {
@@ -42,8 +42,13 @@ const ArticleDetailPage = (props) => {
   },[]);
 
   useEffect(() => {
-    findCommentsApi(articleId).then(commentPromise => {
+    findCommentsApi({
+      articleId: articleId,
+      mapType: mapType,
+      history: props.history}
+    ).then(commentPromise => {
       setComments(commentPromise)
+      console.log(commentPromise)
     });
   }, [articleId]);
 
@@ -76,11 +81,12 @@ const ArticleDetailPage = (props) => {
         </PostBox>
         <CommentsBox>
           <CommentWriting
+            mapType={mapType}
             articleId={articleId}
-            accessToken={accessToken}
-            history={props.history}
             comments={comments}
             setComments={setComments}
+            accessToken={accessToken}
+            history={props.history}
           />
           {
             comments ? comments.map((comment, idx) =>

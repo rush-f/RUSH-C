@@ -12,12 +12,17 @@ POST http://localhost:8080/groups/join?invitation_code=aklsjdf2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1M
 
-###
+### 내가 속한 그룹 목록 조회
 GET http://localhost:8080/groups/mine
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1M
 
-###
+### 그룹 상세 조회
 GET http://localhost:8080/groups/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI0ODcxMzY2LCJleHAiOjE2MjQ4NzMxN
+
+### 그룹 멤버 목록 조회
+GET http://localhost:8080/groups/1/members
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2NjgyMDg4LCJleHAiOjE2MjY2ODM4O
