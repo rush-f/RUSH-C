@@ -170,15 +170,14 @@ class ArticleRepositoryTest {
         Group group2 = persistGroup(testEntityManager);
         Group group3 = persistGroup(testEntityManager);
 
-        persistUserGroup(testEntityManager, user, group1);
-        persistUserGroup(testEntityManager, user, group2);
-
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        persistArticleGroup(testEntityManager, article1, group1);
-        persistArticleGroup(testEntityManager, article1, group2);
-        persistArticleGroup(testEntityManager, article2, group3);
+        persistArticleGroup(testEntityManager, article3, group1);
+        persistArticleGroup(testEntityManager, article3, group2);
+        persistArticleGroup(testEntityManager, article4, group3);
 
         testEntityManager.flush();
         testEntityManager.clear();
@@ -199,6 +198,7 @@ class ArticleRepositoryTest {
             .map(ArticleGroup::getGroup)
             .collect(Collectors.toList());
 
+        assertThat(articles.size()).isEqualTo(4);
         assertThat(groups2.size()).isEqualTo(1);
         assertThat(groups1.size()).isEqualTo(2);
     }
