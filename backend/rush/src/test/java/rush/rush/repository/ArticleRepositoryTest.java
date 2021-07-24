@@ -3,9 +3,11 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistUser;
+import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
 @ExtendWith(SpringExtension.class)  // junit5에게 Spring support를 enable 하라고 말하는거
@@ -121,5 +125,63 @@ class ArticleRepositoryTest {
         assertThat(foundArticle.isPresent()).isTrue();
         assertThat(foundArticle.get().getId()).isEqualTo(article.getId());
         assertThat(foundArticle.get().getContent()).isEqualTo(article.getContent());
+    }
+
+    @Test
+    @Transactional
+    void findArticlesWithGroupsByUserId(){
+        //given
+        User user = persistUser(testEntityManager, "test@email.com");
+
+        Group group1 = persistGroup();
+        Group group2 = persistGroup();
+        Group group3 = persistGroup();
+
+        persistUserGroup(testEntityManager, user, group1);
+        persistUserGroup(testEntityManager, user, group2);
+
+        Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+
+        persistArticleGroup(article1, group1);
+        persistArticleGroup(article1, group2);
+        persistArticleGroup(article2, group3);
+
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        // when
+        List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(user.getId());
+
+        //then
+        List<Group> groups2 = articles.get(0)
+            .getArticleGroups()
+            .stream()
+            .map(ArticleGroup::getGroup)
+            .collect(Collectors.toList());
+
+        List<Group> groups1 = articles.get(1)
+            .getArticleGroups()
+            .stream()
+            .map(ArticleGroup::getGroup)
+            .collect(Collectors.toList());
+
+        assertThat(groups2.size()).isEqualTo(1);
+        assertThat(groups1.size()).isEqualTo(2);
+    }
+
+    private Group persistGroup() {
+        Group group = Group.builder()
+            .name(Constants.TEST_GROUP_NAME)
+            .build();
+        return testEntityManager.persist(group);
+    }
+
+    private void persistArticleGroup(Article article, Group group) {
+        ArticleGroup articleGroup = ArticleGroup.builder()
+            .group(group)
+            .article(article)
+            .build();
+        testEntityManager.persist(articleGroup);
     }
 }

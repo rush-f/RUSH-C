@@ -3,6 +3,8 @@ package rush.rush.repository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
@@ -18,4 +20,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> findByPublicMapTrueAndId(Long articleId);
 
     Optional<Article> findByPrivateMapTrueAndIdAndUserId(Long articleId, Long userId);
+
+    @Query("select distinct article from Article article "
+        + "join fetch article.articleGroups articlegroups "
+        + "join fetch articlegroups.group "
+        + "where article.user.id = :userId "
+        + "order by article.createDate desc")
+    List<Article> findArticlesWithGroupsByUserId(@Param("userId") Long userId);
 }
