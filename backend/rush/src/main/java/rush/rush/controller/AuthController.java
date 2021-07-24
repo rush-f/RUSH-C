@@ -1,5 +1,7 @@
 package rush.rush.controller;
 
+import java.net.URI;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +22,6 @@ import rush.rush.dto.SignUpRequest;
 import rush.rush.repository.UserRepository;
 import rush.rush.security.BadRequestException;
 import rush.rush.security.TokenProvider;
-
-import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
@@ -66,11 +65,10 @@ public class AuthController {
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/api/users/me")
+                .fromCurrentContextPath().path("/api/users/me")
                 .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location)
                 .build();
     }
-
 }
