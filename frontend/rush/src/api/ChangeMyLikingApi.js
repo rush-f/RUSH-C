@@ -15,7 +15,7 @@ const changeMyLikingApi = (accessToken, hasILiked, articleId,history) => {
     }
   }
 
-  axios.post(BACKEND_ADDRESS + "/articles/"+articleId+"/like?hasiliked="+hasILiked,{}, config)
+  axios.post(BACKEND_ADDRESS + "/articles/" + articleId + "/like?hasiliked=" + hasILiked,{}, config)
   .then(response => {
     if (response.status === 201) {
     }

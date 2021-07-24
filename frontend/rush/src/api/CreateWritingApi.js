@@ -29,8 +29,12 @@ const createWritingApi = ({title, content, center, publicMap, privateMap,
   axios.post(BACKEND_ADDRESS + "/articles", body, config)
     .then(response => {
       if (response.status === 201) {
-         const uri = response.headers.location;
-         history.push(uri);
+        const backArticleUri = response.headers.location;
+        const split = backArticleUri.split('/');
+        const articleId = split[split.length - 1];
+        const mapType = split[split.length - 2];
+
+        history.push("/articles/" + mapType + "/" + articleId);
       }
     })
     .catch(error => {

@@ -30,7 +30,7 @@ public class GroupController {
     public ResponseEntity<Void> create(@RequestBody CreateGroupRequest createGroupRequest, @CurrentUser UserPrincipal userPrincipal) {
         Long groupId = groupService.createGroup(createGroupRequest, userPrincipal.getUser());
 
-        return ResponseEntity.created(URI.create("/groups/" + groupId))
+        return ResponseEntity.created(URI.create("/api/groups/" + groupId))
                 .build();
     }
 
@@ -38,7 +38,7 @@ public class GroupController {
     public ResponseEntity<Void> join(@RequestParam(value = "invitation_code") String invitationCode, @CurrentUser UserPrincipal userPrincipal) {
         Long groupId = groupService.join(invitationCode, userPrincipal.getUser());
 
-        return ResponseEntity.created(URI.create("/groups/" + groupId))
+        return ResponseEntity.created(URI.create("/api/groups/" + groupId))
                 .build();
     }
 
