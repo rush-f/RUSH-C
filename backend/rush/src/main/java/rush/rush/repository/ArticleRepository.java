@@ -29,4 +29,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "where article.id = :articleId and groupmember.id = :userId")
     Optional<Article> findAsGroupMapArticle(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
+
+    @Query("select distinct article from Article article "
+        + "join fetch article.articleGroups articlegroups "
+        + "join fetch articlegroups.group "
+        + "where article.user.id = :userId "
+        + "order by article.createDate desc")
+    List<Article> findArticlesWithGroupsByUserId(@Param("userId") Long userId);
 }
