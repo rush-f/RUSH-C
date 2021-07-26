@@ -32,9 +32,16 @@ public class ArticleLikeService {
 
     @Transactional
     public boolean hasILiked(Long articleId, MapType mapType, Long userId) {
-        int count = articleLikeRepository.countByUserIdAndArticleId(userId,articleId);
-
-        return count >= 1;
+        if (mapType == MapType.PUBLIC) {
+            return articleLikeRepository.countOfPublicArticle(articleId, userId) >=1;
+        }
+        if (mapType == MapType.PRIVATE) {
+            return articleLikeRepository.countOfPrivateArticle(articleId, userId) >=1;
+        }
+        if (mapType == MapType.GROUPED) {
+            return articleLikeRepository.countOfGroupedArticle(articleId, userId) >=1;
+        }
+        throw new IllegalStateException("MapType 오류 - " + mapType.name());
     }
 
     private void changeMyLikeOnPublicArticle(Long articleId, Boolean hasILiked, User user){
@@ -68,7 +75,6 @@ public class ArticleLikeService {
                 .article(article)
                 .build());
         }
-
     }
 
     private ArticleLike findLike(Long articleId, Long userId){
