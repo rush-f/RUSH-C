@@ -9,7 +9,6 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.User;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CommentResponse;
-import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 
 @Service
@@ -17,7 +16,6 @@ import rush.rush.repository.CommentRepository;
 public class FindCommentService {
 
     private final CommentRepository commentRepository;
-    private final ArticleRepository articleRepository;
 
     @Transactional
     public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {

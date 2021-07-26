@@ -9,6 +9,7 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
@@ -156,5 +158,48 @@ class ArticleRepositoryTest {
             article.getId(), anotherGroupUser.getId());
         // then
         assertThat(foundArticle2.isPresent()).isFalse();
+    }
+
+    @Test
+    @Transactional
+    void findArticlesWithGroupsByUserId(){
+        //given
+        User user = persistUser(testEntityManager, "test@email.com");
+
+        Group group1 = persistGroup(testEntityManager);
+        Group group2 = persistGroup(testEntityManager);
+        Group group3 = persistGroup(testEntityManager);
+
+        Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+
+        persistArticleGroup(testEntityManager, article3, group1);
+        persistArticleGroup(testEntityManager, article3, group2);
+        persistArticleGroup(testEntityManager, article4, group3);
+
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        // when
+        List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(user.getId());
+
+        //then
+        List<Group> groups2 = articles.get(0)
+            .getArticleGroups()
+            .stream()
+            .map(ArticleGroup::getGroup)
+            .collect(Collectors.toList());
+
+        List<Group> groups1 = articles.get(1)
+            .getArticleGroups()
+            .stream()
+            .map(ArticleGroup::getGroup)
+            .collect(Collectors.toList());
+
+        assertThat(articles.size()).isEqualTo(4);
+        assertThat(groups2.size()).isEqualTo(1);
+        assertThat(groups1.size()).isEqualTo(2);
     }
 }
