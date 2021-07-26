@@ -44,6 +44,7 @@ const GroupList = (props) => {
             {
               groups ? groups.map(group =>
                 <GroupContent
+                  setIsMenuOpen={props.setIsMenuOpen}
                   groupName={group.name}
                   groupId={group.id}
                   setMapType={props.setMapType}

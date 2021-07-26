@@ -66,6 +66,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
             },
           }}
           onClick={() => {
+            props.setIsMenuOpen(false);
             setInfoWindowPostId(null);
           }}
           onZoomChanged={()=>{

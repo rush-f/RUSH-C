@@ -36,14 +36,19 @@ const CommentWriting = ({articleId, comments, setComments, mapType, accessToken,
             placeholder="댓글을 입력해주세요 :)"
         />
         <CommentWritingButton onClick={() => {
-          createCommentApi(inputValue,
-              articleId,
-              mapType,
-              accessToken,
-              history
-          ).then(commentPromise => {
-            setComments(new Array(commentPromise).concat(comments))
-          })
+          if(inputValue.length === 0)
+            alert("댓글을 채워주세요!");
+          else{
+            setInputValue("");
+            createCommentApi(inputValue,
+                articleId,
+                mapType,
+                accessToken,
+                history
+            ).then(commentPromise => {
+              setComments(new Array(commentPromise).concat(comments))
+            })
+          }
         }}>
           등록
         </CommentWritingButton>
