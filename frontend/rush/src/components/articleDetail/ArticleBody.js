@@ -1,18 +1,18 @@
 import React from 'react';
 import ArticleTitle from "./ArticleTitle";
 import styled from "styled-components";
-import changeMyLikingApi from "../../api/ChangeMyLikingApi";
+import changeMyLikeApi from "../../api/ChangeMyLikeApi";
 
 const ArticleContent = styled.div`
   font-size: 24px;
   margin-top: 10px;
 `
 
-const ArticleLiking = styled.div`
+const ArticleLike = styled.div`
   display: flex;
 `
 
-const LikingHeart = styled.div`
+const LikeHeart = styled.div`
   font-size: 40px;
   margin-top: 10px;
   color: rgb(90, 155, 213);
@@ -26,7 +26,7 @@ const LikingHeart = styled.div`
   user-select: none;
  `
 
-const LikingLetter = styled.div`
+const LikeLetter = styled.div`
   font-size: 17px;
   margin-left:7px;
   padding-top:26px;
@@ -41,16 +41,16 @@ const ArticleBody = (props) => {
         <ArticleContent>
           {props.article ? props.article.content : ""}
         </ArticleContent>
-        <ArticleLiking>
-          <LikingHeart
+        <ArticleLike>
+          <LikeHeart
             onClick={() => {
               props.setArticleTotalLikes(props.hasILiked?props.articleTotalLikes-1 : props.articleTotalLikes+1);
-              changeMyLikingApi(props.accessToken, props.hasILiked, props.articleId, props.mapType, props.history);
+              changeMyLikeApi(props.accessToken, props.hasILiked, props.articleId, props.mapType, props.history);
               props.setHasILiked(!props.hasILiked);
               }
-            }>{props.hasILiked?"♥":"♡"} </LikingHeart>
-          <LikingLetter>좋아요 {props.article ? props.articleTotalLikes : ""}개</LikingLetter>
-        </ArticleLiking>
+            }>{props.hasILiked?"♥":"♡"} </LikeHeart>
+          <LikeLetter>좋아요 {props.article ? props.articleTotalLikes : ""}개</LikeLetter>
+        </ArticleLike>
       </div>
   );
 };
