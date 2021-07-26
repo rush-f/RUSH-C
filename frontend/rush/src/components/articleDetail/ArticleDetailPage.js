@@ -10,7 +10,7 @@ import findCommentsApi from "../../api/FindCommentsApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
-import CheckHasIlikedApi from "../../api/CheckHasILikedApi";
+import checkHasIlikedApi from "../../api/CheckHasILikedApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -36,10 +36,10 @@ const ArticleDetailPage = (props) => {
 
   useEffect(()=>{
     if(accessToken)
-    CheckHasIlikedApi(accessToken, articleId).then(hasILiked =>{
+    checkHasIlikedApi(accessToken, articleId, mapType).then(hasILiked =>{
       setHasILiked(hasILiked);
     })
-  },[]);
+  },[articleId]);
 
   useEffect(() => {
     findCommentsApi({
@@ -48,7 +48,6 @@ const ArticleDetailPage = (props) => {
       history: props.history}
     ).then(commentPromise => {
       setComments(commentPromise)
-      console.log(commentPromise)
     });
   }, [articleId]);
 
@@ -71,6 +70,7 @@ const ArticleDetailPage = (props) => {
           <ArticleBody
             accessToken={accessToken}
             articleId={articleId}
+            mapType={mapType}
             article={article}
             articleTotalLikes={articleTotalLikes}
             setArticleTotalLikes={setArticleTotalLikes}

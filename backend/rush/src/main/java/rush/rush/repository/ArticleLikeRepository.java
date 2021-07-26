@@ -11,5 +11,4 @@ public interface ArticleLikeRepository extends JpaRepository<ArticleLike,Long> {
     Integer countByArticleId(Long articleId);
 
     Integer countByUserIdAndArticleId(Long userId, Long ArticleId);
-
 }

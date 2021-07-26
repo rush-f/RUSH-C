@@ -9,31 +9,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rush.rush.domain.MapType;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.ArticleLikeService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/articles/{id}/like")
+@RequestMapping("/articles/{mapType}/{articleId}/like")
 public class ArticleLikeController {
 
     private final ArticleLikeService articleLikeService;
 
     @PostMapping
-    public ResponseEntity<Void> changeMyLike(@PathVariable Long id,
+    public ResponseEntity<Void> changeMyLike(
+        @PathVariable Long articleId,
+        @PathVariable("mapType") String mapType,
         @RequestParam(value = "hasiliked") Boolean hasILiked,
         @CurrentUser UserPrincipal userPrincipal){
-        articleLikeService.changeMyLike(id,hasILiked, userPrincipal.getUser());
+        articleLikeService.changeMyLike(articleId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .build();
     }
 
     @GetMapping
-    public ResponseEntity<Boolean> checkMyLike(@PathVariable Long id,
+    public ResponseEntity<Boolean> checkMyLike(
+        @PathVariable Long articleId,
+        @PathVariable("mapType") String mapType,
         @CurrentUser UserPrincipal userPrincipal){
-        boolean result= articleLikeService.hasILiked(id, userPrincipal.getId());
+        boolean result= articleLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);

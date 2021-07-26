@@ -45,7 +45,7 @@ const ArticleBody = (props) => {
           <LikingHeart
             onClick={() => {
               props.setArticleTotalLikes(props.hasILiked?props.articleTotalLikes-1 : props.articleTotalLikes+1);
-              changeMyLikingApi(props.accessToken, props.hasILiked, props.articleId, props.history);
+              changeMyLikingApi(props.accessToken, props.hasILiked, props.articleId, props.mapType, props.history);
               props.setHasILiked(!props.hasILiked);
               }
             }>{props.hasILiked?"♥":"♡"} </LikingHeart>
