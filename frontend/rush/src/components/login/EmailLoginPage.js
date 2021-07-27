@@ -7,11 +7,11 @@ import {Link} from "react-router-dom";
 const StyledDiv = styled.div`
   display: inline-block;
   color:rgb(90, 155, 213);
-`
+`;
 
 const SignUpButton = styled.a`
   cursor: pointer;
-`
+`;
 
 const EmailLoginPage = (props) => {
   const [email, setEmail] = useState("");
@@ -33,8 +33,9 @@ const EmailLoginPage = (props) => {
         />
         <LoginButton
             onClick={() => {
-              if(email.length || password.length) {
+              if(email.length && password.length ) {
                 emailLoginApi(email, password, props.history);
+                setPassword("");
               }
               else {
                 alert("빈칸을 다 채워주세요!");

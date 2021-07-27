@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {HomeButton, LoginButton, StyledInput} from "./Box";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import signUpApi from "../../api/SignUpApi";
 
 const SignUpPageBox = styled.div`
   position:absolute;
@@ -10,7 +11,7 @@ const SignUpPageBox = styled.div`
   text-align: center;
 `;
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
@@ -25,11 +26,13 @@ const SignUpPage = () => {
             placeholder={"이메일"}
         />
         <StyledInput
+            type='password'
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder={"비밀번호"}
         />
         <StyledInput
+            type='password'
             value={checkPassword}
             onChange={e => setCheckPassword(e.target.value)}
             placeholder={"비밀번호 재확인"}
@@ -41,8 +44,11 @@ const SignUpPage = () => {
         />
         <LoginButton
             onClick={() => {
-              if(email.length || password.length || checkPassword.length || nickName.length){
-                alert("테스트중!!");
+              if(email.length && password.length && checkPassword.length && nickName.length){
+                if(password === checkPassword)
+                  signUpApi(email, password, nickName, props.history);
+                else
+                  alert("비밀번호가 일치하지 않습니다");
               }
               else{
                 alert("빈칸을 다 채워주세요");
