@@ -1,5 +1,7 @@
 package rush.rush.security.service;
 
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -17,9 +19,6 @@ import rush.rush.security.OAuth2AuthenticationProcessingException;
 import rush.rush.security.user.OAuth2UserInfo;
 import rush.rush.security.user.OAuth2UserInfoFactory;
 import rush.rush.security.user.UserPrincipal;
-
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +62,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
             }
-            user = updateExistingUser(user, oAuth2UserInfo);
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
@@ -81,11 +79,5 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             .imageUrl(oAuth2UserInfo.getImageUrl())
             .build();
         return userRepository.save(user);
-    }
-
-    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
-        existingUser.alterNickName(oAuth2UserInfo.getName());
-        existingUser.alterImageUrl(oAuth2UserInfo.getImageUrl());
-        return userRepository.save(existingUser);
     }
 }
