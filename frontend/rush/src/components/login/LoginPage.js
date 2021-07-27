@@ -1,15 +1,7 @@
 import React from 'react';
-import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {BACKEND_ADDRESS, FRONTEND_ADDRESS} from "../../constants/ADDRESS";
-import {LoginPageBox, LoginButton} from "./Box";
-const HomeButton = styled.div`
-  width: 50px;
-  height: 50px;
-  display: inline-block;
-  background-image: url('/home.png');
-  background-size: contain;
-`;
+import {HomeButton, LoginPageBox, LoginButton} from "./Box";
 
 const LoginPage = (props) => {
   return (<>

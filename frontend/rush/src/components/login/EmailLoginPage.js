@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {LoginPageBox, LoginButton, StyledInput} from "./Box";
+import {LoginPageBox, LoginButton, StyledInput, HomeButton} from "./Box";
 import emailLoginApi from "../../api/EmailLoginApi";
+import {Link} from "react-router-dom";
 
 const StyledDiv = styled.div`
   display: inline-block;
@@ -16,7 +17,8 @@ const EmailLoginPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  return (
+  return (<>
+    <Link to="/"><HomeButton/></Link>
       <LoginPageBox>
         <StyledInput
             value={email}
@@ -43,7 +45,7 @@ const EmailLoginPage = (props) => {
             onClick={() => props.history.push("/login/signUp")}
         > 회원가입</SignUpButton>
       </LoginPageBox>
-  );
+  </>);
 };
 
 export default EmailLoginPage;

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {LoginButton, StyledInput} from "./Box";
+import {HomeButton, LoginButton, StyledInput} from "./Box";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const SignUpPageBox = styled.div`
   position:absolute;
@@ -14,7 +15,9 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [nickName, setNickName] = useState("");
-  return (
+
+  return (<>
+    <Link to="/"><HomeButton/></Link>
       <SignUpPageBox>
         <StyledInput
             value={email}
@@ -46,7 +49,7 @@ const SignUpPage = () => {
               }
               }}>가입하기</LoginButton>
       </SignUpPageBox>
-  );
+  </>);
 };
 
 export default SignUpPage;

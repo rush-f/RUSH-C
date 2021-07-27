@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+const HomeButton = styled.div`
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url('/home.png');
+  background-size: contain;
+`;
+
 const LoginPageBox = styled.div`
   position:absolute;
   top: 30%;
@@ -41,4 +49,4 @@ const StyledInput = styled.input`
     }
 `;
 
-export {LoginPageBox, LoginButton, StyledInput};
+export {HomeButton, LoginPageBox, LoginButton, StyledInput};
