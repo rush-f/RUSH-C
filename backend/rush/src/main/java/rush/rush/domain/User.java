@@ -78,14 +78,6 @@ public class User {
         this.userGroups = userGroups;
     }
 
-    public void alterImageUrl(String newImageUrl) {
-        imageUrl = newImageUrl;
-    }
-
-    public void alterNickName(String newNickName) {
-        nickName = newNickName;
-    }
-
     private void validate(Long id, String nickName, String password, String email, String imageUrl,
         Timestamp joinDate, Timestamp visitDate, AuthProvider provider,
         String providerId) {
