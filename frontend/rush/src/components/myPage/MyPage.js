@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {DisplayBox, Outside, StyledDiv} from "./Box";
+import {DisplayBox, Outside} from "../common/Box";
 import WindowSize from "../WindowSize";
 import CancelButton from "./CancelButton";
 import findUserApi from "../../api/findUserApi";
@@ -10,6 +10,13 @@ import Info from "./Info";
 import MyArticles from "./articles/MyArticles";
 import MyGroups from "./groups/MyGroups";
 import findMyGroupsApi from "../../api/FindMyGroupsApi";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  display: flex;
+  justify: center;
+  margin-top: 40px;
+`;
 
 const MyPage = (props) => {
 
