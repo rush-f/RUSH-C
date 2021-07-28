@@ -23,7 +23,7 @@ public class ArticleLikeController {
 
     @PostMapping
     public ResponseEntity<Void> changeMyLike(
-        @PathVariable Long articleId,
+        @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
         @RequestParam(value = "hasiliked") Boolean hasILiked,
         @CurrentUser UserPrincipal userPrincipal){
@@ -35,7 +35,7 @@ public class ArticleLikeController {
 
     @GetMapping
     public ResponseEntity<Boolean> checkMyLike(
-        @PathVariable Long articleId,
+        @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
         @CurrentUser UserPrincipal userPrincipal){
         boolean result= articleLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
