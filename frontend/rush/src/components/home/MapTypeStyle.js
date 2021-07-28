@@ -4,12 +4,12 @@ import styled from "styled-components";
 
 const Style = styled.div`
   display: inline-block;
-  font-size: 15px;
+  font-size: 18px;
   border-radius: 20px;
   cursor: pointer;
   position: fixed;
   zIndex: 10;
-  top: 5px;
+  top: 0;
   right: ${props => props.rightMargin};
   width: 100px;
   margin: 10px;
