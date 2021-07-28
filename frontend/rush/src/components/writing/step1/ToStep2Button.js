@@ -17,7 +17,8 @@ const ToStep2Button = (props) => {
           fontFamily: "'Gowun Dodum', sans-serif",
           fontSize: "105%",
           color: "white",
-          borderRadius: "10px"
+          borderRadius: "15px",
+          borderTopLeftRadius: "0"
         }}
     > 다음 </button>
     }
