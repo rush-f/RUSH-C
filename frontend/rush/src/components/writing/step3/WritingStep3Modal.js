@@ -48,7 +48,7 @@ const WritingStep3Modal = (props) => {
             content: {
               maxWidth: '500px',
               margin: 'auto',
-              backgroundColor: 'rgb(222, 235, 247)',
+              backgroundColor: 'white',
             }
           }}
           contentLabel="Example Modal"

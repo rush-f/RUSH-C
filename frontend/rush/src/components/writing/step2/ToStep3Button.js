@@ -11,15 +11,18 @@ const ToStep3Button = (props) => {
           alert("제목 또는 내용이 비어있습니다!");
         }}
         style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          backgroundColor: "#00000000",
+          backgroundColor: "white",
+          borderBottomRightRadius: "50px",
+          borderTopRightRadius: "50px",
+          border: "2px solid rgb(90, 90, 90)",
           width: "100px",
           height: "50px",
-          margin: "10px",
+          margin: "5px 10px 10px 3px",
+          fontFamily: "'Gowun Dodum', sans-serif",
+          textAlign: "left",
+          paddingLeft: "30px"
         }}
-    > 다음 </button>
+    >다음</button>
     }
   </>;
 };
