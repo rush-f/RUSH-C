@@ -18,6 +18,7 @@ const WriteButton = (props) => {
           color: "white",
           borderRadius: "100px",
           border: "2px solid rgb(50, 50, 50)",
+          fontFamily: "'Gowun Dodum', sans-serif",
           fontSize: "110%",
           fontWeight: "bold",
           cursor: "pointer"

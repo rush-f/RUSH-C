@@ -16,7 +16,8 @@ const LoginButton = () => {
         background: "rgb(222, 235, 247)",
         borderRadius: "50px",
         fontSize: "110%",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: "'Gowun Dodum', sans-serif"
       }}> 로그인 </button></Link>
   );
 };
