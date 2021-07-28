@@ -5,10 +5,10 @@ import {
   withGoogleMap,
   withScriptjs
 } from "react-google-maps";
+import {withRouter} from "react-router-dom";
 import MarkerClusterer
   from "react-google-maps/lib/components/addons/MarkerClusterer";
 import React, {useRef, useState} from "react";
-import {withRouter} from "react-router-dom";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {

@@ -11,6 +11,7 @@ import MyArticles from "./articles/MyArticles";
 import MyGroups from "./groups/MyGroups";
 import findMyGroupsApi from "../../api/FindMyGroupsApi";
 import styled from "styled-components";
+import {withRouter} from "react-router-dom";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -29,11 +30,11 @@ const MyPage = (props) => {
 
   useEffect(() => {
     if (!accessToken) {
-      alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+      alert("로그인이 필요한 서비스입니다.");
       props.history.push("/login");
       return;
     }
-    findMyGroupsApi(accessToken).then(groupsPromise=>{
+    findMyGroupsApi(props.history).then(groupsPromise=>{
       setMyGroups(groupsPromise)
     })
     findUserApi(accessToken).then(userPromise => {
@@ -70,4 +71,4 @@ const MyPage = (props) => {
   );
 };
 
-export default MyPage;
+export default withRouter(MyPage);
