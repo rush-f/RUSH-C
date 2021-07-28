@@ -61,7 +61,7 @@ public class FindArticleService {
         User author = article.getUser();
         AuthorResponse authorResponse = new AuthorResponse(author.getId(),
             author.getNickName(), author.getImageUrl());
-        int totalLikes = articleLikeRepository.countByArticleId(article.getId());
+        Long totalLikes = articleLikeRepository.countByArticleId(article.getId());
 
         return new ArticleResponse(
             article.getId(),

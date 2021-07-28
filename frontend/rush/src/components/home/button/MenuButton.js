@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
@@ -14,21 +14,23 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
-
+const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
   const url = accessToken? "/mypage" : "/login";
-  const [isMenuOpen,setIsMenuOpen] = useState(false);
+  useEffect(()=>{
+    if(!isMenuOpen)
+      setIsGroupOpened(false);
+  },[isMenuOpen]);
+
   return (<>
     <BurgerMenu
-        onOpen={()=>setIsMenuOpen(true)}
-        onClose={()=>{
-          setIsMenuOpen(false);
-          setIsGroupOpened(false);
-        }}
         isOpen={isMenuOpen}
+        onStateChange={(state)=>{setIsMenuOpen(state.isOpen)}}
         disableAutoFocus>
       <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>
-      <BurgerMenuContents onClick={() => setMapType(PUBLIC)}>전체지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => {
+        setMapType(PUBLIC);
+        setIsMenuOpen(false);
+      }}>전체지도</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
         그룹지도
       </BurgerMenuContents>
@@ -41,7 +43,10 @@ const Menu = ({isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCre
           setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
           setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       />
-      <BurgerMenuContents onClick={() => setMapType(PRIVATE)}>개인지도</BurgerMenuContents>
+      <BurgerMenuContents onClick={() => {
+        setMapType(PRIVATE);
+        setIsMenuOpen(false);
+      }}>개인지도</BurgerMenuContents>
     </BurgerMenu>
   </>);
 }

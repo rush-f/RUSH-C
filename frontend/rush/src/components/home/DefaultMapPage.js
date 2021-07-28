@@ -23,7 +23,7 @@ import findGroupApi from "../../api/FindGroupApi";
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
   const LngRangeRatio = 0.70378;
-
+  const [isMenuOpen,setIsMenuOpen] = useState(false);
   const [windowSize, setWindowSize] = useState(WindowSize());
   // 사용자 관련
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -104,8 +104,11 @@ const DefaultMapPage = (props) => {
                 setCenter={setCenter}
                 latitudeRange={latitudeRange}
                 longitudeRange={longitudeRange}
+                setIsMenuOpen={setIsMenuOpen}
     />
     <Menu
+      isMenuOpen={isMenuOpen}
+      setIsMenuOpen={setIsMenuOpen}
       isGroupOpened={isGroupOpened}
       setIsGroupOpened={setIsGroupOpened}
       setMapType={setMapType}
