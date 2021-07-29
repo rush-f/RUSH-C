@@ -14,10 +14,11 @@ const WriteButton = (props) => {
           width: "90px",
           height: "90px",
           margin: "10px",
-          background: "rgb(90, 90, 90)",
+          backgroundColor: "rgb(50, 50, 50)",
+          borderWidth: "0",
           color: "white",
           borderRadius: "100px",
-          border: "2px solid rgb(50, 50, 50)",
+          fontFamily: "'Gowun Dodum', sans-serif",
           fontSize: "110%",
           fontWeight: "bold",
           cursor: "pointer"

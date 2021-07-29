@@ -7,9 +7,10 @@ const Outside = styled.div`
 
 const DisplayBox = styled.div`
   margin: 10px;
-  border: 2px solid rgb(90, 155, 213);
   border-radius: 10px;
   overflow-y: scroll;
+  background-color: white;
+  box-shadow: 0 0 8px #888888;
 `;
 
 const PostBox = styled.div`

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from "styled-components";
 import Modal from 'react-modal';
 import CancelButton from "../CancelButton";
 import StyledInput from "./StyledInput";
@@ -7,6 +8,13 @@ import ToStep3Button from "./ToStep3Button";
 import BackButton from "./BackButton";
 import WindowSize from "../../WindowSize";
 
+const BoxInModal = styled.div`
+  width: 85%;
+  text-align: center;
+`;
+const Buttons = styled.div`
+  width: 112%;
+`;
 const WritingStep2Modal = (props) => {
 
   return (
@@ -21,12 +29,13 @@ const WritingStep2Modal = (props) => {
             content: {
               maxWidth: '500px',
               margin: 'auto',
-              backgroundColor: 'rgb(222, 235, 247)',
+              backgroundColor: 'white',
             }
           }}
           contentLabel="Example Modal"       //모달의 라벨
       >
         <CancelButton/>
+        <BoxInModal>
         <StyledInput
             value={props.title}
             onChange={e => props.setTitle(e.target.value)}
@@ -36,16 +45,19 @@ const WritingStep2Modal = (props) => {
             value={props.content}
             onChange={e => props.setContent(e.target.value)}
             placeholder={"내용"}
-            style={{height: WindowSize().height - 300}}
+            style={{height: WindowSize().height - 330}}
         />
-        <ToStep3Button
-            setStep={props.setStep}
-            step={props.step}
-            isWritingCompleted={(props.title.length !== 0
-                && props.content.length !== 0)}
-        />
-        <BackButton setStep={props.setStep}
-                    step={props.step}/>
+        <Buttons>
+          <BackButton setStep={props.setStep}
+                      step={props.step}/>
+          <ToStep3Button
+              setStep={props.setStep}
+              step={props.step}
+              isWritingCompleted={(props.title.length !== 0
+                  && props.content.length !== 0)}
+          />
+        </Buttons>
+        </BoxInModal>
       </Modal>
   );
 };

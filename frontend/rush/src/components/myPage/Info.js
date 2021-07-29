@@ -1,8 +1,15 @@
 import React from 'react';
 import styled from "styled-components";
-import {Email, Name} from "./Box";
 import CreateDate from "../../util/CreateDate";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
+
+const Email = styled.div`
+  font-size: 20px;
+`;
+
+const Name = styled.div`
+  font-size: 20px;
+`;
 
 const StyledInfo = styled.div`
   padding-Top: 2px;

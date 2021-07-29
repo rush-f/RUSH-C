@@ -19,7 +19,7 @@ const JoinGroupModal = ({isJoinGroupModalOpen, setIsJoinGroupModalOpen, setIsGro
         content: {
           maxWidth: '500px',
           margin: 'auto',
-          backgroundColor: 'rgb(222, 235, 247)',
+          backgroundColor: 'white',
           maxHeight: '300px',
           textAlign: 'center'
         }

@@ -10,13 +10,18 @@ const LoginButton = () => {
         top: 0,
         right: 0,
         width: "100px",
-        height: "40px",
+        height: "35px",
         margin: "10px",
-        border: "2px solid black",
-        background: "rgb(222, 235, 247)",
-        borderRadius: "50px",
+        border: "1px solid rgb(30, 30, 30)",
+        borderBottom: "3px solid rgb(30, 30, 30)",
+        backgroundColor: "rgb(50, 50, 50)",
+        borderWidth: "0",
+        color: "white",
+        borderRadius: "7px",
+        borderTopLeftRadius: "0",
         fontSize: "110%",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: "'Gowun Dodum', sans-serif"
       }}> 로그인 </button></Link>
   );
 };

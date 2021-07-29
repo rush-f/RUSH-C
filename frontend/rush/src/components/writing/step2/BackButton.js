@@ -7,13 +7,16 @@ const BackButton = (props) => {
           props.setStep(1);
         }}
         style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          backgroundColor: "#00000000",
+          backgroundColor: "white",
+          borderBottomLeftRadius: "50px",
+          borderTopLeftRadius: "50px",
+          border: "2px solid rgb(90, 90, 90)",
           width: "100px",
           height: "50px",
-          margin: "10px",
+          margin: "5px 3px 10px 10px",
+          fontFamily: "'Gowun Dodum', sans-serif",
+          textAlign: "right",
+          paddingRight: "30px"
         }}
     > 이전 </button>
     }
