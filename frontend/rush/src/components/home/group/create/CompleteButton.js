@@ -19,6 +19,7 @@ const CompleteButton = ({isCreateGroupModalOpen, groupName, history}) => {
         margin: "10px",
         borderRadius: "20px",
         fontSize: "18px",
+        fontFamily: "'Gowun Dodum', sans-serif",
         color: "#445566"
       }}
     > 그룹 만들기 </button>
