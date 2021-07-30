@@ -13,12 +13,10 @@ const LoginPage = (props) => {
         <LoginButton
             href={ BACKEND_ADDRESS + "/oauth2/authorize/naver?"
             + "redirect_uri=" + FRONTEND_ADDRESS +"/oauth2/redirect" }
-            style={{backgroundColor: "green", color: "white"}}
         >네이버로그인</LoginButton>
         <LoginButton
             href={ BACKEND_ADDRESS + "/oauth2/authorize/google?"
             + "redirect_uri=" + FRONTEND_ADDRESS +"/oauth2/redirect" }
-            style={{backgroundColor: "#EEEEEE", color: "black"}}
         >구글로그인</LoginButton>
       </LoginPageBox>
   </>);

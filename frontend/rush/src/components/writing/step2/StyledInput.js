@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const StyledInput = styled.input`
   display: block;
+  font-family: 'Gowun Dodum', sans-serif;
   font-size: 20px;
   margin: 10px;
   width: 100%;
