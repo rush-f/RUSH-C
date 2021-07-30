@@ -77,44 +77,44 @@ alter table user_group
 alter table article
     add constraint article_user_id_foreign_key
         foreign key (user_id)
-            references user;
+            references user (id);
 
 alter table article_group
     add constraint article_group_article_id_foreign_key
         foreign key (article_id)
-            references article;
+            references article (id);
 
 alter table article_group
     add constraint article_group_group_id_foreign_key
         foreign key (group_id)
-            references group_table;
+            references group_table (id);
 
 alter table article_like
     add constraint article_like_article_id_foreign_key
         foreign key (article_id)
-            references article;
+            references article (id);
 
 alter table article_like
     add constraint article_like_user_id_foreign_key
         foreign key (user_id)
-            references user;
+            references user (id);
 
 alter table comment
     add constraint comment_article_id_foreign_key
         foreign key (article_id)
-            references article;
+            references article (id);
 
 alter table comment
     add constraint comment_user_id_foreign_key
         foreign key (user_id)
-            references user;
+            references user (id);
 
 alter table user_group
     add constraint user_group_group_id_foreign_key
         foreign key (group_id)
-            references group_table;
+            references group_table (id);
 
 alter table user_group
     add constraint user_group_user_id_foreign_key
         foreign key (user_id)
-            references user;
+            references user (id);
