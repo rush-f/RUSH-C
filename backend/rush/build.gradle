@@ -27,6 +27,7 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     implementation 'commons-codec:commons-codec:1.11'
     implementation 'org.springframework.security:spring-security-test'
+    implementation 'org.flywaydb:flyway-core'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured'
 }

@@ -18,7 +18,8 @@ const CompleteButton = ({isCreateGroupModalOpen, invitationCode, history}) => {
         margin: "10px",
         borderRadius: "20px",
         fontSize: "18px",
-        color: "#445566"
+        color: "#445566",
+        fontFamily: "'Gowun Dodum', sans-serif"
       }}
     >가입</button>
     }
