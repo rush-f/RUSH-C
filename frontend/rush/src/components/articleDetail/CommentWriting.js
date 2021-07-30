@@ -3,6 +3,9 @@ import styled from "styled-components";
 import createCommentApi from "../../api/CreateCommentApi";
 
 const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 5px;
   border-bottom: 2px solid rgb(90, 155, 213);
 `;
@@ -14,15 +17,25 @@ const StyledInput = styled.input`
   background-color: #00000000;
   padding: 10px;
   height: 10px;
-  width: auto;
+  width: 100%;
 `;
 
 const CommentWritingButton = styled.button`
   display: inline-block;
-  height: 27px;
-  width: 50px;
+  height: 33px;
+  width: 60px;
   margin-left: 5px;
   padding: 7px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #333333;
+  color: #cccccc;
+  font-family: 'Gowun Dodum', sans-serif;
+  border-width: 0;
+  border-radius: 5px;
+  border-top-left-radius: 0;
 `;
 
 const CommentWriting = ({articleId, comments, setComments, mapType, accessToken, history}) => {
