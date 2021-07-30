@@ -75,7 +75,8 @@ public class User {
         this.visitDate = visitDate;
         this.provider = provider;
         this.providerId = providerId;
-        this.userGroups = userGroups;
+        if (Objects.nonNull(userGroups))
+            this.userGroups = userGroups;
     }
 
     private void validate(Long id, String nickName, String password, String email, String imageUrl,
