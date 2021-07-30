@@ -9,6 +9,7 @@ const StyledDiv = styled.div`
 
 const StyledInput = styled.input`
   display: inline-block;
+  font-family: 'Gowun Dodum', sans-serif;
   font-size: 17px;
   background-color: #00000000;
   padding: 10px;
