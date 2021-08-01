@@ -19,7 +19,20 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Optional<Article> findByPublicMapTrueAndId(Long articleId);
 
+    @Query("select distinct article from Article article "
+        + "left join fetch article.articleLikes "
+        + "join fetch article.user "
+        + "where article.publicMap = true and article.id = :articleId")
+    Optional<Article> findByPublicMapWithLikes(@Param("articleId") Long articleId);
+
     Optional<Article> findByPrivateMapTrueAndIdAndUserId(Long articleId, Long userId);
+
+    @Query("select distinct article from Article article "
+        + "left join fetch article.articleLikes "
+        + "join fetch article.user user "
+        + "where article.privateMap = true and article.id = :articleId and user.id = :userId ")
+    Optional<Article> findByPrivateMapWithLikes(@Param("articleId") Long articleId,
+        @Param("userId") Long userId);
 
     @Query("select distinct article from Article article "
         + "inner join article.articleGroups articlegroup "
@@ -28,6 +41,17 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join usergroup.user groupmember "
         + "where article.id = :articleId and groupmember.id = :userId")
     Optional<Article> findAsGroupMapArticle(@Param("articleId") Long articleId,
+        @Param("userId") Long userId);
+
+    @Query("select distinct article from Article article "
+        + "inner join article.articleGroups articlegroup "
+        + "inner join articlegroup.group g "
+        + "inner join g.userGroups usergroup "
+        + "inner join usergroup.user groupmember "
+        + "left join fetch article.articleLikes "
+        + "join fetch article.user "
+        + "where article.id = :articleId and groupmember.id = :userId")
+    Optional<Article> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
     @Query("select distinct article from Article article "

@@ -56,12 +56,15 @@ public class Article {
     @CreationTimestamp
     private Timestamp createDate;
 
-    @OneToMany(mappedBy = "article",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article")
     private List<ArticleGroup> articleGroups = new ArrayList<>();
+
+    @OneToMany(mappedBy = "article")
+    private List<ArticleLike> articleLikes = new ArrayList<>();
 
     public Article(Long id, String title, String content, Double latitude, Double longitude,
             User user, boolean publicMap, boolean privateMap, Timestamp createDate,
-            List<ArticleGroup> articleGroups) {
+            List<ArticleGroup> articleGroups, List<ArticleLike> articleLikes) {
         validate(title, content, user);
         this.id = id;
         this.title = title;
@@ -74,6 +77,9 @@ public class Article {
         this.createDate = createDate;
         if (Objects.nonNull(articleGroups)) {
             this.articleGroups = articleGroups;
+        }
+        if (Objects.nonNull(articleLikes)) {
+            this.articleLikes = articleLikes;
         }
     }
 

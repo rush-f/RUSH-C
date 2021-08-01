@@ -65,20 +65,6 @@ class ArticleLikeRepositoryTest {
 
     @Test
     @Transactional
-    void countByArticleId(){
-        //given
-
-        //when
-        Long totalLikes1 = articleLikeRepository.countByArticleId(articleOnPrivateMap.getId());
-        Long totalLikes2 = articleLikeRepository.countByArticleId(articleOnPublicMap.getId());
-
-        //then
-        assertThat(totalLikes1).isEqualTo(2);
-        assertThat(totalLikes2).isEqualTo(2);
-    }
-
-    @Test
-    @Transactional
     void countOfPublicArticle() {
         //given
 

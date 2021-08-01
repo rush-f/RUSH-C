@@ -15,7 +15,6 @@ import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.repository.ArticleGroupRepository;
-import rush.rush.repository.ArticleLikeRepository;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserGroupRepository;
 
@@ -26,11 +25,10 @@ public class FindArticleService {
     private final ArticleRepository articleRepository;
     private final UserGroupRepository userGroupRepository;
     private final ArticleGroupRepository articleGroupRepository;
-    private final ArticleLikeRepository articleLikeRepository;
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
-        Article article = articleRepository.findByPublicMapTrueAndId(id)
+        Article article = articleRepository.findByPublicMapWithLikes(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
@@ -41,7 +39,7 @@ public class FindArticleService {
 
     @Transactional
     public ArticleResponse findPrivateArticle(Long id, User me) {
-        Article article = articleRepository.findByPrivateMapTrueAndIdAndUserId(id, me.getId())
+        Article article = articleRepository.findByPrivateMapWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
@@ -50,7 +48,7 @@ public class FindArticleService {
 
     @Transactional
     public ArticleResponse findGroupArticle(Long id, User me) {
-        Article article = articleRepository.findAsGroupMapArticle(id, me.getId())
+        Article article = articleRepository.findAsGroupMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
 
@@ -61,7 +59,6 @@ public class FindArticleService {
         User author = article.getUser();
         AuthorResponse authorResponse = new AuthorResponse(author.getId(),
             author.getNickName(), author.getImageUrl());
-        Long totalLikes = articleLikeRepository.countByArticleId(article.getId());
 
         return new ArticleResponse(
             article.getId(),
@@ -71,7 +68,7 @@ public class FindArticleService {
             article.getLongitude(),
             authorResponse,
             article.getCreateDate(),
-            totalLikes
+            article.getArticleLikes().size()
         );
     }
 
