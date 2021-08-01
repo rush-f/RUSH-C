@@ -22,12 +22,10 @@ const WritingStep3Modal = (props) => {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    if (isGroupOpened) {
       findMyGroupsApi(props.history).then(groupsPromise => {
         setGroups(groupsPromise)
       });
-    }
-  }, [isGroupOpened]);
+  }, []);
 
   const onGroupCheckboxClicked = (groupId) => {
     if (props.checkedGroupIds.includes(groupId)) {
