@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
-import rush.rush.dto.ArticleDetails;
+import rush.rush.dto.ArticleResponse;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -18,28 +18,55 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween(Long userId,
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
-    @Query("select distinct new rush.rush.dto.ArticleDetails(article, user, count(articleLikes)) from Article article "
+    @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
+        + "article.content, "
+        + "article.latitude, "
+        + "article.longitude, "
+        + "user.id, "
+        + "user.nickName, "
+        + "user.imageUrl, "
+        + "article.createDate, "
+        + "count(articleLikes)) from Article article "
         + "inner join article.articleLikes articleLikes "
         + "inner join article.user user "
-        + "where article.publicMap = true and article.id = :articleId")
-    Optional<ArticleDetails> findByPublicMapWithLikes(@Param("articleId") Long articleId);
+        + "group by article.id "
+        + "having article.publicMap = true and article.id = :articleId ")
+    Optional<ArticleResponse> findByPublicMapWithLikes(@Param("articleId") Long articleId);
 
-    @Query("select distinct new rush.rush.dto.ArticleDetails(article, user, count(articleLikes)) from Article article "
+    @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
+        + "article.content, "
+        + "article.latitude, "
+        + "article.longitude, "
+        + "user.id, "
+        + "user.nickName, "
+        + "user.imageUrl, "
+        + "article.createDate, "
+        + "count(articleLikes)) from Article article "
         + "inner join article.articleLikes articleLikes "
         + "inner join article.user user "
-        + "where article.privateMap = true and article.id = :articleId and user.id = :userId ")
-    Optional<ArticleDetails> findByPrivateMapWithLikes(@Param("articleId") Long articleId,
+        + "group by article.id "
+        + "having article.privateMap = true and article.id = :articleId and user.id = :userId ")
+    Optional<ArticleResponse> findByPrivateMapWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
-    @Query("select distinct new rush.rush.dto.ArticleDetails(article, user, count(articleLikes)) from Article article "
+    @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
+        + "article.content, "
+        + "article.latitude, "
+        + "article.longitude, "
+        + "user.id, "
+        + "user.nickName, "
+        + "user.imageUrl, "
+        + "article.createDate, "
+        + "count(articleLikes)) from Article article "
         + "inner join article.articleLikes articleLikes "
         + "inner join article.articleGroups articlegroup "
         + "inner join articlegroup.group g "
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user groupmember "
         + "inner join article.user user "
-        + "where article.id = :articleId and groupmember.id = :userId")
-    Optional<ArticleDetails> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
+        + "group by article.id "
+        + "having article.id = :articleId and groupmember.id = :userId ")
+    Optional<ArticleResponse> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
     Optional<Article> findByPublicMapTrueAndId(Long articleId);

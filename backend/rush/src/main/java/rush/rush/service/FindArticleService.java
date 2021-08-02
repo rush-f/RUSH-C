@@ -11,10 +11,8 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.LocationRange;
 import rush.rush.domain.User;
-import rush.rush.dto.ArticleDetails;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
-import rush.rush.dto.AuthorResponse;
 import rush.rush.repository.ArticleGroupRepository;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserGroupRepository;
@@ -29,45 +27,41 @@ public class FindArticleService {
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
-        ArticleDetails articleDetails = articleRepository.findByPublicMapWithLikes(id)
+        ArticleResponse articleResponse = articleRepository.findByPublicMapWithLikes(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
-        return toResponse(articleDetails);
+        return toResponse(articleResponse);
     }
 
     @Transactional
     public ArticleResponse findPrivateArticle(Long id, User me) {
-        ArticleDetails articleDetails = articleRepository.findByPrivateMapWithLikes(id, me.getId())
+        ArticleResponse articleResponse = articleRepository.findByPrivateMapWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
-        return toResponse(articleDetails);
+        return toResponse(articleResponse);
     }
 
     @Transactional
     public ArticleResponse findGroupArticle(Long id, User me) {
-        ArticleDetails articleDetails = articleRepository.findAsGroupMapArticleWithLikes(id, me.getId())
+        ArticleResponse articleResponse = articleRepository.findAsGroupMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
 
-        return toResponse(articleDetails);
+        return toResponse(articleResponse);
     }
 
-    private ArticleResponse toResponse(ArticleDetails articleDetails) {
-        User author = articleDetails.getUser();
-        AuthorResponse authorResponse = new AuthorResponse(author.getId(),
-            author.getNickName(), author.getImageUrl());
-
+    private ArticleResponse toResponse(ArticleResponse articleResponse) {
         return new ArticleResponse(
-            articleDetails.getArticle().getId(),
-            articleDetails.getArticle().getTitle(),
-            articleDetails.getArticle().getContent(),
-            articleDetails.getArticle().getLatitude(),
-            articleDetails.getArticle().getLongitude(),
-            authorResponse,
-            articleDetails.getArticle().getCreateDate(),
-            articleDetails.getTotalLikes()
+            articleResponse.getId(),
+            articleResponse.getTitle(),
+            articleResponse.getContent(),
+            articleResponse.getLatitude(),
+            articleResponse.getLongitude(),
+            articleResponse.getAuthor(),
+            articleResponse.getCreateDate(),
+            articleResponse.getTotalLikes()
         );
     }
 
