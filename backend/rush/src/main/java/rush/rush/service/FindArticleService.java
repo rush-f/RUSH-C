@@ -31,7 +31,7 @@ public class FindArticleService {
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
-        return toResponse(articleResponse);
+        return articleResponse;
     }
 
     @Transactional
@@ -40,7 +40,7 @@ public class FindArticleService {
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
-        return toResponse(articleResponse);
+        return articleResponse;
     }
 
     @Transactional
@@ -49,20 +49,7 @@ public class FindArticleService {
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
 
-        return toResponse(articleResponse);
-    }
-
-    private ArticleResponse toResponse(ArticleResponse articleResponse) {
-        return new ArticleResponse(
-            articleResponse.getId(),
-            articleResponse.getTitle(),
-            articleResponse.getContent(),
-            articleResponse.getLatitude(),
-            articleResponse.getLongitude(),
-            articleResponse.getAuthor(),
-            articleResponse.getCreateDate(),
-            articleResponse.getTotalLikes()
-        );
+        return articleResponse;
     }
 
     @Transactional

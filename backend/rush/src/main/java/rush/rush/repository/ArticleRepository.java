@@ -27,10 +27,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "user.imageUrl, "
         + "article.createDate, "
         + "count(articleLikes)) from Article article "
-        + "inner join article.articleLikes articleLikes "
+        + "left join article.articleLikes articleLikes "
         + "inner join article.user user "
-        + "group by article.id "
-        + "having article.publicMap = true and article.id = :articleId ")
+        + "where article.publicMap = true and article.id = :articleId")
     Optional<ArticleResponse> findByPublicMapWithLikes(@Param("articleId") Long articleId);
 
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
@@ -42,10 +41,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "user.imageUrl, "
         + "article.createDate, "
         + "count(articleLikes)) from Article article "
-        + "inner join article.articleLikes articleLikes "
+        + "left join article.articleLikes articleLikes "
         + "inner join article.user user "
-        + "group by article.id "
-        + "having article.privateMap = true and article.id = :articleId and user.id = :userId ")
+        + "where article.privateMap = true and article.id = :articleId and user.id = :userId ")
     Optional<ArticleResponse> findByPrivateMapWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
@@ -58,14 +56,13 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "user.imageUrl, "
         + "article.createDate, "
         + "count(articleLikes)) from Article article "
-        + "inner join article.articleLikes articleLikes "
+        + "left join article.articleLikes articleLikes "
         + "inner join article.articleGroups articlegroup "
         + "inner join articlegroup.group g "
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user groupmember "
         + "inner join article.user user "
-        + "group by article.id "
-        + "having article.id = :articleId and groupmember.id = :userId ")
+        + "where article.id = :articleId and groupmember.id = :userId ")
     Optional<ArticleResponse> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
