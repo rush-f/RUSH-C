@@ -11,6 +11,7 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.LocationRange;
 import rush.rush.domain.User;
+import rush.rush.dto.ArticleDetails;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.AuthorResponse;
@@ -28,47 +29,45 @@ public class FindArticleService {
 
     @Transactional
     public ArticleResponse findPublicArticle(Long id) {
-        Article article = articleRepository.findByPublicMapWithLikes(id)
+        ArticleDetails articleDetails = articleRepository.findByPublicMapWithLikes(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
-        User user = article.getUser();
-
-        return toResponse(article);
+        return toResponse(articleDetails);
     }
 
     @Transactional
     public ArticleResponse findPrivateArticle(Long id, User me) {
-        Article article = articleRepository.findByPrivateMapWithLikes(id, me.getId())
+        ArticleDetails articleDetails = articleRepository.findByPrivateMapWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
-        return toResponse(article);
+        return toResponse(articleDetails);
     }
 
     @Transactional
     public ArticleResponse findGroupArticle(Long id, User me) {
-        Article article = articleRepository.findAsGroupMapArticleWithLikes(id, me.getId())
+        ArticleDetails articleDetails = articleRepository.findAsGroupMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new IllegalArgumentException("id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
 
-        return toResponse(article);
+        return toResponse(articleDetails);
     }
 
-    private ArticleResponse toResponse(Article article) {
-        User author = article.getUser();
+    private ArticleResponse toResponse(ArticleDetails articleDetails) {
+        User author = articleDetails.getUser();
         AuthorResponse authorResponse = new AuthorResponse(author.getId(),
             author.getNickName(), author.getImageUrl());
 
         return new ArticleResponse(
-            article.getId(),
-            article.getTitle(),
-            article.getContent(),
-            article.getLatitude(),
-            article.getLongitude(),
+            articleDetails.getArticle().getId(),
+            articleDetails.getArticle().getTitle(),
+            articleDetails.getArticle().getContent(),
+            articleDetails.getArticle().getLatitude(),
+            articleDetails.getArticle().getLongitude(),
             authorResponse,
-            article.getCreateDate(),
-            article.getArticleLikes().size()
+            articleDetails.getArticle().getCreateDate(),
+            articleDetails.getTotalLikes()
         );
     }
 
