@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistComment;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -57,10 +58,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, false, true, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
 
         // when
         List<Comment> comments = commentRepository.findAllOfPrivateArticle(article.getId(), user.getId());
@@ -81,10 +80,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, false, true, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
 
         // when
         List<Comment> comments = commentRepository
@@ -110,10 +107,8 @@ class CommentRepositoryTest extends RepositoryTest {
             user, false, false, 37.14, 34.24);
         persistArticleGroup(testEntityManager, article, group);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
 
         // when
         List<Comment> comments = commentRepository
