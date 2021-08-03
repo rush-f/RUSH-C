@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistCommentLike;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -16,6 +17,7 @@ import rush.rush.domain.Article;
 import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.CommentResponse;
 
 class CommentRepositoryTest extends RepositoryTest {
 
@@ -38,13 +40,17 @@ class CommentRepositoryTest extends RepositoryTest {
         testEntityManager.persist(comment1);
         Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment2);
+        persistCommentLike(testEntityManager, user, comment1);
+        persistCommentLike(testEntityManager, user, comment1);
 
         // when
-        List<Comment> comments = commentRepository.findAllOfPublicArticle(article.getId());
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPublicArticle(article.getId());
 
         // then
-        assertThat(comments).isNotNull();
-        assertThat(comments).hasSize(2);
+        assertThat(commentResponses).isNotNull();
+        assertThat(commentResponses).hasSize(2);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
+        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
     }
 
     @Test
@@ -61,13 +67,18 @@ class CommentRepositoryTest extends RepositoryTest {
         testEntityManager.persist(comment1);
         Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment2);
+        persistCommentLike(testEntityManager, user, comment1);
+        persistCommentLike(testEntityManager, user, comment1);
+
 
         // when
-        List<Comment> comments = commentRepository.findAllOfPrivateArticle(article.getId(), user.getId());
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPrivateArticle(article.getId(), user.getId());
 
         // then
-        assertThat(comments).isNotNull();
-        assertThat(comments).hasSize(2);
+        assertThat(commentResponses).isNotNull();
+        assertThat(commentResponses).hasSize(2);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
+        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
     }
 
     @Test
@@ -85,13 +96,15 @@ class CommentRepositoryTest extends RepositoryTest {
         testEntityManager.persist(comment1);
         Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment2);
+        persistCommentLike(testEntityManager, user, comment1);
+        persistCommentLike(testEntityManager, another, comment1);
 
         // when
-        List<Comment> comments = commentRepository
+        List<CommentResponse> commentResponses = commentRepository
             .findAllOfPrivateArticle(article.getId(), another.getId());
 
         // then
-        assertThat(comments.isEmpty()).isTrue();
+        assertThat(commentResponses.isEmpty()).isTrue();
     }
 
     @Test
@@ -114,12 +127,16 @@ class CommentRepositoryTest extends RepositoryTest {
         testEntityManager.persist(comment1);
         Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment2);
+        persistCommentLike(testEntityManager, user, comment1);
+        persistCommentLike(testEntityManager, groupMember, comment1);
 
         // when
-        List<Comment> comments = commentRepository
+        List<CommentResponse> commentResponses = commentRepository
             .findAllOfGroupedArticle(article.getId(), groupMember.getId());
 
         // then
-        assertThat(comments.size()).isEqualTo(2);
+        assertThat(commentResponses.size()).isEqualTo(2);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
+        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
     }
 }
