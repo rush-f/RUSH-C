@@ -214,4 +214,18 @@ class ArticleRepositoryTest extends RepositoryTest {
         assertThat(groups2.size()).isEqualTo(1);
         assertThat(groups1.size()).isEqualTo(2);
     }
+
+    @Test
+    @Transactional
+    void findArticleAuthorId() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+
+        // when
+        Long authorId = articleRepository.findArticleAuthorId(article.getId());
+
+        // then
+        assertThat(authorId).isEqualTo(user.getId());
+    }
 }
