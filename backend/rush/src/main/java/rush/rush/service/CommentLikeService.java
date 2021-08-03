@@ -30,22 +30,36 @@ public class CommentLikeService {
         }
     }
 
+    @Transactional
+    public boolean hasILiked(Long commentId, MapType mapType, Long userId) {
+        if (mapType == MapType.PUBLIC) {
+            return commentLikeRepository.countOfPublicComment(commentId, userId) >=1;
+        }
+        if (mapType == MapType.PRIVATE) {
+            return commentLikeRepository.countOfPrivateComment(commentId, userId) >=1;
+        }
+        if (mapType == MapType.GROUPED) {
+            return commentLikeRepository.countOfGroupedComment(commentId, userId) >=1;
+        }
+        throw new IllegalStateException("MapType 오류 - " + mapType.name());
+    }
+
     private void changeMyLikeOnPublicComment(Long commentId, Boolean hasILiked, User user){
-        Comment comment = commentRepository.findAsPublicArticle(commentId)
+        Comment comment = commentRepository.findInPublicArticle(commentId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
     }
 
     private void changeMyLikeOnPrivateComment(Long commentId, Boolean hasILiked, User user){
-        Comment comment = commentRepository.findAsPrivateArticle(commentId, user.getId())
+        Comment comment = commentRepository.findInPrivateArticle(commentId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 comment 조회 권한이 없거나, 존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
     }
 
     private void changeMyLikeOnGroupedComment(Long commentId, Boolean hasILiked, User user){
-        Comment comment = commentRepository.findAsGroupedArticle(commentId, user.getId())
+        Comment comment = commentRepository.findInGroupedArticle(commentId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 comment 조회 권한이 없거나, 존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);

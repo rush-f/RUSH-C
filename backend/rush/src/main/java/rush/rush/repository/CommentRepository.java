@@ -12,12 +12,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("select distinct comment from Comment comment "
         + "where comment.id = :commentId "
         + "and comment.article.publicMap = true ")
-    Optional<Comment> findAsPublicArticle(@Param("commentId") Long commentId);
+    Optional<Comment> findInPublicArticle(@Param("commentId") Long commentId);
 
     @Query("select distinct comment from Comment comment "
         + "where comment.id = :commentId "
         + "and comment.article.user.id = :userId ")
-    Optional<Comment> findAsPrivateArticle(@Param("commentId") Long commentId,
+    Optional<Comment> findInPrivateArticle(@Param("commentId") Long commentId,
         @Param("userId") Long userId);
 
     @Query("select distinct comment from Comment comment "
@@ -26,7 +26,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user groupmember "
         + "where comment.id = :commentId and groupmember.id = :userId")
-    Optional<Comment> findAsGroupedArticle(@Param("commentId") Long commentId,
+    Optional<Comment> findInGroupedArticle(@Param("commentId") Long commentId,
         @Param("userId") Long userId);
 
     @Query("select new rush.rush.dto.CommentResponse(comment.id, comment.content, "
