@@ -131,4 +131,11 @@ public class FindArticleService {
                 article.getTitle()))
             .collect(Collectors.toUnmodifiableList());
     }
+
+    @Transactional
+    public Boolean isMyArticle(Long articleId, User user) {
+        Long articleAuthorId = articleRepository.findArticleAuthorId(articleId)
+            .orElseThrow(() -> new IllegalArgumentException("ID가 " + articleId + "인 글이 없습니다."));
+        return articleAuthorId.equals(user.getId());
+    }
 }
