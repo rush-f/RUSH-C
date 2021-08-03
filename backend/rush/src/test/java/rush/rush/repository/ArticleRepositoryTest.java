@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistComment;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
@@ -22,6 +24,25 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Test
+    @Transactional
+    void delete(@Autowired CommentRepository commentRepository) {
+        // given
+        User author = persistUser(testEntityManager, "test1@email.com");
+        Article article = persistArticle(testEntityManager, author, true, true, 37.63, 127.07);
+
+        User another = persistUser(testEntityManager, "test2@email.com");
+        Comment comment = persistComment(testEntityManager, "댓글내용", article, another);
+        article.getComments().add(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+
+        // when
+        articleRepository.delete(article);
+
+        // then
+        assertThat(articleRepository.findAll()).hasSize(0);
+        assertThat(commentRepository.findAll()).hasSize(0);
+    }
 
     @Test
     @Transactional
