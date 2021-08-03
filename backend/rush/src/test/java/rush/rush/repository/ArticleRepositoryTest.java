@@ -34,7 +34,7 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         User another = persistUser(testEntityManager, "test2@email.com");
         Comment comment = persistComment(testEntityManager, "댓글내용", article, another);
-        article.getComments().add(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+        article.addComment(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
 
         // when
         articleRepository.delete(article);

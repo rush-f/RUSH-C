@@ -3,6 +3,7 @@ package rush.rush.domain;
 import com.sun.istack.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,6 +62,7 @@ public class Article {
     private List<ArticleGroup> articleGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Getter(AccessLevel.NONE)
     private List<Comment> comments = new ArrayList<>();
 
     public Article(Long id, String title, String content, Double latitude, Double longitude,
@@ -92,6 +95,24 @@ public class Article {
         }
         if (Objects.isNull(user) || Objects.isNull(user.getId())) {
             throw new IllegalArgumentException("작성자가 올바르게 지정되지 않았습니다.");
+        }
+    }
+
+    public List<Comment> getComments() {
+        return Collections.unmodifiableList(comments);
+    }
+
+    public void addComment(Comment newComment) {
+        validateCanAdd(newComment);
+        comments.add(newComment);
+    }
+
+    private void validateCanAdd(Comment newComment) {
+        boolean isAlreadyExist = comments.stream()
+            .anyMatch(comment -> comment.getId().equals(newComment.getId()));
+
+        if (isAlreadyExist) {
+            throw new IllegalArgumentException("이미 이 글에 포함되어있는 댓글입니다.");
         }
     }
 }
