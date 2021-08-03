@@ -9,6 +9,7 @@ import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,80 @@ class CommentRepositoryTest extends RepositoryTest {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Test
+    @Transactional
+    @DisplayName("전체지도 댓글 한개 조회")
+    void findAsPublicArticle(){
+        //given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
+        Comment comment = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment);
+
+        //when
+        Optional<Comment> foundComment = commentRepository.findAsPublicArticle(comment.getId());
+
+        //then
+        assertThat(foundComment.isPresent()).isTrue();
+        assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
+        assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("개인지도 댓글 한개 조회")
+    void findAsPrivateArticle(){
+        //given
+        User user = persistUser(testEntityManager, "test@email.com");
+        User another = persistUser(testEntityManager, "test2@email.com");
+        Article article = persistArticle(testEntityManager, user, false, true, 37.63, 127.07);
+        Comment comment = new Comment(COMMENT_CONTENT, user, article);
+        testEntityManager.persist(comment);
+
+        //when
+        Optional<Comment> foundComment = commentRepository.findAsPrivateArticle(comment.getId(), user.getId());
+        Optional<Comment> foundComment2 = commentRepository.findAsPrivateArticle(comment.getId(), another.getId());
+
+        //then
+        assertThat(foundComment.isPresent()).isTrue();
+        assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
+        assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
+        assertThat(foundComment2.isPresent()).isFalse();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("그룹지도 댓글 한개 조회")
+    void findAsGroupedArticle(){
+        //given
+        User user1 = persistUser(testEntityManager, "test1@email.com");
+        User user2 = persistUser(testEntityManager, "test2@email.com");
+        User another = persistUser(testEntityManager, "test3@email.com");
+
+        Group group = persistGroup(testEntityManager);
+
+        persistUserGroup(testEntityManager, user1, group);
+        persistUserGroup(testEntityManager, user2, group);
+
+        Article article = persistArticle(testEntityManager, user1, false, false, 0.0, 0.0);
+
+        persistArticleGroup(testEntityManager, article, group);
+
+        Comment comment = new Comment(COMMENT_CONTENT, user2, article);
+        testEntityManager.persist(comment);
+
+        //when
+        Optional<Comment> foundComment = commentRepository.findAsGroupedArticle(comment.getId(), user1.getId());
+        Optional<Comment> foundComment2 = commentRepository.findAsGroupedArticle(comment.getId(), another.getId());
+
+        //then
+        assertThat(foundComment.isPresent()).isTrue();
+        assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
+        assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
+        assertThat(foundComment2.isPresent()).isFalse();
+
+    }
 
     @Test
     @Transactional
