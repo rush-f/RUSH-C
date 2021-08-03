@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistComment;
 import static rush.rush.repository.SetUpMethods.persistCommentLike;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
@@ -30,15 +31,14 @@ class CommentRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     @DisplayName("전체지도 댓글 한개 조회")
-    void findAsPublicArticle(){
+    void findInPublicArticle(){
         //given
         User user = persistUser(testEntityManager, "test@email.com");
         Article article = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
-        Comment comment = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
 
         //when
-        Optional<Comment> foundComment = commentRepository.findAsPublicArticle(comment.getId());
+        Optional<Comment> foundComment = commentRepository.findInPublicArticle(comment.getId());
 
         //then
         assertThat(foundComment.isPresent()).isTrue();
@@ -49,17 +49,16 @@ class CommentRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     @DisplayName("개인지도 댓글 한개 조회")
-    void findAsPrivateArticle(){
+    void findInPrivateArticle(){
         //given
         User user = persistUser(testEntityManager, "test@email.com");
         User another = persistUser(testEntityManager, "test2@email.com");
         Article article = persistArticle(testEntityManager, user, false, true, 37.63, 127.07);
-        Comment comment = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
 
         //when
-        Optional<Comment> foundComment = commentRepository.findAsPrivateArticle(comment.getId(), user.getId());
-        Optional<Comment> foundComment2 = commentRepository.findAsPrivateArticle(comment.getId(), another.getId());
+        Optional<Comment> foundComment = commentRepository.findInPrivateArticle(comment.getId(), user.getId());
+        Optional<Comment> foundComment2 = commentRepository.findInPrivateArticle(comment.getId(), another.getId());
 
         //then
         assertThat(foundComment.isPresent()).isTrue();
@@ -71,7 +70,7 @@ class CommentRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     @DisplayName("그룹지도 댓글 한개 조회")
-    void findAsGroupedArticle(){
+    void findInGroupedArticle(){
         //given
         User user1 = persistUser(testEntityManager, "test1@email.com");
         User user2 = persistUser(testEntityManager, "test2@email.com");
@@ -86,12 +85,11 @@ class CommentRepositoryTest extends RepositoryTest {
 
         persistArticleGroup(testEntityManager, article, group);
 
-        Comment comment = new Comment(COMMENT_CONTENT, user2, article);
-        testEntityManager.persist(comment);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user2, article);
 
         //when
-        Optional<Comment> foundComment = commentRepository.findAsGroupedArticle(comment.getId(), user1.getId());
-        Optional<Comment> foundComment2 = commentRepository.findAsGroupedArticle(comment.getId(), another.getId());
+        Optional<Comment> foundComment = commentRepository.findInGroupedArticle(comment.getId(), user1.getId());
+        Optional<Comment> foundComment2 = commentRepository.findInGroupedArticle(comment.getId(), another.getId());
 
         //then
         assertThat(foundComment.isPresent()).isTrue();
@@ -111,10 +109,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, true, false, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, user, comment1);
 
@@ -138,10 +134,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, false, true, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, user, comment1);
 
@@ -167,9 +161,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, false, true, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
         testEntityManager.persist(comment2);
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, another, comment1);
@@ -198,10 +191,8 @@ class CommentRepositoryTest extends RepositoryTest {
             user, false, false, 37.14, 34.24);
         persistArticleGroup(testEntityManager, article, group);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, groupMember, comment1);
 

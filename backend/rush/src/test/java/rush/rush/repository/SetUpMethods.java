@@ -62,6 +62,11 @@ public class SetUpMethods {
         testEntityManager.persist(articleGroup);
     }
 
+    public static Comment persistComment(TestEntityManager testEntityManager, String content, User user, Article article) {
+        Comment comment = new Comment(content, user, article);
+        return testEntityManager.persist(comment);
+    }
+
     public static CommentLike persistCommentLike(TestEntityManager testEntityManager, User user, Comment comment) {
         CommentLike commentLike =CommentLike.builder()
             .user(user)
