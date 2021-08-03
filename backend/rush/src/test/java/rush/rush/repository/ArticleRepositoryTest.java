@@ -27,7 +27,7 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void delete(@Autowired CommentRepository commentRepository) {
+    void deleteById(@Autowired CommentRepository commentRepository) {
         // given
         User author = persistUser(testEntityManager, "test1@email.com");
         Article article = persistArticle(testEntityManager, author, true, true, 37.63, 127.07);
@@ -37,7 +37,7 @@ class ArticleRepositoryTest extends RepositoryTest {
         article.addComment(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
 
         // when
-        articleRepository.delete(article);
+        articleRepository.deleteById(article.getId());
 
         // then
         assertThat(articleRepository.findAll()).hasSize(0);
