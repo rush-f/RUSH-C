@@ -33,10 +33,26 @@ const LikeLetter = styled.div`
   margin-left: 7px;
 `;
 
-const ArticleMetaBottom = styled.div`
+const ArticleBottom = styled.div`
+  position: relative;
+`;
+
+const MyArticleControl = styled.div`
+  min-width: 70px;
+  max-width: 140px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  text-align: right;
+`;
+
+const MyArticleControlInner = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
 `;
 
 const ArticleBody = (props) => {
@@ -48,7 +64,7 @@ const ArticleBody = (props) => {
         <ArticleContent>
           {props.article ? props.article.content : ""}
         </ArticleContent>
-        <ArticleMetaBottom>
+        <ArticleBottom>
           <ArticleLike>
             <LikeHeart
               onClick={() => {
@@ -59,8 +75,12 @@ const ArticleBody = (props) => {
               }>{props.hasILiked?"♥":"♡"} </LikeHeart>
             <LikeLetter>좋아요 {props.article ? props.articleTotalLikes : ""}개</LikeLetter>
           </ArticleLike>
-          <DeleteButton/>
-        </ArticleMetaBottom>
+          <MyArticleControl>
+            <MyArticleControlInner>
+              <DeleteButton/>
+            </MyArticleControlInner>
+          </MyArticleControl>
+        </ArticleBottom>
       </div>
   );
 };
