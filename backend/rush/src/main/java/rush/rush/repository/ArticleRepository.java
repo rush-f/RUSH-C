@@ -38,5 +38,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findArticlesWithGroupsByUserId(@Param("userId") Long userId);
 
     @Query("select article.user.id from Article article inner join article.user")
-    Long findArticleAuthorId(@Param("articleId") Long articleId);
+    Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
 }

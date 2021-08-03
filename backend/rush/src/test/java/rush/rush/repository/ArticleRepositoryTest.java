@@ -223,9 +223,10 @@ class ArticleRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
 
         // when
-        Long authorId = articleRepository.findArticleAuthorId(article.getId());
+        Optional<Long> articleAuthorId = articleRepository.findArticleAuthorId(article.getId());
 
         // then
-        assertThat(authorId).isEqualTo(user.getId());
+        assertThat(articleAuthorId.isPresent()).isTrue();
+        assertThat(articleAuthorId.get()).isEqualTo(user.getId());
     }
 }
