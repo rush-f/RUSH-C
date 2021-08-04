@@ -78,7 +78,11 @@ const ArticleBody = (props) => {
           {
             props.isMyArticle? <MyArticleControl>
               <MyArticleControlInner>
-                <DeleteButton/>
+                <DeleteButton
+                  articleId={props.articleId}
+                  accessToken={props.accessToken}
+                  history={props.history}
+                />
               </MyArticleControlInner>
             </MyArticleControl> : ""
           }

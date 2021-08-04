@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from "styled-components";
+import deleteArticleApi from "../../api/DeleteArticleApi";
 
 const DeleteButtonStyle = styled.div`
   color: #777777;
   display: inline-block;
 `;
 
-const DeleteButton = () => {
+const DeleteButton = ({articleId, accessToken, history}) => {
+  const onDeleteButtonClicked = () => {
+    deleteArticleApi({articleId, accessToken, history})
+  };
   return (
-    <DeleteButtonStyle>
+    <DeleteButtonStyle onClick={onDeleteButtonClicked}>
       삭제
     </DeleteButtonStyle>
   );
