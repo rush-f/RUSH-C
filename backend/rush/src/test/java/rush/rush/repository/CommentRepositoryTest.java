@@ -27,6 +27,22 @@ class CommentRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
+    void deleteById() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager,
+            user, true, false, 37.14, 34.24);
+        Comment comment = persistComment(testEntityManager, "댓글내용", article, user);
+
+        // when
+        commentRepository.deleteById(comment.getId());
+
+        // then
+        assertThat(commentRepository.findAll()).hasSize(0);
+    }
+
+    @Test
+    @Transactional
     @DisplayName("전체지도 댓글 조회")
     void findAllOfPublicArticle() {
         // given
@@ -35,10 +51,8 @@ class CommentRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager,
             user, true, false, 37.14, 34.24);
 
-        Comment comment1 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment1);
-        Comment comment2 = new Comment(COMMENT_CONTENT, user, article);
-        testEntityManager.persist(comment2);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, article, user);
 
         // when
         List<Comment> comments = commentRepository.findAllOfPublicArticle(article.getId());
