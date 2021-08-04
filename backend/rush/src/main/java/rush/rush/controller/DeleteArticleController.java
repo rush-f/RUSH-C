@@ -18,7 +18,7 @@ public class DeleteArticleController {
     private final DeleteArticleService deleteArticleService;
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("articleId") Long articleId,
+    public ResponseEntity<Void> deleteArticle(@PathVariable Long articleId,
             @CurrentUser UserPrincipal userPrincipal) {
         deleteArticleService.deleteArticle(articleId, userPrincipal.getUser());
 

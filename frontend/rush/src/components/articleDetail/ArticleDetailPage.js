@@ -11,6 +11,7 @@ import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import checkHasILikedApi from "../../api/CheckHasILikedApi";
+import isMyArticleApi from "../../api/IsMyArticleApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -20,6 +21,7 @@ const ArticleDetailPage = (props) => {
   const [comments, setComments] = useState([]);
   const [hasILiked,setHasILiked] = useState(false);
   const [articleTotalLikes, setArticleTotalLikes] = useState(0);
+  const [isMyArticle, setIsMyArticle] = useState(false);
   
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
@@ -51,6 +53,11 @@ const ArticleDetailPage = (props) => {
     });
   }, [articleId]);
 
+  useEffect(() => {
+    isMyArticleApi({articleId, accessToken})
+      .then(resultPromise => setIsMyArticle(resultPromise));
+  }, []);
+
   return (
     <Outside>
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
@@ -77,6 +84,7 @@ const ArticleDetailPage = (props) => {
             hasILiked={hasILiked}
             setHasILiked={setHasILiked}
             history={props.history}
+            isMyArticle={isMyArticle}
           />
         </PostBox>
         <CommentsBox>

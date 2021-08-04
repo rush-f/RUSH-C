@@ -75,11 +75,13 @@ const ArticleBody = (props) => {
               }>{props.hasILiked?"♥":"♡"} </LikeHeart>
             <LikeLetter>좋아요 {props.article ? props.articleTotalLikes : ""}개</LikeLetter>
           </ArticleLike>
-          <MyArticleControl>
-            <MyArticleControlInner>
-              <DeleteButton/>
-            </MyArticleControlInner>
-          </MyArticleControl>
+          {
+            props.isMyArticle? <MyArticleControl>
+              <MyArticleControlInner>
+                <DeleteButton/>
+              </MyArticleControlInner>
+            </MyArticleControl> : ""
+          }
         </ArticleBottom>
       </div>
   );

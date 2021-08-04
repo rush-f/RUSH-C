@@ -1,10 +1,7 @@
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const isMyArticleApi = (articleId) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
-
+const isMyArticleApi = ({articleId, accessToken}) => {
   if (!accessToken) {
     return Promise.resolve(false);
   }
