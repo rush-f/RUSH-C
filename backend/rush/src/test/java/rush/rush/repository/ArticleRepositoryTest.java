@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistArticleLike;
 import static rush.rush.repository.SetUpMethods.persistComment;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
@@ -27,14 +28,18 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void deleteById(@Autowired CommentRepository commentRepository) {
-        // given
+    void deleteById(@Autowired CommentRepository commentRepository, @Autowired ArticleLikeRepository articleLikeRepository) {
+        // given 글이 작성되어있다.
         User author = persistUser(testEntityManager, "test1@email.com");
         Article article = persistArticle(testEntityManager, author, true, true, 37.63, 127.07);
 
+        // given 글에 댓글도 달려있다.
         User another = persistUser(testEntityManager, "test2@email.com");
         Comment comment = persistComment(testEntityManager, "댓글내용", article, another);
         article.addComment(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+
+        // given 글에 좋아요가 눌러져있다.
+        persistArticleLike(testEntityManager, another, article);
 
         // when
         articleRepository.deleteById(article.getId());

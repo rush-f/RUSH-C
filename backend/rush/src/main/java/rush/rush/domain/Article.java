@@ -65,9 +65,13 @@ public class Article {
     @Getter(AccessLevel.NONE)
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Getter(AccessLevel.NONE)
+    private List<ArticleLike> articleLikes = new ArrayList<>();
+
     public Article(Long id, String title, String content, Double latitude, Double longitude,
             User user, boolean publicMap, boolean privateMap, Timestamp createDate,
-            List<ArticleGroup> articleGroups, List<Comment> comments) {
+            List<ArticleGroup> articleGroups, List<Comment> comments, List<ArticleLike> articleLikes) {
         validate(title, content, user);
         this.id = id;
         this.title = title;
@@ -83,6 +87,9 @@ public class Article {
         }
         if (Objects.nonNull(articleGroups)) {
             this.comments = comments;
+        }
+        if (Objects.nonNull(articleLikes)) {
+            this.articleLikes = articleLikes;
         }
     }
 
@@ -103,16 +110,31 @@ public class Article {
     }
 
     public void addComment(Comment newComment) {
-        validateCanAdd(newComment);
+        if (isAlreadyExist(newComment)) {
+            return;
+        }
         comments.add(newComment);
     }
 
-    private void validateCanAdd(Comment newComment) {
-        boolean isAlreadyExist = comments.stream()
+    private boolean isAlreadyExist(Comment newComment) {
+        return comments.stream()
             .anyMatch(comment -> comment.getId().equals(newComment.getId()));
+    }
 
-        if (isAlreadyExist) {
-            throw new IllegalArgumentException("이미 이 글에 포함되어있는 댓글입니다.");
+    public List<ArticleLike> getArticleLikes() {
+        return Collections.unmodifiableList(articleLikes);
+    }
+
+    public void addArticleLike(ArticleLike articleLike) {
+        if (isAlreadyExist(articleLike)) {
+            return;
         }
+        articleLikes.add(articleLike);
+    }
+
+    private boolean isAlreadyExist(ArticleLike newArticleLike) {
+        return articleLikes.stream()
+            .anyMatch(articleLike -> articleLike.getId()
+                .equals(newArticleLike.getId()));
     }
 }

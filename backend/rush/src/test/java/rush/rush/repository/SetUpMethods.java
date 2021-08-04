@@ -3,6 +3,7 @@ package rush.rush.repository;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.ArticleLike;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
@@ -65,5 +66,13 @@ public class SetUpMethods {
             String content, Article article, User user) {
         Comment comment = new Comment(content, user, article);
         return testEntityManager.persist(comment);
+    }
+
+    public static ArticleLike persistArticleLike(TestEntityManager testEntityManager, User user, Article article) {
+        ArticleLike articleLike =ArticleLike.builder()
+            .user(user)
+            .article(article)
+            .build();
+        return testEntityManager.persist(articleLike);
     }
 }

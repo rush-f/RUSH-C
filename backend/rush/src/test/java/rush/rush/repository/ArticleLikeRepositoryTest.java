@@ -3,6 +3,7 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistArticleLike;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -32,10 +33,10 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
         savedUser2 = persistUser(testEntityManager, "test2@email.com");
         articleOnPrivateMap = persistArticle(testEntityManager, savedUser1, false, true, 0.0, 0.0);
         articleOnPublicMap = persistArticle(testEntityManager, savedUser1, true, false, 0.0, 0.0);
-        persistArticleLike(savedUser1, articleOnPublicMap);
-        persistArticleLike(savedUser2, articleOnPublicMap);
-        persistArticleLike(savedUser1, articleOnPrivateMap);
-        persistArticleLike(savedUser2, articleOnPrivateMap);
+        persistArticleLike(testEntityManager, savedUser1, articleOnPublicMap);
+        persistArticleLike(testEntityManager, savedUser2, articleOnPublicMap);
+        persistArticleLike(testEntityManager, savedUser1, articleOnPrivateMap);
+        persistArticleLike(testEntityManager, savedUser2, articleOnPrivateMap);
     }
 
     @Test
@@ -118,13 +119,5 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
         //then
         assertThat(count1).isEqualTo(0);
         assertThat(count2).isEqualTo(1);
-    }
-
-    private ArticleLike persistArticleLike(User user, Article article) {
-        ArticleLike articleLike =ArticleLike.builder()
-            .user(user)
-            .article(article)
-            .build();
-        return testEntityManager.persist(articleLike);
     }
 }
