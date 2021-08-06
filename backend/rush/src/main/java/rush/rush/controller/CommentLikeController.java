@@ -1,5 +1,6 @@
 package rush.rush.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,18 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.domain.MapType;
+import rush.rush.dto.CommentHasILikedResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.CommentLikeService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/articles/{mapType}/comments/{commentId}/like")
+@RequestMapping("/articles/{mapType}/comments")
 public class CommentLikeController {
 
     private final CommentLikeService commentLikeService;
 
-    @PostMapping
+    @PostMapping("/{commentId}/like")
     public ResponseEntity<Void> changeMyLike(
         @PathVariable("commentId") Long commentId,
         @PathVariable("mapType") String mapType,
@@ -33,12 +35,12 @@ public class CommentLikeController {
             .build();
     }
 
-    @GetMapping
-    public ResponseEntity<Boolean> checkMyLike(
-        @PathVariable("commentId") Long commentId,
+    @GetMapping("/{articleId}/like")
+    public ResponseEntity<List<CommentHasILikedResponse>> checkMyLike(
+        @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
         @CurrentUser UserPrincipal userPrincipal){
-        boolean result= commentLikeService.hasILiked(commentId, MapType.from(mapType), userPrincipal.getId());
+        List<CommentHasILikedResponse> result= commentLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);

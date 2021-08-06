@@ -1,5 +1,6 @@
 package rush.rush.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.CommentLike;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
+import rush.rush.dto.CommentHasILikedResponse;
 import rush.rush.repository.CommentLikeRepository;
 import rush.rush.repository.CommentRepository;
 
@@ -31,15 +33,16 @@ public class CommentLikeService {
     }
 
     @Transactional
-    public boolean hasILiked(Long commentId, MapType mapType, Long userId) {
+    public List<CommentHasILikedResponse> hasILiked(Long articleId, MapType mapType, Long userId) {
         if (mapType == MapType.PUBLIC) {
-            return commentLikeRepository.countOfPublicComment(commentId, userId) >=1;
+
+            return commentLikeRepository.findHasILikedInPublic(articleId, userId);
         }
         if (mapType == MapType.PRIVATE) {
-            return commentLikeRepository.countOfPrivateComment(commentId, userId) >=1;
+            return commentLikeRepository.findHasILikedInPravete(articleId, userId);
         }
         if (mapType == MapType.GROUPED) {
-            return commentLikeRepository.countOfGroupedComment(commentId, userId) >=1;
+            return commentLikeRepository.findHasILikedInGroup(articleId, userId);
         }
         throw new IllegalStateException("MapType 오류 - " + mapType.name());
     }

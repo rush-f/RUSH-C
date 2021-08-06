@@ -9,6 +9,7 @@ import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.CommentLike;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.CommentHasILikedResponse;
 
 public class CommentLikeRepositoryTest extends RepositoryTest {
 
@@ -59,44 +61,49 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void countOfPublicComment() {
+    void findHasILikedInPublic() {
         //given
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
-        persistCommentLike(testEntityManager, savedUser2, comment);
-
-        testEntityManager.flush();
-        testEntityManager.clear();
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
+        Comment comment3 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
+        persistCommentLike(testEntityManager, savedUser2, comment1);
+        persistCommentLike(testEntityManager, savedUser2, comment3);
 
         //when
-        Long count1 = commentLikeRepository.countOfPublicComment(comment.getId(),
-            savedUser1.getId());
-        Long count2 = commentLikeRepository.countOfPublicComment(comment.getId(),
+        List<CommentHasILikedResponse> hasILiked= commentLikeRepository.findHasILikedInPublic(articleOnPublicMap.getId(),
             savedUser2.getId());
 
        //then
-        assertThat(count1).isEqualTo(0);
-        assertThat(count2).isEqualTo(1);
-    }
-    @Test
-    @Transactional
-    void countOfPrivateComment() {
-        //given
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
-        persistCommentLike(testEntityManager, savedUser1, comment);
-        persistCommentLike(testEntityManager, savedUser2, comment);
-        //when
-        Long count1 = commentLikeRepository.countOfPrivateComment(comment.getId(),
-            savedUser1.getId());
-        Long count2 = commentLikeRepository.countOfPrivateComment(comment.getId(),
-            savedUser2.getId());
-        //then
-        assertThat(count1).isEqualTo(1);
-        assertThat(count2).isEqualTo(0);
+        assertThat(hasILiked.get(0).getCommentId()).isEqualTo(3);
+        assertThat(hasILiked.size()).isEqualTo(1);
     }
 
     @Test
     @Transactional
-    void countOfGroupedComment() {
+    void findHasILikedInPravete() {
+        //given
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
+        persistCommentLike(testEntityManager, savedUser1, comment1);
+        persistCommentLike(testEntityManager, savedUser1, comment2);
+        persistCommentLike(testEntityManager, savedUser2, comment1);
+
+        //when
+        List<CommentHasILikedResponse> hasILiked= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
+            savedUser1.getId());
+        List<CommentHasILikedResponse> hasILiked2= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
+            savedUser2.getId());
+
+        //then
+        assertThat(hasILiked.get(0).getCommentId()).isEqualTo(1);
+        assertThat(hasILiked.get(1).getCommentId()).isEqualTo(2);
+        assertThat(hasILiked.size()).isEqualTo(2);
+        assertThat(hasILiked2.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    void findHasILikedInGroup() {
         //given
         Group group1=persistGroup(testEntityManager);
         persistArticleGroup(testEntityManager, articleOnPublicMap, group1);
@@ -106,13 +113,14 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, savedUser2, comment);
 
         //when
-        Long count1 = commentLikeRepository.countOfGroupedComment(comment.getId(),
+        List<CommentHasILikedResponse> hasILiked1= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
             savedUser1.getId());
-        Long count2 = commentLikeRepository.countOfGroupedComment(comment.getId(),
+        List<CommentHasILikedResponse> hasILiked2= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
             savedUser2.getId());
 
         //then
-        assertThat(count1).isEqualTo(0);
-        assertThat(count2).isEqualTo(1);
+        assertThat(hasILiked2.get(0).getCommentId()).isEqualTo(1);
+        assertThat(hasILiked2.size()).isEqualTo(1);
+        assertThat(hasILiked1.size()).isEqualTo(0);
     }
 }
