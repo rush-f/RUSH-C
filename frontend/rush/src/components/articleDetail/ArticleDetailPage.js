@@ -16,11 +16,15 @@ const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const articleId = props.match.params.articleId;
   const mapType = props.match.params.mapType;
+
   const [article, setArticle] = useState(null);
-  const [comments, setComments] = useState([]);
   const [hasILiked,setHasILiked] = useState(false);
   const [articleTotalLikes, setArticleTotalLikes] = useState(0);
-  
+
+  const [comments, setComments] = useState([]);
+  const [hasILikedInComment, setHasILikedInComment] = useState([]);
+  const [commentTotalLikes, setCommentTotalLikes] = useState(0);
+
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
       findWritingApi(articleId, mapType, props.history).then(articlePromise => {
@@ -47,7 +51,10 @@ const ArticleDetailPage = (props) => {
       mapType: mapType,
       history: props.history}
     ).then(commentPromise => {
-      setComments(commentPromise)
+      setComments(commentPromise);
+      commentPromise.forEach((comment)=>{
+        setCommentTotalLikes(comment.totalLikes)
+      });
     });
   }, [articleId]);
 
@@ -94,6 +101,8 @@ const ArticleDetailPage = (props) => {
                 key={idx}
                 content={comment.content}
                 author={comment.author}
+                commentTotalLikes={commentTotalLikes}
+                setCommentTotalLikes={setCommentTotalLikes}
               />
             ) : "아직 댓글이 없습니다 :)"
           }
