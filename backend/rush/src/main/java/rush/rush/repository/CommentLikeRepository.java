@@ -6,30 +6,29 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.CommentLike;
-import rush.rush.dto.CommentHasILikedResponse;
 
 public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> {
 
     Optional<CommentLike> findByUserIdAndCommentId(Long userId, Long commentId);
 
-    @Query("select new rush.rush.dto.CommentHasILikedResponse(commentLike.comment.id) from CommentLike commentLike "
+    @Query("select commentLike.comment.id from CommentLike commentLike "
         + "inner join commentLike.comment.article article "
         + "where article.id = :articleId "
         + "and article.publicMap = true "
         + "and commentLike.user.id = :userId")
-    List<CommentHasILikedResponse> findHasILikedInPublic(
+    Long[] findHasILikedInPublic(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
 
-    @Query("select new rush.rush.dto.CommentHasILikedResponse(commentLike.comment.id) from CommentLike commentLike "
+    @Query("select commentLike.comment.id from CommentLike commentLike "
         + "inner join commentLike.comment.article article "
         + "where article.id = :articleId "
         + "and article.user.id = :userId "
         + "and commentLike.user.id = :userId")
-    List<CommentHasILikedResponse> findHasILikedInPravete(
+    Long[] findHasILikedInPravete(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
-    @Query("select new rush.rush.dto.CommentHasILikedResponse(commentLike.comment.id) from CommentLike commentLike "
+    @Query("select commentLike.comment.id from CommentLike commentLike "
         + "inner join commentLike.comment.article article "
         + "inner join article.articleGroups articlegroup "
         + "inner join articlegroup.group g "
@@ -38,6 +37,6 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "where article.id = :articleId "
         + "and user.id = :userId "
         + "and commentLike.user.id = :userId ")
-    List<CommentHasILikedResponse> findHasILikedInGroup(
+    Long[] findHasILikedInGroup(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 }

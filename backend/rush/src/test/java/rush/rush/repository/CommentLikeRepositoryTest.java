@@ -19,7 +19,6 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.CommentLike;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
-import rush.rush.dto.CommentHasILikedResponse;
 
 public class CommentLikeRepositoryTest extends RepositoryTest {
 
@@ -70,12 +69,12 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, savedUser2, comment3);
 
         //when
-        List<CommentHasILikedResponse> hasILiked= commentLikeRepository.findHasILikedInPublic(articleOnPublicMap.getId(),
+        Long[] hasILiked= commentLikeRepository.findHasILikedInPublic(articleOnPublicMap.getId(),
             savedUser2.getId());
 
        //then
-        assertThat(hasILiked.get(0).getCommentId()).isEqualTo(3);
-        assertThat(hasILiked.size()).isEqualTo(1);
+        assertThat(hasILiked[0]).isEqualTo(3);
+        assertThat(hasILiked.length).isEqualTo(1);
     }
 
     @Test
@@ -89,16 +88,16 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, savedUser2, comment1);
 
         //when
-        List<CommentHasILikedResponse> hasILiked= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
+        Long[] hasILiked= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
             savedUser1.getId());
-        List<CommentHasILikedResponse> hasILiked2= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
+        Long[] hasILiked2= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
             savedUser2.getId());
 
         //then
-        assertThat(hasILiked.get(0).getCommentId()).isEqualTo(1);
-        assertThat(hasILiked.get(1).getCommentId()).isEqualTo(2);
-        assertThat(hasILiked.size()).isEqualTo(2);
-        assertThat(hasILiked2.size()).isEqualTo(0);
+        assertThat(hasILiked[0]).isEqualTo(1);
+        assertThat(hasILiked[1]).isEqualTo(2);
+        assertThat(hasILiked.length).isEqualTo(2);
+        assertThat(hasILiked2.length).isEqualTo(0);
     }
 
     @Test
@@ -113,14 +112,14 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, savedUser2, comment);
 
         //when
-        List<CommentHasILikedResponse> hasILiked1= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
+        Long[] hasILiked1= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
             savedUser1.getId());
-        List<CommentHasILikedResponse> hasILiked2= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
+        Long[] hasILiked2= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
             savedUser2.getId());
 
         //then
-        assertThat(hasILiked2.get(0).getCommentId()).isEqualTo(1);
-        assertThat(hasILiked2.size()).isEqualTo(1);
-        assertThat(hasILiked1.size()).isEqualTo(0);
+        assertThat(hasILiked2[0]).isEqualTo(1);
+        assertThat(hasILiked2.length).isEqualTo(1);
+        assertThat(hasILiked1.length).isEqualTo(0);
     }
 }

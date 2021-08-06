@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.domain.MapType;
-import rush.rush.dto.CommentHasILikedResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
 import rush.rush.service.CommentLikeService;
@@ -36,11 +35,11 @@ public class CommentLikeController {
     }
 
     @GetMapping("/{articleId}/like")
-    public ResponseEntity<List<CommentHasILikedResponse>> checkMyLike(
+    public ResponseEntity<Long[]> checkMyLike(
         @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
         @CurrentUser UserPrincipal userPrincipal){
-        List<CommentHasILikedResponse> result= commentLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
+        Long[] result= commentLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);

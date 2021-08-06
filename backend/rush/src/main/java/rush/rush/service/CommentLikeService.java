@@ -8,7 +8,6 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.CommentLike;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
-import rush.rush.dto.CommentHasILikedResponse;
 import rush.rush.repository.CommentLikeRepository;
 import rush.rush.repository.CommentRepository;
 
@@ -33,7 +32,7 @@ public class CommentLikeService {
     }
 
     @Transactional
-    public List<CommentHasILikedResponse> hasILiked(Long articleId, MapType mapType, Long userId) {
+    public Long[] hasILiked(Long articleId, MapType mapType, Long userId) {
         if (mapType == MapType.PUBLIC) {
 
             return commentLikeRepository.findHasILikedInPublic(articleId, userId);
