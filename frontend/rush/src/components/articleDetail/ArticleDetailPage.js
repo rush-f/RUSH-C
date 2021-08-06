@@ -11,6 +11,7 @@ import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import checkHasIlikedApi from "../../api/CheckHasILikedApi";
+import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -22,8 +23,8 @@ const ArticleDetailPage = (props) => {
   const [articleTotalLikes, setArticleTotalLikes] = useState(0);
 
   const [comments, setComments] = useState([]);
-  const [hasILikedInComment, setHasILikedInComment] = useState([]);
-  const [commentTotalLikes, setCommentTotalLikes] = useState(0);
+  const [hasILikedListInComment, setHasILikedListInComment] = useState([]);
+  const [updatePage, setUpdatePage] = useState(false);
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
@@ -52,11 +53,13 @@ const ArticleDetailPage = (props) => {
       history: props.history}
     ).then(commentPromise => {
       setComments(commentPromise);
-      commentPromise.forEach((comment)=>{
-        setCommentTotalLikes(comment.totalLikes)
-      });
+
+      if(accessToken)
+        checkHasIlikedInCommentApi(accessToken, articleId, mapType).then(hasILikedListInComment =>{
+          setHasILikedListInComment(hasILikedListInComment);
+        })
     });
-  }, [articleId]);
+  }, [articleId, updatePage]);
 
   return (
     <Outside>
@@ -94,18 +97,22 @@ const ArticleDetailPage = (props) => {
             setComments={setComments}
             accessToken={accessToken}
             history={props.history}
+            updatePage={updatePage}
+            setUpdatePage={setUpdatePage}
           />
           {
             comments ? comments.map((comment, idx) =>
               <Comment
-                key={idx}
-                content={comment.content}
-                author={comment.author}
-                commentTotalLikes={commentTotalLikes}
-                setCommentTotalLikes={setCommentTotalLikes}
+                accessToken={accessToken}
+                comment={comment}
+                mapType={mapType}
+                commentTotalLikes={comment.totalLikes}
+                hasILikedListInComment={hasILikedListInComment ? hasILikedListInComment:""}
+                history={props.history}
+                updatePage={updatePage}
               />
             ) : "아직 댓글이 없습니다 :)"
-          }
+            }
         </CommentsBox>
       </DisplayBox>
     </Outside>

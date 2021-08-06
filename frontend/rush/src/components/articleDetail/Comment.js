@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Profile from "./Profile";
+import changeMyLikeInCommentIdApi from "../../api/ChangeMyLikeInCommentApi";
 
 const CommentBox = styled.div`
   margin: 0;
@@ -40,24 +41,62 @@ const LikeLetter = styled.div`
   font-size: 13px;
   margin-left:10px;
 `;
-const Comment = (props) => {
+
+const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedListInComment, history, updatePage}) => {
+  const [hasILiked, setHasILiked]= useState(false);
+  const [totalLikes, setTotalLikes] = useState(-3);
+  const [check, setCheck] = useState(false);
+  const [heart, setHeart] = useState(false);
+
+  useEffect(()=>{
+
+    setHasILiked(false);
+    setTotalLikes(-1);
+    setHeart(false);
+    setCheck(false);
+  },[updatePage]);
+
   return (
       <CommentBox>
-        <Profile imageUrl={props.author? props.author.imageUrl : ""}/>
+        <Profile imageUrl={comment.author.imageUrl}/>
         <div>
           <AuthorName>
-            {props.author? props.author.nickName : ""}
+            {comment.author.nickName}
           </AuthorName>
-          <div>{props.content}</div>
+          <div>{comment.content}</div>
           <CommentLike>
             <LikeHeart
               onClick={() => {
-/*                props.setArticleTotalLikes(props.hasILiked?props.articleTotalLikes-1 : props.articleTotalLikes+1);
-                changeMyLikeApi(props.accessToken, props.hasILiked, props.articleId, props.mapType, props.history);
-                props.setHasILiked(!props.hasILiked);*/
+                if(hasILikedListInComment.includes(comment.id) || hasILiked){
+                  if(!hasILiked && check){
+                    if(totalLikes===0)
+                      setTotalLikes(commentTotalLikes);
+                    else
+                      setTotalLikes( commentTotalLikes+1);
+                    changeMyLikeInCommentIdApi(accessToken, false, comment.id, mapType, history);
+                    setHasILiked(true);
+                    setHeart("♥");
+                  }
+                  else{
+                    setTotalLikes( commentTotalLikes-1);
+                    changeMyLikeInCommentIdApi(accessToken, true, comment.id, mapType, history);
+                    setHasILiked(false);
+                    setCheck(true);
+                    setHeart("♡");
+                  }
+                }
+                else{
+                  if(totalLikes===0)
+                    setTotalLikes( commentTotalLikes);
+                  else
+                    setTotalLikes( commentTotalLikes+1);
+                  changeMyLikeInCommentIdApi(accessToken, false, comment.id, mapType,  history);
+                  setHasILiked(true);
+                  setHeart("♥");
+                }
               }
-              }>{props.hasILiked?"♥":"♡"} </LikeHeart>
-            <LikeLetter>좋아요 {props.commentTotalLikes >= 0 ? props.commentTotalLikes : ""}개</LikeLetter>
+              }>{!heart?(hasILikedListInComment.includes(comment.id) ?"♥":"♡"):heart} </LikeHeart>
+            <LikeLetter>좋아요 { totalLikes<0 ? (commentTotalLikes!=null?commentTotalLikes:0): totalLikes}개</LikeLetter>
           </CommentLike>
         </div>
       </CommentBox>
