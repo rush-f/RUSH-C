@@ -38,7 +38,7 @@ const CommentWritingButton = styled.button`
   border-top-left-radius: 0;
 `;
 
-const CommentWriting = ({articleId, comments, setComments, mapType, accessToken, history, updatePage, setUpdatePage}) => {
+const CommentWriting = ({articleId, comments, setComments, mapType, accessToken, history}) => {
   const [inputValue, setInputValue] = useState([]);
 
   return (
@@ -63,7 +63,6 @@ const CommentWriting = ({articleId, comments, setComments, mapType, accessToken,
               setComments(new Array(commentPromise).concat(comments))
             })
           };
-          setUpdatePage(!updatePage);
         }}>
           등록
         </CommentWritingButton>

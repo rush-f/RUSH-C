@@ -42,19 +42,9 @@ const LikeLetter = styled.div`
   margin-left:10px;
 `;
 
-const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedListInComment, history, updatePage}) => {
-  const [hasILiked, setHasILiked]= useState(false);
-  const [totalLikes, setTotalLikes] = useState(-3);
-  const [check, setCheck] = useState(false);
-  const [heart, setHeart] = useState(false);
-
-  useEffect(()=>{
-
-    setHasILiked(false);
-    setTotalLikes(-1);
-    setHeart(false);
-    setCheck(false);
-  },[updatePage]);
+const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedListInComment, onCommentLikeClicked,
+  changetotalLikesInComment, history}) => {
+  const changetotalLikes = changetotalLikesInComment.includes(comment.id) ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0 ;
 
   return (
       <CommentBox>
@@ -67,36 +57,10 @@ const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedLis
           <CommentLike>
             <LikeHeart
               onClick={() => {
-                if(hasILikedListInComment.includes(comment.id) || hasILiked){
-                  if(!hasILiked && check){
-                    if(totalLikes===0)
-                      setTotalLikes(commentTotalLikes);
-                    else
-                      setTotalLikes( commentTotalLikes+1);
-                    changeMyLikeInCommentIdApi(accessToken, false, comment.id, mapType, history);
-                    setHasILiked(true);
-                    setHeart("♥");
-                  }
-                  else{
-                    setTotalLikes( commentTotalLikes-1);
-                    changeMyLikeInCommentIdApi(accessToken, true, comment.id, mapType, history);
-                    setHasILiked(false);
-                    setCheck(true);
-                    setHeart("♡");
-                  }
-                }
-                else{
-                  if(totalLikes===0)
-                    setTotalLikes( commentTotalLikes);
-                  else
-                    setTotalLikes( commentTotalLikes+1);
-                  changeMyLikeInCommentIdApi(accessToken, false, comment.id, mapType,  history);
-                  setHasILiked(true);
-                  setHeart("♥");
-                }
-              }
-              }>{!heart?(hasILikedListInComment.includes(comment.id) ?"♥":"♡"):heart} </LikeHeart>
-            <LikeLetter>좋아요 { totalLikes<0 ? (commentTotalLikes!=null?commentTotalLikes:0): totalLikes}개</LikeLetter>
+                changeMyLikeInCommentIdApi(accessToken, hasILikedListInComment.includes(comment.id), comment.id, mapType,  history);
+                onCommentLikeClicked(comment.id);
+              }}>{hasILikedListInComment.includes(comment.id) ?"♥":"♡"} </LikeHeart>
+            <LikeLetter>좋아요 { commentTotalLikes ? commentTotalLikes + changetotalLikes : 0 + changetotalLikes }개</LikeLetter>
           </CommentLike>
         </div>
       </CommentBox>

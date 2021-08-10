@@ -24,7 +24,21 @@ const ArticleDetailPage = (props) => {
 
   const [comments, setComments] = useState([]);
   const [hasILikedListInComment, setHasILikedListInComment] = useState([]);
-  const [updatePage, setUpdatePage] = useState(false);
+  const [changetotalLikesInComment, setChangeTotalLikesListInComment] = useState([]);
+
+  const onCommentLikeClicked = (commentId) => {
+    if (hasILikedListInComment.includes(commentId)) {
+      setHasILikedListInComment(hasILikedListInComment.filter(e => e !== commentId))
+      } else {
+      setHasILikedListInComment([...hasILikedListInComment, commentId]);
+    }
+
+    if(changetotalLikesInComment.includes(commentId)){
+      setChangeTotalLikesListInComment(changetotalLikesInComment.filter(e => e !== commentId))
+      } else {
+      setChangeTotalLikesListInComment([...changetotalLikesInComment, commentId]);
+    }
+  };
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
@@ -53,13 +67,12 @@ const ArticleDetailPage = (props) => {
       history: props.history}
     ).then(commentPromise => {
       setComments(commentPromise);
-
-      if(accessToken)
-        checkHasIlikedInCommentApi(accessToken, articleId, mapType).then(hasILikedListInComment =>{
-          setHasILikedListInComment(hasILikedListInComment);
-        })
     });
-  }, [articleId, updatePage]);
+    if(accessToken)
+      checkHasIlikedInCommentApi(accessToken, articleId, mapType).then(hasILikedListInComment =>{
+        setHasILikedListInComment(hasILikedListInComment);
+      });
+  }, [articleId]);
 
   return (
     <Outside>
@@ -97,8 +110,6 @@ const ArticleDetailPage = (props) => {
             setComments={setComments}
             accessToken={accessToken}
             history={props.history}
-            updatePage={updatePage}
-            setUpdatePage={setUpdatePage}
           />
           {
             comments ? comments.map((comment, idx) =>
@@ -107,9 +118,10 @@ const ArticleDetailPage = (props) => {
                 comment={comment}
                 mapType={mapType}
                 commentTotalLikes={comment.totalLikes}
-                hasILikedListInComment={hasILikedListInComment ? hasILikedListInComment:""}
+                hasILikedListInComment={hasILikedListInComment}
+                onCommentLikeClicked={onCommentLikeClicked}
+                changetotalLikesInComment={changetotalLikesInComment}
                 history={props.history}
-                updatePage={updatePage}
               />
             ) : "아직 댓글이 없습니다 :)"
             }
