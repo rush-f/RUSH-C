@@ -27,13 +27,13 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
     @Autowired
     CommentLikeRepository commentLikeRepository;
 
-    User savedUser1;
-    User savedUser2;
-    Article articleOnPrivateMap;
-    Article articleOnPublicMap;
+    private User savedUser1;
+    private User savedUser2;
+    private Article articleOnPrivateMap;
+    private Article articleOnPublicMap;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         savedUser1 = persistUser(testEntityManager, "test@email.com");
         savedUser2 = persistUser(testEntityManager, "test2@email.com");
         articleOnPrivateMap = persistArticle(testEntityManager, savedUser1, false, true, 0.0, 0.0);
@@ -42,9 +42,10 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findByUserIdAndCommentId(){
+    void findByUserIdAndCommentId() {
         //given
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPublicMap);
         persistCommentLike(testEntityManager, savedUser2, comment);
 
         //when
@@ -62,64 +63,75 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
     @Transactional
     void findHasILikedInPublic() {
         //given
-        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
-        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
-        Comment comment3 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPublicMap);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPrivateMap);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPublicMap);
+        Comment comment3 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPublicMap);
         persistCommentLike(testEntityManager, savedUser2, comment1);
         persistCommentLike(testEntityManager, savedUser2, comment3);
 
         //when
-        Long[] hasILiked= commentLikeRepository.findHasILikedInPublic(articleOnPublicMap.getId(),
-            savedUser2.getId());
+        List<Long> hasILiked = commentLikeRepository
+            .findHasILikedInPublic(articleOnPublicMap.getId(),
+                savedUser2.getId());
 
-       //then
-        assertThat(hasILiked[0]).isEqualTo(3);
-        assertThat(hasILiked.length).isEqualTo(1);
+        //then
+        assertThat(hasILiked.get(0)).isEqualTo(3);
+        assertThat(hasILiked.size()).isEqualTo(1);
     }
 
     @Test
     @Transactional
     void findHasILikedInPravete() {
         //given
-        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
-        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1, articleOnPrivateMap);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPrivateMap);
+        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
+            articleOnPrivateMap);
         persistCommentLike(testEntityManager, savedUser1, comment1);
         persistCommentLike(testEntityManager, savedUser1, comment2);
         persistCommentLike(testEntityManager, savedUser2, comment1);
 
         //when
-        Long[] hasILiked= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
-            savedUser1.getId());
-        Long[] hasILiked2= commentLikeRepository.findHasILikedInPravete(articleOnPrivateMap.getId(),
-            savedUser2.getId());
+        List<Long> hasILiked = commentLikeRepository
+            .findHasILikedInPravete(articleOnPrivateMap.getId(),
+                savedUser1.getId());
+        List<Long> hasILiked2 = commentLikeRepository
+            .findHasILikedInPravete(articleOnPrivateMap.getId(),
+                savedUser2.getId());
 
         //then
-        assertThat(hasILiked[0]).isEqualTo(1);
-        assertThat(hasILiked[1]).isEqualTo(2);
-        assertThat(hasILiked.length).isEqualTo(2);
-        assertThat(hasILiked2.length).isEqualTo(0);
+        assertThat(hasILiked.get(0)).isEqualTo(1);
+        assertThat(hasILiked.get(1)).isEqualTo(2);
+        assertThat(hasILiked.size()).isEqualTo(2);
+        assertThat(hasILiked2.size()).isEqualTo(0);
     }
 
     @Test
     @Transactional
     void findHasILikedInGroup() {
         //given
-        Group group1=persistGroup(testEntityManager);
+        Group group1 = persistGroup(testEntityManager);
         persistArticleGroup(testEntityManager, articleOnPublicMap, group1);
         persistUserGroup(testEntityManager, savedUser2, group1);
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser2, articleOnPublicMap);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser2,
+            articleOnPublicMap);
         persistCommentLike(testEntityManager, savedUser1, comment);
         persistCommentLike(testEntityManager, savedUser2, comment);
 
         //when
-        Long[] hasILiked1= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
-            savedUser1.getId());
-        Long[] hasILiked2= commentLikeRepository.findHasILikedInGroup(articleOnPublicMap.getId(),
-            savedUser2.getId());
+        List<Long> hasILiked1 = commentLikeRepository
+            .findHasILikedInGroup(articleOnPublicMap.getId(),
+                savedUser1.getId());
+        List<Long> hasILiked2 = commentLikeRepository
+            .findHasILikedInGroup(articleOnPublicMap.getId(),
+                savedUser2.getId());
 
         //then
-        assertThat(hasILiked2[0]).isEqualTo(1);
-        assertThat(hasILiked2.length).isEqualTo(1);
-        assertThat(hasILiked1.length).isEqualTo(0);
+        assertThat(hasILiked2.get(0)).isEqualTo(1);
+        assertThat(hasILiked2.size()).isEqualTo(1);
+        assertThat(hasILiked1.size()).isEqualTo(0);
     }
 }

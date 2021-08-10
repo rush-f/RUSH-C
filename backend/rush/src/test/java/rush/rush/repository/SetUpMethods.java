@@ -31,7 +31,8 @@ public class SetUpMethods {
         return group;
     }
 
-    public static void persistUserGroup(TestEntityManager testEntityManager, User user, Group group) {
+    public static void persistUserGroup(TestEntityManager testEntityManager, User user,
+        Group group) {
         UserGroup userGroup = UserGroup.builder()
             .group(group)
             .user(user)
@@ -40,8 +41,8 @@ public class SetUpMethods {
     }
 
     public static Article persistArticle(TestEntityManager testEntityManager, User user,
-            boolean isPublicMap, boolean isPrivateMap,
-            Double latitude, Double longitude) {
+        boolean isPublicMap, boolean isPrivateMap,
+        Double latitude, Double longitude) {
         Article article = Article.builder()
             .user(user)
             .title("글제목")
@@ -54,7 +55,8 @@ public class SetUpMethods {
         return testEntityManager.persist(article);
     }
 
-    public static void persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
+    public static void persistArticleGroup(TestEntityManager testEntityManager, Article article,
+        Group group) {
         ArticleGroup articleGroup = ArticleGroup.builder()
             .article(article)
             .group(group)
@@ -62,13 +64,19 @@ public class SetUpMethods {
         testEntityManager.persist(articleGroup);
     }
 
-    public static Comment persistComment(TestEntityManager testEntityManager, String content, User user, Article article) {
-        Comment comment = new Comment(content, user, article);
+    public static Comment persistComment(TestEntityManager testEntityManager, String content,
+        User user, Article article) {
+        Comment comment = Comment.builder()
+            .user(user)
+            .content(content)
+            .article(article)
+            .build();
         return testEntityManager.persist(comment);
     }
 
-    public static CommentLike persistCommentLike(TestEntityManager testEntityManager, User user, Comment comment) {
-        CommentLike commentLike =CommentLike.builder()
+    public static CommentLike persistCommentLike(TestEntityManager testEntityManager, User user,
+        Comment comment) {
+        CommentLike commentLike = CommentLike.builder()
             .user(user)
             .comment(comment)
             .build();

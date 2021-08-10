@@ -34,8 +34,8 @@ public class CommentLike {
         validate(user);
         validate(comment);
         this.id = id;
-        this.user=user;
-        this.comment=comment;
+        this.user = user;
+        this.comment = comment;
     }
 
     private void validate(User user) {
@@ -55,5 +55,4 @@ public class CommentLike {
             throw new IllegalArgumentException("article에 id가 없습니다.");
         }
     }
-
 }

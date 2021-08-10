@@ -14,12 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 public class Comment {
 
@@ -44,10 +46,6 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment")
     private List<CommentLike> commentLikes = new ArrayList<>();
-
-    public Comment(String content, User user, Article article) {
-        this(null, content, user, article, null, null);
-    }
 
     public Comment(Long id, String content, User user, Article article, Timestamp createDate, List<CommentLike> commentLikes) {
         validate(content, user, article);

@@ -27,19 +27,21 @@ public class CommentLikeController {
         @PathVariable("commentId") Long commentId,
         @PathVariable("mapType") String mapType,
         @RequestParam(value = "hasiliked") Boolean hasILiked,
-        @CurrentUser UserPrincipal userPrincipal){
-        commentLikeService.changeMyLike(commentId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
+        @CurrentUser UserPrincipal userPrincipal) {
+        commentLikeService
+            .changeMyLike(commentId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .build();
     }
 
     @GetMapping("/{articleId}/like")
-    public ResponseEntity<Long[]> checkMyLike(
+    public ResponseEntity<List<Long>> checkMyLike(
         @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
-        @CurrentUser UserPrincipal userPrincipal){
-        Long[] result= commentLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
+        @CurrentUser UserPrincipal userPrincipal) {
+        List<Long> result = commentLikeService
+            .hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);
