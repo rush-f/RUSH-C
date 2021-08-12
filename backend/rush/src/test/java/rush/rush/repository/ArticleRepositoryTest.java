@@ -11,6 +11,7 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.ArticleResponse;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
@@ -115,6 +117,29 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // then
         assertThat(articles.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    void findByPublicMapWithLikes() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article1 = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+        Article article2 = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+        persistArticleLike(testEntityManager, user, article2);
+        persistArticleLike(testEntityManager, user, article2);
+        persistArticleLike(testEntityManager, user, article2);
+
+        // when
+        Optional<ArticleResponse> articleResponse = articleRepository.findByPublicMapWithLikes(article1.getId());
+        Optional<ArticleResponse> articleResponse2 = articleRepository.findByPublicMapWithLikes(article2.getId());
+
+        // then
+        assertThat(articleResponse.isPresent()).isTrue();
+        assertThat(articleResponse.get().getId()).isEqualTo(article1.getId());
+        assertThat(articleResponse.get().getContent()).isEqualTo(article1.getContent());
+        assertThat(articleResponse.get().getTotalLikes()).isEqualTo(0);
+        assertThat(articleResponse2.get().getTotalLikes()).isEqualTo(3);
     }
 
     @Test

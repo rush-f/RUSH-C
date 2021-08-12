@@ -10,8 +10,6 @@ public interface ArticleLikeRepository extends JpaRepository<ArticleLike,Long> {
 
     Optional<ArticleLike> findByUserIdAndArticleId(Long userId, Long articleId);
 
-    Long countByArticleId(Long articleId);
-
     @Query("select count(articlelike) from ArticleLike articlelike "
         + "where articlelike.article.id = :articleId "
         + "and articlelike.article.publicMap = true "

@@ -1,6 +1,6 @@
 package rush.rush.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +17,18 @@ public class ArticleResponse {
     private Double latitude;
     private Double longitude;
     private AuthorResponse author;
-    private Timestamp createDate;
+    private Date createDate;
     private Long totalLikes;
+
+    public ArticleResponse(Long id, String title, String content, Double latitude, Double longitude,
+        Long userId, String nickName, String imageUrl, Date createDate, Long totalLikes ){
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.latitude =latitude;
+        this.longitude = longitude;
+        this.author = new AuthorResponse(userId, nickName, imageUrl);
+        this.createDate = createDate;
+        this.totalLikes = totalLikes;
+    }
 }

@@ -58,15 +58,15 @@ public class Article {
     @CreationTimestamp
     private Timestamp createDate;
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
     @Getter(AccessLevel.NONE)
     private List<ArticleGroup> articleGroups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
     @Getter(AccessLevel.NONE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
     @Getter(AccessLevel.NONE)
     private List<ArticleLike> articleLikes = new ArrayList<>();
 

@@ -46,7 +46,6 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
     </InfoWindow>}
   </Marker>);
 
-
   return (
       <GoogleMap
           ref={mapRef}
@@ -78,7 +77,6 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
             let lngChangeRange= Math.abs(props.center.lng()-mapRef.current.getCenter().lng())>(5*props.longitudeRange/12);
             let dummy= (latChangeRange || lngChangeRange)?props.setCenter(mapRef.current.getCenter()): "";
           }}
-
       >
         <MarkerClusterer
             averageCenter
