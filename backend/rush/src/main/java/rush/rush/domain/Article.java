@@ -86,7 +86,7 @@ public class Article {
         if (Objects.nonNull(articleGroups)) {
             this.articleGroups = articleGroups;
         }
-        if (Objects.nonNull(articleGroups)) {
+        if (Objects.nonNull(comments)) {
             this.comments = comments;
         }
         if (Objects.nonNull(articleLikes)) {
