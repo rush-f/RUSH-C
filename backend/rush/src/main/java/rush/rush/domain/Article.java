@@ -58,7 +58,8 @@ public class Article {
     @CreationTimestamp
     private Timestamp createDate;
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Getter(AccessLevel.NONE)
     private List<ArticleGroup> articleGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true)
@@ -103,6 +104,23 @@ public class Article {
         if (Objects.isNull(user) || Objects.isNull(user.getId())) {
             throw new IllegalArgumentException("작성자가 올바르게 지정되지 않았습니다.");
         }
+    }
+
+    public List<ArticleGroup> getArticleGroups() {
+        return Collections.unmodifiableList(articleGroups);
+    }
+
+    public void addArticleGroup(ArticleGroup articleGroup) {
+        if (isAlreadyExist(articleGroup)) {
+            return;
+        }
+        this.articleGroups.add(articleGroup);
+    }
+
+    private boolean isAlreadyExist(ArticleGroup newArticleGroup) {
+        return articleGroups.stream()
+            .anyMatch(articleGroup ->
+                articleGroup.getId().equals(newArticleGroup.getId()));
     }
 
     public List<Comment> getComments() {

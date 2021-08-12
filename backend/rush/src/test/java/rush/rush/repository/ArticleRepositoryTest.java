@@ -29,9 +29,13 @@ class ArticleRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     void deleteById(@Autowired CommentRepository commentRepository, @Autowired ArticleLikeRepository articleLikeRepository) {
-        // given 글이 작성되어있다.
         User author = persistUser(testEntityManager, "test1@email.com");
+        Group group = persistGroup(testEntityManager);
+
+        // given 글이 작성되어있다.
         Article article = persistArticle(testEntityManager, author, true, true, 37.63, 127.07);
+        ArticleGroup articleGroup = persistArticleGroup(testEntityManager, article, group);
+        article.addArticleGroup(articleGroup);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
 
         // given 글에 댓글도 달려있다.
         User another = persistUser(testEntityManager, "test2@email.com");

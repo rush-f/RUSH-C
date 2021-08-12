@@ -54,12 +54,12 @@ public class SetUpMethods {
         return testEntityManager.persist(article);
     }
 
-    public static void persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
+    public static ArticleGroup persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
         ArticleGroup articleGroup = ArticleGroup.builder()
             .article(article)
             .group(group)
             .build();
-        testEntityManager.persist(articleGroup);
+        return testEntityManager.persist(articleGroup);
     }
 
     public static Comment persistComment(TestEntityManager testEntityManager,
