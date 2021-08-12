@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +19,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 @Table(name = "GROUP_TABLE")
 public class Group {
 
@@ -37,10 +35,10 @@ public class Group {
     @CreationTimestamp
     private Timestamp createDate;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group")
     private List<UserGroup> userGroups = new ArrayList<>();
 
-
+    @Builder
     public Group(Long id, String name, String invitationCode, Timestamp createDate,
             List<UserGroup> userGroups) {
         validate(name);

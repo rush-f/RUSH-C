@@ -97,6 +97,20 @@ class CommentRepositoryTest extends RepositoryTest {
         assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
         assertThat(foundComment2.isPresent()).isFalse();
 
+    @Test
+    @Transactional
+    void deleteById() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager,
+            user, true, false, 37.14, 34.24);
+        Comment comment = persistComment(testEntityManager, "댓글내용", article, user);
+
+        // when
+        commentRepository.deleteById(comment.getId());
+
+        // then
+        assertThat(commentRepository.findAll()).hasSize(0);
     }
 
     @Test

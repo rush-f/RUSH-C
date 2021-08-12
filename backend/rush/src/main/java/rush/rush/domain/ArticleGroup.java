@@ -16,7 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 public class ArticleGroup {
 
@@ -35,6 +34,7 @@ public class ArticleGroup {
     @CreationTimestamp
     private Timestamp createDate;
 
+    @Builder
     public ArticleGroup(Long id, Article article, Group group, Timestamp createDate) {
         validate(article);
         validate(group);

@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +23,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class User {
 
     private static final int NICKNAME_MAX_LENGTH = 100;
@@ -59,9 +57,10 @@ public class User {
 
     private String providerId;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<UserGroup> userGroups = new ArrayList<>();
 
+    @Builder
     public User(Long id, String nickName, String password, String email, String imageUrl,
         Timestamp joinDate, Timestamp visitDate, AuthProvider provider, String providerId,
         List<UserGroup> userGroups) {

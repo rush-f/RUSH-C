@@ -53,6 +53,7 @@ public class Comment {
         this.content = content;
         this.user = user;
         this.article = article;
+        article.addComment(this);
         this.createDate = createDate;
         if (Objects.nonNull(commentLikes)) {
             this.commentLikes = commentLikes;

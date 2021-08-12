@@ -20,7 +20,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @Getter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"USER_ID", "GROUP_ID"})})
-@Builder
 public class UserGroup {
 
     @Id
@@ -38,10 +37,7 @@ public class UserGroup {
     @CreationTimestamp
     private Timestamp createDate;
 
-    public UserGroup(User user, Group group) {
-        this(null, user, group, null);
-    }
-
+    @Builder
     public UserGroup(Long id, User user, Group group, Timestamp createDate) {
         validate(user);
         validate(group);

@@ -12,6 +12,7 @@ import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import checkHasIlikedApi from "../../api/CheckHasILikedApi";
 import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
+import isMyArticleApi from "../../api/IsMyArticleApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -32,7 +33,6 @@ const ArticleDetailPage = (props) => {
       } else {
       setHasILikedListInComment([...hasILikedListInComment, commentId]);
     }
-
     if(changetotalLikesInComment.includes(commentId)){
       setChangeTotalLikesListInComment(changetotalLikesInComment.filter(e => e !== commentId))
       } else {
@@ -40,6 +40,8 @@ const ArticleDetailPage = (props) => {
     }
   };
 
+  const [isMyArticle, setIsMyArticle] = useState(false);
+  
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
       findWritingApi(articleId, mapType, props.history).then(articlePromise => {
@@ -55,7 +57,7 @@ const ArticleDetailPage = (props) => {
 
   useEffect(()=>{
     if(accessToken)
-    checkHasIlikedApi(accessToken, articleId, mapType).then(hasILiked =>{
+    checkHasILikedApi(accessToken, articleId, mapType).then(hasILiked =>{
       setHasILiked(hasILiked);
     })
   },[articleId]);
@@ -73,6 +75,11 @@ const ArticleDetailPage = (props) => {
         setHasILikedListInComment(hasILikedListInComment);
       });
   }, [articleId]);
+
+  useEffect(() => {
+    isMyArticleApi({articleId, accessToken})
+      .then(resultPromise => setIsMyArticle(resultPromise));
+  }, []);
 
   return (
     <Outside>
@@ -100,6 +107,7 @@ const ArticleDetailPage = (props) => {
             hasILiked={hasILiked}
             setHasILiked={setHasILiked}
             history={props.history}
+            isMyArticle={isMyArticle}
           />
         </PostBox>
         <CommentsBox>

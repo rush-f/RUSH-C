@@ -3,6 +3,8 @@ package rush.rush.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rush.rush.repository.SetUpMethods.persistArticle;
 import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistArticleLike;
+import static rush.rush.repository.SetUpMethods.persistComment;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -15,13 +17,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.ArticleResponse;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Test
+    @Transactional
+    void deleteById(@Autowired CommentRepository commentRepository, @Autowired ArticleLikeRepository articleLikeRepository) {
+        User author = persistUser(testEntityManager, "test1@email.com");
+        Group group = persistGroup(testEntityManager);
+
+        // given 글이 작성되어있다.
+        Article article = persistArticle(testEntityManager, author, true, true, 37.63, 127.07);
+        ArticleGroup articleGroup = persistArticleGroup(testEntityManager, article, group);
+        article.addArticleGroup(articleGroup);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+
+        // given 글에 댓글도 달려있다.
+        User another = persistUser(testEntityManager, "test2@email.com");
+        Comment comment = persistComment(testEntityManager, "댓글내용", article, another);
+        article.addComment(comment);    // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+
+        // given 글에 좋아요가 눌러져있다.
+        persistArticleLike(testEntityManager, another, article);
+
+        // when
+        articleRepository.deleteById(article.getId());
+
+        // then
+        assertThat(articleRepository.findAll()).hasSize(0);
+        assertThat(commentRepository.findAll()).hasSize(0);
+    }
 
     @Test
     @Transactional
@@ -86,6 +117,29 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // then
         assertThat(articles.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    void findByPublicMapWithLikes() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article1 = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+        Article article2 = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+        persistArticleLike(testEntityManager, user, article2);
+        persistArticleLike(testEntityManager, user, article2);
+        persistArticleLike(testEntityManager, user, article2);
+
+        // when
+        Optional<ArticleResponse> articleResponse = articleRepository.findByPublicMapWithLikes(article1.getId());
+        Optional<ArticleResponse> articleResponse2 = articleRepository.findByPublicMapWithLikes(article2.getId());
+
+        // then
+        assertThat(articleResponse.isPresent()).isTrue();
+        assertThat(articleResponse.get().getId()).isEqualTo(article1.getId());
+        assertThat(articleResponse.get().getContent()).isEqualTo(article1.getContent());
+        assertThat(articleResponse.get().getTotalLikes()).isEqualTo(0);
+        assertThat(articleResponse2.get().getTotalLikes()).isEqualTo(3);
     }
 
     @Test
@@ -161,38 +215,44 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         Group group1 = persistGroup(testEntityManager);
         Group group2 = persistGroup(testEntityManager);
-        Group group3 = persistGroup(testEntityManager);
 
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        persistArticleGroup(testEntityManager, article3, group1);
-        persistArticleGroup(testEntityManager, article3, group2);
-        persistArticleGroup(testEntityManager, article4, group3);
+        persistArticleGroup(testEntityManager, article1, group1);
+        persistArticleGroup(testEntityManager, article1, group2);
 
         testEntityManager.flush();
         testEntityManager.clear();
 
-        // when
+        // when & then
         List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(user.getId());
+        assertThat(articles).hasSize(1);
+        List<ArticleGroup> articleGroups = articles.get(0)
+            .getArticleGroups();
+        assertThat(articleGroups).hasSize(2);
 
-        //then
-        List<Group> groups2 = articles.get(0)
-            .getArticleGroups()
-            .stream()
-            .map(ArticleGroup::getGroup)
-            .collect(Collectors.toList());
+        // when & then
+        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        List<Group> groups1 = articles.get(1)
-            .getArticleGroups()
-            .stream()
-            .map(ArticleGroup::getGroup)
-            .collect(Collectors.toList());
+        articles = articleRepository.findArticlesWithGroupsByUserId(
+            user.getId());
+        assertThat(articles).hasSize(4);
+    }
 
-        assertThat(articles.size()).isEqualTo(4);
-        assertThat(groups2.size()).isEqualTo(1);
-        assertThat(groups1.size()).isEqualTo(2);
+    @Test
+    @Transactional
+    void findArticleAuthorId() {
+        // given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+
+        // when
+        Optional<Long> articleAuthorId = articleRepository.findArticleAuthorId(article.getId());
+
+        // then
+        assertThat(articleAuthorId.isPresent()).isTrue();
+        assertThat(articleAuthorId.get()).isEqualTo(user.getId());
     }
 }
