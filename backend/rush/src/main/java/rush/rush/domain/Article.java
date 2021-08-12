@@ -25,7 +25,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class Article {
 
     @Id
@@ -70,6 +69,7 @@ public class Article {
     @Getter(AccessLevel.NONE)
     private List<ArticleLike> articleLikes = new ArrayList<>();
 
+    @Builder
     public Article(Long id, String title, String content, Double latitude, Double longitude,
             User user, boolean publicMap, boolean privateMap, Timestamp createDate,
             List<ArticleGroup> articleGroups, List<Comment> comments, List<ArticleLike> articleLikes) {
@@ -86,7 +86,7 @@ public class Article {
         if (Objects.nonNull(articleGroups)) {
             this.articleGroups = articleGroups;
         }
-        if (Objects.nonNull(articleGroups)) {
+        if (Objects.nonNull(comments)) {
             this.comments = comments;
         }
         if (Objects.nonNull(articleLikes)) {

@@ -1,9 +1,9 @@
 package rush.rush.domain;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 
 class GroupTest {
 
@@ -16,6 +16,8 @@ class GroupTest {
                 .build();
 
         assertThat(group).isNotNull();
+        assertThat(group.getName()).isEqualTo(TEST_GROUP_NAME);
+        assertThat(group.getUserGroups()).isNotNull();
     }
 
     @Test

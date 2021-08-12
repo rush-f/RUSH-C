@@ -19,7 +19,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 @Table(name = "GROUP_TABLE")
 public class Group {
 
@@ -39,7 +38,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<UserGroup> userGroups = new ArrayList<>();
 
-
+    @Builder
     public Group(Long id, String name, String invitationCode, Timestamp createDate,
             List<UserGroup> userGroups) {
         validate(name);
