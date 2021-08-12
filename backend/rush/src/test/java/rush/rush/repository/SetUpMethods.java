@@ -6,6 +6,7 @@ import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.ArticleLike;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
+import rush.rush.domain.CommentLike;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
@@ -31,7 +32,8 @@ public class SetUpMethods {
         return group;
     }
 
-    public static void persistUserGroup(TestEntityManager testEntityManager, User user, Group group) {
+    public static void persistUserGroup(TestEntityManager testEntityManager, User user,
+        Group group) {
         UserGroup userGroup = UserGroup.builder()
             .group(group)
             .user(user)
@@ -40,8 +42,8 @@ public class SetUpMethods {
     }
 
     public static Article persistArticle(TestEntityManager testEntityManager, User user,
-            boolean isPublicMap, boolean isPrivateMap,
-            Double latitude, Double longitude) {
+        boolean isPublicMap, boolean isPrivateMap,
+        Double latitude, Double longitude) {
         Article article = Article.builder()
             .user(user)
             .title("글제목")
@@ -74,5 +76,24 @@ public class SetUpMethods {
             .article(article)
             .build();
         return testEntityManager.persist(articleLike);
+    }
+
+    public static Comment persistComment(TestEntityManager testEntityManager, String content,
+        User user, Article article) {
+        Comment comment = Comment.builder()
+            .user(user)
+            .content(content)
+            .article(article)
+            .build();
+        return testEntityManager.persist(comment);
+    }
+
+    public static CommentLike persistCommentLike(TestEntityManager testEntityManager, User user,
+        Comment comment) {
+        CommentLike commentLike = CommentLike.builder()
+            .user(user)
+            .comment(comment)
+            .build();
+        return testEntityManager.persist(commentLike);
     }
 }

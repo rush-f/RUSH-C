@@ -62,7 +62,7 @@ const CommentWriting = ({articleId, comments, setComments, mapType, accessToken,
             ).then(commentPromise => {
               setComments(new Array(commentPromise).concat(comments))
             })
-          }
+          };
         }}>
           등록
         </CommentWritingButton>

@@ -10,17 +10,36 @@ import findCommentsApi from "../../api/FindCommentsApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
-import checkHasILikedApi from "../../api/CheckHasILikedApi";
+import checkHasIlikedApi from "../../api/CheckHasILikedApi";
+import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
 import isMyArticleApi from "../../api/IsMyArticleApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const articleId = props.match.params.articleId;
   const mapType = props.match.params.mapType;
+
   const [article, setArticle] = useState(null);
-  const [comments, setComments] = useState([]);
   const [hasILiked,setHasILiked] = useState(false);
   const [articleTotalLikes, setArticleTotalLikes] = useState(0);
+
+  const [comments, setComments] = useState([]);
+  const [hasILikedListInComment, setHasILikedListInComment] = useState([]);
+  const [changetotalLikesInComment, setChangeTotalLikesListInComment] = useState([]);
+
+  const onCommentLikeClicked = (commentId) => {
+    if (hasILikedListInComment.includes(commentId)) {
+      setHasILikedListInComment(hasILikedListInComment.filter(e => e !== commentId))
+      } else {
+      setHasILikedListInComment([...hasILikedListInComment, commentId]);
+    }
+    if(changetotalLikesInComment.includes(commentId)){
+      setChangeTotalLikesListInComment(changetotalLikesInComment.filter(e => e !== commentId))
+      } else {
+      setChangeTotalLikesListInComment([...changetotalLikesInComment, commentId]);
+    }
+  };
+
   const [isMyArticle, setIsMyArticle] = useState(false);
   
   useEffect(() => {
@@ -49,8 +68,12 @@ const ArticleDetailPage = (props) => {
       mapType: mapType,
       history: props.history}
     ).then(commentPromise => {
-      setComments(commentPromise)
+      setComments(commentPromise);
     });
+    if(accessToken)
+      checkHasIlikedInCommentApi(accessToken, articleId, mapType).then(hasILikedListInComment =>{
+        setHasILikedListInComment(hasILikedListInComment);
+      });
   }, [articleId]);
 
   useEffect(() => {
@@ -99,12 +122,17 @@ const ArticleDetailPage = (props) => {
           {
             comments ? comments.map((comment, idx) =>
               <Comment
-                key={idx}
-                content={comment.content}
-                author={comment.author}
+                accessToken={accessToken}
+                comment={comment}
+                mapType={mapType}
+                commentTotalLikes={comment.totalLikes}
+                hasILikedListInComment={hasILikedListInComment}
+                onCommentLikeClicked={onCommentLikeClicked}
+                changetotalLikesInComment={changetotalLikesInComment}
+                history={props.history}
               />
             ) : "아직 댓글이 없습니다 :)"
-          }
+            }
         </CommentsBox>
       </DisplayBox>
     </Outside>

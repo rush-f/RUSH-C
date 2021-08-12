@@ -150,7 +150,8 @@ class ArticleRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
 
         // when
-        Optional<Article> foundArticle = articleRepository.findByPublicMapTrueAndId(article.getId());
+        Optional<Article> foundArticle = articleRepository
+            .findByPublicMapTrueAndId(article.getId());
 
         // then
         assertThat(foundArticle.isPresent()).isTrue();
@@ -166,7 +167,8 @@ class ArticleRepositoryTest extends RepositoryTest {
         Article article = persistArticle(testEntityManager, me, false, true, 0.0, 0.0);
 
         // when
-        Optional<Article> foundArticle = articleRepository.findByPrivateMapTrueAndIdAndUserId(article.getId(), me.getId());
+        Optional<Article> foundArticle = articleRepository
+            .findByPrivateMapTrueAndIdAndUserId(article.getId(), me.getId());
 
         // then
         assertThat(foundArticle.isPresent()).isTrue();
@@ -207,7 +209,7 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findArticlesWithGroupsByUserId(){
+    void findArticlesWithGroupsByUserId() {
         //given
         User user = persistUser(testEntityManager, "test@email.com");
 

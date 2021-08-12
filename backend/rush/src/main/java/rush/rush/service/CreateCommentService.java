@@ -21,7 +21,8 @@ public class CreateCommentService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public CommentResponse create(Long articleId, MapType mapType, CreateCommentRequest createCommentRequest, User user) {
+    public CommentResponse create(Long articleId, MapType mapType,
+        CreateCommentRequest createCommentRequest, User user) {
         if (mapType == MapType.PUBLIC) {
             return createOnPublicArticle(articleId, user, createCommentRequest);
         }
@@ -34,37 +35,52 @@ public class CreateCommentService {
         throw new IllegalStateException("MapType 오류 - " + mapType.name());
     }
 
-    private CommentResponse createOnPublicArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
+    private CommentResponse createOnPublicArticle(Long articleId, User user,
+        CreateCommentRequest createCommentRequest) {
         Article article = articleRepository.findByPublicMapTrueAndId(articleId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
-            new Comment(createCommentRequest.getContent(), user, article));
+            Comment.builder()
+                .content(createCommentRequest.getContent())
+                .user(user)
+                .article(article).build());
 
         return toCommentResponse(savedComment);
     }
 
-    private CommentResponse createOnPrivateArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
-        Article article = articleRepository.findByPrivateMapTrueAndIdAndUserId(articleId, user.getId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
+    private CommentResponse createOnPrivateArticle(Long articleId, User user,
+        CreateCommentRequest createCommentRequest) {
+        Article article = articleRepository
+            .findByPrivateMapTrueAndIdAndUserId(articleId, user.getId())
+            .orElseThrow(() -> new IllegalArgumentException(
+                "해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
-            new Comment(createCommentRequest.getContent(), user, article));
+            Comment.builder()
+                .content(createCommentRequest.getContent())
+                .user(user)
+                .article(article).build());
 
         return toCommentResponse(savedComment);
     }
 
-    private CommentResponse createOnGroupedArticle(Long articleId, User user, CreateCommentRequest createCommentRequest) {
+    private CommentResponse createOnGroupedArticle(Long articleId, User user,
+        CreateCommentRequest createCommentRequest) {
         Article article = articleRepository.findAsGroupMapArticle(articleId, user.getId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(
+                "해당 article 조회 권한이 없거나, 존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
-            new Comment(createCommentRequest.getContent(), user, article));
+            Comment.builder()
+                .content(createCommentRequest.getContent())
+                .user(user)
+                .article(article).build());
 
         return toCommentResponse(savedComment);
     }
 
-    private CommentResponse toCommentResponse(Comment comment){
+    private CommentResponse toCommentResponse(Comment comment) {
         AuthorResponse authorResponse = toAuthResponse(comment.getUser());
 
         return new CommentResponse(

@@ -2,6 +2,8 @@ package rush.rush.domain;
 
 import com.sun.istack.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,12 +13,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 public class Comment {
 
@@ -39,11 +44,10 @@ public class Comment {
     @CreationTimestamp
     private Timestamp createDate;
 
-    public Comment(String content, User user, Article article) {
-        this(null, content, user, article, null);
-    }
+    @OneToMany(mappedBy = "comment")
+    private List<CommentLike> commentLikes = new ArrayList<>();
 
-    public Comment(Long id, String content, User user, Article article, Timestamp createDate) {
+    public Comment(Long id, String content, User user, Article article, Timestamp createDate, List<CommentLike> commentLikes) {
         validate(content, user, article);
         this.id = id;
         this.content = content;
@@ -51,6 +55,9 @@ public class Comment {
         this.article = article;
         article.addComment(this);
         this.createDate = createDate;
+        if (Objects.nonNull(commentLikes)) {
+            this.commentLikes = commentLikes;
+        }
     }
 
     private void validate(String content, User user, Article article) {

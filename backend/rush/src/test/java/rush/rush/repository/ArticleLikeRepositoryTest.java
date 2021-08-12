@@ -17,7 +17,7 @@ import rush.rush.domain.ArticleLike;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
-class ArticleLikeRepositoryTest  extends RepositoryTest {
+class ArticleLikeRepositoryTest extends RepositoryTest {
 
     @Autowired
     ArticleLikeRepository articleLikeRepository;
@@ -28,7 +28,7 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
     Article articleOnPublicMap;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         savedUser1 = persistUser(testEntityManager, "test@email.com");
         savedUser2 = persistUser(testEntityManager, "test2@email.com");
         articleOnPrivateMap = persistArticle(testEntityManager, savedUser1, false, true, 0.0, 0.0);
@@ -41,12 +41,13 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
 
     @Test
     @Transactional
-    void findByUserIdAndArticleId(){
+    void findByUserIdAndArticleId() {
         //given
 
         //when
-        ArticleLike articleLikeTest = articleLikeRepository.findByUserIdAndArticleId(savedUser1.getId(),
-            articleOnPrivateMap.getId())
+        ArticleLike articleLikeTest = articleLikeRepository
+            .findByUserIdAndArticleId(savedUser1.getId(),
+                articleOnPrivateMap.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당되는 유저나 게시글이 없어서 테스트 실패"));
 
         //then
@@ -92,7 +93,7 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
     @Transactional
     void countOfGroupedArticle() {
         //given
-        Group group1=persistGroup(testEntityManager);
+        Group group1 = persistGroup(testEntityManager);
         persistArticleGroup(testEntityManager, articleOnPublicMap, group1);
         persistUserGroup(testEntityManager, savedUser2, group1);
 
