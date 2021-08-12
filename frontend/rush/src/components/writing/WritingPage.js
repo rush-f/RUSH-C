@@ -8,7 +8,7 @@ import WindowSize from "../WindowSize";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {Redirect} from "react-router-dom";
 
-const WritingPage = () => {
+const WritingPage = (props) => {
   const [step, setStep] = useState(1);
   const [center, setCenter] = useState({
     lat: () => 37.63185105917152,
@@ -32,6 +32,7 @@ const WritingPage = () => {
                     loadingElement={<div style={{height: `100%`}}/>}
                     containerElement={<div style={{height: WindowSize().height}}/>}
                     mapElement={<div style={{height: `100%`}}/>}
+                    defaultCenter={props.location.state.defaultCenter}
                     center={center}
                     setCenter={setCenter}
         />

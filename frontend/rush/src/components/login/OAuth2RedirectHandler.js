@@ -18,14 +18,12 @@ const OAuth2RedirectHandler = (props) => {
   if(token) {
     sessionStorage.setItem(ACCESS_TOKEN, token);
     return <Redirect to={{
-      pathname: "/",
-      state: { from: props.location ? props.location.state : "", lat:37.63185105917152, lng:127.07745984005722 }
+      pathname: "/"
     }}/>;
   } else {
     return <Redirect to={{
       pathname: "/login",
       state: {
-        from: props.location ? props.location.state : "",
         error: error
       }
     }}/>;

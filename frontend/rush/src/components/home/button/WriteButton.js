@@ -5,7 +5,12 @@ const WriteButton = (props) => {
   const url = props.accessToken? "/writing" : "/login";
 
   return (
-      <Link to={url}>
+      <Link to={{
+        pathname: url,
+        state: {
+          defaultCenter: props.defaultCenter
+        }
+      }}>
         <button style={{
           position: "fixed",
           zIndex: 10,
