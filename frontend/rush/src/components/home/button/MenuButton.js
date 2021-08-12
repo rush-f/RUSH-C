@@ -26,13 +26,12 @@ const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMa
         isOpen={isMenuOpen}
         onStateChange={(state)=>{setIsMenuOpen(state.isOpen)}}
         disableAutoFocus>
-      <BurgerMenuContents onClick={() => history.push(url)}>마이페이지</BurgerMenuContents>
       <BurgerMenuContents onClick={() => {
         setMapType(PUBLIC);
         setIsMenuOpen(false);
-      }}>전체지도</BurgerMenuContents>
+      }}>온누리 발자국</BurgerMenuContents>
       <BurgerMenuContents onClick={() => setIsGroupOpened(!isGroupOpened)}>
-        그룹지도
+        우리누리 발자국
       </BurgerMenuContents>
       <GroupList
           setIsMenuOpen={setIsMenuOpen}
@@ -46,7 +45,7 @@ const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMa
       <BurgerMenuContents onClick={() => {
         setMapType(PRIVATE);
         setIsMenuOpen(false);
-      }}>개인지도</BurgerMenuContents>
+      }}>나만의 발자국</BurgerMenuContents>
     </BurgerMenu>
   </>);
 }
