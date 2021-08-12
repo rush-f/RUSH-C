@@ -56,7 +56,8 @@ public class SetUpMethods {
         return testEntityManager.persist(article);
     }
 
-    public static ArticleGroup persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
+    public static ArticleGroup persistArticleGroup(TestEntityManager testEntityManager,
+        Article article, Group group) {
         ArticleGroup articleGroup = ArticleGroup.builder()
             .article(article)
             .group(group)
@@ -65,13 +66,18 @@ public class SetUpMethods {
     }
 
     public static Comment persistComment(TestEntityManager testEntityManager,
-            String content, Article article, User user) {
-        Comment comment = new Comment(content, user, article);
+        String content, Article article, User user) {
+        Comment comment = Comment.builder()
+            .content(content)
+            .article(article)
+            .user(user)
+            .build();
         return testEntityManager.persist(comment);
     }
 
-    public static ArticleLike persistArticleLike(TestEntityManager testEntityManager, User user, Article article) {
-        ArticleLike articleLike =ArticleLike.builder()
+    public static ArticleLike persistArticleLike(TestEntityManager testEntityManager, User user,
+        Article article) {
+        ArticleLike articleLike = ArticleLike.builder()
             .user(user)
             .article(article)
             .build();
