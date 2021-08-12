@@ -11,7 +11,6 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -189,39 +188,30 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         Group group1 = persistGroup(testEntityManager);
         Group group2 = persistGroup(testEntityManager);
-        Group group3 = persistGroup(testEntityManager);
 
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
-        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        persistArticleGroup(testEntityManager, article3, group1);
-        persistArticleGroup(testEntityManager, article3, group2);
-        persistArticleGroup(testEntityManager, article4, group3);
+        persistArticleGroup(testEntityManager, article1, group1);
+        persistArticleGroup(testEntityManager, article1, group2);
 
         testEntityManager.flush();
         testEntityManager.clear();
 
-        // when
+        // when & then
         List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(user.getId());
+        assertThat(articles).hasSize(1);
+        List<ArticleGroup> articleGroups = articles.get(0)
+            .getArticleGroups();
+        assertThat(articleGroups).hasSize(2);
 
-        //then
-        List<Group> groups2 = articles.get(0)
-            .getArticleGroups()
-            .stream()
-            .map(ArticleGroup::getGroup)
-            .collect(Collectors.toList());
+        // when & then
+        Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        List<Group> groups1 = articles.get(1)
-            .getArticleGroups()
-            .stream()
-            .map(ArticleGroup::getGroup)
-            .collect(Collectors.toList());
-
-        assertThat(articles.size()).isEqualTo(4);
-        assertThat(groups2.size()).isEqualTo(1);
-        assertThat(groups1.size()).isEqualTo(2);
+        articles = articleRepository.findArticlesWithGroupsByUserId(
+            user.getId());
+        assertThat(articles).hasSize(4);
     }
 
     @Test
