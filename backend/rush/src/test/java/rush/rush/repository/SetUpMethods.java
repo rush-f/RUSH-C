@@ -5,6 +5,7 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.ArticleLike;
 import rush.rush.domain.AuthProvider;
+import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
@@ -53,12 +54,18 @@ public class SetUpMethods {
         return testEntityManager.persist(article);
     }
 
-    public static void persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
+    public static ArticleGroup persistArticleGroup(TestEntityManager testEntityManager, Article article, Group group) {
         ArticleGroup articleGroup = ArticleGroup.builder()
             .article(article)
             .group(group)
             .build();
-        testEntityManager.persist(articleGroup);
+        return testEntityManager.persist(articleGroup);
+    }
+
+    public static Comment persistComment(TestEntityManager testEntityManager,
+            String content, Article article, User user) {
+        Comment comment = new Comment(content, user, article);
+        return testEntityManager.persist(comment);
     }
 
     public static ArticleLike persistArticleLike(TestEntityManager testEntityManager, User user, Article article) {

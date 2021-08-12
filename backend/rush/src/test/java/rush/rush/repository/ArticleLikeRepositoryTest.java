@@ -106,5 +106,4 @@ class ArticleLikeRepositoryTest  extends RepositoryTest {
         assertThat(count1).isEqualTo(0);
         assertThat(count2).isEqualTo(1);
     }
-
 }

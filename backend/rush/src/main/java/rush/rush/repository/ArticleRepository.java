@@ -85,4 +85,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "where article.user.id = :userId "
         + "order by article.createDate desc")
     List<Article> findArticlesWithGroupsByUserId(@Param("userId") Long userId);
+
+    @Query("select article.user.id from Article article inner join article.user")
+    Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
 }

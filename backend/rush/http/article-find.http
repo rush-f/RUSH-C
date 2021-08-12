@@ -30,3 +30,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwL
 GET http://localhost:8080/api/articles/grouped/1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwLCJleHAiOjE2MjUwMjU0O
+
+### 내글인지 아닌지 조회
+GET http://localhost:8080/api/articles/1/is-mine
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDIzNjgwLCJleHAiOjE2MjUwMjU0O

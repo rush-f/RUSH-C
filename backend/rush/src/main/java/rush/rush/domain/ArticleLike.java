@@ -30,12 +30,13 @@ public class ArticleLike {
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
-    public ArticleLike(Long id, User user,Article article) {
+    public ArticleLike(Long id, User user, Article article) {
         validate(user);
         validate(article);
         this.id = id;
-        this.user=user;
-        this.article=article;
+        this.user = user;
+        this.article = article;
+        article.addArticleLike(this);
     }
 
     private void validate(User user) {
