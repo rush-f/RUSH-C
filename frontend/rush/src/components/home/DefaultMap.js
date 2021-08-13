@@ -14,7 +14,6 @@ import postPositionSpreader from "../../util/PostPositionSpreader";
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
 
   const mapRef = useRef(null)
-  const [defaultCenter,setDefaultCenter] = useState(props.markerCenter);
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
 
   const turnOn = (postId) => {
@@ -50,7 +49,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
       <GoogleMap
           ref={mapRef}
           defaultZoom={16}
-          defaultCenter={defaultCenter}
+          center={props.defaultCenter}
           defaultOptions={{
             disableDefaultUI:true,
             maxZoom:21,

@@ -37,6 +37,10 @@ const DefaultMapPage = (props) => {
     lat: () => 37.63185105917152,
     lng: () => 127.07745984005722,
   });
+  const [defaultCenter, setDefaultCenter] = useState({
+    lat: 37.63185105917152,
+    lng: 127.07745984005722,
+  });
   const [articles, setArticles] = useState([]);
   const [latitudeRange, setLatitudeRange] = useState(0.0095);
   const [longitudeRange, setLongitudeRange] = useState(0.025);
@@ -44,6 +48,11 @@ const DefaultMapPage = (props) => {
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isJoinGroupModalOpen, setIsJoinGroupModalOpen] = useState(false);
   const [isGroupOpened, setIsGroupOpened] = useState(false);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+    })},[]);
 
   useEffect(() => {
     setLatitudeRange(
@@ -97,8 +106,7 @@ const DefaultMapPage = (props) => {
                 mapElement={<div style={{height: `100%`}}/>}
                 mapType={mapType}
                 articles={articles}
-                markerCenter={props.location.state ? props.location.state
-                  : {lat: 37.63185105917152, lng: 127.07745984005722}}
+                defaultCenter={props.location.state ? props.location.state : defaultCenter}
                 setZoom={setZoom}
                 center={center}
                 setCenter={setCenter}
@@ -153,7 +161,10 @@ const DefaultMapPage = (props) => {
           history={props.history}
         />
     }
-    <WriteButton accessToken={accessToken}/>
+    <WriteButton
+        accessToken={accessToken}
+        defaultCenter={defaultCenter}
+    />
   </>);
 };
 

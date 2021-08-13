@@ -9,18 +9,14 @@ import {useState, useEffect} from "react";
 
 const WritingMap = withScriptjs(withGoogleMap((props) => {
 
-  const defaultMapOptions = {
-    disableDefaultUI: true
-  };
-
   const [map, setMap] = useState(null);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
 
   useEffect(() => {
     if (lat == null) {
-      setLat(37.63185105917152);
-      setLng(127.07745984005722);
+      setLat(props.defaultCenter.lat);
+      setLng(props.defaultCenter.lng);
     }
   });
 
@@ -29,7 +25,7 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
         <GoogleMap
             ref={(map) => setMap(map)}
             defaultZoom={16}
-            defaultCenter={{lat: 37.63185105917152, lng: 127.07745984005722}}
+            center={props.defaultCenter}
             defaultOptions={{
               disableDefaultUI:true,
               maxZoom:21,
