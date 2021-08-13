@@ -44,7 +44,7 @@ public class Comment {
     @CreationTimestamp
     private Timestamp createDate;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment", orphanRemoval = true)
     private List<CommentLike> commentLikes = new ArrayList<>();
 
     public Comment(Long id, String content, User user, Article article, Timestamp createDate, List<CommentLike> commentLikes) {
