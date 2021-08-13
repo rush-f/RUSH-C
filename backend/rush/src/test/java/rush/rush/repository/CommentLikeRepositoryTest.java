@@ -11,6 +11,7 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,64 +75,69 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
 
         //when
         List<Long> hasILiked = commentLikeRepository
-            .findHasILikedInPublic(articleOnPublicMap.getId(),
+            .findPublicArticleCommentIdsILiked(articleOnPublicMap.getId(),
                 savedUser2.getId());
 
         //then
-        assertThat(hasILiked.get(0)).isEqualTo(3);
+        assertThat(hasILiked.get(0)).isEqualTo(comment3.getId());
         assertThat(hasILiked.size()).isEqualTo(1);
     }
 
     @Test
     @Transactional
-    void findHasILikedInPravete() {
-        //given
+    @DisplayName("좋아요를 누른 댓글의 ID 목록 조회 (in any private article)")
+    void findPrivateArticleCommentIdsILiked() {
+        // given : 댓글이 두 개 존재
         Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
             articleOnPrivateMap);
         Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
             articleOnPrivateMap);
+
+        // given : 사용자가 댓글1에 좋아요를 남김
         persistCommentLike(testEntityManager, savedUser1, comment1);
+
+        // when & then : 댓글 갯수가 한개고, 해당 댓글은 comment1 임
+        List<Long> commentIdsILiked = commentLikeRepository.findPrivateArticleCommentIdsILiked(
+            articleOnPrivateMap.getId(), savedUser1.getId());
+
+        assertThat(commentIdsILiked.size()).isEqualTo(1);
+        assertThat(commentIdsILiked.get(0)).isEqualTo(comment1.getId());
+
+        // given : 사용자가 댓글2에도 좋아요를 남김
         persistCommentLike(testEntityManager, savedUser1, comment2);
-        persistCommentLike(testEntityManager, savedUser2, comment1);
 
-        //when
-        List<Long> hasILiked = commentLikeRepository
-            .findHasILikedInPravete(articleOnPrivateMap.getId(),
-                savedUser1.getId());
-        List<Long> hasILiked2 = commentLikeRepository
-            .findHasILikedInPravete(articleOnPrivateMap.getId(),
-                savedUser2.getId());
+        // when & then : 댓글 갯수가 2개가 됨
+        commentIdsILiked = commentLikeRepository.findPrivateArticleCommentIdsILiked(
+            articleOnPrivateMap.getId(), savedUser1.getId());
 
-        //then
-        assertThat(hasILiked.get(0)).isEqualTo(1);
-        assertThat(hasILiked.get(1)).isEqualTo(2);
-        assertThat(hasILiked.size()).isEqualTo(2);
-        assertThat(hasILiked2.size()).isEqualTo(0);
+        assertThat(commentIdsILiked.size()).isEqualTo(2);
     }
 
     @Test
     @Transactional
     void findHasILikedInGroup() {
         //given
-        Group group1 = persistGroup(testEntityManager);
-        persistArticleGroup(testEntityManager, articleOnPublicMap, group1);
-        persistUserGroup(testEntityManager, savedUser2, group1);
+        Group group = persistGroup(testEntityManager);
+
+        persistArticleGroup(testEntityManager, articleOnPublicMap, group);
+        persistUserGroup(testEntityManager, savedUser2, group);
+
         Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, savedUser2,
             articleOnPublicMap);
-        persistCommentLike(testEntityManager, savedUser1, comment);
+
         persistCommentLike(testEntityManager, savedUser2, comment);
 
-        //when
-        List<Long> hasILiked1 = commentLikeRepository
-            .findHasILikedInGroup(articleOnPublicMap.getId(),
-                savedUser1.getId());
-        List<Long> hasILiked2 = commentLikeRepository
-            .findHasILikedInGroup(articleOnPublicMap.getId(),
-                savedUser2.getId());
+        // when & then : 댓글 좋아요를 한개 눌렀던 사용자
+        List<Long> commentIdsUser2Liked = commentLikeRepository.findGroupedArticleCommentIdsILiked(
+            articleOnPublicMap.getId(), savedUser2.getId());
 
-        //then
-        assertThat(hasILiked2.get(0)).isEqualTo(1);
-        assertThat(hasILiked2.size()).isEqualTo(1);
-        assertThat(hasILiked1.size()).isEqualTo(0);
+        assertThat(commentIdsUser2Liked.size()).isEqualTo(1);
+        assertThat(commentIdsUser2Liked.get(0)).isEqualTo(comment.getId());
+
+        // when & then : 댓글 좋아요를 한개도 누르지 않았던 사용자
+        List<Long> commentIdsUser1Liked = commentLikeRepository.findGroupedArticleCommentIdsILiked(
+            articleOnPublicMap.getId(), savedUser1.getId());
+
+        assertThat(commentIdsUser1Liked.size()).isEqualTo(0);
     }
 }

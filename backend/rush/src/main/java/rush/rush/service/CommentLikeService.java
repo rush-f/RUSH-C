@@ -32,13 +32,13 @@ public class CommentLikeService {
     @Transactional
     public List<Long> hasILiked(Long articleId, MapType mapType, Long userId) {
         if (mapType == MapType.PUBLIC) {
-            return commentLikeRepository.findHasILikedInPublic(articleId, userId);
+            return commentLikeRepository.findPublicArticleCommentIdsILiked(articleId, userId);
         }
         if (mapType == MapType.PRIVATE) {
-            return commentLikeRepository.findHasILikedInPravete(articleId, userId);
+            return commentLikeRepository.findPrivateArticleCommentIdsILiked(articleId, userId);
         }
         if (mapType == MapType.GROUPED) {
-            return commentLikeRepository.findHasILikedInGroup(articleId, userId);
+            return commentLikeRepository.findGroupedArticleCommentIdsILiked(articleId, userId);
         }
         throw new IllegalStateException("MapType 오류 - " + mapType.name());
     }
