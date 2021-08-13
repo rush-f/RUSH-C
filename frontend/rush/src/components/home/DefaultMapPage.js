@@ -56,9 +56,9 @@ const DefaultMapPage = (props) => {
 
   useEffect(() => {
     setLatitudeRange(
-      LatRangeRatio * windowSize.height * Math.pow(0.5, zoom - 1));
+      LatRangeRatio * windowSize.height * Math.pow(0.5, zoom - 2));
     setLongitudeRange(
-      LngRangeRatio * windowSize.width * Math.pow(0.5, zoom - 1));
+      LngRangeRatio * windowSize.width * Math.pow(0.5, zoom - 2));
   }, [zoom]);
 
   useEffect(() => {

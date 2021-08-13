@@ -13,7 +13,6 @@ import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import checkHasILikedApi from "../../api/CheckHasILikedApi";
 import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
 import isMyArticleApi from "../../api/IsMyArticleApi";
-import checkHasILikedApi from "../../api/CheckHasILikedApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
