@@ -11,8 +11,8 @@ class UserTest {
     private static final String TEST_EMAIL = "email@email.com";
 
     @Test
-    @DisplayName("생성자")
-    void constructor() {
+    @DisplayName("Builder")
+    void builder() {
         User user = User.builder()
             .id(1L)
             .email(TEST_EMAIL)
@@ -26,8 +26,8 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("생성자 - 이메일 형식이 잘못됐을 때 예외처리")
-    void constructor_IfEmailFormatIsWrong_ThrowException() {
+    @DisplayName("Builder - 이메일 형식이 잘못됐을 때 예외처리")
+    void builder_IfEmailFormatIsWrong_ThrowException() {
         assertThatThrownBy(() -> User.builder()
                 .id(1L)
                 .email("wrong_email")

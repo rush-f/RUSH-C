@@ -3,6 +3,7 @@ package rush.rush.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GroupTest {
@@ -10,7 +11,8 @@ class GroupTest {
     private static final String TEST_GROUP_NAME = "그룹이름";
 
     @Test
-    void constructor() {
+    @DisplayName("Builder")
+    void builder() {
         Group group = Group.builder()
                 .name(TEST_GROUP_NAME)
                 .build();
@@ -21,7 +23,8 @@ class GroupTest {
     }
 
     @Test
-    void constructor_IfNameIsEmpty_ThrowException() {
+    @DisplayName("Builder - 그룹이름이 비어있을 경우 예외처리")
+    void builder_IfNameIsEmpty_ThrowException() {
         assertThatThrownBy(() -> Group.builder()
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
