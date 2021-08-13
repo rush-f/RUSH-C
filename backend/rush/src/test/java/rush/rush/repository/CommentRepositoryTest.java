@@ -70,7 +70,7 @@ class CommentRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     @DisplayName("그룹지도 댓글 한개 조회")
-    void findInGroupedArticle(){
+    void findInGroupedArticle() {
         //given
         User user1 = persistUser(testEntityManager, "test1@email.com");
         User user2 = persistUser(testEntityManager, "test2@email.com");
@@ -88,14 +88,17 @@ class CommentRepositoryTest extends RepositoryTest {
         Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user2, article);
 
         //when
-        Optional<Comment> foundComment = commentRepository.findInGroupedArticle(comment.getId(), user1.getId());
-        Optional<Comment> foundComment2 = commentRepository.findInGroupedArticle(comment.getId(), another.getId());
+        Optional<Comment> foundComment = commentRepository.findInGroupedArticle(comment.getId(),
+            user1.getId());
+        Optional<Comment> foundComment2 = commentRepository.findInGroupedArticle(comment.getId(),
+            another.getId());
 
         //then
         assertThat(foundComment.isPresent()).isTrue();
         assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
         assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
         assertThat(foundComment2.isPresent()).isFalse();
+    }
 
     @Test
     @Transactional

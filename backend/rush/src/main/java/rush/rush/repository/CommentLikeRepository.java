@@ -16,16 +16,17 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "where article.id = :articleId "
         + "and article.publicMap = true "
         + "and commentLike.user.id = :userId")
-    List<Long> findHasILikedInPublic(
+    List<Long> findPublicArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
 
     @Query("select commentLike.comment.id from CommentLike commentLike "
         + "inner join commentLike.comment.article article "
         + "where article.id = :articleId "
+        + "and article.privateMap = true "
         + "and article.user.id = :userId "
         + "and commentLike.user.id = :userId")
-    List<Long> findHasILikedInPravete(
+    List<Long> findPrivateArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
     @Query("select commentLike.comment.id from CommentLike commentLike "
@@ -37,6 +38,6 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "where article.id = :articleId "
         + "and user.id = :userId "
         + "and commentLike.user.id = :userId ")
-    List<Long> findHasILikedInGroup(
+    List<Long> findGroupedArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 }
