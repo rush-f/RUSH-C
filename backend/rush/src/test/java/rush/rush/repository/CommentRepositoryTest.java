@@ -163,8 +163,8 @@ class CommentRepositoryTest extends RepositoryTest {
         // then
         assertThat(commentResponses).isNotNull();
         assertThat(commentResponses).hasSize(2);
-        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
-        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0L);
+        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2L);
     }
 
     @Test
@@ -196,7 +196,6 @@ class CommentRepositoryTest extends RepositoryTest {
     @Transactional
     @DisplayName("그룹지도글 댓글 조회")
     void findAllOfGroupedArticle() {
-        // given
         User user = persistUser(testEntityManager, "test1@email.com");
         User groupMember = persistUser(testEntityManager, "test2@email.com");
         Group group = persistGroup(testEntityManager);
@@ -208,18 +207,22 @@ class CommentRepositoryTest extends RepositoryTest {
             user, false, false, 37.14, 34.24);
         persistArticleGroup(testEntityManager, article, group);
 
+        // 댓글이 한개 써있을 때 댓글목록 조회
         Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
-        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
         persistCommentLike(testEntityManager, user, comment1);
-        persistCommentLike(testEntityManager, groupMember, comment1);
 
-        // when
-        List<CommentResponse> commentResponses = commentRepository
-            .findAllOfGroupedArticle(article.getId(), groupMember.getId());
+        List<CommentResponse> commentResponses = commentRepository.findAllOfGroupedArticle(
+            article.getId(), groupMember.getId());
 
-        // then
+        assertThat(commentResponses.size()).isEqualTo(1);
+        assertThat(commentResponses.get(0).getId()).isEqualTo(comment1.getId());
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(1L);
+
+        // 댓글이 한개 더 써져서 두개가 되었을 때 댓글목록 조회
+        persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+
+        commentResponses = commentRepository.findAllOfGroupedArticle(
+            article.getId(), groupMember.getId());
         assertThat(commentResponses.size()).isEqualTo(2);
-        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
-        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
     }
 }
