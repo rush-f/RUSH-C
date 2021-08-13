@@ -46,8 +46,8 @@ class ArticleTest {
     }
 
     @Test
-    @DisplayName("Builder - Collection 필드를 주입하지 않을 경우")
-    void builder() {
+    @DisplayName("Builder - Collection 필드를 주입하지 않을 경우 빈 컬렉션을 가짐")
+    void builder_IfNotInjectCollectionFields_EmptyCollection() {
         Article article = Article.builder()
             .id(2L)
             .title("title")
