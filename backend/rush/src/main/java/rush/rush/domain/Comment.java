@@ -21,7 +21,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 public class Comment {
 
@@ -47,6 +46,7 @@ public class Comment {
     @OneToMany(mappedBy = "comment", orphanRemoval = true)
     private List<CommentLike> commentLikes = new ArrayList<>();
 
+    @Builder
     public Comment(Long id, String content, User user, Article article, Timestamp createDate, List<CommentLike> commentLikes) {
         validate(content, user, article);
         this.id = id;
