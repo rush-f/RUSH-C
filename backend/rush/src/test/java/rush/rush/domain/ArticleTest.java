@@ -128,7 +128,7 @@ class ArticleTest {
 
         List<Comment> comments = new ArrayList<>();
 
-        comments.add(new Comment(1L, "댓글내용", user, article, null));
+        comments.add(new Comment(1L, "댓글내용", user, article, null, null));
 
         return comments;
     }

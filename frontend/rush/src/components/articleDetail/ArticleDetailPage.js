@@ -10,6 +10,7 @@ import findCommentsApi from "../../api/FindCommentsApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
+import checkHasILikedApi from "../../api/CheckHasILikedApi";
 import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
 import isMyArticleApi from "../../api/IsMyArticleApi";
 import checkHasILikedApi from "../../api/CheckHasILikedApi";

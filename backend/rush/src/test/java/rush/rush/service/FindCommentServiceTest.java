@@ -55,7 +55,7 @@ class FindCommentServiceTest {
             .build();
         articleRepository.save(article);
 
-        Comment comment = new Comment("댓글내용", savedUser, article);
+        Comment comment = new Comment(null, "댓글내용", savedUser, article, null, null);
         comment = commentRepository.save(comment);
 
         // when
