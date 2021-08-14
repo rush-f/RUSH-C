@@ -2,7 +2,7 @@ import React from 'react';
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const withdraUserwApi = ({accessToken, history}) => {
+const withdrawUserApi = ({accessToken, history}) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
@@ -31,4 +31,4 @@ const withdraUserwApi = ({accessToken, history}) => {
     });
 };
 
-export default withdraUserwApi;
+export default withdrawUserApi;

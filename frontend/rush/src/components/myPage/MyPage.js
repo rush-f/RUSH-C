@@ -68,6 +68,7 @@ const MyPage = (props) => {
               setIsOpened={setIsGroupsOpened}
           />
           <WithdrawButton
+              nickName={user ? user.nickName : ""}
               accessToken={accessToken}
               history={props.history}
           />
