@@ -14,6 +14,7 @@ import rush.rush.dto.SignUpRequest;
 import rush.rush.repository.UserRepository;
 import rush.rush.security.BadRequestException;
 import rush.rush.security.TokenProvider;
+import rush.rush.security.user.UserPrincipal;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class AuthService {
     }
 
     public void signUp(SignUpRequest signUpRequest) {
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException("이미 사용중인 이메일입니다.");
         }
         User user = User.builder()
@@ -47,5 +48,12 @@ public class AuthService {
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
             .build();
         userRepository.save(user);
+    }
+
+    public void withdraw(UserPrincipal userPrincipal) {
+        if (!userRepository.existsById(userPrincipal.getId())) {
+            throw new BadRequestException("존재하지 않는 회원입니다.");
+        }
+        userRepository.deleteById(userPrincipal.getId());
     }
 }
