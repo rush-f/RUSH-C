@@ -12,6 +12,7 @@ import MyGroups from "./groups/MyGroups";
 import findMyGroupsApi from "../../api/FindMyGroupsApi";
 import styled from "styled-components";
 import {withRouter} from "react-router-dom";
+import WithdrawButton from "./WithdrawButton";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -65,6 +66,10 @@ const MyPage = (props) => {
               myGroups={myGroups}
               isOpened={isGroupsOpened}
               setIsOpened={setIsGroupsOpened}
+          />
+          <WithdrawButton
+              accessToken={accessToken}
+              history={props.history}
           />
         </DisplayBox>
       </Outside>
