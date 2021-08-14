@@ -21,10 +21,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select distinct article from Article article "
         + "inner join article.articleGroups articlegroup "
         + "inner join articlegroup.group g "
-        + "where g.id = :groupId "
+        + "inner join g.userGroups usergroup "
+        + "where g.id = :groupId and usergroup.user.id = :userId "
         + "and article.latitude between :lowerLatitude and :upperLatitude "
         + "and article.longitude between :lowerLongitude and :upperLongitude")
-    List<Article> findAllOfGroupedMap(@Param("groupId") Long groupId,
+    List<Article> findAllOfGroupedMap(@Param("userId") Long userId, @Param("groupId") Long groupId,
         @Param("lowerLatitude") Double lowerLatitude, @Param("upperLatitude") Double upperLatitude,
         @Param("lowerLongitude") Double lowerLongitude, @Param("upperLongitude") Double upperLongitude);
 

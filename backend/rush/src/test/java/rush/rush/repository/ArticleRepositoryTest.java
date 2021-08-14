@@ -123,6 +123,7 @@ class ArticleRepositoryTest extends RepositoryTest {
     void findAllOfGroupedMap(){
         //given
         User user = persistUser(testEntityManager, "test1@email.com");
+        User user2 = persistUser(testEntityManager, "test2@email.com");
         Group group = persistGroup(testEntityManager);
 
         persistUserGroup(testEntityManager, user, group);
@@ -135,11 +136,14 @@ class ArticleRepositoryTest extends RepositoryTest {
         persistArticleGroup(testEntityManager, article3, group);
 
         //when
-        List<Article> articles = articleRepository.findAllOfGroupedMap(group.getId(),
+        List<Article> articles = articleRepository.findAllOfGroupedMap(user.getId(), group.getId(),
+            34.0, 37.0, 125.0, 140.0);
+        List<Article> articles2 = articleRepository.findAllOfGroupedMap(user2.getId(), group.getId(),
             34.0, 37.0, 125.0, 140.0);
 
         //then
         assertThat(articles.size()).isEqualTo(1);
+        assertThat(articles2.size()).isEqualTo(0);
         assertThat(articles.get(0).getId()).isEqualTo(article1.getId());
     }
 
