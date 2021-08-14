@@ -39,7 +39,7 @@ public class AuthController {
             .build();
     }
 
-    @DeleteMapping("/ withdraw")
+    @DeleteMapping("/withdraw")
     public ResponseEntity<Void> withdrawUser(@CurrentUser UserPrincipal userPrincipal) {
         authService.withdraw(userPrincipal);
 
