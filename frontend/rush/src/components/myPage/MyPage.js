@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {DisplayBox, Outside} from "../common/Box";
-import WindowSize from "../WindowSize";
+import WindowSize from "../../util/WindowSize";
 import CancelButton from "./CancelButton";
 import findUserApi from "../../api/findUserApi";
 import findMyArticlesApi from "../../api/findMyArticlesApi";

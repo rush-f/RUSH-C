@@ -5,6 +5,7 @@ import deleteArticleApi from "../../api/DeleteArticleApi";
 const DeleteButtonStyle = styled.div`
   color: #777777;
   display: inline-block;
+  cursor: pointer;
 `;
 
 const DeleteButton = ({articleId, accessToken, history}) => {

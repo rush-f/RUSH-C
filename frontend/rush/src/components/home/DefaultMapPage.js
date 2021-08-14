@@ -4,7 +4,7 @@ import {CLIENT_ID} from "../../constants/GoogleMapAuth";
 import Menu from "./button/MenuButton";
 import LoginButton from "./button/LoginButton";
 import WriteButton from "./button/WriteButton";
-import WindowSize from "../WindowSize";
+import WindowSize from "../../util/WindowSize";
 import findUserImageUrlApi from "../../api/FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import WindowSize from "../WindowSize";
+import WindowSize from "../../util/WindowSize";
 import {DisplayBox, Outside} from "../common/Box";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import findGroupApi from "../../api/FindGroupApi";

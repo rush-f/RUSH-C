@@ -4,7 +4,7 @@ import WritingMap from "./step1/WritingMap";
 import ToStep2Button from "./step1/ToStep2Button";
 import WritingStep2Modal from "./step2/WritingStep2Modal";
 import WritingStep3Modal from "./step3/WritingStep3Modal";
-import WindowSize from "../WindowSize";
+import WindowSize from "../../util/WindowSize";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {Redirect} from "react-router-dom";
 

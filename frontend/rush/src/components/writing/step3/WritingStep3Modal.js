@@ -8,7 +8,7 @@ import CancelButton from "../CancelButton";
 import styled from "styled-components";
 import CompleteButton from "./CompleteButton";
 import BackButton from "./BackButton";
-import WindowSize from "../../WindowSize";
+import WindowSize from "../../../util/WindowSize";
 import findMyGroupsApi from "../../../api/FindMyGroupsApi";
 
 const StyledDiv = styled.div`
