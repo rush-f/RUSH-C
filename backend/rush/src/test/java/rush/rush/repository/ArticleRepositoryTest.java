@@ -11,7 +11,6 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,6 +116,31 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // then
         assertThat(articles.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    void findAllOfGroupedMap(){
+        //given
+        User user = persistUser(testEntityManager, "test1@email.com");
+        Group group = persistGroup(testEntityManager);
+
+        persistUserGroup(testEntityManager, user, group);
+
+        Article article1 = persistArticle(testEntityManager, user, false, false, 36.0, 127.0);
+        Article article2 = persistArticle(testEntityManager, user, false, false, 38.0, 131.0);
+        Article article3 = persistArticle(testEntityManager, user, false, false, 35.0, 120.0);
+        persistArticleGroup(testEntityManager, article1, group);
+        persistArticleGroup(testEntityManager, article2, group);
+        persistArticleGroup(testEntityManager, article3, group);
+
+        //when
+        List<Article> articles = articleRepository.findAllOfGroupedMap(group.getId(),
+            34.0, 37.0, 125.0, 140.0);
+
+        //then
+        assertThat(articles.size()).isEqualTo(1);
+        assertThat(articles.get(0).getId()).isEqualTo(article1.getId());
     }
 
     @Test
