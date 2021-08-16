@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class CommentLike {
 
     @Id
@@ -30,6 +29,7 @@ public class CommentLike {
     @JoinColumn(name = "comment_id", nullable = false)
     private Comment comment;
 
+    @Builder
     public CommentLike(Long id, User user, Comment comment) {
         validate(user);
         validate(comment);
