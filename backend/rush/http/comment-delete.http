@@ -1,0 +1,3 @@
+DELETE http://localhost:8080/api/comments/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2ODczNjA0LCJleHAiOjE2MjY4NzU0M
