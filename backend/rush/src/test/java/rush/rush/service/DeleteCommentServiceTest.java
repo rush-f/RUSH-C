@@ -100,4 +100,12 @@ class DeleteCommentServiceTest {
         assertThat(commentRepository.findAllOfPublicArticle(article.getId()))
             .hasSize(1);
     }
+
+    @Test
+    @Transactional
+    @DisplayName("댓글 삭제 - 존재하지 않는 댓글 삭제 시도시 예외처리")
+    void deleteComment_IfNotExistComment_ThrowException() {
+        assertThatThrownBy(() -> deleteCommentService.deleteComment(10_000L, commentAuthor))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }
