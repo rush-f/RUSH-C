@@ -29,26 +29,6 @@ class CommentRepositoryTest extends RepositoryTest {
     private CommentRepository commentRepository;
 
     @Test
-    @DisplayName("댓글 ID와 사용자 ID로 댓글삭제")
-    void delete() {
-        // given : 댓글이 저장되어있다.
-        User user = persistUser(testEntityManager, "test@email.com");
-        assertThat(user.getId()).isNotNull();
-
-        Article article = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
-        assertThat(article.getId()).isNotNull();
-
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
-        assertThat(comment.getId()).isNotNull();
-
-        // when : 댓글을 삭제한다.
-        commentRepository.delete(comment.getId(), user.getId());
-
-        // then : 댓글이 삭제되었다.
-        assertThat(commentRepository.findAllOfPublicArticle(article.getId())).hasSize(0);
-    }
-
-    @Test
     @Transactional
     void countByIdAndUserId() {
         // given : user1이 댓글을 한개 썼다.
