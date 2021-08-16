@@ -29,18 +29,62 @@ class CommentRepositoryTest extends RepositoryTest {
     private CommentRepository commentRepository;
 
     @Test
+    @DisplayName("댓글 ID와 사용자 ID로 댓글삭제")
+    void delete() {
+        // given : 댓글이 저장되어있다.
+        User user = persistUser(testEntityManager, "test@email.com");
+        assertThat(user.getId()).isNotNull();
+
+        Article article = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
+        assertThat(article.getId()).isNotNull();
+
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        assertThat(comment.getId()).isNotNull();
+
+        // when : 댓글을 삭제한다.
+        commentRepository.delete(comment.getId(), user.getId());
+
+        // then : 댓글이 삭제되었다.
+        assertThat(commentRepository.findAllOfPublicArticle(article.getId())).hasSize(0);
+    }
+
+    @Test
+    @Transactional
+    void countByIdAndUserId() {
+        // given : user1이 댓글을 한개 썼다.
+        User user1 = persistUser(testEntityManager, "user1@email.com");
+        assertThat(user1.getId()).isNotNull();
+
+        User user2 = persistUser(testEntityManager, "user2@email.com");
+        assertThat(user2.getId()).isNotNull();
+
+        Article article = persistArticle(testEntityManager, user1, true, false, 37.63, 127.07);
+        assertThat(article.getId()).isNotNull();
+
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user1, article);
+        assertThat(comment1.getId()).isNotNull();
+
+        // when & then : user1 이 주어진 글에 쓴 댓글의 수가 1개라고 조회된다.
+        assertThat(commentRepository.countByIdAndUserId(article.getId(), user1.getId()))
+            .isEqualTo(1L);
+        // when & then : user2 가 주어진 글에 쓴 댓글의 수가 0개라고 조회된다.
+        assertThat(commentRepository.countByIdAndUserId(article.getId(), user2.getId()))
+            .isEqualTo(0L);
+    }
+
+    @Test
     @Transactional
     @DisplayName("전체지도 댓글 한개 조회")
-    void findInPublicArticle(){
-        //given
+    void findInPublicArticle() {
+        // given : 전체지도 글에 댓글이 저장되어있다.
         User user = persistUser(testEntityManager, "test@email.com");
-        Article article = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Article publicArticle = persistArticle(testEntityManager, user, true, false, 37.63, 127.07);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, publicArticle);
 
-        //when
+        // when
         Optional<Comment> foundComment = commentRepository.findInPublicArticle(comment.getId());
 
-        //then
+        // then
         assertThat(foundComment.isPresent()).isTrue();
         assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
         assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
@@ -49,18 +93,20 @@ class CommentRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     @DisplayName("개인지도 댓글 한개 조회")
-    void findInPrivateArticle(){
-        //given
+    void findInPrivateArticle() {
+        // given : 개인지도 글에 댓글이 저장되어있다.
         User user = persistUser(testEntityManager, "test@email.com");
         User another = persistUser(testEntityManager, "test2@email.com");
-        Article article = persistArticle(testEntityManager, user, false, true, 37.63, 127.07);
-        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Article privateArticle = persistArticle(testEntityManager, user, false, true, 37.63, 127.07);
+        Comment comment = persistComment(testEntityManager, COMMENT_CONTENT, user, privateArticle);
 
-        //when
-        Optional<Comment> foundComment = commentRepository.findInPrivateArticle(comment.getId(), user.getId());
-        Optional<Comment> foundComment2 = commentRepository.findInPrivateArticle(comment.getId(), another.getId());
+        // when
+        Optional<Comment> foundComment = commentRepository.findInPrivateArticle(comment.getId(),
+            user.getId());
+        Optional<Comment> foundComment2 = commentRepository.findInPrivateArticle(comment.getId(),
+            another.getId());
 
-        //then
+        // then
         assertThat(foundComment.isPresent()).isTrue();
         assertThat(foundComment.get().getId()).isEqualTo(comment.getId());
         assertThat(foundComment.get().getContent()).isEqualTo(comment.getContent());
@@ -132,7 +178,8 @@ class CommentRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, user, comment1);
 
         // when
-        List<CommentResponse> commentResponses = commentRepository.findAllOfPublicArticle(article.getId());
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPublicArticle(
+            article.getId());
 
         // then
         assertThat(commentResponses).isNotNull();
@@ -156,9 +203,9 @@ class CommentRepositoryTest extends RepositoryTest {
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, user, comment1);
 
-
         // when
-        List<CommentResponse> commentResponses = commentRepository.findAllOfPrivateArticle(article.getId(), user.getId());
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPrivateArticle(
+            article.getId(), user.getId());
 
         // then
         assertThat(commentResponses).isNotNull();
