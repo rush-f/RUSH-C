@@ -120,51 +120,56 @@ class CommentRepositoryTest extends RepositoryTest {
     @Transactional
     @DisplayName("전체지도 댓글 조회")
     void findAllOfPublicArticle() {
-        // given
+        // given : 전체지도 글에 댓글이 한개 써있다.
         User user = persistUser(testEntityManager, "test@email.com");
 
-        Article article = persistArticle(testEntityManager,
+        Article publicArticle = persistArticle(testEntityManager,
             user, true, false, 37.14, 34.24);
 
-        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
-        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, publicArticle);
+
         persistCommentLike(testEntityManager, user, comment1);
         persistCommentLike(testEntityManager, user, comment1);
 
-        // when
-        List<CommentResponse> commentResponses = commentRepository.findAllOfPublicArticle(article.getId());
+        // when & then
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPublicArticle(publicArticle.getId());
 
-        // then
         assertThat(commentResponses).isNotNull();
-        assertThat(commentResponses).hasSize(2);
-        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0);
-        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2);
+        assertThat(commentResponses).hasSize(1);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(2L);
+
+        // given : 전체지도 글에 댓글이 두개 써있다.
+        persistComment(testEntityManager, COMMENT_CONTENT, user, publicArticle);
+
+        // when & then
+        assertThat(commentRepository.findAllOfPublicArticle(publicArticle.getId())).hasSize(2);
     }
 
     @Test
     @Transactional
     @DisplayName("개인지도 댓글 조회")
     void findAllOfPrivateArticle() {
-        // given
+        // given : 개인지도 글에 댓글이 한 개 저장되어 있다.
         User user = persistUser(testEntityManager, "test@email.com");
 
-        Article article = persistArticle(testEntityManager,
+        Article privateArticle = persistArticle(testEntityManager,
             user, false, true, 37.14, 34.24);
 
-        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
-        Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
-        persistCommentLike(testEntityManager, user, comment1);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, privateArticle);
         persistCommentLike(testEntityManager, user, comment1);
 
-
-        // when
-        List<CommentResponse> commentResponses = commentRepository.findAllOfPrivateArticle(article.getId(), user.getId());
-
-        // then
+        // when & then
+        List<CommentResponse> commentResponses = commentRepository.findAllOfPrivateArticle(privateArticle.getId(), user.getId());
         assertThat(commentResponses).isNotNull();
-        assertThat(commentResponses).hasSize(2);
-        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(0L);
-        assertThat(commentResponses.get(1).getTotalLikes()).isEqualTo(2L);
+        assertThat(commentResponses).hasSize(1);
+        assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(1L);
+
+        // given : 개인지도 글에 댓글이 두개 저장되어있다.
+        persistComment(testEntityManager, COMMENT_CONTENT, user, privateArticle);
+
+        // when & then
+        assertThat(commentRepository.findAllOfPrivateArticle(privateArticle.getId(), user.getId()))
+            .hasSize(2);
     }
 
     @Test
@@ -196,6 +201,7 @@ class CommentRepositoryTest extends RepositoryTest {
     @Transactional
     @DisplayName("그룹지도글 댓글 조회")
     void findAllOfGroupedArticle() {
+        // given : 그룹지도 글에 댓글이 한개 저장되어있다.
         User user = persistUser(testEntityManager, "test1@email.com");
         User groupMember = persistUser(testEntityManager, "test2@email.com");
         Group group = persistGroup(testEntityManager);
@@ -203,26 +209,27 @@ class CommentRepositoryTest extends RepositoryTest {
         persistUserGroup(testEntityManager, user, group);
         persistUserGroup(testEntityManager, groupMember, group);
 
-        Article article = persistArticle(testEntityManager,
+        Article groupedArticle = persistArticle(testEntityManager,
             user, false, false, 37.14, 34.24);
-        persistArticleGroup(testEntityManager, article, group);
+        persistArticleGroup(testEntityManager, groupedArticle, group);
 
-        // 댓글이 한개 써있을 때 댓글목록 조회
-        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+        Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user, groupedArticle);
         persistCommentLike(testEntityManager, user, comment1);
 
+        // when & then
         List<CommentResponse> commentResponses = commentRepository.findAllOfGroupedArticle(
-            article.getId(), groupMember.getId());
+            groupedArticle.getId(), groupMember.getId());
 
         assertThat(commentResponses.size()).isEqualTo(1);
         assertThat(commentResponses.get(0).getId()).isEqualTo(comment1.getId());
         assertThat(commentResponses.get(0).getTotalLikes()).isEqualTo(1L);
 
-        // 댓글이 한개 더 써져서 두개가 되었을 때 댓글목록 조회
-        persistComment(testEntityManager, COMMENT_CONTENT, user, article);
+         // given : 그룹지도 글에 댓글이 두개 저장되어있다.
+        persistComment(testEntityManager, COMMENT_CONTENT, user, groupedArticle);
 
+        // when & then
         commentResponses = commentRepository.findAllOfGroupedArticle(
-            article.getId(), groupMember.getId());
+            groupedArticle.getId(), groupMember.getId());
         assertThat(commentResponses.size()).isEqualTo(2);
     }
 }

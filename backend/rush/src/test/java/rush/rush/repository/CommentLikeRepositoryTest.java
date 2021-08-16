@@ -62,8 +62,8 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findHasILikedInPublic() {
-        //given
+    void findPublicArticleCommentIdsILiked() {
+        // given
         Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
             articleOnPrivateMap);
         Comment comment2 = persistComment(testEntityManager, COMMENT_CONTENT, savedUser1,
@@ -115,7 +115,7 @@ public class CommentLikeRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findHasILikedInGroup() {
+    void findGroupedArticleCommentIdsILiked() {
         //given
         Group group = persistGroup(testEntityManager);
 
