@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-class ArticleTest {
+class ArticleBuilderTest {
 
     @Mock
     private User articleAuthor;

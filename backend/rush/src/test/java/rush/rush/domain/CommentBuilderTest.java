@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-class CommentTest {
+class CommentBuilderTest {
 
     @Mock
     private User user;

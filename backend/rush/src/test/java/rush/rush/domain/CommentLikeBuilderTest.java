@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-class CommentLikeTest {
+class CommentLikeBuilderTest {
 
     @Mock
     private Comment comment;

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-class ArticleGroupTest {
+class ArticleGroupBuilderTest {
 
     @Mock
     private Article article;
