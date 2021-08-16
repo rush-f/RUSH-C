@@ -81,30 +81,46 @@ const DeleteComment = styled.div`
   font-size: 13px;
 `;
 
-const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedListInComment, onCommentLikeClicked,
-  changetotalLikesInComment, history}) => {
-  const changetotalLikes = changetotalLikesInComment.includes(comment.id) ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0 ;
+const Comment = ({
+  accessToken,
+  comment,
+  mapType,
+  commentTotalLikes,
+  isMine,
+  hasILikedListInComment,
+  onCommentLikeClicked,
+  changetotalLikesInComment,
+  history
+}) => {
+  const changetotalLikes = changetotalLikesInComment.includes(comment.id)
+    ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0;
 
   return (
-      <CommentBox>
-        <Profile imageUrl={comment.author.imageUrl}/>
-        <CommentRight>
-          <AuthorName>
-            {comment.author.nickName}
-          </AuthorName>
-          <div>{comment.content}</div>
-          <CommentBottom>
-              <CommentLike>
-                <CommentLikeInner>
-                  <LikeHeart
-                    onClick={() => {
-                      changeMyLikeInCommentIdApi(accessToken, hasILikedListInComment.includes(comment.id), comment.id, mapType,  history);
-                      onCommentLikeClicked(comment.id);
-                    }}>{hasILikedListInComment.includes(comment.id) ?"♥":"♡"} </LikeHeart>
-                  <LikeLetter>좋아요 { commentTotalLikes ? commentTotalLikes + changetotalLikes : 0 + changetotalLikes }개</LikeLetter>
-                </CommentLikeInner>
-              </CommentLike>
-              <MyCommentControl>
+    <CommentBox>
+      <Profile imageUrl={comment.author.imageUrl}/>
+      <CommentRight>
+        <AuthorName>
+          {comment.author.nickName}
+        </AuthorName>
+        <div>{comment.content}</div>
+        <CommentBottom>
+          <CommentLike>
+            <CommentLikeInner>
+              <LikeHeart
+                onClick={() => {
+                  changeMyLikeInCommentIdApi(accessToken,
+                    hasILikedListInComment.includes(comment.id), comment.id,
+                    mapType, history);
+                  onCommentLikeClicked(comment.id);
+                }}>{hasILikedListInComment.includes(comment.id) ? "♥"
+                : "♡"} </LikeHeart>
+              <LikeLetter>좋아요 {commentTotalLikes ? commentTotalLikes
+                + changetotalLikes : 0 + changetotalLikes}개</LikeLetter>
+            </CommentLikeInner>
+          </CommentLike>
+          <MyCommentControl>
+            {
+              isMine?
                 <MyCommentControlInner>
                   <DeleteComment onClick={() => deleteCommentApi({
                     commentId: comment.id,
@@ -112,10 +128,12 @@ const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedLis
                     history: history
                   })}>삭제</DeleteComment>
                 </MyCommentControlInner>
-              </MyCommentControl>
-          </CommentBottom>
-        </CommentRight>
-      </CommentBox>
+              : ""
+            }
+          </MyCommentControl>
+        </CommentBottom>
+      </CommentRight>
+    </CommentBox>
   );
 };
 
