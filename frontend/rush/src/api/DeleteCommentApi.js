@@ -1,7 +1,7 @@
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../constants/ADDRESS";
 
-const deleteCommentApi = ({ commentId, accessToken }) => {
+const deleteCommentApi = ({ commentId, accessToken, history }) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');

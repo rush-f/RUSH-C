@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import Profile from "./Profile";
 import changeMyLikeInCommentIdApi from "../../api/ChangeMyLikeInCommentApi";
+import deleteCommentApi from "../../api/DeleteCommentApi";
 
 const CommentBox = styled.div`
   margin: 0;
@@ -105,7 +106,11 @@ const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedLis
               </CommentLike>
               <MyCommentControl>
                 <MyCommentControlInner>
-                  <DeleteComment>삭제</DeleteComment>
+                  <DeleteComment onClick={() => deleteCommentApi({
+                    commentId: comment.id,
+                    accessToken: accessToken,
+                    history: history
+                  })}>삭제</DeleteComment>
                 </MyCommentControlInner>
               </MyCommentControl>
           </CommentBottom>
