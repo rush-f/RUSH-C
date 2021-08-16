@@ -116,7 +116,7 @@ const ArticleDetailPage = (props) => {
             hasILiked={hasILiked}
             setHasILiked={setHasILiked}
             history={props.history}
-            isMyArticle={isMyArticle}
+            isMyArticle={article? article.author.id === myId : false}
           />
         </PostBox>
         <CommentsBox>
