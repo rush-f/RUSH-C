@@ -89,11 +89,21 @@ const Comment = ({
   isMine,
   hasILikedListInComment,
   onCommentLikeClicked,
-  changetotalLikesInComment,
+  changeTotalLikesInComment,
   history
 }) => {
-  const changetotalLikes = changetotalLikesInComment.includes(comment.id)
+  const changeTotalLikes = changeTotalLikesInComment.includes(comment.id)
     ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0;
+
+  const onDeleteButtonClicked = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteCommentApi({
+        commentId: comment.id,
+        accessToken: accessToken,
+        history: history
+      });
+    }
+  }
 
   return (
     <CommentBox>
@@ -115,18 +125,14 @@ const Comment = ({
                 }}>{hasILikedListInComment.includes(comment.id) ? "♥"
                 : "♡"} </LikeHeart>
               <LikeLetter>좋아요 {commentTotalLikes ? commentTotalLikes
-                + changetotalLikes : 0 + changetotalLikes}개</LikeLetter>
+                + changeTotalLikes : 0 + changeTotalLikes}개</LikeLetter>
             </CommentLikeInner>
           </CommentLike>
           <MyCommentControl>
             {
               isMine?
                 <MyCommentControlInner>
-                  <DeleteComment onClick={() => deleteCommentApi({
-                    commentId: comment.id,
-                    accessToken: accessToken,
-                    history: history
-                  })}>삭제</DeleteComment>
+                  <DeleteComment onClick={onDeleteButtonClicked}>삭제</DeleteComment>
                 </MyCommentControlInner>
               : ""
             }

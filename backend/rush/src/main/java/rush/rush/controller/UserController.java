@@ -33,7 +33,7 @@ public class UserController {
             body(userResponse);
     }
 
-    @GetMapping("users/me/id")
+    @GetMapping("/users/me/id")
     public ResponseEntity<Long> findId(@CurrentUser UserPrincipal userPrincipal) {
         return ResponseEntity.ok()
             .body(userPrincipal.getId());

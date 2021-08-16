@@ -12,7 +12,6 @@ import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import checkHasILikedApi from "../../api/CheckHasILikedApi";
 import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
-import isMyArticleApi from "../../api/IsMyArticleApi";
 import findMyIdApi from "../../api/FindMyIdApi";
 
 const ArticleDetailPage = (props) => {
@@ -43,8 +42,6 @@ const ArticleDetailPage = (props) => {
         [...changeTotalLikesInComment, commentId]);
     }
   };
-
-  const [isMyArticle, setIsMyArticle] = useState(false);
 
   useEffect(() => {
     if (mapType === GROUPED || mapType === PUBLIC || mapType === PRIVATE) {
@@ -84,8 +81,6 @@ const ArticleDetailPage = (props) => {
   }, [articleId, mapType]);
 
   useEffect(() => {
-    isMyArticleApi({articleId, accessToken})
-    .then(resultPromise => setIsMyArticle(resultPromise));
     findMyIdApi({accessToken, history: props.history})
     .then(resultPromise => setMyId(resultPromise))
   }, [articleId, mapType]);
@@ -139,7 +134,7 @@ const ArticleDetailPage = (props) => {
                 isMine={comment.author.id === myId}
                 hasILikedListInComment={hasILikedListInComment}
                 onCommentLikeClicked={onCommentLikeClicked}
-                changetotalLikesInComment={changeTotalLikesInComment}
+                changeTotalLikesInComment={changeTotalLikesInComment}
                 history={props.history}
               />
             ) : "아직 댓글이 없습니다 :)"
