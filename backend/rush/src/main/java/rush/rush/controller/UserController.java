@@ -2,7 +2,6 @@ package rush.rush.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.UserImageResponse;
@@ -18,7 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/users/me/image")
-    public ResponseEntity<UserImageResponse> findUserImageUrl(@CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<UserImageResponse> findUserImageUrl(
+        @CurrentUser UserPrincipal userPrincipal) {
         UserImageResponse userImageResponse = userService.findUserImageUrl(userPrincipal);
 
         return ResponseEntity.ok()
@@ -26,10 +26,16 @@ public class UserController {
     }
 
     @GetMapping("/users/me")
-    public ResponseEntity<UserResponse> findUser(@CurrentUser UserPrincipal userPrincipal){
-            UserResponse userResponse = userService.findUser(userPrincipal);
+    public ResponseEntity<UserResponse> findUser(@CurrentUser UserPrincipal userPrincipal) {
+        UserResponse userResponse = userService.findUser(userPrincipal);
 
-            return ResponseEntity.ok().
-                body(userResponse);
+        return ResponseEntity.ok().
+            body(userResponse);
+    }
+
+    @GetMapping("users/me/id")
+    public ResponseEntity<Long> findId(@CurrentUser UserPrincipal userPrincipal) {
+        return ResponseEntity.ok()
+            .body(userPrincipal.getId());
     }
 }

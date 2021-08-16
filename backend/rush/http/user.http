@@ -1,9 +1,14 @@
-###
-GET http://localhost:8080/users/me/image
+### 내 프로필사진 URL 조회
+GET http://localhost:8080/api/users/me/image
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
 
-###
-GET http://localhost:8080/users/me
+### 내 정보 조회
+GET http://localhost:8080/api/users/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
+
+### 내 id(PK) 조회
+GET http://localhost:8080/api/users/me/id
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
