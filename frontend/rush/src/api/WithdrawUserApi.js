@@ -13,7 +13,7 @@ const withdrawUserApi = ({accessToken, history}) => {
       Authorization: "Bearer " + accessToken
     }
   };
-    axios.delete(BACKEND_ADDRESS + "/auth/withdraw", config)
+    axios.delete(BACKEND_ADDRESS + "/users/me", config)
     .then(response => {
       if (response.status === 204) {
         alert("회원 탈퇴가 완료되었습니다");

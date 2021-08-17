@@ -15,8 +15,3 @@ Content-Type: application/json
   "email" : "dsadsadas@naver.com",
   "password": "dfsfasdsafds"
 }
-
-###
-DELETE http://localhost:8080/api/auth/withdraw
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
