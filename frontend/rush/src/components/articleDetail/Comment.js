@@ -103,8 +103,7 @@ const Comment = ({
         history: history
       });
     }
-  }
-
+  };
   return (
     <CommentBox>
       <Profile imageUrl={comment.author.imageUrl}/>

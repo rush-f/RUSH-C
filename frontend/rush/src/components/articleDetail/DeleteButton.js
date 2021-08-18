@@ -9,7 +9,9 @@ const DeleteButtonStyle = styled.div`
 
 const DeleteButton = ({articleId, accessToken, history}) => {
   const onDeleteButtonClicked = () => {
-    deleteArticleApi({articleId, accessToken, history})
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteArticleApi({articleId, accessToken, history});
+    }
   };
   return (
     <DeleteButtonStyle onClick={onDeleteButtonClicked}>
