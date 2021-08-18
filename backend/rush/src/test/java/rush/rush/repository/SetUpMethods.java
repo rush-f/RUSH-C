@@ -32,13 +32,13 @@ public class SetUpMethods {
         return group;
     }
 
-    public static void persistUserGroup(TestEntityManager testEntityManager, User user,
+    public static UserGroup persistUserGroup(TestEntityManager testEntityManager, User user,
         Group group) {
         UserGroup userGroup = UserGroup.builder()
             .group(group)
             .user(user)
             .build();
-        testEntityManager.persist(userGroup);
+        return testEntityManager.persist(userGroup);
     }
 
     public static Article persistArticle(TestEntityManager testEntityManager, User user,
@@ -66,7 +66,7 @@ public class SetUpMethods {
     }
 
     public static Comment persistComment(TestEntityManager testEntityManager,
-            String content, Article article, User user) {
+        String content, Article article, User user) {
         Comment comment = new Comment(null, content, user, article, null, null);
         return testEntityManager.persist(comment);
     }
