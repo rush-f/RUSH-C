@@ -1,4 +1,5 @@
 package rush.rush.repository;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +9,8 @@ import rush.rush.domain.Comment;
 import rush.rush.dto.CommentResponse;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
+    Long countByIdAndUserId(Long id, Long userId);
 
     @Query("select distinct comment from Comment comment "
         + "where comment.id = :commentId "

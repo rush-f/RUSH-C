@@ -1,16 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import Profile from "./Profile";
 import changeMyLikeInCommentIdApi from "../../api/ChangeMyLikeInCommentApi";
+import deleteCommentApi from "../../api/DeleteCommentApi";
 
 const CommentBox = styled.div`
   margin: 0;
   height: 100px;
   border-bottom: 2px solid rgb(90, 155, 213);
-  padding: 10px;
-  padding-top: 15px;
+  padding: 15px 10px 0 10px;
   display: flex;
   justify: center;
+`;
+
+const CommentRight = styled.div`
+  width: 80%;
 `;
 
 const AuthorName = styled.div`
@@ -18,15 +22,32 @@ const AuthorName = styled.div`
   font-weight: bold;
   margin-bottom: 3px;
 `;
-const CommentLike = styled.div`
+
+const CommentBottom = styled.div`
+  width: 100%;
+  height: 35px;
+  position: relative;
   display: flex;
-`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const CommentLike = styled.div`
+  position: absolute;
+  left: 0;
+`;
+
+const CommentLikeInner = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const LikeHeart = styled.div`
+  display: inline-block;
   font-size: 20px;
-  margin-top: px;
   color: rgb(90, 155, 213);
   cursor: pointer;
-  right: 0;
 
   //아래 5가지는 마우스 드래그를 방지한다
   -ms-user-select: none; 
@@ -34,36 +55,90 @@ const LikeHeart = styled.div`
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
- `
-
-const LikeLetter = styled.div`
-  padding-top:4px;
-  font-size: 13px;
-  margin-left:10px;
 `;
 
-const Comment = ({accessToken, comment, mapType, commentTotalLikes, hasILikedListInComment, onCommentLikeClicked,
-  changetotalLikesInComment, history}) => {
-  const changetotalLikes = changetotalLikesInComment.includes(comment.id) ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0 ;
+const LikeLetter = styled.div`
+  display: inline-block;
+  font-size: 13px;
+  margin-left: 10px;
+`;
 
+const MyCommentControl = styled.div`
+  position: absolute;
+  right: 0;
+`;
+
+const MyCommentControlInner = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const DeleteComment = styled.div`
+  color: #777777;
+  display: inline-block;
+  font-size: 13px;
+`;
+
+const Comment = ({
+  accessToken,
+  comment,
+  mapType,
+  commentTotalLikes,
+  isMine,
+  hasILikedListInComment,
+  onCommentLikeClicked,
+  changeTotalLikesInComment,
+  history
+}) => {
+  const changeTotalLikes = changeTotalLikesInComment.includes(comment.id)
+    ? (hasILikedListInComment.includes(comment.id) ? 1 : -1) : 0;
+
+  const onDeleteButtonClicked = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteCommentApi({
+        commentId: comment.id,
+        accessToken: accessToken,
+        history: history
+      });
+    }
+  };
   return (
-      <CommentBox>
-        <Profile imageUrl={comment.author.imageUrl}/>
-        <div>
-          <AuthorName>
-            {comment.author.nickName}
-          </AuthorName>
-          <div>{comment.content}</div>
+    <CommentBox>
+      <Profile imageUrl={comment.author.imageUrl}/>
+      <CommentRight>
+        <AuthorName>
+          {comment.author.nickName}
+        </AuthorName>
+        <div>{comment.content}</div>
+        <CommentBottom>
           <CommentLike>
-            <LikeHeart
-              onClick={() => {
-                changeMyLikeInCommentIdApi(accessToken, hasILikedListInComment.includes(comment.id), comment.id, mapType,  history);
-                onCommentLikeClicked(comment.id);
-              }}>{hasILikedListInComment.includes(comment.id) ?"♥":"♡"} </LikeHeart>
-            <LikeLetter>좋아요 { commentTotalLikes ? commentTotalLikes + changetotalLikes : 0 + changetotalLikes }개</LikeLetter>
+            <CommentLikeInner>
+              <LikeHeart
+                onClick={() => {
+                  changeMyLikeInCommentIdApi(accessToken,
+                    hasILikedListInComment.includes(comment.id), comment.id,
+                    mapType, history);
+                  onCommentLikeClicked(comment.id);
+                }}>{hasILikedListInComment.includes(comment.id) ? "♥"
+                : "♡"} </LikeHeart>
+              <LikeLetter>좋아요 {commentTotalLikes ? commentTotalLikes
+                + changeTotalLikes : 0 + changeTotalLikes}개</LikeLetter>
+            </CommentLikeInner>
           </CommentLike>
-        </div>
-      </CommentBox>
+          <MyCommentControl>
+            {
+              isMine?
+                <MyCommentControlInner>
+                  <DeleteComment onClick={onDeleteButtonClicked}>삭제</DeleteComment>
+                </MyCommentControlInner>
+              : ""
+            }
+          </MyCommentControl>
+        </CommentBottom>
+      </CommentRight>
+    </CommentBox>
   );
 };
 

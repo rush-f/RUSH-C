@@ -1,0 +1,13 @@
+### 전체지도 글의 댓글목록 조회
+GET http://localhost:8080/api/articles/public/1/comments
+Content-Type: application/json
+
+### 개인지도 글의 댓글목록 조회
+GET http://localhost:8080/api/articles/private/1/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2ODczNjA0LCJleHAiOjE2MjY4NzU0M
+
+### 그룹지도 글의 댓글목록 조회
+GET http://localhost:8080/api/articles/grouped/1/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2ODczNjA0LCJleHAiOjE2MjY4NzU0M

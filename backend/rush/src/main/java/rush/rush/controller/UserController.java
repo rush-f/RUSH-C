@@ -31,8 +31,14 @@ public class UserController {
     public ResponseEntity<UserResponse> findUser(@CurrentUser UserPrincipal userPrincipal){
             UserResponse userResponse = userService.findUser(userPrincipal.getUser());
 
-            return ResponseEntity.ok().
-                body(userResponse);
+            return ResponseEntity.ok()
+                .body(userResponse);
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<Long> findId(@CurrentUser UserPrincipal userPrincipal) {
+        return ResponseEntity.ok()
+            .body(userPrincipal.getId());
     }
 
     @DeleteMapping

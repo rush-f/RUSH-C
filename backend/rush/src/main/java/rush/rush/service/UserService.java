@@ -8,7 +8,6 @@ import rush.rush.dto.UserImageResponse;
 import rush.rush.dto.UserResponse;
 import rush.rush.repository.UserRepository;
 import rush.rush.security.BadRequestException;
-import rush.rush.security.user.UserPrincipal;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +36,7 @@ public class UserService {
             foundUser.getVisitDate());
     }
 
+    @Transactional
     public void withdraw(User user) {
         if (!userRepository.existsById(user.getId())) {
             throw new BadRequestException("존재하지 않는 회원입니다.");
