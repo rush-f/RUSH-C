@@ -6,7 +6,7 @@ import StyledInput from "./StyledInput";
 import StyledTextarea from "./StyledTextarea";
 import ToStep3Button from "./ToStep3Button";
 import BackButton from "./BackButton";
-import WindowSize from "../../WindowSize";
+import WindowSize from "../../../util/WindowSize";
 
 const BoxInModal = styled.div`
   width: 85%;

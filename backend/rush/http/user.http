@@ -12,3 +12,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4L
 GET http://localhost:8080/api/users/me/id
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIxNDIwNzY4LCJleHAiOjE2MjE0MjI1N
+
+### 회원 탈퇴
+DELETE http://localhost:8080/api/users/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN

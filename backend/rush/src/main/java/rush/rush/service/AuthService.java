@@ -37,7 +37,7 @@ public class AuthService {
     }
 
     public void signUp(SignUpRequest signUpRequest) {
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException("이미 사용중인 이메일입니다.");
         }
         User user = User.builder()

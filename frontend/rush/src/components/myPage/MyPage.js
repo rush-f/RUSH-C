@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {DisplayBox, Outside} from "../common/Box";
-import WindowSize from "../WindowSize";
+import WindowSize from "../../util/WindowSize";
 import CancelButton from "./CancelButton";
 import findUserApi from "../../api/findUserApi";
 import findMyArticlesApi from "../../api/findMyArticlesApi";
@@ -12,6 +12,7 @@ import MyGroups from "./groups/MyGroups";
 import findMyGroupsApi from "../../api/FindMyGroupsApi";
 import styled from "styled-components";
 import {withRouter} from "react-router-dom";
+import WithdrawButton from "./WithdrawButton";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -65,6 +66,11 @@ const MyPage = (props) => {
               myGroups={myGroups}
               isOpened={isGroupsOpened}
               setIsOpened={setIsGroupsOpened}
+          />
+          <WithdrawButton
+              nickName={user ? user.nickName : ""}
+              accessToken={accessToken}
+              history={props.history}
           />
         </DisplayBox>
       </Outside>

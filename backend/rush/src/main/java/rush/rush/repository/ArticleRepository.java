@@ -18,6 +18,17 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween(Long userId,
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
+    @Query("select distinct article from Article article "
+        + "inner join article.articleGroups articlegroup "
+        + "inner join articlegroup.group g "
+        + "inner join g.userGroups usergroup "
+        + "where g.id = :groupId and usergroup.user.id = :userId "
+        + "and article.latitude between :lowerLatitude and :upperLatitude "
+        + "and article.longitude between :lowerLongitude and :upperLongitude")
+    List<Article> findAllOfGroupedMap(@Param("userId") Long userId, @Param("groupId") Long groupId,
+        @Param("lowerLatitude") Double lowerLatitude, @Param("upperLatitude") Double upperLatitude,
+        @Param("lowerLongitude") Double lowerLongitude, @Param("upperLongitude") Double upperLongitude);
+
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
         + "article.content, "
         + "article.latitude, "

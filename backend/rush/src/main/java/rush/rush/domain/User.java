@@ -57,14 +57,28 @@ public class User {
 
     private String providerId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Article> articles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<ArticleLike> articleLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<UserGroup> userGroups = new ArrayList<>();
 
     @Builder
     public User(Long id, String nickName, String password, String email, String imageUrl,
         Timestamp joinDate, Timestamp visitDate, AuthProvider provider, String providerId,
-        List<UserGroup> userGroups) {
-        validate(id, nickName, password, email, imageUrl, joinDate, visitDate, provider, providerId);
+        List<Article> articles, List<Comment> comments, List<ArticleLike> articleLikes,
+        List<CommentLike> commentLikes, List<UserGroup> userGroups) {
+        validate(id, nickName, password, email, imageUrl, joinDate, visitDate, provider,
+            providerId);
         this.id = id;
         this.nickName = nickName;
         this.password = password;
@@ -74,8 +88,21 @@ public class User {
         this.visitDate = visitDate;
         this.provider = provider;
         this.providerId = providerId;
-        if (Objects.nonNull(userGroups))
+        if (Objects.nonNull(articles)) {
+            this.articles = articles;
+        }
+        if (Objects.nonNull(comments)) {
+            this.comments = comments;
+        }
+        if (Objects.nonNull(articleLikes)) {
+            this.articleLikes = articleLikes;
+        }
+        if (Objects.nonNull(commentLikes)) {
+            this.commentLikes = commentLikes;
+        }
+        if (Objects.nonNull(userGroups)) {
             this.userGroups = userGroups;
+        }
     }
 
     private void validate(Long id, String nickName, String password, String email, String imageUrl,
@@ -117,5 +144,70 @@ public class User {
         if (Objects.isNull(provider)) {
             throw new IllegalArgumentException("provider 지정이 안되어있습니다.");
         }
+    }
+
+    public void addArticle(Article newArticle) {
+        if (isAlreadyExist(newArticle)) {
+            return;
+        }
+        articles.add(newArticle);
+    }
+
+    private boolean isAlreadyExist(Article newArticle) {
+        return articles.stream()
+            .anyMatch(article -> article.getId()
+                .equals(newArticle.getId()));
+    }
+
+    public void addComment(Comment newComment) {
+        if (isAlreadyExist(newComment)) {
+            return;
+        }
+        comments.add(newComment);
+    }
+
+    private boolean isAlreadyExist(Comment newComment) {
+        return comments.stream()
+            .anyMatch(comment -> comment.getId()
+                .equals(newComment.getId()));
+    }
+
+    public void addArticleLike(ArticleLike newArticleLike) {
+        if (isAlreadyExist(newArticleLike)) {
+            return;
+        }
+        articleLikes.add(newArticleLike);
+    }
+
+    private boolean isAlreadyExist(ArticleLike newArticleLike) {
+        return articleLikes.stream()
+            .anyMatch(articleLike -> articleLike.getId()
+                .equals(newArticleLike.getId()));
+    }
+
+    public void addCommentLike(CommentLike newCommentLike) {
+        if (isAlreadyExist(newCommentLike)) {
+            return;
+        }
+        commentLikes.add(newCommentLike);
+    }
+
+    private boolean isAlreadyExist(CommentLike newCommentLike) {
+        return commentLikes.stream()
+            .anyMatch(commentLike -> commentLike.getId()
+                .equals(newCommentLike.getId()));
+    }
+
+    public void addUserGroup(UserGroup newUserGroup) {
+        if (isAlreadyExist(newUserGroup)) {
+            return;
+        }
+        userGroups.add(newUserGroup);
+    }
+
+    private boolean isAlreadyExist(UserGroup newUserGroup) {
+        return userGroups.stream()
+            .anyMatch(userGroup -> userGroup.getId()
+                .equals(newUserGroup.getId()));
     }
 }
