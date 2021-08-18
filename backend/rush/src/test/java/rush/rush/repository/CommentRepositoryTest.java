@@ -44,11 +44,12 @@ class CommentRepositoryTest extends RepositoryTest {
         Comment comment1 = persistComment(testEntityManager, COMMENT_CONTENT, user1, article);
         assertThat(comment1.getId()).isNotNull();
 
-        // when & then : user1 이 주어진 글에 쓴 댓글의 수가 1개라고 조회된다.
-        assertThat(commentRepository.countByIdAndUserId(article.getId(), user1.getId()))
+        // when & then : user1 이 comment1 을 작성했기 때문에 조회결과가 1로 나옴
+        assertThat(commentRepository.countByIdAndUserId(comment1.getId(), user1.getId()))
             .isEqualTo(1L);
-        // when & then : user2 가 주어진 글에 쓴 댓글의 수가 0개라고 조회된다.
-        assertThat(commentRepository.countByIdAndUserId(article.getId(), user2.getId()))
+
+        // when & then : user2 는 comment1을 작성하지 않았으므로 조회결과가 0
+        assertThat(commentRepository.countByIdAndUserId(comment1.getId(), user2.getId()))
             .isEqualTo(0L);
     }
 
