@@ -6,7 +6,7 @@ import WritingStep2Modal from "./step2/WritingStep2Modal";
 import WritingStep3Modal from "./step3/WritingStep3Modal";
 import WindowSize from "../WindowSize";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
-import {Redirect} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 const WritingPage = (props) => {
   const [step, setStep] = useState(1);
@@ -57,9 +57,10 @@ const WritingPage = (props) => {
             setIsPrivateMapChecked={setIsPrivateMapChecked}
             checkedGroupIds={checkedGroups}
             setCheckedGroups={setCheckedGroups}
+            history={props.history}
         />
       </>
   );
 };
 
-export default WritingPage;
+export default withRouter(WritingPage);
