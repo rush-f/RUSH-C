@@ -83,6 +83,7 @@ const ArticleDetailPage = (props) => {
   useEffect(() => {
     findMyIdApi({accessToken, history: props.history})
     .then(resultPromise => setMyId(resultPromise))
+    .catch(() => setMyId(-1))
   }, [articleId, mapType]);
 
   return (
