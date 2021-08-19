@@ -99,10 +99,4 @@ public class FindArticleController {
         return ResponseEntity.ok()
             .body(myPageArticleResponse);
     }
-
-    @GetMapping("/{articleId}/is-mine")
-    public ResponseEntity<Boolean> checkIsMyArticle(@PathVariable("articleId") Long articleId, @CurrentUser UserPrincipal user) {
-        return ResponseEntity.ok()
-            .body(findArticleService.isMyArticle(articleId, user.getUser()));
-    }
 }
