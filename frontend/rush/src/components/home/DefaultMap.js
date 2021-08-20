@@ -72,8 +72,8 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
             props.setCenter(mapRef.current.getCenter());
           }}
           onCenterChanged={() =>{
-            let latChangeRange= Math.abs(props.center.lat()-mapRef.current.getCenter().lat())>(5*props.latitudeRange/12);
-            let lngChangeRange= Math.abs(props.center.lng()-mapRef.current.getCenter().lng())>(5*props.longitudeRange/12);
+            let latChangeRange= Math.abs(props.center.lat()-mapRef.current.getCenter().lat())>(props.latitudeRange/4);
+            let lngChangeRange= Math.abs(props.center.lng()-mapRef.current.getCenter().lng())>(props.longitudeRange/4);
             let dummy= (latChangeRange || lngChangeRange)?props.setCenter(mapRef.current.getCenter()): "";
           }}
       >
