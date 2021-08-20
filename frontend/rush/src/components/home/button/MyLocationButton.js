@@ -14,6 +14,10 @@ const MyLocationButton = ({defaultCenter, setDefaultCenter}) => {
             margin: "10px",
             cursor: "pointer"
           }}
+          onClick={()=>{setDefaultCenter({
+            lat: defaultCenter.lat+0.00000000000000000001,
+            lng: defaultCenter.lng+0.00000000000000000001,
+          });}}
       />
   );
 };
