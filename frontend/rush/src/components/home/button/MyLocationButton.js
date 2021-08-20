@@ -7,17 +7,17 @@ const MyLocationButton = ({defaultCenter, setMyLocation}) => {
           style={{
             position: "fixed",
             zIndex: 10,
-            bottom: "60px",
-            right: "-30px",
-            width: "160px",
-            height: "160px",
+            bottom: "65px",
+            right: "-27px",
+            width: "150px",
+            height: "150px",
             margin: "10px",
             cursor: "pointer"
           }}
           onClick={()=>{setMyLocation({
             lat: defaultCenter.lat+0.00000000000000000001,
             lng: defaultCenter.lng+0.00000000000000000001,
-          });}}
+          })}}
       />
   );
 };
