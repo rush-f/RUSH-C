@@ -19,6 +19,7 @@ import CreateGroupModal from "./group/create/CreateGroupModal";
 import JoinGroupModal from "./group/join/JoinGroupModal";
 import MapType from "./MapTypeStyle";
 import findGroupApi from "../../api/FindGroupApi";
+import MyLocationButton from "./button/MyLocationButton";
 
 const DefaultMapPage = (props) => {
   const LatRangeRatio = 0.561906;
@@ -107,6 +108,7 @@ const DefaultMapPage = (props) => {
                 mapType={mapType}
                 articles={articles}
                 defaultCenter={props.location.state ? props.location.state : defaultCenter}
+                setDefaultCenter={setDefaultCenter}
                 setZoom={setZoom}
                 center={center}
                 setCenter={setCenter}
@@ -161,9 +163,13 @@ const DefaultMapPage = (props) => {
           history={props.history}
         />
     }
+    <MyLocationButton
+      defaultCenter={defaultCenter}
+      setDefaultCenter={setDefaultCenter}
+    />
     <WriteButton
-        accessToken={accessToken}
-        defaultCenter={defaultCenter}
+      accessToken={accessToken}
+      defaultCenter={defaultCenter}
     />
   </>);
 };
