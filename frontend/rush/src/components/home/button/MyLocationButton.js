@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyLocationButton = ({defaultCenter, setDefaultCenter}) => {
+const MyLocationButton = ({defaultCenter, setMyLocation}) => {
   return (<img
           src="/myLocation.png"
           alt="my image"
@@ -14,7 +14,7 @@ const MyLocationButton = ({defaultCenter, setDefaultCenter}) => {
             margin: "10px",
             cursor: "pointer"
           }}
-          onClick={()=>{setDefaultCenter({
+          onClick={()=>{setMyLocation({
             lat: defaultCenter.lat+0.00000000000000000001,
             lng: defaultCenter.lng+0.00000000000000000001,
           });}}

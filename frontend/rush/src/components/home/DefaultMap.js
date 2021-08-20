@@ -49,7 +49,7 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
       <GoogleMap
           ref={mapRef}
           defaultZoom={16}
-          center={props.defaultCenter}
+          center={props.myLocation ? props.myLocation : props.defaultCenter}
           defaultOptions={{
             disableDefaultUI:true,
             maxZoom:21,
