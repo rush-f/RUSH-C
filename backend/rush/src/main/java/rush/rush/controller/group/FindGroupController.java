@@ -12,14 +12,14 @@ import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.dto.SimpleUserResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.group.GroupService;
+import rush.rush.service.group.FindGroupService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/groups")
 public class FindGroupController {
 
-    private final GroupService groupService;
+    private final FindGroupService groupService;
 
     @GetMapping("/mine")
     public ResponseEntity<List<GroupSummaryResponse>> findMyGroups(@CurrentUser UserPrincipal userPrincipal) {

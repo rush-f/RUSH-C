@@ -18,24 +18,11 @@ import rush.rush.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class GroupService {
+public class FindGroupService {
 
     private final GroupRepository groupRepository;
     private final UserGroupRepository userGroupRepository;
     private final UserRepository userRepository;
-
-    @Transactional
-    public Long join(String invitationCode, User user) {
-        Group group = groupRepository.findByInvitationCode(invitationCode)
-                .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
-
-        if (hasJoined(group.getId(), user.getId())) {
-            throw new IllegalArgumentException("이미 가입된 그룹입니다.");
-        }
-        saveUserGroup(group, user);
-
-        return group.getId();
-    }
 
     @Transactional
     public List<GroupSummaryResponse> findAllByUser(User user) {
@@ -72,13 +59,5 @@ public class GroupService {
             .findByUserIdAndGroupId(userId, groupId);
 
         return userGroup.isPresent();
-    }
-
-    private void saveUserGroup(Group group, User user) {
-        UserGroup userGroup = UserGroup.builder()
-                .group(group)
-                .user(user)
-                .build();
-        userGroupRepository.save(userGroup);
     }
 }
