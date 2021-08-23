@@ -1,6 +1,5 @@
-package rush.rush.controller;
+package rush.rush.controller.article;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,35 +12,33 @@ import org.springframework.web.bind.annotation.RestController;
 import rush.rush.domain.MapType;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.CommentLikeService;
+import rush.rush.service.article.ArticleLikeService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/articles/{mapType}/comments")
-public class CommentLikeController {
+@RequestMapping("/articles/{mapType}/{articleId}/like")
+public class ArticleLikeController {
 
-    private final CommentLikeService commentLikeService;
+    private final ArticleLikeService articleLikeService;
 
-    @PostMapping("/{commentId}/like")
+    @PostMapping
     public ResponseEntity<Void> changeMyLike(
-        @PathVariable("commentId") Long commentId,
+        @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
         @RequestParam(value = "hasiliked") Boolean hasILiked,
-        @CurrentUser UserPrincipal userPrincipal) {
-        commentLikeService
-            .changeMyLike(commentId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
+        @CurrentUser UserPrincipal userPrincipal){
+        articleLikeService.changeMyLike(articleId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .build();
     }
 
-    @GetMapping("/{articleId}/like")
-    public ResponseEntity<List<Long>> checkMyLike(
+    @GetMapping
+    public ResponseEntity<Boolean> checkMyLike(
         @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
-        @CurrentUser UserPrincipal userPrincipal) {
-        List<Long> result = commentLikeService
-            .hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
+        @CurrentUser UserPrincipal userPrincipal){
+        boolean result= articleLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);

@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.article.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

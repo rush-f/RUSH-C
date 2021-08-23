@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.article.comment;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

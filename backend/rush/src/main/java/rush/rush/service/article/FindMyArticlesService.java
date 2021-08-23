@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.article;
 
 import java.util.List;
 import java.util.stream.Collectors;

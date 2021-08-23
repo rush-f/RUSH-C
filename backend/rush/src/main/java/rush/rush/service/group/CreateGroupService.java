@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.group;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

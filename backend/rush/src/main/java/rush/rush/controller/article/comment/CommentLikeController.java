@@ -1,5 +1,6 @@
-package rush.rush.controller;
+package rush.rush.controller.article.comment;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,33 +13,35 @@ import org.springframework.web.bind.annotation.RestController;
 import rush.rush.domain.MapType;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.ArticleLikeService;
+import rush.rush.service.article.comment.CommentLikeService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/articles/{mapType}/{articleId}/like")
-public class ArticleLikeController {
+@RequestMapping("/articles/{mapType}/comments")
+public class CommentLikeController {
 
-    private final ArticleLikeService articleLikeService;
+    private final CommentLikeService commentLikeService;
 
-    @PostMapping
+    @PostMapping("/{commentId}/like")
     public ResponseEntity<Void> changeMyLike(
-        @PathVariable("articleId") Long articleId,
+        @PathVariable("commentId") Long commentId,
         @PathVariable("mapType") String mapType,
         @RequestParam(value = "hasiliked") Boolean hasILiked,
-        @CurrentUser UserPrincipal userPrincipal){
-        articleLikeService.changeMyLike(articleId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
+        @CurrentUser UserPrincipal userPrincipal) {
+        commentLikeService
+            .changeMyLike(commentId, MapType.from(mapType), hasILiked, userPrincipal.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .build();
     }
 
-    @GetMapping
-    public ResponseEntity<Boolean> checkMyLike(
+    @GetMapping("/{articleId}/like")
+    public ResponseEntity<List<Long>> checkMyLike(
         @PathVariable("articleId") Long articleId,
         @PathVariable("mapType") String mapType,
-        @CurrentUser UserPrincipal userPrincipal){
-        boolean result= articleLikeService.hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
+        @CurrentUser UserPrincipal userPrincipal) {
+        List<Long> result = commentLikeService
+            .hasILiked(articleId, MapType.from(mapType), userPrincipal.getId());
 
         return ResponseEntity.ok()
             .body(result);

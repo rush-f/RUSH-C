@@ -1,4 +1,4 @@
-package rush.rush.controller;
+package rush.rush.controller.group;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.dto.SimpleUserResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.GroupService;
+import rush.rush.service.group.GroupService;
 
 @RequiredArgsConstructor
 @RestController

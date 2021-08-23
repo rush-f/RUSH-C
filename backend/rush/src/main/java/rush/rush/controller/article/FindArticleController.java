@@ -1,4 +1,4 @@
-package rush.rush.controller;
+package rush.rush.controller.article;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +13,8 @@ import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.MyPageArticleResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.FindArticleService;
-import rush.rush.service.FindMyArticlesService;
+import rush.rush.service.article.FindArticleService;
+import rush.rush.service.article.FindMyArticlesService;
 
 @RequiredArgsConstructor
 @RestController

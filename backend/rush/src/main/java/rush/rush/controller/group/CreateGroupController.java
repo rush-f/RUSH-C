@@ -1,4 +1,4 @@
-package rush.rush.controller;
+package rush.rush.controller.group;
 
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.CreateGroupRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.CreateGroupService;
+import rush.rush.service.group.CreateGroupService;
 
 @RequiredArgsConstructor
 @RestController

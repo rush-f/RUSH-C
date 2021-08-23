@@ -1,4 +1,4 @@
-package rush.rush.controller;
+package rush.rush.controller.article;
 
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import rush.rush.domain.Article;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.CreateArticleService;
+import rush.rush.service.article.CreateArticleService;
 
 @RequiredArgsConstructor
 @RestController
