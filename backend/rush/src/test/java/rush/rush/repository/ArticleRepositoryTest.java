@@ -20,7 +20,6 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.dto.ArticleResponse;
-import rush.rush.dto.MyPageArticleResponse;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
@@ -242,19 +241,29 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findArticlesWithCommentsAndLikes() {
+    void findArticlesWithComments() {
         //given
         User user = persistUser(testEntityManager, "test@email.com");
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         persistComment(testEntityManager, "댓글 내용", article1, user);
+        persistComment(testEntityManager, "댓글 내용2", article1, user);
+        persistComment(testEntityManager, "댓글 내용3", article1, user);
+        persistArticleLike(testEntityManager, user, article1);
+        persistArticleLike(testEntityManager, user, article1);
+        persistArticleLike(testEntityManager, user, article1);
         persistArticleLike(testEntityManager, user, article1);
 
+        testEntityManager.flush();
+        testEntityManager.clear();
+
         // when & then
-        List<MyPageArticleResponse> articles = articleRepository
-            .findArticlesWithCommentsAndLikes(user.getId());
-        Long totalComments = articles.get(0).getTotalComments();
+        List<Article> articles = articleRepository
+            .findArticlesWithComments(user.getId());
+        Long totalLikes = articles.get(0).getArticleLikes().stream().count();
+        Integer totalComments = articles.get(0).getComments().size();
         assertThat(articles).hasSize(1);
-        assertThat(totalComments).isEqualTo(1L);
+        assertThat(totalLikes).isEqualTo(4L);
+        assertThat(totalComments).isEqualTo(3);
 
         // when & then
         Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
@@ -262,7 +271,7 @@ class ArticleRepositoryTest extends RepositoryTest {
         Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
         articles = articleRepository
-            .findArticlesWithCommentsAndLikes(user.getId());
+            .findArticlesWithComments(user.getId());
         assertThat(articles).hasSize(4);
     }
 
