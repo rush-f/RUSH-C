@@ -12,10 +12,14 @@ const ArticleContentStyle = styled.div`
 `;
 
 const StyledTitle = styled.div`
+  width: 85%;
   margin-top:5px;
   height: 30px;
   margin-left: 5px;
   font-size: 22px;
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+  white-space:nowrap;
 `;
 
 const StyledInf = styled.div`
@@ -57,7 +61,6 @@ const ArticleContent = (props) => {
     else props.history.push('/articles/grouped/'+props.article.id)
   };
 
-  console.log(props.article)
   return (
       <ArticleContentStyle onClick={()=>{onClickedArticleContent(props.article.publicMap ,props.article.privateMap);}}>
         <StyledTitle>{props.article.title}</StyledTitle>
