@@ -237,34 +237,26 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findArticlesWithGroupsByUserId() {
+    void findArticlesWithCommentsByUserId() {
         //given
         User user = persistUser(testEntityManager, "test@email.com");
 
-        Group group1 = persistGroup(testEntityManager);
-        Group group2 = persistGroup(testEntityManager);
-
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        persistArticleGroup(testEntityManager, article1, group1);
-        persistArticleGroup(testEntityManager, article1, group2);
-
-        testEntityManager.flush();
-        testEntityManager.clear();
-
+        Comment comment = persistComment(testEntityManager, "댓글 내용", article1, user);
         // when & then
-        List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(user.getId());
+        List<Article> articles = articleRepository.findArticlesWithCommentsByUserId(user.getId());
         assertThat(articles).hasSize(1);
-        List<ArticleGroup> articleGroups = articles.get(0)
-            .getArticleGroups();
-        assertThat(articleGroups).hasSize(2);
+        List<Comment> comments = articles.get(0)
+            .getComments();
+        assertThat(comments).hasSize(1);
 
         // when & then
         Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        articles = articleRepository.findArticlesWithGroupsByUserId(
+        articles = articleRepository.findArticlesWithCommentsByUserId(
             user.getId());
         assertThat(articles).hasSize(4);
     }

@@ -91,11 +91,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         @Param("userId") Long userId);
 
     @Query("select distinct article from Article article "
-        + "left join fetch article.articleGroups articlegroups "
-        + "left join fetch articlegroups.group "
+        + "left join fetch article.comments "
         + "where article.user.id = :userId "
         + "order by article.createDate desc")
-    List<Article> findArticlesWithGroupsByUserId(@Param("userId") Long userId);
+    List<Article> findArticlesWithCommentsByUserId(@Param("userId") Long userId);
 
     @Query("select distinct article.user.id from Article article where article.id = :articleId")
     Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
