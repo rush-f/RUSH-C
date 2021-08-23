@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.article;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

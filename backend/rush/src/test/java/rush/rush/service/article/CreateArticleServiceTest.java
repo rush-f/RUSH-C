@@ -1,4 +1,4 @@
-package rush.rush.service;
+package rush.rush.service.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,6 @@ import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.dto.CreateArticleRequest;
 import rush.rush.repository.UserRepository;
-import rush.rush.service.article.CreateArticleService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
