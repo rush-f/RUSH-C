@@ -14,7 +14,7 @@ import rush.rush.service.group.GroupService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/groups")
-public class ManageGroupController {
+public class JoinGroupController {
 
     private final GroupService groupService;
 
