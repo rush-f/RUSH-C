@@ -1,4 +1,4 @@
-package rush.rush.controller.article.comment;
+package rush.rush.controller.comment;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rush.rush.dto.CommentResponse;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.article.comment.FindCommentService;
+import rush.rush.service.comment.FindCommentService;
 
 @RestController
 @RequestMapping("/articles")

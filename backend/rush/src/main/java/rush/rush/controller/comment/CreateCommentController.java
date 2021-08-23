@@ -1,4 +1,4 @@
-package rush.rush.controller.article.comment;
+package rush.rush.controller.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.dto.CreateCommentRequest;
 import rush.rush.security.CurrentUser;
 import rush.rush.security.user.UserPrincipal;
-import rush.rush.service.article.comment.CreateCommentService;
+import rush.rush.service.comment.CreateCommentService;
 
 @RestController
 @RequestMapping("/articles")

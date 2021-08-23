@@ -15,7 +15,7 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
-import rush.rush.service.article.comment.FindCommentService;
+import rush.rush.service.comment.FindCommentService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
