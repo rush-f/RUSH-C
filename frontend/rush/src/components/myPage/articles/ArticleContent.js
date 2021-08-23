@@ -32,10 +32,19 @@ const StyledSubInf = styled.div`
   right: 5px;
 `;
 
-const StyledTotalComments = styled.div`
+const StyledTotalLikes = styled.div`
   display: inline-block;
   margin-right: 5px;
   font-size: 20px;
+  color: rgb(255, 100, 100);
+`;
+
+const StyledTotalComments = styled.div`
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 8px;
+  font-size: 20px;
+  color: rgb(90, 155, 213);
 `;
 
 
@@ -48,12 +57,24 @@ const ArticleContent = (props) => {
     else props.history.push('/articles/grouped/'+props.article.id)
   };
 
+  console.log(props.article)
   return (
       <ArticleContentStyle onClick={()=>{onClickedArticleContent(props.article.publicMap ,props.article.privateMap);}}>
         <StyledTitle>{props.article.title}</StyledTitle>
         <StyledInf>
           <CreateDate iso8601format={props.article.createDate}/>
           <StyledSubInf>
+            <StyledTotalLikes>
+              {props.article.totalLikes}
+            </StyledTotalLikes>
+            <img
+                src="/articleLike.png"
+                alt="my image"
+                style={{
+                  width: "17px",
+                  height: "16px"
+                }}
+            />
             <StyledTotalComments>
               {props.article.totalComments}
             </StyledTotalComments>
@@ -62,7 +83,7 @@ const ArticleContent = (props) => {
                 alt="my image"
                 style={{
                   width: "17px",
-                  height: "17px"
+                  height: "20px"
                 }}
             />
           </StyledSubInf>
