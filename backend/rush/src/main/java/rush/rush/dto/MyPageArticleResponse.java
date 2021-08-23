@@ -16,5 +16,6 @@ public class MyPageArticleResponse {
     private boolean publicMap;
     private boolean privateMap;
     private Date createDate;
+    private Long totalLikes;
     private Long totalComments;
 }

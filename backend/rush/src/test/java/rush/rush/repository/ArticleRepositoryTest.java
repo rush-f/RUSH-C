@@ -20,6 +20,7 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.dto.ArticleResponse;
+import rush.rush.dto.MyPageArticleResponse;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
@@ -28,7 +29,8 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void deleteById(@Autowired CommentRepository commentRepository, @Autowired ArticleLikeRepository articleLikeRepository) {
+    void deleteById(@Autowired CommentRepository commentRepository,
+        @Autowired ArticleLikeRepository articleLikeRepository) {
         User author = persistUser(testEntityManager, "test1@email.com");
         Group group = persistGroup(testEntityManager);
 
@@ -120,7 +122,7 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findAllOfGroupedMap(){
+    void findAllOfGroupedMap() {
         //given
         User user = persistUser(testEntityManager, "test1@email.com");
         User user2 = persistUser(testEntityManager, "test2@email.com");
@@ -138,8 +140,9 @@ class ArticleRepositoryTest extends RepositoryTest {
         //when
         List<Article> articles = articleRepository.findAllOfGroupedMap(user.getId(), group.getId(),
             34.0, 37.0, 125.0, 140.0);
-        List<Article> articles2 = articleRepository.findAllOfGroupedMap(user2.getId(), group.getId(),
-            34.0, 37.0, 125.0, 140.0);
+        List<Article> articles2 = articleRepository
+            .findAllOfGroupedMap(user2.getId(), group.getId(),
+                34.0, 37.0, 125.0, 140.0);
 
         //then
         assertThat(articles.size()).isEqualTo(1);
@@ -159,8 +162,10 @@ class ArticleRepositoryTest extends RepositoryTest {
         persistArticleLike(testEntityManager, user, article2);
 
         // when
-        Optional<ArticleResponse> articleResponse = articleRepository.findByPublicMapWithLikes(article1.getId());
-        Optional<ArticleResponse> articleResponse2 = articleRepository.findByPublicMapWithLikes(article2.getId());
+        Optional<ArticleResponse> articleResponse = articleRepository
+            .findByPublicMapWithLikes(article1.getId());
+        Optional<ArticleResponse> articleResponse2 = articleRepository
+            .findByPublicMapWithLikes(article2.getId());
 
         // then
         assertThat(articleResponse.isPresent()).isTrue();
@@ -237,27 +242,27 @@ class ArticleRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void findArticlesWithCommentsByUserId() {
+    void findArticlesWithCommentsAndLikes() {
         //given
         User user = persistUser(testEntityManager, "test@email.com");
-
         Article article1 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        persistComment(testEntityManager, "댓글 내용", article1, user);
+        persistArticleLike(testEntityManager, user, article1);
 
-        Comment comment = persistComment(testEntityManager, "댓글 내용", article1, user);
         // when & then
-        List<Article> articles = articleRepository.findArticlesWithCommentsByUserId(user.getId());
+        List<MyPageArticleResponse> articles = articleRepository
+            .findArticlesWithCommentsAndLikes(user.getId());
+        Long totalComments = articles.get(0).getTotalComments();
         assertThat(articles).hasSize(1);
-        List<Comment> comments = articles.get(0)
-            .getComments();
-        assertThat(comments).hasSize(1);
+        assertThat(totalComments).isEqualTo(1L);
 
         // when & then
         Article article2 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         Article article3 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
         Article article4 = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
 
-        articles = articleRepository.findArticlesWithCommentsByUserId(
-            user.getId());
+        articles = articleRepository
+            .findArticlesWithCommentsAndLikes(user.getId());
         assertThat(articles).hasSize(4);
     }
 

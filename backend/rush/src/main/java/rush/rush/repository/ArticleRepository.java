@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
 import rush.rush.dto.ArticleResponse;
+import rush.rush.dto.MyPageArticleResponse;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -90,11 +91,18 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> findAsGroupMapArticle(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
-    @Query("select distinct article from Article article "
-        + "left join fetch article.comments "
+    @Query("select distinct new rush.rush.dto.MyPageArticleResponse(article.id, article.title, "
+        + "article.publicMap, "
+        + "article.privateMap, "
+        + "article.createDate, "
+        + "count(articleLikes),"
+        + "count(comments)) from Article article "
+        + "left join article.articleLikes articleLikes "
+        + "left join article.comments comments "
         + "where article.user.id = :userId "
+        + "group by article.id "
         + "order by article.createDate desc")
-    List<Article> findArticlesWithCommentsByUserId(@Param("userId") Long userId);
+    List<MyPageArticleResponse> findArticlesWithCommentsAndLikes(@Param("userId") Long userId);
 
     @Query("select distinct article.user.id from Article article where article.id = :articleId")
     Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
