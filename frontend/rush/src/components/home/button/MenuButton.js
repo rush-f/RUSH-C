@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
@@ -15,7 +15,6 @@ const BurgerMenuContents = styled.div`
 `;
 
 const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
-  const url = accessToken? "/mypage" : "/login";
   useEffect(()=>{
     if(!isMenuOpen)
       setIsGroupOpened(false);

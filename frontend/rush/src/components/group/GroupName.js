@@ -19,11 +19,13 @@ const EditGroupNameButton = styled.div`
   color: #777777;
 `;
 
-const GroupName = (props) => {
+const GroupName = ({groupName, setIsEditNameModalOpen}) => {
   return (
     <Box>
-      <GroupNameStyle>{props.children}</GroupNameStyle>
-      <EditGroupNameButton>edit</EditGroupNameButton>
+      <GroupNameStyle>{groupName}</GroupNameStyle>
+      <EditGroupNameButton onClick={() => setIsEditNameModalOpen(true)}>
+        edit
+      </EditGroupNameButton>
     </Box>
   );
 };
