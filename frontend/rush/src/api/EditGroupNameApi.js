@@ -21,7 +21,7 @@ const editGroupNameApi = ({ groupId, newGroupName, accessToken, history }) => {
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         history.push("/login");
       } else {
-        alert("그룹 가입 실패");
+        alert("그룹이름 변경 실패");
       }
       return Promise.reject();
     });
