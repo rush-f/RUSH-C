@@ -33,7 +33,7 @@ const EditNameModal = ({ isEditNameModalOpen, setIsEditNameModalOpen, group, set
         maxLength='10'
         value={newGroupName}
         onChange={e => setNewGroupName(e.target.value)}
-        placeholder={"바꿀 그룹 이름은?!"}
+        placeholder={"바꿀 그룹 이름"}
       />
       <CompleteButton
         group={group}
