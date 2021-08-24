@@ -1,0 +1,3 @@
+### port 확인
+GET http://localhost:8080/api/port
+Content-Type: application/json
