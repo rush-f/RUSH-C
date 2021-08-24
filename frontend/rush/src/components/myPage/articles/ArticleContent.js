@@ -74,8 +74,8 @@ const ArticleContent = (props) => {
                 src="/articleLike.png"
                 alt="my image"
                 style={{
-                  width: "17px",
-                  height: "16px"
+                  width: "16px",
+                  height: "15px"
                 }}
             />
             <StyledTotalComments>
