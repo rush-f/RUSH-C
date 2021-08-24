@@ -1,5 +1,6 @@
 package rush.rush;
 
+import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -14,7 +15,7 @@ public class RushApplication {
         Profile profile = decideProfile(args);
 
         new SpringApplicationBuilder(RushApplication.class)
-            .properties(location(profile.path()))
+            .properties(location(profile))
             .properties(port(profile.port()))
             .run(args);
     }
@@ -26,11 +27,13 @@ public class RushApplication {
         return Profile.from(args[0]);
     }
 
-    private static String location(String path) {
-        return "spring.config.location="
-            + path + "application.yml,"
-            + path + "application-oauth.yml,"
-            + path + "application-local.yml";
+    private static String location(Profile profile) {
+        String path = profile.path();
+        String value = profile.ymlFileNames().stream()
+            .map(ymlFileName -> path + ymlFileName)
+            .collect(Collectors.joining(","));
+
+        return "spring.config.location=" + value;
     }
 
     private static String port(int port) {
