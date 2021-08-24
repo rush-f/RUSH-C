@@ -1,18 +1,21 @@
 package rush.rush.environment;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Profile {
-    LOCAL(8080, "classpath:"),
-    REAL1(8081, "/app/config"),
-    REAL2(8082, "/app/config");
+    LOCAL(8080, "classpath:", Arrays.asList("application.yml", "application-oauth.yml", "application-local.yml")),
+    REAL1(8081, "/app/config/", Arrays.asList("application.yml", "application-oauth.yml", "application-real.yml")),
+    REAL2(8082, "/app/config/", Arrays.asList("application.yml", "application-oauth.yml", "application-real.yml"));
 
     private final int port;
     private final String path;
+    private List<String> ymlFileNames;
 
-    Profile(int port, String path) {
+    Profile(int port, String path, List<String> ymlFileNames) {
         this.port = port;
         this.path = path;
+        this.ymlFileNames = ymlFileNames;
     }
 
     public static Profile from(String profileText) {
@@ -29,5 +32,9 @@ public enum Profile {
 
     public String path() {
         return path;
+    }
+
+    public List<String> ymlFileNames() {
+        return ymlFileNames;
     }
 }
