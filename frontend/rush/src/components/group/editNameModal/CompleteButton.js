@@ -1,16 +1,25 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
+import editGroupNameApi from "../../../api/EditGroupNameApi";
 
-const CompleteButton = ({isEditNameModalOpen, newGroupName}) => {
+const CompleteButton = ({ isEditNameModalOpen, setIsEditNameModalOpen, newGroupName, group, setGroup, accessToken, history, setNewGroupName }) => {
   return <>
-    {isEditNameModalOpen && <button
+    {isEditNameModalOpen && group.id && <button
       onClick={() => {
         if (!newGroupName) {
           alert("그룹이름을 작성해주세요!");
           return;
         }
-        // Todo : 그룹이름 바꾸기 api 사용
-        // createGroupApi({groupName, history});
+        editGroupNameApi({
+          groupId: group.id,
+          newGroupName: newGroupName,
+          accessToken: accessToken,
+          history: history
+        });
+        setNewGroupName("");
+        group.name = newGroupName;
+        setGroup(group);
+        setIsEditNameModalOpen(false);
       }}
       style={{
         backgroundColor: "#00000000",

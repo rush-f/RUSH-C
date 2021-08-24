@@ -52,6 +52,9 @@ const GroupPage = (props) => {
         <hr style={{margin: "20px 0 8px 0"}}/>
         <GroupMembers members={groupMembers}/>
         <EditNameModal
+          group={group}
+          setGroup={setGroup}
+          accessToken={accessToken}
           isEditNameModalOpen={isEditNameModalOpen}
           setIsEditNameModalOpen={setIsEditNameModalOpen}
         />

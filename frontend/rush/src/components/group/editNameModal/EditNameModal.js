@@ -4,7 +4,7 @@ import CancelButton from "./CancelButton";
 import GroupNameInput from "./GroupNameInput";
 import CompleteButton from "./CompleteButton";
 
-const EditNameModal = ({ isEditNameModalOpen, setIsEditNameModalOpen }) => {
+const EditNameModal = ({ isEditNameModalOpen, setIsEditNameModalOpen, group, setGroup, accessToken }) => {
   const [newGroupName, setNewGroupName] = useState("");
 
   return (
@@ -36,8 +36,11 @@ const EditNameModal = ({ isEditNameModalOpen, setIsEditNameModalOpen }) => {
         placeholder={"바꿀 그룹 이름은?!"}
       />
       <CompleteButton
-        isEditNameModalOpen={setIsEditNameModalOpen}
+        group={group}
+        setGroup={setGroup}
         newGroupName={newGroupName}
+        accessToken={accessToken}
+        isEditNameModalOpen={setIsEditNameModalOpen}
         setIsEditNameModalOpen={setIsEditNameModalOpen}
         setNewGroupName={setNewGroupName}
       />
