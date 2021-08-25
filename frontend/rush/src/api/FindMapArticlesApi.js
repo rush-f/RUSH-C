@@ -61,6 +61,6 @@ export const findGroupedMapArticles = (groupId, latitude, latitudeRange, longitu
       history.push("/login");
       return;
     }
-    alert("이유가 뭔지 모르겠지만 개인지도 글 가져오기에 실패했음...");
+    alert("그룹지도 글 가져오기에 실패함ㅜ");
   });
 };

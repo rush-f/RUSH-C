@@ -21,7 +21,7 @@ const signUpApi = (email, password, nickName, history) => {
       alert("이미 가입되어있는 이메일 입니다");
       return Promise.reject();
     }
-    alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
+    alert("회원가입실패?!");
     history.push("/");
   });
 };
