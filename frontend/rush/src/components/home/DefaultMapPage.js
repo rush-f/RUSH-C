@@ -178,6 +178,7 @@ const DefaultMapPage = (props) => {
         />
     }
     <MyLocationButton
+      setCenter={setCenter}
       defaultCenter={defaultCenter}
       setMyLocation={setMyLocation}
     />
