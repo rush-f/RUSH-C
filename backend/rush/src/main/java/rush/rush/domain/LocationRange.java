@@ -14,7 +14,7 @@ public class LocationRange {
             Double startLongitude, Double longitudeRange) {
         this.lowerLatitude = startLatitude - latitudeRange;
         this.upperLatitude = startLatitude + latitudeRange;
-        this.lowerLongitude = startLongitude - latitudeRange;
+        this.lowerLongitude = startLongitude - longitudeRange;
         this.upperLongitude = startLongitude + longitudeRange;
     }
 }
