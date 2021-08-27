@@ -54,6 +54,18 @@ const DefaultMapPage = (props) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
       setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+      if(props.location.state){
+        setCenter({
+          lat: () => props.location.state.lat,
+          lng: () => props.location.state.lng
+        });
+      }
+      else {
+        setCenter({
+          lat: () => position.coords.latitude,
+          lng: () => position.coords.longitude
+        });
+      }
     })},[]);
 
   useEffect(() => {
