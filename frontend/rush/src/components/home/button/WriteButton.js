@@ -8,7 +8,9 @@ const WriteButton = (props) => {
       <Link to={{
         pathname: url,
         state: {
-          defaultCenter: props.defaultCenter
+          lat: props.center.lat(),
+          lng: props.center.lng(),
+          myLocation: props.defaultCenter
         }
       }}>
         <button style={{

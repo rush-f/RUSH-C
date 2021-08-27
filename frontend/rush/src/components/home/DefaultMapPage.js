@@ -184,6 +184,7 @@ const DefaultMapPage = (props) => {
     />
     <WriteButton
       accessToken={accessToken}
+      center={center}
       defaultCenter={defaultCenter}
     />
   </>);
