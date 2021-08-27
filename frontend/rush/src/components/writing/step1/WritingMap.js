@@ -14,18 +14,16 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
   const [lng, setLng] = useState(null);
 
   useEffect(() => {
-    if (lat == null) {
-      setLat(props.defaultCenter.lat);
-      setLng(props.defaultCenter.lng);
-    }
-  });
+      setLat(props.center.lat);
+      setLng(props.center.lng);
+  },[props.center]);
 
   return (
       <>
         <GoogleMap
             ref={(map) => setMap(map)}
             defaultZoom={16}
-            center={props.defaultCenter}
+            center={{lat: props.center.lat(), lng: props.center.lng()}}
             defaultOptions={{
               disableDefaultUI:true,
               maxZoom:21,
@@ -41,8 +39,6 @@ const WritingMap = withScriptjs(withGoogleMap((props) => {
             }}
             onCenterChanged={() => {
               props.setCenter(map.getCenter());
-              setLat(props.center.lat);
-              setLng(props.center.lng);
             }}
             onZoomChanged={() => {
               props.setCenter(map.getCenter());
