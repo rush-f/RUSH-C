@@ -8,10 +8,10 @@ const DeleteButtonStyle = styled.div`
   cursor: pointer;
 `;
 
-const DeleteButton = ({articleId, accessToken, history}) => {
+const DeleteButton = ({articleId, accessToken, markerLat, markerLng, history}) => {
   const onDeleteButtonClicked = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteArticleApi({articleId, accessToken, history});
+      deleteArticleApi({articleId, accessToken, markerLat, markerLng, history});
     }
   };
   return (
