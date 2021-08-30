@@ -3,6 +3,7 @@ package rush.rush.repository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Group;
@@ -22,4 +23,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
         + "inner join usergroup.user user "
         + "where user.id = :userId")
     List<Group> findAllByUserId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("update Group g set g.name = :newGroupName where g.id = :groupId")
+    void editGroupName(@Param("groupId") Long groupId, @Param("newGroupName") String newGroupName);
 }

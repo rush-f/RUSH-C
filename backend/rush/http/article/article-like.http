@@ -1,0 +1,9 @@
+###
+POST http://localhost:8080/api/articles/1/like?hasiliked=false
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwM
+
+###
+GET http://localhost:8080/api/articles/1/like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwM
