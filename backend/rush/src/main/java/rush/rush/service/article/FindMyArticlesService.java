@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
-import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.dto.MyPageArticleResponse;
 import rush.rush.repository.ArticleRepository;
 
@@ -18,7 +17,7 @@ public class FindMyArticlesService {
 
     @Transactional
     public List<MyPageArticleResponse> findMyArticles(Long userId) {
-        List<Article> articles = articleRepository.findArticlesWithGroupsByUserId(userId);
+        List<Article> articles = articleRepository.findArticlesWithComments(userId);
 
         return articles.stream()
             .map(article -> new MyPageArticleResponse(
@@ -26,17 +25,10 @@ public class FindMyArticlesService {
                 article.getTitle(),
                 article.isPublicMap(),
                 article.isPrivateMap(),
-                findAllByArticle(article)
+                article.getCreateDate(),
+                article.getArticleLikes().stream().count(),
+                article.getComments().stream().count()
             ))
             .collect(Collectors.toUnmodifiableList());
-    }
-
-    private List<GroupSummaryResponse> findAllByArticle(Article article) {
-        return article.getArticleGroups().stream()
-            .map((articleGroup) -> new GroupSummaryResponse(
-                articleGroup.getGroup().getId(),
-                articleGroup.getGroup().getName()
-            ))
-            .collect(Collectors.toList());
     }
 }

@@ -6,7 +6,7 @@ const ArticlesList = (props) => {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setHeight(props.isOpened ? (50 * props.myArticles.length) : 0);
+    setHeight(props.isOpened ? (87 * props.myArticles.length) : 0);
   }, [props]);
 
   const articlePresent = props.myArticles ? props.myArticles.map((article, index) =>

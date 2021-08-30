@@ -1,9 +1,9 @@
 ###
-POST http://localhost:8080/articles/1/like?hasiliked=false
+POST http://localhost:8080/api/articles/1/like?hasiliked=false
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwMDV9.ChV6cXV-P_xweNxxpeg25bmDN9sQcoanYgNGsmxxktcF_VgZNryXz2YsMgxMyC6P_o4Ml05Fv7AGK-mMSmbYpA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwM
 
 ###
-GET http://localhost:8080/articles/1/like
+GET http://localhost:8080/api/articles/1/like
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwMDV9.ChV6cXV-P_xweNxxpeg25bmDN9sQcoanYgNGsmxxktcF_VgZNryXz2YsMgxMyC6P_o4Ml05Fv7AGK-mMSmbYpA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI2OTM5MjA1LCJleHAiOjE2MjY5NDEwM

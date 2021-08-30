@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(new RestAuthenticationEntryPoint())
             .and()
             .authorizeRequests()
-            .antMatchers("/oauth2/**", "/h2-console/**") // Todo: h2-console 지울것
+            .antMatchers("/oauth2/**", "/h2-console/**", "/port")
             .permitAll()
             .antMatchers(HttpMethod.GET, "/articles/public/**")
             .permitAll()

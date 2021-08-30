@@ -23,7 +23,7 @@ const findWritingApi = (articleId, mapType, history) => {
         history.push("/login");
         return Promise.reject();
       }
-      alert("이유가 뭔지 모르겠지만 개인지도 글 가져오기에 실패했음...");
+      alert("게시 글 가져오기에 실패했음...");
     });
 };
 

@@ -21,7 +21,7 @@ const emailLoginApi = (email, password, history) => {
       alert("가입하지 않은 이메일이거나, 잘못된 비밀번호 입니다");
       return Promise.reject();
     }
-    alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
+    alert("이메일 로그인 실패!");
     history.push("/");
   });
 };
