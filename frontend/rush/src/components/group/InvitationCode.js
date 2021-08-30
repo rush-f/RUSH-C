@@ -13,6 +13,7 @@ const CopyButton = styled.button`
   padding: 4px 30px;
   font-size: 18px;
   border-radius: 20px;
+  font-family: 'Gowun Dodum', sans-serif;
 `;
 
 const InvitationCode = ({invitationCode}) => {
@@ -38,7 +39,7 @@ const InvitationCode = ({invitationCode}) => {
         type="text"
         ref={tempTextInput}
         style={{
-          background: "skyblue",
+          background: "#e0dfff",
           padding: "8px",
           textAlign: "center",
           borderRadius: "20px",
@@ -47,7 +48,8 @@ const InvitationCode = ({invitationCode}) => {
           fontSize: "18px",
           marginLeft: "5px",
           overflow: "hidden",
-          outline: "none"
+          outline: "none",
+          fontFamily: "'Gowun Dodum', sans-serif"
         }}
         value={invitationCode}
         readOnly

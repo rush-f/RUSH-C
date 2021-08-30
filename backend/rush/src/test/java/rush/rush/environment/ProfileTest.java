@@ -23,7 +23,7 @@ class ProfileTest {
     @Test
     void path() {
         assertThat(Profile.LOCAL.path()).isEqualTo("classpath:");
-        assertThat(Profile.REAL1.path()).isEqualTo("/app/config");
-        assertThat(Profile.REAL2.path()).isEqualTo("/app/config");
+        assertThat(Profile.REAL1.path()).isEqualTo("/app/config/");
+        assertThat(Profile.REAL2.path()).isEqualTo("/app/config/");
     }
 }

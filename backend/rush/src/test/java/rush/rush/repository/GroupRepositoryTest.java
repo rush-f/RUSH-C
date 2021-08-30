@@ -7,6 +7,7 @@ import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,5 +72,24 @@ class GroupRepositoryTest extends RepositoryTest {
 
         // then
         assertThat(groups.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("그룹 이름 바꾸기")
+    void editGroupName() {
+        // given
+        User user = persistUser(testEntityManager, "test@seoultech.com");
+        Group group = persistGroup(testEntityManager);
+        persistUserGroup(testEntityManager, user, group);
+
+        // when
+        String newGroupName = "new group name";
+        groupRepository.editGroupName(group.getId(), newGroupName);
+        testEntityManager.clear();
+
+        // then
+        Group result = testEntityManager.find(Group.class, group.getId());
+        assertThat(result.getName()).isEqualTo(newGroupName);
     }
 }

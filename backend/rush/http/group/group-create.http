@@ -1,0 +1,8 @@
+### 그룹 만들기
+POST http://localhost:8080/api/groups
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1NzE2LCJleHAiOjE2MjUwMTc1M
+
+{
+  "name": "그룹이름"
+}

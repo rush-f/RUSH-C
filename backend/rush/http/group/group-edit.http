@@ -1,0 +1,8 @@
+###
+PUT http://localhost:8080/api/groups/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjIwODkyNzE5LCJleHAiOjE2MjA4OTQ1M
+
+{
+  "newName": "그룹 이름 바꾸기"
+}
