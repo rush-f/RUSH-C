@@ -6,6 +6,7 @@ const Outside = styled.div`
 `;
 
 const DisplayBox = styled.div`
+  position: relative;
   margin: 10px;
   border-radius: 10px;
   overflow-y: scroll;

@@ -4,8 +4,11 @@ import withdrawGroupApi from "../../api/WithdrawGroupApi";
 
 const WithdrawButtonStyle = styled.div`
   color: #777777;
-  margin: 30px 14px;
+  font-size: 13px;
   cursor: pointer;
+  position: absolute;
+  right: 19px;
+  top: 98px;  
 `;
 
 const WithdrawButton = ({groupId, accessToken, history}) => {
