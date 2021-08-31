@@ -17,6 +17,7 @@ const GroupNameStyle = styled.div`
 const EditGroupNameButton = styled.div`
   font-size: 12px;
   color: #777777;
+  cursor: pointer;
 `;
 
 const GroupName = ({groupName, setIsEditNameModalOpen}) => {

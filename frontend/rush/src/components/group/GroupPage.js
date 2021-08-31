@@ -10,6 +10,7 @@ import InvitationCode from "./InvitationCode";
 import findGroupMembersApi from "../../api/FindGroupMembersApi";
 import GroupMembers from "./members/GroupMembers";
 import EditNameModal from "./editNameModal/EditNameModal";
+import WithdrawButton from "./WithdrawButton";
 
 const GroupPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -57,6 +58,11 @@ const GroupPage = (props) => {
           accessToken={accessToken}
           isEditNameModalOpen={isEditNameModalOpen}
           setIsEditNameModalOpen={setIsEditNameModalOpen}
+        />
+        <WithdrawButton
+          groupId={groupId}
+          accessToken={accessToken}
+          history={props.history}
         />
       </DisplayBox>
     </Outside>
