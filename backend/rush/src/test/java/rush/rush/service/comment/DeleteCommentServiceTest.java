@@ -1,4 +1,4 @@
-package rush.rush.service.article;
+package rush.rush.service.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
