@@ -1,6 +1,6 @@
 package rush.rush.service.group;
 
-import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +18,28 @@ public class DeleteMemberService {
 
     @Transactional
     public void deleteMember(Long groupId, Long userId) {
-        List<UserGroup> userGroups = userGroupRepository.findAllByGroupId(groupId);
-        UserGroup userGroup = userGroups.stream()
-            .filter(userGroup1 -> userGroup1.getUser().getId() == userId)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
-                + "ID=" + userId + "인 사용자가 ID=" + groupId + "인 그룹을 삭제할 권한이 없습니다."));
-        userGroupRepository.deleteById(userGroup.getId());
-
-        if (userGroups.stream().count() <= 1) {
-            groupRepository.deleteById(groupId);
+        if (!hasJoined(groupId, userId)) {
+            throw new IllegalArgumentException("groupId=" + groupId + "인 그룹이 없거나, "
+                + "userId=" + userId + "인 사용자에게 "
+                + "groupId=" + groupId + "인 그룹을 탈퇴할 권한이 없습니다.");
         }
+        deleteUserGroup(groupId, userId);
+    }
+
+    private void deleteUserGroup(Long groupId, Long userId) {
+        Long userCount = userGroupRepository.countByGroupId(groupId);
+        if (userCount <= 1) {
+            groupRepository.deleteById(groupId);
+        } else {
+            userGroupRepository.deleteByUserIdAndGroupId(userId, groupId);
+        }
+    }
+
+    // Todo: 인터셉터나 스프링시큐리티로 옮길것
+    private boolean hasJoined(Long groupId, Long userId) {
+        Optional<UserGroup> userGroup = userGroupRepository
+            .findByUserIdAndGroupId(userId, groupId);
+
+        return userGroup.isPresent();
     }
 }
