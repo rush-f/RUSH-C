@@ -58,7 +58,6 @@ public class DeleteMemberSeiviceTest {
                 .user(user)
                 .build()
         );
-        group.adduserGroup(userGroup); // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
     }
 
     @Test
@@ -80,7 +79,6 @@ public class DeleteMemberSeiviceTest {
                 .user(user2)
                 .build()
         );
-        group.adduserGroup(userGroup2);
 
         //when
         deleteMemberService.deleteMember(group.getId(), user.getId());

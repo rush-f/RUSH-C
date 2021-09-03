@@ -24,14 +24,17 @@ public class DeleteMemberService {
                 + "groupId=" + groupId + "인 그룹을 탈퇴할 권한이 없습니다.");
         }
         deleteUserGroup(groupId, userId);
+        deleteGroupIfMemberIsNotExist(groupId);
     }
 
     private void deleteUserGroup(Long groupId, Long userId) {
+        userGroupRepository.deleteByUserIdAndGroupId(userId, groupId);
+    }
+
+    private void deleteGroupIfMemberIsNotExist(Long groupId) {
         Long userCount = userGroupRepository.countByGroupId(groupId);
-        if (userCount <= 1) {
+        if (userCount <= 0) {
             groupRepository.deleteById(groupId);
-        } else {
-            userGroupRepository.deleteByUserIdAndGroupId(userId, groupId);
         }
     }
 

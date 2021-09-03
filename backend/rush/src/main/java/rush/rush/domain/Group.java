@@ -36,7 +36,7 @@ public class Group {
     private Timestamp createDate;
 
 
-    @OneToMany(mappedBy = "group", orphanRemoval = true)
+    @OneToMany(mappedBy = "group")
     private List<UserGroup> userGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "group", orphanRemoval = true)
@@ -69,18 +69,6 @@ public class Group {
             throw new IllegalArgumentException("초대코드는 처음 한번만 정할 수 있습니다. 이미 부여된 초대코드가 존재합니다.");
         }
         this.invitationCode = invitationCode;
-    }
-
-    public void adduserGroup(UserGroup newUserGroup) {
-        if (isAlreadyExist(newUserGroup)) {
-            return;
-        }
-        userGroups.add(newUserGroup);
-    }
-
-    private boolean isAlreadyExist(UserGroup newUserGroup) {
-        return userGroups.stream()
-            .anyMatch(userGroup -> userGroup.getId().equals(newUserGroup.getId()));
     }
 
     public void addArticleGroup(ArticleGroup newArticleGroup) {

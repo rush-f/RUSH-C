@@ -17,7 +17,6 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
-import rush.rush.domain.UserGroup;
 
 class GroupRepositoryTest extends RepositoryTest {
 
@@ -100,21 +99,16 @@ class GroupRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    void deleteById(@Autowired UserGroupRepository userGroupRepository,
-        @Autowired ArticleGroupRepository articleGroupRepository) {
+    void deleteById(@Autowired ArticleGroupRepository articleGroupRepository) {
         //given user, article 각각 그룹에 포함하도록 작성
         User user = persistUser(testEntityManager, "test1@email.com");
         Group group = persistGroup(testEntityManager);
         Article article = persistArticle(testEntityManager, user, true, true, 0.0, 0.0);
-        UserGroup userGroup = persistUserGroup(testEntityManager, user, group);
         ArticleGroup articleGroup = persistArticleGroup(testEntityManager, article, group);
-
-        group.adduserGroup(userGroup); // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
-        group.addArticleGroup(articleGroup);
+        group.addArticleGroup(articleGroup); // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
 
         // then 삭제 전
         assertThat(groupRepository.findAll()).hasSize(1);
-        assertThat(userGroupRepository.findAll()).hasSize(1);
         assertThat(articleGroupRepository.findAll()).hasSize(1);
 
         // when
@@ -122,7 +116,6 @@ class GroupRepositoryTest extends RepositoryTest {
 
         // then 삭제 후
         assertThat(groupRepository.findAll()).hasSize(0);
-        assertThat(userGroupRepository.findAll()).hasSize(0);
         assertThat(articleGroupRepository.findAll()).hasSize(0);
     }
 }
