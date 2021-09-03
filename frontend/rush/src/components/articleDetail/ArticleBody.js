@@ -81,6 +81,8 @@ const ArticleBody = (props) => {
                 <DeleteButton
                   articleId={props.articleId}
                   accessToken={props.accessToken}
+                  markerLat={props.article.latitude}
+                  markerLng={props.article.longitude}
                   history={props.history}
                 />
               </MyArticleControlInner>

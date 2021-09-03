@@ -7,12 +7,13 @@ import WritingStep3Modal from "./step3/WritingStep3Modal";
 import WindowSize from "../../util/WindowSize";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {Redirect, withRouter} from "react-router-dom";
+import MyLocationButton from "./MyLocationButton";
 
 const WritingPage = (props) => {
   const [step, setStep] = useState(1);
   const [center, setCenter] = useState({
-    lat: () => props.location.state.defaultCenter.lat,
-    lng: () => props.location.state.defaultCenter.lng
+    lat: () => props.location.state.lat,
+    lng: () => props.location.state.lng
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -32,9 +33,13 @@ const WritingPage = (props) => {
                     loadingElement={<div style={{height: `100%`}}/>}
                     containerElement={<div style={{height: WindowSize().height}}/>}
                     mapElement={<div style={{height: `100%`}}/>}
-                    defaultCenter={props.location.state.defaultCenter}
                     center={center}
                     setCenter={setCenter}
+        />
+        <MyLocationButton
+            step={step}
+            setCenter={setCenter}
+            myLocation={props.location.state.myLocation}
         />
         <ToStep2Button step={step} setStep={setStep} />
         <WritingStep2Modal
