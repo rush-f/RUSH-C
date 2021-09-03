@@ -35,12 +35,16 @@ public class Group {
     @CreationTimestamp
     private Timestamp createDate;
 
+
     @OneToMany(mappedBy = "group")
     private List<UserGroup> userGroups = new ArrayList<>();
 
+    @OneToMany(mappedBy = "group", orphanRemoval = true)
+    private List<ArticleGroup> articleGroups = new ArrayList<>();
+
     @Builder
     public Group(Long id, String name, String invitationCode, Timestamp createDate,
-            List<UserGroup> userGroups) {
+        List<UserGroup> userGroups, List<ArticleGroup> articleGroups) {
         validate(name);
         this.id = id;
         this.name = name;
@@ -48,6 +52,9 @@ public class Group {
         this.createDate = createDate;
         if (Objects.nonNull(userGroups)) {
             this.userGroups = userGroups;
+        }
+        if (Objects.nonNull(articleGroups)) {
+            this.articleGroups = articleGroups;
         }
     }
 
@@ -62,5 +69,17 @@ public class Group {
             throw new IllegalArgumentException("초대코드는 처음 한번만 정할 수 있습니다. 이미 부여된 초대코드가 존재합니다.");
         }
         this.invitationCode = invitationCode;
+    }
+
+    public void addArticleGroup(ArticleGroup newArticleGroup) {
+        if (isAlreadyExist(newArticleGroup)) {
+            return;
+        }
+        articleGroups.add(newArticleGroup);
+    }
+
+    private boolean isAlreadyExist(ArticleGroup newArticleGroup) {
+        return articleGroups.stream()
+            .anyMatch(articleGroup -> articleGroup.getId().equals(newArticleGroup.getId()));
     }
 }

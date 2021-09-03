@@ -1,4 +1,4 @@
-package rush.rush.service.article;
+package rush.rush.service.comment;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -60,7 +60,8 @@ class FindCommentServiceTest {
         comment = commentRepository.save(comment);
 
         // when
-        List<CommentResponse> comments = findCommentService.findCommentsOfPublicArticle(article.getId());
+        List<CommentResponse> comments = findCommentService
+            .findCommentsOfPublicArticle(article.getId());
 
         // then
         assertThat(comments).isNotNull();

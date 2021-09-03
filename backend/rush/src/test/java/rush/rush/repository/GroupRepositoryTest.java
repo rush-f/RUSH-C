@@ -1,6 +1,8 @@
 package rush.rush.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistArticleGroup;
 import static rush.rush.repository.SetUpMethods.persistGroup;
 import static rush.rush.repository.SetUpMethods.persistUser;
 import static rush.rush.repository.SetUpMethods.persistUserGroup;
@@ -11,6 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 
@@ -91,5 +95,27 @@ class GroupRepositoryTest extends RepositoryTest {
         // then
         Group result = testEntityManager.find(Group.class, group.getId());
         assertThat(result.getName()).isEqualTo(newGroupName);
+    }
+
+    @Test
+    @Transactional
+    void deleteById(@Autowired ArticleGroupRepository articleGroupRepository) {
+        //given user, article 각각 그룹에 포함하도록 작성
+        User user = persistUser(testEntityManager, "test1@email.com");
+        Group group = persistGroup(testEntityManager);
+        Article article = persistArticle(testEntityManager, user, true, true, 0.0, 0.0);
+        ArticleGroup articleGroup = persistArticleGroup(testEntityManager, article, group);
+        group.addArticleGroup(articleGroup); // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+
+        // then 삭제 전
+        assertThat(groupRepository.findAll()).hasSize(1);
+        assertThat(articleGroupRepository.findAll()).hasSize(1);
+
+        // when
+        groupRepository.deleteById(group.getId());
+
+        // then 삭제 후
+        assertThat(groupRepository.findAll()).hasSize(0);
+        assertThat(articleGroupRepository.findAll()).hasSize(0);
     }
 }
