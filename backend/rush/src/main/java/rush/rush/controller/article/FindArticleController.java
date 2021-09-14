@@ -46,14 +46,11 @@ public class FindArticleController {
 
     @GetMapping("/grouped")
     public ResponseEntity<List<ArticleSummaryResponse>> findGroupedMapArticles(
-        @RequestParam(value = "groupId") Long groupId,
-        @RequestParam(value = "latitude") Double latitude,
-        @RequestParam(value = "latitudeRange") Double latitudeRange,
-        @RequestParam(value = "longitude") Double longitude,
-        @RequestParam(value = "longitudeRange") Double longitudeRange,
-        @CurrentUser UserPrincipal userPrincipal) {
+            @RequestParam(value = "groupId") Long groupId,
+            ArticleRangeRequest articleRangeRequest,
+            @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> groupMapArticles = findArticleService.findGroupedMapArticles(
-            groupId, latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
+            groupId, articleRangeRequest.getLatitude(), articleRangeRequest.getLatitudeRange(), articleRangeRequest.getLongitude(), articleRangeRequest.getLongitudeRange(), userPrincipal.getUser());
         return ResponseEntity.ok()
             .body(groupMapArticles);
     }
