@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rush.rush.dto.ArticleRangeRequest;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.MyPageArticleResponse;
@@ -25,13 +26,9 @@ public class FindArticleController {
     private final FindMyArticlesService findMyArticlesService;
 
     @GetMapping("/public")
-    public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
-            @RequestParam(value = "latitude") Double latitude,
-            @RequestParam(value = "latitudeRange") Double latitudeRange,
-            @RequestParam(value = "longitude") Double longitude,
-            @RequestParam(value = "longitudeRange") Double longitudeRange) {
+    public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(ArticleRangeRequest request) {
         List<ArticleSummaryResponse> publicMapArticles = findArticleService.findPublicMapArticles(
-            latitude, latitudeRange,longitude, longitudeRange
+            request.getLatitude(), request.getLatitudeRange(),request.getLongitude(), request.getLongitudeRange()
         );
         return ResponseEntity.ok()
             .body(publicMapArticles);
