@@ -36,13 +36,10 @@ public class FindArticleController {
 
     @GetMapping("/private")
     public ResponseEntity<List<ArticleSummaryResponse>> findPrivateMapArticles(
-            @RequestParam(value = "latitude") Double latitude,
-            @RequestParam(value = "latitudeRange") Double latitudeRange,
-            @RequestParam(value = "longitude") Double longitude,
-            @RequestParam(value = "longitudeRange") Double longitudeRange,
+            ArticleRangeRequest request,
             @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> privateMapArticles = findArticleService.findPrivateMapArticles(
-            latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
+            request.getLatitude(), request.getLatitudeRange(),request.getLongitude(), request.getLongitudeRange(), userPrincipal.getUser());
         return ResponseEntity.ok()
             .body(privateMapArticles);
     }
