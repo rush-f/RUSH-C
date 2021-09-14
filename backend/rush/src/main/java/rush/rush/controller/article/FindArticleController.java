@@ -74,8 +74,8 @@ public class FindArticleController {
     }
 
     @GetMapping("/grouped/{id}")
-    public ResponseEntity<ArticleResponse> findPGroupArticle(@PathVariable Long id,
-        @CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<ArticleResponse> findGroupArticle(@PathVariable Long id,
+            @CurrentUser UserPrincipal userPrincipal) {
         ArticleResponse articleResponse= findArticleService.findGroupArticle(id,
             userPrincipal.getUser());
 
