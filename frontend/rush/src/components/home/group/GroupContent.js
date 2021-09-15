@@ -2,11 +2,16 @@ import React from 'react';
 import styled from "styled-components";
 import {GROUPED} from "../../../constants/MapType";
 
-const GroupContentStyle = styled.li`
+
+const StyledDiv = styled.div`
+  position: relative;
   height: 50px;
-  font-size: 110%;
   margin-bottom: 6px;
   margin-left: 20px;
+`;
+const GroupContentStyle = styled.li` 
+  position: absolute;
+  font-size: 110%;
   cursor: pointer;
 `;
 
@@ -17,7 +22,7 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
     setIsMenuOpen(false);
   };
 
-  return (<div>
+  return (<StyledDiv>
     <GroupContentStyle onClick={() => onClick()}>
         {groupName}
       </GroupContentStyle>
@@ -25,14 +30,16 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
       src="/groupSetting.png"
       alt="my image"
       style={{
+        position: "absolute",
         zIndex: 10,
+        right: "10px",
         width: "20px",
         height: "20px",
-        margin: "10px",
+        marginTop: "4px",
         cursor: "pointer"
       }}
       onClick={()=>{alert("Fff");}}
-  /></div>
+  /></StyledDiv>
   );
 };
 
