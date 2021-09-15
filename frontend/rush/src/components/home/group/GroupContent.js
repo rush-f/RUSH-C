@@ -17,10 +17,22 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
     setIsMenuOpen(false);
   };
 
-  return (
-      <GroupContentStyle onClick={() => onClick()}>
+  return (<div>
+    <GroupContentStyle onClick={() => onClick()}>
         {groupName}
       </GroupContentStyle>
+  <img
+      src="/groupSetting.png"
+      alt="my image"
+      style={{
+        zIndex: 10,
+        width: "20px",
+        height: "20px",
+        margin: "10px",
+        cursor: "pointer"
+      }}
+      onClick={()=>{alert("Fff");}}
+  /></div>
   );
 };
 
