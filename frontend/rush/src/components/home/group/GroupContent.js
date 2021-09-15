@@ -33,7 +33,7 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
         position: "absolute",
         zIndex: 10,
         right: "10px",
-        width: "20px",
+        width: "40px",
         height: "20px",
         marginTop: "4px",
         cursor: "pointer"
