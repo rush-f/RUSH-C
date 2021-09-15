@@ -15,7 +15,7 @@ const GroupContentStyle = styled.li`
   cursor: pointer;
 `;
 
-const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId}) => {
+const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId, history}) => {
   const onClick = () => {
     setMapType(GROUPED);
     setGroupId(groupId);
@@ -38,7 +38,7 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
         marginTop: "4px",
         cursor: "pointer"
       }}
-      onClick={()=>{alert("Fff");}}
+      onClick={()=>history.push("/groups/" + groupId)}
   /></StyledDiv>
   );
 };
