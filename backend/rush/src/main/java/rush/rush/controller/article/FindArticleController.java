@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rush.rush.dto.ArticleRangeRequest;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
 import rush.rush.dto.MyPageArticleResponse;
@@ -25,13 +26,9 @@ public class FindArticleController {
     private final FindMyArticlesService findMyArticlesService;
 
     @GetMapping("/public")
-    public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(
-            @RequestParam(value = "latitude") Double latitude,
-            @RequestParam(value = "latitudeRange") Double latitudeRange,
-            @RequestParam(value = "longitude") Double longitude,
-            @RequestParam(value = "longitudeRange") Double longitudeRange) {
+    public ResponseEntity<List<ArticleSummaryResponse>> findPublicMapArticles(ArticleRangeRequest request) {
         List<ArticleSummaryResponse> publicMapArticles = findArticleService.findPublicMapArticles(
-            latitude, latitudeRange,longitude, longitudeRange
+            request.getLatitude(), request.getLatitudeRange(),request.getLongitude(), request.getLongitudeRange()
         );
         return ResponseEntity.ok()
             .body(publicMapArticles);
@@ -39,27 +36,26 @@ public class FindArticleController {
 
     @GetMapping("/private")
     public ResponseEntity<List<ArticleSummaryResponse>> findPrivateMapArticles(
-            @RequestParam(value = "latitude") Double latitude,
-            @RequestParam(value = "latitudeRange") Double latitudeRange,
-            @RequestParam(value = "longitude") Double longitude,
-            @RequestParam(value = "longitudeRange") Double longitudeRange,
-            @CurrentUser UserPrincipal userPrincipal) {
+            ArticleRangeRequest request, @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> privateMapArticles = findArticleService.findPrivateMapArticles(
-            latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
+            request.getLatitude(), request.getLatitudeRange(),request.getLongitude(), request.getLongitudeRange(), userPrincipal.getUser());
         return ResponseEntity.ok()
             .body(privateMapArticles);
     }
 
     @GetMapping("/grouped")
     public ResponseEntity<List<ArticleSummaryResponse>> findGroupedMapArticles(
-        @RequestParam(value = "groupId") Long groupId,
-        @RequestParam(value = "latitude") Double latitude,
-        @RequestParam(value = "latitudeRange") Double latitudeRange,
-        @RequestParam(value = "longitude") Double longitude,
-        @RequestParam(value = "longitudeRange") Double longitudeRange,
-        @CurrentUser UserPrincipal userPrincipal) {
+            @RequestParam(value = "groupId") Long groupId,
+            ArticleRangeRequest articleRangeRequest,
+            @CurrentUser UserPrincipal userPrincipal) {
         List<ArticleSummaryResponse> groupMapArticles = findArticleService.findGroupedMapArticles(
-            groupId, latitude, latitudeRange, longitude, longitudeRange, userPrincipal.getUser());
+            groupId,
+            articleRangeRequest.getLatitude(),
+            articleRangeRequest.getLatitudeRange(),
+            articleRangeRequest.getLongitude(),
+            articleRangeRequest.getLongitudeRange(),
+            userPrincipal.getUser()
+        );
         return ResponseEntity.ok()
             .body(groupMapArticles);
     }
@@ -75,18 +71,16 @@ public class FindArticleController {
     @GetMapping("/private/{id}")
     public ResponseEntity<ArticleResponse> findPrivateArticle(@PathVariable Long id,
             @CurrentUser UserPrincipal userPrincipal) {
-        ArticleResponse articleResponse= findArticleService.findPrivateArticle(id,
-            userPrincipal.getUser());
+        ArticleResponse articleResponse= findArticleService.findPrivateArticle(id, userPrincipal.getUser());
 
         return ResponseEntity.ok()
             .body(articleResponse);
     }
 
     @GetMapping("/grouped/{id}")
-    public ResponseEntity<ArticleResponse> findPGroupArticle(@PathVariable Long id,
-        @CurrentUser UserPrincipal userPrincipal) {
-        ArticleResponse articleResponse= findArticleService.findGroupArticle(id,
-            userPrincipal.getUser());
+    public ResponseEntity<ArticleResponse> findGroupArticle(@PathVariable Long id,
+            @CurrentUser UserPrincipal userPrincipal) {
+        ArticleResponse articleResponse= findArticleService.findGroupArticle(id, userPrincipal.getUser());
 
         return ResponseEntity.ok()
             .body(articleResponse);
