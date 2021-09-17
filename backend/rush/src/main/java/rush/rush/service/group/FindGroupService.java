@@ -24,7 +24,7 @@ public class FindGroupService {
     private final UserGroupRepository userGroupRepository;
     private final UserRepository userRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<GroupSummaryResponse> findAllByUser(User user) {
         List<Group> groups = groupRepository.findAllByUserId(user.getId());
 
@@ -33,7 +33,7 @@ public class FindGroupService {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public GroupResponse findOne(Long groupId, User user) {
         Group group = groupRepository.findByGroupIdAndUserId(groupId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
@@ -41,7 +41,7 @@ public class FindGroupService {
         return new GroupResponse(group.getId(), group.getName(), group.getInvitationCode(), group.getCreateDate());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<SimpleUserResponse> findMembers(Long groupId, User user) {
         if (!hasJoined(groupId, user.getId())) {
             throw new IllegalArgumentException("userId=" + user.getId() + "인 사용자가 "
