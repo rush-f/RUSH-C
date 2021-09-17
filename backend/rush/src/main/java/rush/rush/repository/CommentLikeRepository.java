@@ -2,8 +2,10 @@ package rush.rush.repository;
 
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.CommentLike;
 
@@ -16,6 +18,7 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "where article.id = :articleId "
         + "and article.publicMap = true "
         + "and commentLike.user.id = :userId")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Long> findPublicArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
@@ -26,6 +29,7 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "and article.privateMap = true "
         + "and article.user.id = :userId "
         + "and commentLike.user.id = :userId")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Long> findPrivateArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
@@ -38,6 +42,7 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
         + "where article.id = :articleId "
         + "and user.id = :userId "
         + "and commentLike.user.id = :userId ")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Long> findGroupedArticleCommentIdsILiked(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 }
