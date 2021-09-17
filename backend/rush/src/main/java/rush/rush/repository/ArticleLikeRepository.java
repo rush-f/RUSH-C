@@ -1,10 +1,8 @@
 package rush.rush.repository;
 
 import java.util.Optional;
-import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.ArticleLike;
 
@@ -16,7 +14,6 @@ public interface ArticleLikeRepository extends JpaRepository<ArticleLike, Long> 
         + "where articlelike.article.id = :articleId "
         + "and articlelike.article.publicMap = true "
         + "and articlelike.user.id = :userId ")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Long countOfPublicArticle(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
@@ -24,7 +21,6 @@ public interface ArticleLikeRepository extends JpaRepository<ArticleLike, Long> 
         + "where articlelike.article.id = :articleId "
         + "and articlelike.article.user.id = :userId "
         + "and articlelike.user.id = :userId ")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Long countOfPrivateArticle(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
@@ -37,7 +33,6 @@ public interface ArticleLikeRepository extends JpaRepository<ArticleLike, Long> 
         + "where article.id = :articleId "
         + "and user.id = :userId "
         + "and articlelike.user.id = :userId ")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Long countOfGroupedArticle(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 }

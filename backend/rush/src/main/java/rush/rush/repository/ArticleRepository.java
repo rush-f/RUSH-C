@@ -46,7 +46,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "left join article.articleLikes articleLikes "
         + "inner join article.user user "
         + "where article.publicMap = true and article.id = :articleId")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<ArticleResponse> findByPublicMapWithLikes(@Param("articleId") Long articleId);
 
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
@@ -61,7 +60,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "left join article.articleLikes articleLikes "
         + "inner join article.user user "
         + "where article.privateMap = true and article.id = :articleId and user.id = :userId ")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<ArticleResponse> findByPrivateMapWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
@@ -81,7 +79,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join usergroup.user groupmember "
         + "inner join article.user user "
         + "where article.id = :articleId and groupmember.id = :userId ")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<ArticleResponse> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 

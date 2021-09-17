@@ -2,10 +2,8 @@ package rush.rush.repository;
 
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Comment;
 import rush.rush.dto.CommentResponse;
@@ -46,7 +44,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         + "and comment.article.publicMap = true "
         + "group by comment.id "
         + "order by comment.createDate desc")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<CommentResponse> findAllOfPublicArticle(
         @Param("articleId") Long articleId);
 
@@ -66,7 +63,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         + "and usergroup.user.id = :userId "
         + "group by comment.id "
         + "order by comment.createDate desc")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<CommentResponse> findAllOfGroupedArticle(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 
@@ -83,7 +79,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         + "and comment.article.user.id = :userId "
         + "group by comment.id "
         + "order by comment.createDate desc")
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<CommentResponse> findAllOfPrivateArticle(
         @Param("articleId") Long articleId, @Param("userId") Long userId);
 }
