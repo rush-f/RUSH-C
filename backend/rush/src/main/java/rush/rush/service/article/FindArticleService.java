@@ -20,7 +20,7 @@ public class FindArticleService {
 
     private final ArticleRepository articleRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ArticleResponse findPublicArticle(Long id) {
         ArticleResponse articleResponse = articleRepository.findByPublicMapWithLikes(id)
             .orElseThrow(() ->
@@ -29,7 +29,7 @@ public class FindArticleService {
         return articleResponse;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ArticleResponse findPrivateArticle(Long id, User me) {
         ArticleResponse articleResponse = articleRepository
             .findByPrivateMapWithLikes(id, me.getId())
@@ -39,7 +39,7 @@ public class FindArticleService {
         return articleResponse;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ArticleResponse findGroupArticle(Long id, User me) {
         ArticleResponse articleResponse = articleRepository
             .findAsGroupMapArticleWithLikes(id, me.getId())
@@ -49,7 +49,7 @@ public class FindArticleService {
         return articleResponse;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ArticleSummaryResponse> findPublicMapArticles(
         Double latitude, Double latitudeRange, Double longitude, Double longitudeRange) {
         LocationRange locationRange = new LocationRange(latitude, latitudeRange, longitude,
@@ -63,7 +63,7 @@ public class FindArticleService {
         return toResponses(articles);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ArticleSummaryResponse> findPrivateMapArticles(Double latitude,
         Double latitudeRange, Double longitude, Double longitudeRange, User me) {
         LocationRange locationRange = new LocationRange(latitude, latitudeRange, longitude,
@@ -77,7 +77,7 @@ public class FindArticleService {
         return toResponses(articles);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ArticleSummaryResponse> findGroupedMapArticles(Long groupId,
         Double latitude, Double latitudeRange, Double longitude, Double longitudeRange, User user) {
         LocationRange locationRange = new LocationRange(latitude, latitudeRange, longitude,
