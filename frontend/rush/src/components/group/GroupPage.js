@@ -49,8 +49,10 @@ const GroupPage = (props) => {
         <CancelButton/>
         <GroupHead
           setIsEditNameModalOpen={setIsEditNameModalOpen}
-          groupName={group? group.name : ""}
-          important={group? group.important : false}
+          group={group}
+          setGroup={setGroup}
+          accessToken={accessToken}
+          history={props.history}
         />
         <InvitationCode invitationCode={group.invitationCode}/>
         <hr style={{margin: "20px 0 8px 0"}}/>

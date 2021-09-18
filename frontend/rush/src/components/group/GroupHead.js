@@ -21,14 +21,25 @@ const EditGroupNameButton = styled.div`
   cursor: pointer;
 `;
 
-const GroupHead = ({groupName, setIsEditNameModalOpen, important}) => {
+const GroupHead = ({
+  setIsEditNameModalOpen,
+  group,
+  setGroup,
+  accessToken,
+  history
+}) => {
   return (
     <Box>
-      <GroupNameStyle>{groupName}</GroupNameStyle>
+      <GroupNameStyle>{group.name}</GroupNameStyle>
       <EditGroupNameButton onClick={() => setIsEditNameModalOpen(true)}>
         edit
       </EditGroupNameButton>
-      <ImportantStart important={important} />
+      <ImportantStart
+        group={group}
+        setGroup={setGroup}
+        accessToken={accessToken}
+        history={history}
+      />
     </Box>
   );
 };
