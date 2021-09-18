@@ -35,10 +35,9 @@ public class FindGroupService {
 
     @Transactional
     public GroupResponse findOne(Long groupId, User user) {
-        Group group = groupRepository.findByGroupIdAndUserId(groupId, user.getId())
+        return groupRepository.findGroupDetail(groupId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
                 + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
-        return new GroupResponse(group.getId(), group.getName(), group.getInvitationCode(), group.getCreateDate());
     }
 
     @Transactional

@@ -67,4 +67,12 @@ public class UserGroup {
             throw new IllegalArgumentException("group 객체에 groupId가 없습니다.");
         }
     }
+
+    public void changeImportant() {
+        if (Objects.isNull(important)) {
+            important = true;
+        } else {
+            important = !important;
+        }
+    }
 }

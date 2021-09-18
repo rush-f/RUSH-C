@@ -17,6 +17,7 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.GroupResponse;
 
 class GroupRepositoryTest extends RepositoryTest {
 
@@ -53,8 +54,8 @@ class GroupRepositoryTest extends RepositoryTest {
         persistUserGroup(testEntityManager, user, group);
 
         // when
-        Optional<Group> result = groupRepository
-            .findByGroupIdAndUserId(group.getId(), user.getId());
+        Optional<GroupResponse> result = groupRepository
+            .findGroupDetail(group.getId(), user.getId());
 
         // then
         assertThat(result.isPresent()).isTrue();
