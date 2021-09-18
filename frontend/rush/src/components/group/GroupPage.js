@@ -4,7 +4,7 @@ import {DisplayBox, Outside} from "../common/Box";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import findGroupApi from "../../api/FindGroupApi";
 import {withRouter} from "react-router-dom";
-import GroupName from "./GroupName";
+import GroupHead from "./GroupHead";
 import CancelButton from "./CancelButton";
 import InvitationCode from "./InvitationCode";
 import findGroupMembersApi from "../../api/FindGroupMembersApi";
@@ -19,7 +19,9 @@ const GroupPage = (props) => {
   const [group, setGroup] = useState({
     id: groupId,
     name: "",
-    invitationCode: ""
+    invitationCode: "",
+    important: false,
+    createDate: null
   });
   const [groupMembers, setGroupMembers] = useState([]);
 
@@ -45,9 +47,10 @@ const GroupPage = (props) => {
     <Outside>
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
         <CancelButton/>
-        <GroupName
+        <GroupHead
           setIsEditNameModalOpen={setIsEditNameModalOpen}
           groupName={group? group.name : ""}
+          important={group? group.important : false}
         />
         <InvitationCode invitationCode={group.invitationCode}/>
         <hr style={{margin: "20px 0 8px 0"}}/>

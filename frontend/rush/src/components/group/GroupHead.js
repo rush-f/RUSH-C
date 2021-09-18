@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import ImportantStart from "./ImportantStart";
 
 const Box = styled.div`
   margin-bottom: 15px;
@@ -20,15 +21,16 @@ const EditGroupNameButton = styled.div`
   cursor: pointer;
 `;
 
-const GroupName = ({groupName, setIsEditNameModalOpen}) => {
+const GroupHead = ({groupName, setIsEditNameModalOpen, important}) => {
   return (
     <Box>
       <GroupNameStyle>{groupName}</GroupNameStyle>
       <EditGroupNameButton onClick={() => setIsEditNameModalOpen(true)}>
         edit
       </EditGroupNameButton>
+      <ImportantStart important={important} />
     </Box>
   );
 };
 
-export default GroupName;
+export default GroupHead;
