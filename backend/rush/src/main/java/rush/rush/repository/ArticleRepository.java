@@ -2,8 +2,10 @@ package rush.rush.repository;
 
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
 import rush.rush.dto.ArticleResponse;
@@ -12,9 +14,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findAllByUserId(Long userId);
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Article> findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Article> findAllByPrivateMapTrueAndUserIdAndLatitudeBetweenAndLongitudeBetween(Long userId,
         Double lowerLatitude, Double upperLatitude, Double lowerLongitude, Double upperLongitude);
 
@@ -25,6 +29,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "where g.id = :groupId and usergroup.user.id = :userId "
         + "and article.latitude between :lowerLatitude and :upperLatitude "
         + "and article.longitude between :lowerLongitude and :upperLongitude")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Article> findAllOfGroupedMap(@Param("userId") Long userId, @Param("groupId") Long groupId,
         @Param("lowerLatitude") Double lowerLatitude, @Param("upperLatitude") Double upperLatitude,
         @Param("lowerLongitude") Double lowerLongitude, @Param("upperLongitude") Double upperLongitude);
@@ -94,6 +99,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "left join fetch article.articleLikes articleLikes "
         + "where article.user.id = :userId "
         + "order by article.createDate desc")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<Article> findArticlesWithComments(@Param("userId") Long userId);
 
     @Query("select distinct article.user.id from Article article where article.id = :articleId")

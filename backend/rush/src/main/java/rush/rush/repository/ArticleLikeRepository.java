@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.ArticleLike;
 
-public interface ArticleLikeRepository extends JpaRepository<ArticleLike,Long> {
+public interface ArticleLikeRepository extends JpaRepository<ArticleLike, Long> {
 
     Optional<ArticleLike> findByUserIdAndArticleId(Long userId, Long articleId);
 

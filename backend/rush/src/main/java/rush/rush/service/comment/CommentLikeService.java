@@ -29,7 +29,7 @@ public class CommentLikeService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Long> hasILiked(Long articleId, MapType mapType, Long userId) {
         if (mapType == MapType.PUBLIC) {
             return commentLikeRepository.findPublicArticleCommentIdsILiked(articleId, userId);

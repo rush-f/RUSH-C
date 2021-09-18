@@ -30,7 +30,7 @@ public class ArticleLikeService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean hasILiked(Long articleId, MapType mapType, Long userId) {
         if (mapType == MapType.PUBLIC) {
             return articleLikeRepository.countOfPublicArticle(articleId, userId) >=1;

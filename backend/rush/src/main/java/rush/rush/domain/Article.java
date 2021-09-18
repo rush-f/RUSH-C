@@ -155,4 +155,8 @@ public class Article {
             .anyMatch(articleLike -> articleLike.getId()
                 .equals(newArticleLike.getId()));
     }
+
+    public void changeTitle(String newTitle){
+        this.title = newTitle;
+    }
 }
