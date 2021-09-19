@@ -175,6 +175,7 @@ const DefaultMapPage = (props) => {
     <MyLocationButton
       setCenter={setCenter}
       defaultCenter={defaultCenter}
+      setDefaultCenter={setDefaultCenter}
       setMyLocation={setMyLocation}
     />
     <WriteButton

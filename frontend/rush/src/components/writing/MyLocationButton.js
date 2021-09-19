@@ -3,8 +3,8 @@ import React from 'react';
 const MyLocationButton = ({step, setCenter, myLocation}) => {
   const success = (position) => {
     setCenter({
-      lat: () => myLocation.lat,
-      lng: () => myLocation.lng
+      lat: () => position.coords.latitude,
+      lng: () => position.coords.longitude
     })
   }
 

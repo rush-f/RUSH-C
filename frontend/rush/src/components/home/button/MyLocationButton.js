@@ -1,10 +1,11 @@
 import React from 'react';
 
-const MyLocationButton = ({setCenter, defaultCenter, setMyLocation}) => {
+const MyLocationButton = ({setCenter, defaultCenter, setDefaultCenter, setMyLocation}) => {
   const success = (position) => {
+    setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
     setCenter({
-      lat: () => defaultCenter.lat,
-      lng: () => defaultCenter.lng
+      lat: () => position.coords.latitude,
+      lng: () => position.coords.longitude
     })
     setMyLocation({
       lat: defaultCenter.lat+0.00000000000000000001,
