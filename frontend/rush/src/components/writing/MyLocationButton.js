@@ -1,6 +1,17 @@
 import React from 'react';
 
 const MyLocationButton = ({step, setCenter, myLocation}) => {
+  const success = (position) => {
+    setCenter({
+      lat: () => myLocation.lat,
+      lng: () => myLocation.lng
+    })
+  }
+
+  const error = () => {
+    alert("위치 권한을 허용해 주세요");
+  }
+
   return <>{(step === 1) && <img
       src="/myLocation.png"
       alt="my image"
@@ -14,12 +25,7 @@ const MyLocationButton = ({step, setCenter, myLocation}) => {
         margin: "10px",
         cursor: "pointer"
       }}
-      onClick={() => {
-        setCenter({
-          lat: () => myLocation.lat,
-          lng: () => myLocation.lng
-        })
-      }}
+      onClick={()=> navigator.geolocation.getCurrentPosition(success, error)}
   />}
   </>
 };
