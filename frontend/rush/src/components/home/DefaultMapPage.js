@@ -107,8 +107,6 @@ const DefaultMapPage = (props) => {
     })
   }, [accessToken]);
 
-  console.log(props.location.state)
-  console.log(myLocation+" ddddd")
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
                 loadingElement={<div style={{width: `100%`}}/>}
