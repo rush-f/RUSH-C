@@ -18,6 +18,7 @@ import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.dto.GroupResponse;
+import rush.rush.dto.GroupSummaryResponse;
 
 class GroupRepositoryTest extends RepositoryTest {
 
@@ -119,8 +120,9 @@ class GroupRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    @DisplayName("중요 그룹 목록 조회")
     @Transactional
-    void findImportantGroupsByUserId(@Autowired UserGroupRepository userGroupRepository) {
+    void findImportantGroupsByUserId() {
         // given : 사용자가 여러 그룹에 속해있다.
         User user = persistUser(testEntityManager, "test1@email.com");
 
@@ -135,7 +137,7 @@ class GroupRepositoryTest extends RepositoryTest {
         persistUserGroup(testEntityManager, user, importantGroup2, true);
 
         // when : 중요 그룹 목록을 조회한다.
-        List<Group> importantGroups = groupRepository.findImportantGroupsByUserId(user.getId());
+        List<GroupSummaryResponse> importantGroups = groupRepository.findImportantGroupsByUserId(user.getId());
 
         // then : 중요 그룹들이 조회되었다.
         assertThat(importantGroups.size()).isEqualTo(2);

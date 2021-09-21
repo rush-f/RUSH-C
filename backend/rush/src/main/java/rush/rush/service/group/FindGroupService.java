@@ -34,6 +34,11 @@ public class FindGroupService {
     }
 
     @Transactional
+    public List<GroupSummaryResponse> findImportantGroupsByUser(User user) {
+        return groupRepository.findImportantGroupsByUserId(user.getId());
+    }
+
+    @Transactional
     public GroupResponse findOne(Long groupId, User user) {
         return groupRepository.findGroupDetail(groupId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
