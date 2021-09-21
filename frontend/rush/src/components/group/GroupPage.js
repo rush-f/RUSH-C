@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import WindowSize from "../../util/WindowSize";
 import {DisplayBox, Outside} from "../common/Box";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
-import findGroupApi from "../../api/FindGroupApi";
+import findGroupApi from "../../api/group/FindGroupApi";
 import {withRouter} from "react-router-dom";
-import GroupName from "./GroupName";
+import GroupHead from "./GroupHead";
 import CancelButton from "./CancelButton";
 import InvitationCode from "./InvitationCode";
-import findGroupMembersApi from "../../api/FindGroupMembersApi";
+import findGroupMembersApi from "../../api/group/FindGroupMembersApi";
 import GroupMembers from "./members/GroupMembers";
 import EditNameModal from "./editNameModal/EditNameModal";
 import WithdrawButton from "./WithdrawButton";
@@ -19,7 +19,9 @@ const GroupPage = (props) => {
   const [group, setGroup] = useState({
     id: groupId,
     name: "",
-    invitationCode: ""
+    invitationCode: "",
+    important: false,
+    createDate: null
   });
   const [groupMembers, setGroupMembers] = useState([]);
 
@@ -45,9 +47,12 @@ const GroupPage = (props) => {
     <Outside>
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
         <CancelButton/>
-        <GroupName
+        <GroupHead
           setIsEditNameModalOpen={setIsEditNameModalOpen}
-          groupName={group? group.name : ""}
+          group={group}
+          setGroup={setGroup}
+          accessToken={accessToken}
+          history={props.history}
         />
         <InvitationCode invitationCode={group.invitationCode}/>
         <hr style={{margin: "20px 0 8px 0"}}/>

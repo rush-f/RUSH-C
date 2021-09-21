@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import withdrawGroupApi from "../../api/WithdrawGroupApi";
+import withdrawGroupApi from "../../api/group/WithdrawGroupApi";
 
 const WithdrawButtonStyle = styled.div`
   color: #777777;

@@ -34,18 +34,20 @@ public class UserGroup {
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private Group group;
 
+    private Boolean important;
+
     @CreationTimestamp
     private Timestamp createDate;
 
     @Builder
-    public UserGroup(Long id, User user, Group group, Timestamp createDate) {
+    public UserGroup(Long id, User user, Group group, Timestamp createDate, Boolean important) {
         validate(user);
         validate(group);
-
         this.id = id;
         this.user = user;
         this.group = group;
         this.createDate = createDate;
+        this.important = important;
     }
 
     private void validate(User user) {
@@ -63,6 +65,14 @@ public class UserGroup {
         }
         if (Objects.isNull(group.getId())) {
             throw new IllegalArgumentException("group 객체에 groupId가 없습니다.");
+        }
+    }
+
+    public void changeImportant() {
+        if (Objects.isNull(important)) {
+            important = true;
+        } else {
+            important = !important;
         }
     }
 }

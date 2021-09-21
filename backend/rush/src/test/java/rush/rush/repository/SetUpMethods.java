@@ -32,11 +32,16 @@ public class SetUpMethods {
         return group;
     }
 
+    public static UserGroup persistUserGroup(TestEntityManager testEntityManager, User user, Group group) {
+        return persistUserGroup(testEntityManager, user, group, false);
+    }
+
     public static UserGroup persistUserGroup(TestEntityManager testEntityManager, User user,
-        Group group) {
+            Group group, Boolean important) {
         UserGroup userGroup = UserGroup.builder()
             .group(group)
             .user(user)
+            .important(important)
             .build();
         return testEntityManager.persist(userGroup);
     }

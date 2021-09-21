@@ -1,5 +1,5 @@
 import React from 'react';
-import createWritingApi from "../../../api/CreateWritingApi";
+import createWritingApi from "../../../api/article/CreateWritingApi";
 import {withRouter} from "react-router-dom";
 
 const CompleteButton = ({step, title, content, center, publicMap, privateMap, groupIds, history}) => {

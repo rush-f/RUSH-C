@@ -17,6 +17,8 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
+import rush.rush.dto.GroupResponse;
+import rush.rush.dto.GroupSummaryResponse;
 
 class GroupRepositoryTest extends RepositoryTest {
 
@@ -53,8 +55,8 @@ class GroupRepositoryTest extends RepositoryTest {
         persistUserGroup(testEntityManager, user, group);
 
         // when
-        Optional<Group> result = groupRepository
-            .findByGroupIdAndUserId(group.getId(), user.getId());
+        Optional<GroupResponse> result = groupRepository
+            .findGroupDetail(group.getId(), user.getId());
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -98,24 +100,46 @@ class GroupRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    @Transactional
     void deleteById(@Autowired ArticleGroupRepository articleGroupRepository) {
-        //given user, article 각각 그룹에 포함하도록 작성
+        // given
         User user = persistUser(testEntityManager, "test1@email.com");
         Group group = persistGroup(testEntityManager);
         Article article = persistArticle(testEntityManager, user, true, true, 0.0, 0.0);
         ArticleGroup articleGroup = persistArticleGroup(testEntityManager, article, group);
-        group.addArticleGroup(articleGroup); // 주의!! 고아객체 자동 제거를 위해선 반드시 이 과정이 필요함!!!
+        group.addArticleGroup(articleGroup); // 주의 - 고아객체 자동 제거를 위해선 반드시 이 과정이 필요
 
-        // then 삭제 전
         assertThat(groupRepository.findAll()).hasSize(1);
         assertThat(articleGroupRepository.findAll()).hasSize(1);
 
         // when
         groupRepository.deleteById(group.getId());
 
-        // then 삭제 후
+        // then
         assertThat(groupRepository.findAll()).hasSize(0);
         assertThat(articleGroupRepository.findAll()).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("중요 그룹 목록 조회")
+    @Transactional
+    void findImportantGroupsByUserId() {
+        // given : 사용자가 여러 그룹에 속해있다.
+        User user = persistUser(testEntityManager, "test1@email.com");
+
+        Group group1 = persistGroup(testEntityManager);
+        Group group2 = persistGroup(testEntityManager);
+        Group importantGroup1 = persistGroup(testEntityManager);
+        Group importantGroup2 = persistGroup(testEntityManager);
+
+        persistUserGroup(testEntityManager, user, group1);
+        persistUserGroup(testEntityManager, user, group2);
+        persistUserGroup(testEntityManager, user, importantGroup1, true);
+        persistUserGroup(testEntityManager, user, importantGroup2, true);
+
+        // when : 중요 그룹 목록을 조회한다.
+        List<GroupSummaryResponse> importantGroups = groupRepository.findImportantGroupsByUserId(user.getId());
+
+        // then : 중요 그룹들이 조회되었다.
+        assertThat(importantGroups.size()).isEqualTo(2);
     }
 }

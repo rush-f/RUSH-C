@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {LoginPageBox, LoginButton, StyledInput, HomeButton} from "./Box";
-import emailLoginApi from "../../api/EmailLoginApi";
+import {HomeButton, LoginButton, LoginPageBox, StyledInput} from "./Box";
+import emailLoginApi from "../../api/auth/EmailLoginApi";
 import {Link} from "react-router-dom";
 
 const StyledDiv = styled.div`

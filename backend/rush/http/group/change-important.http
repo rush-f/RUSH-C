@@ -1,0 +1,4 @@
+###
+PUT http://localhost:8080/api/groups/1/important
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDE1NzE2LCJleHAiOjE2MjUwMTc1M

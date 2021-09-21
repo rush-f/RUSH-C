@@ -1,6 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
-import editGroupNameApi from "../../../api/EditGroupNameApi";
+import editGroupNameApi from "../../../api/group/EditGroupNameApi";
 
 const CompleteButton = ({ isEditNameModalOpen, setIsEditNameModalOpen, newGroupName, group, setGroup, accessToken, history, setNewGroupName }) => {
   return <>
