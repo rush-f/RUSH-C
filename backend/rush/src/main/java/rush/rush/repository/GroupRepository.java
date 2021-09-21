@@ -26,6 +26,13 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
         + "where user.id = :userId")
     List<Group> findAllByUserId(@Param("userId") Long userId);
 
+    @Query("select distinct g from Group g "
+        + "inner join g.userGroups usergroup "
+        + "inner join usergroup.user user "
+        + "where user.id = :userId "
+        + "and usergroup.important = true")
+    List<Group> findImportantGroupsByUserId(@Param("userId") Long userId);
+
     @Modifying
     @Query("update Group g set g.name = :newGroupName where g.id = :groupId")
     void editGroupName(@Param("groupId") Long groupId, @Param("newGroupName") String newGroupName);
