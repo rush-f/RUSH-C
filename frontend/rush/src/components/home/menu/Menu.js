@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
-import {PRIVATE, PUBLIC} from "../../../constants/MapType";
+import {GROUPED, PRIVATE, PUBLIC} from "../../../constants/MapType";
 import GroupList from "./group/GroupList";
+import findMyImportantGroupsApi
+  from "../../../api/group/FindMyImportantGroupsApi";
 
 const BurgerMenuContents = styled.div`
   width: 90%;
@@ -35,8 +37,9 @@ const Menu = ({
   }, [isMenuOpen]);
 
   useEffect(() => {
-
-  }, []);
+    findMyImportantGroupsApi({accessToken})
+    .then(responsePromise => setImportantGroups(responsePromise));
+  }, [accessToken]);
 
   return (<>
     <BurgerMenu
@@ -45,6 +48,18 @@ const Menu = ({
         setIsMenuOpen(state.isOpen)
       }}
       disableAutoFocus>
+      {
+        importantGroups.map(importantGroup =>
+          <BurgerMenuContents
+            onClick={() => {
+            setMapType(GROUPED);
+            setGroupId(importantGroup.id);
+            setIsMenuOpen(false);
+          }}>
+            {importantGroup.name}
+          </BurgerMenuContents>
+        )
+      }
       <BurgerMenuContents onClick={() => {
         setMapType(PUBLIC);
         setIsMenuOpen(false);
