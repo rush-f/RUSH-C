@@ -1,8 +1,8 @@
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
-const joinGroupApi = ({invitationCode, history}) => {
+const createGroupApi = ({groupName, history}) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken) {
@@ -10,12 +10,15 @@ const joinGroupApi = ({invitationCode, history}) => {
     history.push('/login');
     return Promise.reject("토큰이 없음");
   }
+  const body = {
+    name: groupName
+  };
   const config = {
     headers: {
       Authorization: "Bearer " + accessToken
     }
   }
-  axios.post(BACKEND_ADDRESS + "/groups/join?invitation_code=" + invitationCode, null, config)
+  axios.post(BACKEND_ADDRESS + "/groups", body, config)
   .then(response => {
     if (response.status === 201) {
       const backGroupUri = response.headers.location;
@@ -29,10 +32,11 @@ const joinGroupApi = ({invitationCode, history}) => {
     if (error.response.status === 401 || error.response.status === 403) {
       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
       history.push("/login");
-      return Promise.reject();
+    } else {
+      alert("그룹 가입 실패");
     }
-    alert("이유가 뭔지 모르겠지만 그룹 가입에 실패했음...");
+    return Promise.reject();
   });
 };
 
-export default joinGroupApi;
+export default createGroupApi;

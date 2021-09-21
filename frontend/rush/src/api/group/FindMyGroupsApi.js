@@ -1,7 +1,10 @@
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
-const findGroupApi = ({ groupId, accessToken, history }) => {
+const findMyGroupsApi = (history) => {
+  const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
+
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
@@ -12,7 +15,7 @@ const findGroupApi = ({ groupId, accessToken, history }) => {
       Authorization: "Bearer " + accessToken
     }
   }
-  return axios.get(BACKEND_ADDRESS + "/groups/" + groupId, config)
+  return axios.get(BACKEND_ADDRESS + "/groups/mine", config)
   .then(response => {
     if (response.status === 200) {
       return response.data
@@ -28,4 +31,4 @@ const findGroupApi = ({ groupId, accessToken, history }) => {
   });
 };
 
-export default findGroupApi;
+export default findMyGroupsApi;

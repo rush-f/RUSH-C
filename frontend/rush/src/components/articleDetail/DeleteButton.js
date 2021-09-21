@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import deleteArticleApi from "../../api/DeleteArticleApi";
+import deleteArticleApi from "../../api/article/DeleteArticleApi";
 
 const DeleteButtonStyle = styled.div`
   color: #777777;

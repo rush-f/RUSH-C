@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
@@ -14,17 +14,37 @@ const BurgerMenuContents = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMapType, setGroupId, setIsCreateGroupModalOpen,  setIsJoinGroupModalOpen, accessToken, history}) => {
-  useEffect(()=>{
-    if(!isMenuOpen)
+const Menu = ({
+  isMenuOpen,
+  setIsMenuOpen,
+  isGroupOpened,
+  setIsGroupOpened,
+  setMapType,
+  setGroupId,
+  setIsCreateGroupModalOpen,
+  setIsJoinGroupModalOpen,
+  accessToken,
+  history
+}) => {
+  const [importantGroups, setImportantGroups] = useState([]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
       setIsGroupOpened(false);
-  },[isMenuOpen]);
+    }
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+
+  }, []);
 
   return (<>
     <BurgerMenu
-        isOpen={isMenuOpen}
-        onStateChange={(state)=>{setIsMenuOpen(state.isOpen)}}
-        disableAutoFocus>
+      isOpen={isMenuOpen}
+      onStateChange={(state) => {
+        setIsMenuOpen(state.isOpen)
+      }}
+      disableAutoFocus>
       <BurgerMenuContents onClick={() => {
         setMapType(PUBLIC);
         setIsMenuOpen(false);
@@ -33,13 +53,13 @@ const Menu = ({isMenuOpen, setIsMenuOpen, isGroupOpened, setIsGroupOpened, setMa
         우리누리 발자국
       </BurgerMenuContents>
       <GroupList
-          setIsMenuOpen={setIsMenuOpen}
-          isGroupOpened={isGroupOpened}
-          setMapType={setMapType}
-          setGroupId={setGroupId}
-          history={history}
-          setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
-          setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        isGroupOpened={isGroupOpened}
+        setMapType={setMapType}
+        setGroupId={setGroupId}
+        history={history}
+        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+        setIsJoinGroupModalOpen={setIsJoinGroupModalOpen}
       />
       <BurgerMenuContents onClick={() => {
         setMapType(PRIVATE);

@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
-const changeMyLikeInCommentIdApi = (accessToken, hasILiked, commentId, mapType, history) => {
+const changeMyLikeApi = (accessToken, hasILiked, articleId, mapType, history) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
@@ -15,7 +15,7 @@ const changeMyLikeInCommentIdApi = (accessToken, hasILiked, commentId, mapType, 
     }
   }
 
-  axios.post(BACKEND_ADDRESS + "/articles/" +mapType + "/comments/" + commentId + "/like?hasiliked=" + hasILiked,{}, config)
+  axios.post(BACKEND_ADDRESS + "/articles/" +mapType + "/" + articleId + "/like?hasiliked=" + hasILiked,{}, config)
   .then(response => {
     if (response.status === 201) {
     }
@@ -31,4 +31,4 @@ const changeMyLikeInCommentIdApi = (accessToken, hasILiked, commentId, mapType, 
   });
 };
 
-export default changeMyLikeInCommentIdApi;
+export default changeMyLikeApi;

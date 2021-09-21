@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
 const checkHasIlikedInCommentApi = (accessToken, articleId, mapType) => {
   const config = {

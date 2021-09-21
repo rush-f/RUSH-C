@@ -1,7 +1,7 @@
 import axios from "axios";
-import {PUBLIC} from "../constants/MapType";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
+import {PUBLIC} from "../../constants/MapType";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 
 const findWritingApi = (articleId, mapType, history) => {
   if (mapType === PUBLIC) {

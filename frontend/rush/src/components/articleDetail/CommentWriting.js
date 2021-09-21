@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import createCommentApi from "../../api/CreateCommentApi";
+import createCommentApi from "../../api/comment/CreateCommentApi";
 
 const StyledDiv = styled.div`
   display: flex;

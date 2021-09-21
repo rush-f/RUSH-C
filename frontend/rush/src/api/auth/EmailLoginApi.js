@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 
 const emailLoginApi = (email, password, history) => {
   const body = {

@@ -1,7 +1,7 @@
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
-const findGroupMembersApi = ({ groupId, accessToken, history }) => {
+const deleteArticleApi = ({articleId, accessToken, markerLat, markerLng, history}) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
@@ -11,21 +11,25 @@ const findGroupMembersApi = ({ groupId, accessToken, history }) => {
     headers: {
       Authorization: "Bearer " + accessToken
     }
-  }
-  return axios.get(BACKEND_ADDRESS + "/groups/" + groupId + "/members", config)
+  };
+  axios.delete(BACKEND_ADDRESS + "/articles/" + articleId, config)
   .then(response => {
-    if (response.status === 200) {
-      return response.data
+    if (response.status === 204) {
+      alert("글이 삭제되었습니다 :)");
+      history.push({
+        pathname:"/",
+        state: {lat: markerLat, lng: markerLng}
+      });
     }
   })
   .catch(error => {
     if (error.response.status === 401 || error.response.status === 403) {
       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
       history.push("/login");
-      return Promise.reject();
+    } else {
+      alert("글 삭제 실패");
     }
-    alert("이유가 뭔지 모르겠지만 그룹원 목록을 불러오는데 실패했음...");
+    return Promise.reject();
   });
 };
-
-export default findGroupMembersApi;
+export default deleteArticleApi;

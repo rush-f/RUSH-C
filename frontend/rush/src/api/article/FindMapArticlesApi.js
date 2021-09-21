@@ -1,7 +1,7 @@
 import axios from "axios";
-import {BACKEND_ADDRESS} from "../constants/ADDRESS";
-import {GROUPED, PRIVATE, PUBLIC} from "../constants/MapType";
-import {ACCESS_TOKEN} from "../constants/SessionStorage";
+import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
+import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
+import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 
 export const findPublicMapArticles = (latitude, latitudeRange, longitude, longitudeRange) => {
   return axios.get(BACKEND_ADDRESS + "/articles/" + PUBLIC

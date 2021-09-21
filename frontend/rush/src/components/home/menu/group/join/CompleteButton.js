@@ -1,5 +1,5 @@
 import React from "react";
-import joinGroupApi from "../../../../../api/JoinGroupApi";
+import joinGroupApi from "../../../../../api/group/JoinGroupApi";
 
 const CompleteButton = ({isCreateGroupModalOpen, invitationCode, history}) => {
   return <>

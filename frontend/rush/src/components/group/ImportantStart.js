@@ -1,5 +1,5 @@
 import React from 'react';
-import changeGroupImportant from "../../api/ChangeGroupImportant";
+import changeGroupImportant from "../../api/group/ChangeGroupImportant";
 
 const ImportantStart = ({group, setGroup, accessToken, history}) => {
   const color = (group && group.important)? "#ffd400" : "#afafaf";
