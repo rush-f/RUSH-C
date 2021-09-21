@@ -3,7 +3,7 @@ import {bubble as BurgerMenu} from "react-burger-menu";
 import "./styled.css";
 import styled from "styled-components";
 import {PRIVATE, PUBLIC} from "../../../constants/MapType";
-import GroupList from "../group/GroupList";
+import GroupList from "./group/GroupList";
 
 const BurgerMenuContents = styled.div`
   width: 90%;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {GROUPED} from "../../../constants/MapType";
+import {GROUPED} from "../../../../constants/MapType";
 
 const GroupContentStyle = styled.li`
   height: 50px;
