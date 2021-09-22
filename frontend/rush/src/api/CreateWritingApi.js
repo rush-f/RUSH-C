@@ -33,7 +33,13 @@ const createWritingApi = ({title, content, center, publicMap, privateMap,
         const split = backArticleUri.split('/');
         const articleId = split[split.length - 1];
         const mapType = split[split.length - 2];
-
+        if(mapType ==='grouped'){
+          history.push({
+            pathname: '/articles/' + mapType + "/" + articleId,
+            state: {groupId: groupIds[0]}
+          })
+          return;
+        }
         history.push("/articles/" + mapType + "/" + articleId);
       }
     })
