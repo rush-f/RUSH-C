@@ -30,7 +30,7 @@ const DefaultMapPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const [userImageUrl, setUserImageUrl] = useState(null);
   // 지도 관련
-  const [mapType, setMapType] = useState(PUBLIC);
+  const [mapType, setMapType] = useState(props.location.state? props.location.state.mapType : PUBLIC);
   const [groupId, setGroupId] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [zoom, setZoom] = useState(16);
@@ -105,6 +105,7 @@ const DefaultMapPage = (props) => {
     })
   }, [accessToken]);
 
+  console.log(props.location.state)
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
                 loadingElement={<div style={{width: `100%`}}/>}

@@ -101,6 +101,7 @@ const ArticleDetailPage = (props) => {
             createDate={article ? article.createDate : ""}
             markerLat={article ? article.latitude : ""}
             markerLng={article ? article.longitude : ""}
+            mapType={mapType}
           />
           <ArticleBody
             accessToken={accessToken}

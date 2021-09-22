@@ -20,7 +20,7 @@ const CancelButton = (props) => {
       <StyledCancelButton onClick={() => {
         props.history.push({
           pathname:"/",
-          state: {lat:props.markerLat, lng:props.markerLng}
+          state: {lat:props.markerLat, lng:props.markerLng, mapType: props.mapType}
         });
       }}>x</StyledCancelButton>
   </div>

@@ -18,6 +18,7 @@ const ArticleMeta = (props) => {
     <CancelButton
         markerLat={props.markerLat}
         markerLng={props.markerLng}
+        mapType={props.mapType}
     />
     <StyledDiv>
       <Profile imageUrl={props.author? props.author.imageUrl : ""}/>
