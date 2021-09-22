@@ -19,6 +19,7 @@ const ArticleMeta = (props) => {
         markerLat={props.markerLat}
         markerLng={props.markerLng}
         mapType={props.mapType}
+        groupId={props.groupId}
     />
     <StyledDiv>
       <Profile imageUrl={props.author? props.author.imageUrl : ""}/>

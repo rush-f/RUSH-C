@@ -102,6 +102,7 @@ const ArticleDetailPage = (props) => {
             markerLat={article ? article.latitude : ""}
             markerLng={article ? article.longitude : ""}
             mapType={mapType}
+            groupId={props.location.state.groupId}
           />
           <ArticleBody
             accessToken={accessToken}
