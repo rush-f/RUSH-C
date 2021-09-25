@@ -49,6 +49,7 @@ const GroupList = (props) => {
                   groupId={group.id}
                   setMapType={props.setMapType}
                   setGroupId={props.setGroupId}
+                  history={props.history}
                 />
               ) : []
             }
