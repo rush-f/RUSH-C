@@ -12,11 +12,11 @@ import rush.rush.domain.UserGroup;
 
 public interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<UserGroup> findAllByUserId(Long userId);
 
     List<UserGroup> findAllByGroupId(Long userId);
 
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<UserGroup> findByUserIdAndGroupId(Long userId, Long groupId);
 
     @Modifying

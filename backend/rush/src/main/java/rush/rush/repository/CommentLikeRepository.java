@@ -2,13 +2,16 @@ package rush.rush.repository;
 
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.CommentLike;
 
 public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> {
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<CommentLike> findByUserIdAndCommentId(Long userId, Long commentId);
 
     @Query("select commentLike.comment.id from CommentLike commentLike "

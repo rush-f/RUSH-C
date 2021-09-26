@@ -82,8 +82,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<ArticleResponse> findAsGroupMapArticleWithLikes(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Article> findByPublicMapTrueAndId(Long articleId);
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Article> findByPrivateMapTrueAndIdAndUserId(Long articleId, Long userId);
 
     @Query("select distinct article from Article article "
@@ -92,6 +94,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user groupmember "
         + "where article.id = :articleId and groupmember.id = :userId")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Article> findAsGroupMapArticle(@Param("articleId") Long articleId,
         @Param("userId") Long userId);
 
@@ -103,5 +106,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findArticlesWithComments(@Param("userId") Long userId);
 
     @Query("select distinct article.user.id from Article article where article.id = :articleId")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
 }
