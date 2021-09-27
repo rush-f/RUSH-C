@@ -15,7 +15,7 @@ public class FindMyArticlesService {
 
     final private ArticleRepository articleRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MyPageArticleResponse> findMyArticles(Long userId) {
         List<Article> articles = articleRepository.findArticlesWithComments(userId);
 

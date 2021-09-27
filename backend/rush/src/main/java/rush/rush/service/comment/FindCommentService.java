@@ -14,17 +14,17 @@ public class FindCommentService {
 
     private final CommentRepository commentRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CommentResponse> findCommentsOfPublicArticle(Long articleId) {
         return commentRepository.findAllOfPublicArticle(articleId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CommentResponse> findCommentsOfPrivateArticle(Long articleId, User user) {
         return commentRepository.findAllOfPrivateArticle(articleId, user.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CommentResponse> findCommentsOfGroupedArticle(Long articleId, User user) {
         return commentRepository.findAllOfGroupedArticle(articleId, user.getId());
     }

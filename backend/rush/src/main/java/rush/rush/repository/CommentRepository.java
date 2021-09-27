@@ -2,8 +2,10 @@ package rush.rush.repository;
 
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Comment;
 import rush.rush.dto.CommentResponse;
@@ -15,11 +17,13 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("select distinct comment from Comment comment "
         + "where comment.id = :commentId "
         + "and comment.article.publicMap = true ")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Comment> findInPublicArticle(@Param("commentId") Long commentId);
 
     @Query("select distinct comment from Comment comment "
         + "where comment.id = :commentId "
         + "and comment.article.user.id = :userId ")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Comment> findInPrivateArticle(@Param("commentId") Long commentId,
         @Param("userId") Long userId);
 
@@ -29,6 +33,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         + "inner join g.userGroups usergroup "
         + "inner join usergroup.user groupmember "
         + "where comment.id = :commentId and groupmember.id = :userId")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Comment> findInGroupedArticle(@Param("commentId") Long commentId,
         @Param("userId") Long userId);
 

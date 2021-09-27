@@ -1,13 +1,16 @@
 package rush.rush.repository;
 
 import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.ArticleLike;
 
-public interface ArticleLikeRepository extends JpaRepository<ArticleLike,Long> {
+public interface ArticleLikeRepository extends JpaRepository<ArticleLike, Long> {
 
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<ArticleLike> findByUserIdAndArticleId(Long userId, Long articleId);
 
     @Query("select count(articlelike) from ArticleLike articlelike "
