@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {HomeButton, LoginButton, StyledInput} from "./Box";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import signUpApi from "../../api/SignUpApi";
+import signUpApi from "../../api/auth/SignUpApi";
 
 const SignUpPageBox = styled.div`
   position:absolute;

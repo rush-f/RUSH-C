@@ -21,6 +21,15 @@ public class FindGroupController {
 
     private final FindGroupService groupService;
 
+    @GetMapping("/mine/important")
+    public ResponseEntity<List<GroupSummaryResponse>> findMyImportantGroups(@CurrentUser UserPrincipal userPrincipal) {
+        List<GroupSummaryResponse> groupSummaryResponses = groupService.findImportantGroupsByUser(
+            userPrincipal.getUser());
+
+        return ResponseEntity.ok()
+            .body(groupSummaryResponses);
+    }
+
     @GetMapping("/mine")
     public ResponseEntity<List<GroupSummaryResponse>> findMyGroups(@CurrentUser UserPrincipal userPrincipal) {
         List<GroupSummaryResponse> groupSummaryResponses = groupService.findAllByUser(userPrincipal.getUser());

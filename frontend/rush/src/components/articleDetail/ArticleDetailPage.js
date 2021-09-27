@@ -2,17 +2,18 @@ import React, {useEffect, useState} from 'react';
 import WindowSize from "../../util/WindowSize";
 import {CommentsBox, DisplayBox, Outside, PostBox} from '../common/Box';
 import ArticleMeta from "./ArticleMeta";
-import findWritingApi from "../../api/FindWritingApi";
+import findWritingApi from "../../api/article/FindWritingApi";
 import ArticleBody from "./ArticleBody";
 import Comment from "./Comment";
 import CommentWriting from "./CommentWriting";
-import findCommentsApi from "../../api/FindCommentsApi";
+import findCommentsApi from "../../api/comment/FindCommentsApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import {withRouter} from "react-router-dom";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
-import checkHasILikedApi from "../../api/CheckHasILikedApi";
-import checkHasIlikedInCommentApi from "../../api/CheckHasIlikedInCommentApi";
-import findMyIdApi from "../../api/FindMyIdApi";
+import checkHasILikedApi from "../../api/article/CheckHasILikedApi";
+import checkHasIlikedInCommentApi
+  from "../../api/comment/CheckHasIlikedInCommentApi";
+import findMyIdApi from "../../api/user/FindMyIdApi";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);

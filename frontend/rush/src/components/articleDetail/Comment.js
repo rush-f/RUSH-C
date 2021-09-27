@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
 import Profile from "./Profile";
-import changeMyLikeInCommentIdApi from "../../api/ChangeMyLikeInCommentApi";
-import deleteCommentApi from "../../api/DeleteCommentApi";
+import changeMyLikeInCommentIdApi
+  from "../../api/comment/ChangeMyLikeInCommentApi";
+import deleteCommentApi from "../../api/comment/DeleteCommentApi";
 
 const CommentBox = styled.div`
   margin: 0;

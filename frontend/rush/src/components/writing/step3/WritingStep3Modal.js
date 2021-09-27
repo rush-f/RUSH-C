@@ -9,7 +9,7 @@ import styled from "styled-components";
 import CompleteButton from "./CompleteButton";
 import BackButton from "./BackButton";
 import WindowSize from "../../../util/WindowSize";
-import findMyGroupsApi from "../../../api/FindMyGroupsApi";
+import findMyGroupsApi from "../../../api/group/FindMyGroupsApi";
 
 const StyledDiv = styled.div`
   padding: 15px;

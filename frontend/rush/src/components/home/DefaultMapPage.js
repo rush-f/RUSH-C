@@ -1,24 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import DefaultMap from "./DefaultMap";
 import {CLIENT_ID} from "../../constants/GoogleMapAuth";
-import Menu from "./button/MenuButton";
+import Menu from "./menu/Menu";
 import LoginButton from "./button/LoginButton";
 import WriteButton from "./button/WriteButton";
 import WindowSize from "../../util/WindowSize";
-import findUserImageUrlApi from "../../api/FindUserImageUrlApi";
+import findUserImageUrlApi from "../../api/user/FindUserImageUrlApi";
 import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 import Profile from "./Profile";
 import {
   findGroupedMapArticles,
   findPrivateMapArticles,
   findPublicMapArticles
-} from "../../api/FindMapArticlesApi";
+} from "../../api/article/FindMapArticlesApi";
 import {GROUPED, PRIVATE, PUBLIC} from "../../constants/MapType";
 import {withRouter} from "react-router-dom";
-import CreateGroupModal from "./group/create/CreateGroupModal";
-import JoinGroupModal from "./group/join/JoinGroupModal";
+import CreateGroupModal from "./menu/group/create/CreateGroupModal";
+import JoinGroupModal from "./menu/group/join/JoinGroupModal";
 import MapType from "./MapTypeStyle";
-import findGroupApi from "../../api/FindGroupApi";
+import findGroupApi from "../../api/group/FindGroupApi";
 import MyLocationButton from "./button/MyLocationButton";
 
 const DefaultMapPage = (props) => {
