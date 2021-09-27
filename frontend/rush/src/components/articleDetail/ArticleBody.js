@@ -62,7 +62,9 @@ const ArticleBody = (props) => {
           {props.article ? props.article.title : ""}
         </ArticleTitle>
         <ArticleContent>
-          {props.article ? props.article.content : ""}
+          {props.article ? props.article.content.split('\n').map((line) => {
+            return (<>{line}<br/></>)
+          }) : ""}
         </ArticleContent>
         <ArticleBottom>
           <ArticleLike>
