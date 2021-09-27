@@ -6,7 +6,12 @@ const ImportantStart = ({group, setGroup, accessToken, history}) => {
 
   return (
     <div
-      style={{color: color, fontSize: "20px", marginLeft: "8px"}}
+      style={{
+        color: color,
+        fontSize: "20px",
+        marginLeft: "8px",
+        cursor: "pointer"
+      }}
       onClick={() => {
         if (group) {
           changeGroupImportant({
