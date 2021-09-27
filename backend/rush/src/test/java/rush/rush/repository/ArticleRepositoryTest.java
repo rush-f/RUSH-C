@@ -289,4 +289,34 @@ class ArticleRepositoryTest extends RepositoryTest {
         assertThat(articleAuthorId.isPresent()).isTrue();
         assertThat(articleAuthorId.get()).isEqualTo(user.getId());
     }
+
+    @Test
+    @Transactional
+    void readOnlyTest() {
+        // given user와 article을 만들고 flush시킴.
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, user, true, true, 37.63, 127.07);
+        String preTitle = article.getTitle();
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        // when & then 데이터 수정하기 전
+        List<Article> articles =
+            articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
+                35.0, 45.0, 125.0, 128.0);
+
+        assertThat(articles.get(0).getTitle()).isEqualTo(preTitle);
+
+        // when  데이터를 수정 후 flush를 하고 다시 데이터를 찾음
+        articles.get(0).changeTitle("새로운 제목");
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        List<Article> articles2 =
+            articleRepository.findAllByPublicMapTrueAndLatitudeBetweenAndLongitudeBetween(
+                35.0, 45.0, 125.0, 128.0);
+
+        //then    수정한 데이터는 반영되지 않고 그대로 유지
+        assertThat(articles2.get(0).getTitle()).isEqualTo(preTitle);
+    }
 }

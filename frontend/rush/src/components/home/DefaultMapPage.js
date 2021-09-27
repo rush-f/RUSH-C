@@ -54,11 +54,13 @@ const DefaultMapPage = (props) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
       setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-      setCenter({
-        lat: () => props.location.state? props.location.state.lat: position.coords.latitude,
-        lng: () => props.location.state? props.location.state.lng: position.coords.longitude
-      });
-    })},[]);
+    });
+    setCenter({
+      lat: () => props.location.state? props.location.state.lat: defaultCenter.lat,
+      lng: () => props.location.state? props.location.state.lng: defaultCenter.lng
+    });
+
+  },[]);
 
   useEffect(() => {
     setLatitudeRange(
@@ -114,7 +116,6 @@ const DefaultMapPage = (props) => {
                 articles={articles}
                 defaultCenter={props.location.state ? props.location.state : defaultCenter}
                 myLocation={myLocation}
-                setDefaultCenter={setDefaultCenter}
                 setZoom={setZoom}
                 center={center}
                 setCenter={setCenter}
@@ -172,6 +173,7 @@ const DefaultMapPage = (props) => {
     <MyLocationButton
       setCenter={setCenter}
       defaultCenter={defaultCenter}
+      setDefaultCenter={setDefaultCenter}
       setMyLocation={setMyLocation}
     />
     <WriteButton

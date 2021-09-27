@@ -24,7 +24,7 @@ public class FindGroupService {
     private final UserGroupRepository userGroupRepository;
     private final UserRepository userRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<GroupSummaryResponse> findAllByUser(User user) {
         List<Group> groups = groupRepository.findAllByUserId(user.getId());
 
@@ -33,19 +33,19 @@ public class FindGroupService {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<GroupSummaryResponse> findImportantGroupsByUser(User user) {
         return groupRepository.findImportantGroupsByUserId(user.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public GroupResponse findOne(Long groupId, User user) {
         return groupRepository.findGroupDetail(groupId, user.getId())
             .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
                 + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<SimpleUserResponse> findMembers(Long groupId, User user) {
         if (!hasJoined(groupId, user.getId())) {
             throw new IllegalArgumentException("userId=" + user.getId() + "인 사용자가 "
