@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import styled from "styled-components";
 import createCommentApi from "../../api/comment/CreateCommentApi";
 
@@ -10,14 +10,16 @@ const StyledDiv = styled.div`
   border-bottom: 2px solid rgb(90, 155, 213);
 `;
 
-const StyledInput = styled.input`
+const StyledTextarea = styled.textarea`
   display: inline-block;
   font-family: 'Gowun Dodum', sans-serif;
   font-size: 17px;
   background-color: #00000000;
-  padding: 10px;
-  height: 10px;
+  padding: 3px 10px 10px 10px;
+  height: 20px;
+  max-height: 80px;
   width: 100%;
+  resize: none;
 `;
 
 const CommentWritingButton = styled.button`
@@ -40,13 +42,28 @@ const CommentWritingButton = styled.button`
 
 const CommentWriting = ({articleId, comments, setComments, mapType, accessToken, history}) => {
   const [inputValue, setInputValue] = useState([]);
+  const writingRef =useRef();
+
+  const handleResizeHeight = useCallback(() => {
+    if (writingRef === null || writingRef.current === null)
+      return;
+    if(writingRef.current.style.height === '20px') {
+      writingRef.current.style.overflow = 'hidden';
+    }
+    else { writingRef.current.style.overflow= '';}
+    writingRef.current.style.height = '20px';
+    writingRef.current.style.height = writingRef.current.scrollHeight-18 + 'px';
+  },[]);
 
   return (
       <StyledDiv>
-        <StyledInput
+        <StyledTextarea
+            ref={writingRef}
             value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
-            type="text"
+            onChange={e => {
+              setInputValue(e.target.value)
+              handleResizeHeight()
+            }}
             placeholder="댓글을 입력해주세요 :)"
         />
         <CommentWritingButton onClick={() => {
@@ -61,6 +78,7 @@ const CommentWriting = ({articleId, comments, setComments, mapType, accessToken,
                 history
             ).then(commentPromise => {
               setComments(new Array(commentPromise).concat(comments))
+              writingRef.current.style.height = '20px';
             })
           };
         }}>
