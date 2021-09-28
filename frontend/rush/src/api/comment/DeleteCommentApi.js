@@ -16,7 +16,7 @@ const deleteCommentApi = ({ commentId, accessToken, history }) => {
   .then(response => {
     if (response.status === 204) {
       alert("댓글이 삭제되었습니다 :)");
-      history.push("/");
+      window.location.reload();
     }
   })
   .catch(error => {
