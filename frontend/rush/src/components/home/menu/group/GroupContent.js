@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import {GROUPED} from "../../../../constants/MapType";
 
-
 const StyledDiv = styled.div`
   position: relative;
   height: 50px;
