@@ -18,8 +18,10 @@ import rush.rush.controller.article.FindArticleController;
 import rush.rush.exception.AlreadyExistException;
 import rush.rush.exception.AlreadySignedUpException;
 import rush.rush.exception.NotAuthorizedOrExistException;
+import rush.rush.exception.NotAuthorizedRedirectUriException;
 import rush.rush.exception.NotExistsException;
 import rush.rush.exception.NotIncludedMapException;
+import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
 import rush.rush.exception.WrongMapTypeException;
 
@@ -110,6 +112,28 @@ class ExceptionAdviceTest {
     void handleWrongMapTypeException() throws Exception {
         when(findArticleController.findMyArticles(any())).thenThrow(
             new WrongMapTypeException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleNotAuthorizedRedirectUriException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new NotAuthorizedRedirectUriException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleOAuth2AuthenticationProcessingException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new OAuth2AuthenticationProcessingException("test"));
 
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())

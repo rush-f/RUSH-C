@@ -8,8 +8,10 @@ import rush.rush.dto.ErrorResponse;
 import rush.rush.exception.AlreadyExistException;
 import rush.rush.exception.AlreadySignedUpException;
 import rush.rush.exception.NotAuthorizedOrExistException;
+import rush.rush.exception.NotAuthorizedRedirectUriException;
 import rush.rush.exception.NotExistsException;
 import rush.rush.exception.NotIncludedMapException;
+import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
 import rush.rush.exception.WrongMapTypeException;
 
@@ -24,14 +26,16 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(AlreadySignedUpException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadySignedUpException(AlreadySignedUpException e) {
+    public ResponseEntity<ErrorResponse> handleAlreadySignedUpException(
+        AlreadySignedUpException e) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }
 
     @ExceptionHandler(NotAuthorizedOrExistException.class)
-    public ResponseEntity<ErrorResponse> handleNotAuthorizedOrExistException(NotAuthorizedOrExistException e) {
+    public ResponseEntity<ErrorResponse> handleNotAuthorizedOrExistException(
+        NotAuthorizedOrExistException e) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(new ErrorResponse(e.getMessage()));
@@ -60,6 +64,22 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(WrongMapTypeException.class)
     public ResponseEntity<ErrorResponse> handleWrongMapTypeException(WrongMapTypeException e) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NotAuthorizedRedirectUriException.class)
+    public ResponseEntity<ErrorResponse> handleNotAuthorizedRedirectUriException(
+        NotAuthorizedRedirectUriException e) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(OAuth2AuthenticationProcessingException.class)
+    public ResponseEntity<ErrorResponse> handleOAuth2AuthenticationProcessingException(
+        OAuth2AuthenticationProcessingException e) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
