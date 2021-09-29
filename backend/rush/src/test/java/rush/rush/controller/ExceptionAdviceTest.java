@@ -23,6 +23,7 @@ import rush.rush.exception.NotExistsException;
 import rush.rush.exception.NotIncludedMapException;
 import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
+import rush.rush.exception.WrongInputException;
 import rush.rush.exception.WrongMapTypeException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -134,6 +135,17 @@ class ExceptionAdviceTest {
     void handleOAuth2AuthenticationProcessingException() throws Exception {
         when(findArticleController.findMyArticles(any())).thenThrow(
             new OAuth2AuthenticationProcessingException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleWrongInputException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new WrongInputException("test"));
 
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())

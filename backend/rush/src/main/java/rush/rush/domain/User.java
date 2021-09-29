@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import rush.rush.exception.WrongInputException;
 
 @Entity
 @Getter
@@ -117,7 +118,7 @@ public class User {
     private void validateEmail(String email) {
         if (Objects.isNull(email) || email.isEmpty()
             || email.length() > EMAIL_MAX_LENGTH || !isEmailFormatRight(email)) {
-            throw new IllegalArgumentException("이메일 형식이 잘못되었습니다.");
+            throw new WrongInputException("이메일 형식이 잘못되었습니다.");
         }
     }
 
@@ -130,19 +131,19 @@ public class User {
     private void validateNickName(String nickName) {
         if (Objects.isNull(nickName) || nickName.isEmpty()
             || nickName.length() > NICKNAME_MAX_LENGTH) {
-            throw new IllegalArgumentException("닉네임 형식이 잘못되었습니다.");
+            throw new WrongInputException("닉네임 형식이 잘못되었습니다.");
         }
     }
 
     private void validatePassword(String password) {
         if (Objects.isNull(password) || password.isEmpty()) {
-            throw new IllegalArgumentException("비밀번호가 잘못되었습니다.");
+            throw new WrongInputException("비밀번호가 잘못되었습니다.");
         }
     }
 
     private void validateAuthProvider(AuthProvider provider) {
         if (Objects.isNull(provider)) {
-            throw new IllegalArgumentException("provider 지정이 안되어있습니다.");
+            throw new WrongInputException("provider 지정이 안되어있습니다.");
         }
     }
 

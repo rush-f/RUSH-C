@@ -13,6 +13,7 @@ import rush.rush.exception.NotExistsException;
 import rush.rush.exception.NotIncludedMapException;
 import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
+import rush.rush.exception.WrongInputException;
 import rush.rush.exception.WrongMapTypeException;
 
 @RestControllerAdvice
@@ -64,6 +65,14 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(WrongMapTypeException.class)
     public ResponseEntity<ErrorResponse> handleWrongMapTypeException(WrongMapTypeException e) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(WrongInputException.class)
+    public ResponseEntity<ErrorResponse> handleWrongInputException(
+        WrongInputException e) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));

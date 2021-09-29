@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import rush.rush.exception.WrongInputException;
 
 @Entity
 @NoArgsConstructor
@@ -52,19 +53,19 @@ public class UserGroup {
 
     private void validate(User user) {
         if (Objects.isNull(user)) {
-            throw new IllegalArgumentException("user 가 null 입니다.");
+            throw new WrongInputException("user 가 null 입니다.");
         }
         if (Objects.isNull(user.getId())) {
-            throw new IllegalArgumentException("user 객체에 userId가 없습니다.");
+            throw new WrongInputException("user 객체에 userId가 없습니다.");
         }
     }
 
     private void validate(Group group) {
         if (Objects.isNull(group)) {
-            throw new IllegalArgumentException("group 이 null 입니다.");
+            throw new WrongInputException("group 이 null 입니다.");
         }
         if (Objects.isNull(group.getId())) {
-            throw new IllegalArgumentException("group 객체에 groupId가 없습니다.");
+            throw new WrongInputException("group 객체에 groupId가 없습니다.");
         }
     }
 

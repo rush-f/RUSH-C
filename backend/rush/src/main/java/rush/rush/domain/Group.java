@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import rush.rush.exception.WrongInputException;
 
 @Entity
 @Getter
@@ -60,13 +61,13 @@ public class Group {
 
     private void validate(String name) {
         if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("그룹이름이 null 일 수 없습니다.");
+            throw new WrongInputException("그룹이름이 null 일 수 없습니다.");
         }
     }
 
     public void setInvitationCode(String invitationCode) {
         if (Objects.nonNull(this.invitationCode) && !this.invitationCode.isEmpty()) {
-            throw new IllegalArgumentException("초대코드는 처음 한번만 정할 수 있습니다. 이미 부여된 초대코드가 존재합니다.");
+            throw new WrongInputException("초대코드는 처음 한번만 정할 수 있습니다. 이미 부여된 초대코드가 존재합니다.");
         }
         this.invitationCode = invitationCode;
     }
