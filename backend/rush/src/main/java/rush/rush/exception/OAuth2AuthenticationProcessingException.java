@@ -1,4 +1,4 @@
-package rush.rush.security;
+package rush.rush.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
