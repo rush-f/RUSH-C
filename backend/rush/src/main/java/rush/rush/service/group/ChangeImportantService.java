@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
+import rush.rush.exception.NotExistsException;
 import rush.rush.repository.UserGroupRepository;
 
 @Service
@@ -16,7 +17,7 @@ public class ChangeImportantService {
     @Transactional
     public void changeImportant(Long groupId, User user) {
         UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(user.getId(), groupId)
-            .orElseThrow(() -> new IllegalArgumentException(
+            .orElseThrow(() -> new NotExistsException(
                 "userId가 " + user.getId() + "이고 groupId가 " + groupId +"인 UserGroup이 존재하지 않습니다."));
 
         userGroup.changeImportant();

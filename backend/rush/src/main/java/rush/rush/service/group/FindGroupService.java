@@ -12,6 +12,7 @@ import rush.rush.domain.UserGroup;
 import rush.rush.dto.GroupResponse;
 import rush.rush.dto.GroupSummaryResponse;
 import rush.rush.dto.SimpleUserResponse;
+import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
@@ -41,14 +42,14 @@ public class FindGroupService {
     @Transactional(readOnly = true)
     public GroupResponse findOne(Long groupId, User user) {
         return groupRepository.findGroupDetail(groupId, user.getId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 그룹이 없거나, "
+            .orElseThrow(() -> new NotAuthorizedOrExistException("해당 그룹이 없거나, "
                 + "ID=" + user.getId() + " 사용자가 ID=" + groupId + "인 그룹에 접근할 권한이 없습니다."));
     }
 
     @Transactional(readOnly = true)
     public List<SimpleUserResponse> findMembers(Long groupId, User user) {
         if (!hasJoined(groupId, user.getId())) {
-            throw new IllegalArgumentException("userId=" + user.getId() + "인 사용자가 "
+            throw new NotAuthorizedOrExistException("userId=" + user.getId() + "인 사용자가 "
                 + "groupId=" + groupId + "인 그룹의 회원목록을 조회할 권한이 없습니다.");
         }
         return userRepository.findAllByGroupId(groupId)

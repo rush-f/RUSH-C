@@ -11,8 +11,8 @@ import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.dto.LoginRequest;
 import rush.rush.dto.SignUpRequest;
+import rush.rush.exception.AlreadyExistException;
 import rush.rush.repository.UserRepository;
-import rush.rush.security.BadRequestException;
 import rush.rush.security.TokenProvider;
 
 @Service
@@ -38,7 +38,7 @@ public class AuthService {
 
     public void signUp(SignUpRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new BadRequestException("이미 사용중인 이메일입니다.");
+            throw new AlreadyExistException("이미 사용중인 이메일입니다.");
         }
         User user = User.builder()
             .nickName(signUpRequest.getNickName())

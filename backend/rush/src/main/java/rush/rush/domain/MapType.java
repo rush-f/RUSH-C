@@ -1,6 +1,7 @@
 package rush.rush.domain;
 
 import java.util.Arrays;
+import rush.rush.exception.WrongMapTypeException;
 
 public enum MapType {
     PUBLIC("public"), PRIVATE("private"), GROUPED("grouped");
@@ -15,7 +16,7 @@ public enum MapType {
         return Arrays.stream(values())
             .filter(value -> value.name.equalsIgnoreCase(mapType))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(
+            .orElseThrow(() -> new WrongMapTypeException(
                 mapType + "에 해당하는 MapType이 존재하지 않습니다."));
     }
 }

@@ -12,6 +12,8 @@ import rush.rush.domain.ArticleGroup;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.dto.CreateArticleRequest;
+import rush.rush.exception.NotIncludedMapException;
+import rush.rush.exception.WrongGroupIdException;
 import rush.rush.repository.ArticleGroupRepository;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.GroupRepository;
@@ -46,7 +48,7 @@ public class CreateArticleService {
 
         if (!request.isPublicMap() && !request.isPrivateMap()
                 && (Objects.isNull(groups) || groups.isEmpty())) {
-            throw new IllegalArgumentException("전체지도, 그룹지도, 개인지도 중 하나는 포함해야합니다.");
+            throw new NotIncludedMapException("전체지도, 그룹지도, 개인지도 중 하나는 포함해야합니다.");
         }
     }
 
@@ -75,7 +77,7 @@ public class CreateArticleService {
             .collect(Collectors.toUnmodifiableList());
 
         if (groups.size() != groupIds.size()) {
-            throw new IllegalArgumentException("그룹 id 목록이 잘못됐습니다.");
+            throw new WrongGroupIdException("그룹 id 목록이 잘못됐습니다.");
         }
         return groups;
     }
