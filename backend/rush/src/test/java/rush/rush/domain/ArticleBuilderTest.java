@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import rush.rush.exception.WrongInputException;
 
 class ArticleBuilderTest {
 
@@ -122,7 +123,7 @@ class ArticleBuilderTest {
             .privateMap(true)
             .publicMap(true)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 
     private static Stream<Arguments> constructorTestParameters() {

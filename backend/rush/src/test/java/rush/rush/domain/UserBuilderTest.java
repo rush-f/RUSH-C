@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import rush.rush.exception.WrongInputException;
 
 class UserBuilderTest {
 
@@ -38,6 +39,6 @@ class UserBuilderTest {
                 .nickName("nickname")
                 .provider(AuthProvider.local)
                 .build())
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(WrongInputException.class);
     }
 }

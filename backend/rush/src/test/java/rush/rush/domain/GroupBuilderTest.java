@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import rush.rush.exception.WrongInputException;
 
 class GroupBuilderTest {
 
@@ -27,6 +28,6 @@ class GroupBuilderTest {
     void builder_IfNameIsEmpty_ThrowException() {
         assertThatThrownBy(() -> Group.builder()
                 .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 }
