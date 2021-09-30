@@ -38,7 +38,7 @@ const MyPage = (props) => {
     findMyGroupsApi(props.history).then(groupsPromise=>{
       setMyGroups(groupsPromise)
     })
-    findUserApi(accessToken).then(userPromise => {
+    findUserApi(accessToken, props.history).then(userPromise => {
     setUser(userPromise)
     });
     findMyArticlesApi(accessToken).then(articlesPromise => {
