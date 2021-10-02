@@ -12,7 +12,6 @@ import React, {useRef, useState} from "react";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
-
   const mapRef = useRef(null)
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
 
