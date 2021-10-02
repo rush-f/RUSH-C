@@ -34,8 +34,9 @@ const GroupContent = ({setIsMenuOpen, groupName, groupId, setMapType, setGroupId
         right: "10px",
         width: "40px",
         height: "20px",
-        marginTop: "4px",
-        cursor: "pointer"
+        margin: "0 -20px 0 0",
+        padding: "5px 10px 5px 10px",
+        cursor: "pointer",
       }}
       onClick={()=>history.push("/groups/" + groupId)}
   /></StyledDiv>
