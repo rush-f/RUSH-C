@@ -12,7 +12,6 @@ import React, {useRef, useState} from "react";
 import postPositionSpreader from "../../util/PostPositionSpreader";
 
 const DefaultMap = withScriptjs(withGoogleMap((props) => {
-
   const mapRef = useRef(null)
   const [infoWindowPostId, setInfoWindowPostId] = useState(null);
 
@@ -41,7 +40,12 @@ const DefaultMap = withScriptjs(withGoogleMap((props) => {
           setInfoWindowPostId(null);
         }}
     >
-      <div onClick={() => props.history.push('/articles/' + props.mapType + '/' + post.id)}>{post.title}</div>
+      <div onClick={() => {
+        props.history.push({
+          pathname: '/articles/' + props.mapType + '/' + post.id,
+          state: {groupId: props.groupId}
+        })
+      }}>{post.title}</div>
     </InfoWindow>}
   </Marker>);
 

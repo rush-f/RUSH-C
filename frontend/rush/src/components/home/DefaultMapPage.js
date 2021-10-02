@@ -30,8 +30,8 @@ const DefaultMapPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
   const [userImageUrl, setUserImageUrl] = useState(null);
   // 지도 관련
-  const [mapType, setMapType] = useState(PUBLIC);
-  const [groupId, setGroupId] = useState(0);
+  const [mapType, setMapType] = useState(props.location.state? props.location.state.mapType : PUBLIC);
+  const [groupId, setGroupId] = useState(props.location.state? props.location.state.groupId : 0);
   const [groupName, setGroupName] = useState("");
   const [zoom, setZoom] = useState(16);
   const [center, setCenter] = useState({
@@ -122,6 +122,7 @@ const DefaultMapPage = (props) => {
                 latitudeRange={latitudeRange}
                 longitudeRange={longitudeRange}
                 setIsMenuOpen={setIsMenuOpen}
+                groupId={groupId}
     />
     <Menu
       isMenuOpen={isMenuOpen}

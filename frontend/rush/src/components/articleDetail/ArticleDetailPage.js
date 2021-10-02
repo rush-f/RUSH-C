@@ -27,6 +27,7 @@ const ArticleDetailPage = (props) => {
   const [hasILikedListInComment, setHasILikedListInComment] = useState([]);
   const [changeTotalLikesInComment, setChangeTotalLikesListInComment] = useState([]);
   const [myId, setMyId] = useState(null);
+  const [groupId, setGroupId] = useState(props.location.state ? props.location.state.groupId : 0);
 
   const onCommentLikeClicked = (commentId) => {
     if (hasILikedListInComment.includes(commentId)) {
@@ -102,6 +103,8 @@ const ArticleDetailPage = (props) => {
             createDate={article ? article.createDate : ""}
             markerLat={article ? article.latitude : ""}
             markerLng={article ? article.longitude : ""}
+            mapType={mapType}
+            groupId={groupId}
           />
           <ArticleBody
             accessToken={accessToken}
