@@ -1,19 +1,30 @@
 package rush.rush.dto;
 
+import java.util.Date;
+import java.util.Objects;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
 @Getter
 public class GroupResponse {
 
-    Long id;
-    String name;
-    String invitationCode;
-    Timestamp createDate;
+    private Long id;
+    private String name;
+    private String invitationCode;
+    private Boolean important;
+    private Date createDate;
+
+    public GroupResponse(Long id, String name, String invitationCode, Boolean important, Date createDate) {
+        if (Objects.isNull(important)) {
+            this.important = false;
+        } else {
+            this.important = important;
+        }
+        this.id = id;
+        this.name = name;
+        this.invitationCode = invitationCode;
+        this.createDate = createDate;
+    }
 }

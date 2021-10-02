@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledDiv = styled.div`
   display: inline-block;
+  cursor: pointer;
 `;
 
 const ArticlesListOpenButton = (props) => {

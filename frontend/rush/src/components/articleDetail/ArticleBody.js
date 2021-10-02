@@ -1,7 +1,7 @@
 import React from 'react';
 import ArticleTitle from "./ArticleTitle";
 import styled from "styled-components";
-import changeMyLikeApi from "../../api/ChangeMyLikeApi";
+import changeMyLikeApi from "../../api/article/ChangeMyLikeApi";
 import DeleteButton from "./DeleteButton";
 
 const ArticleContent = styled.div`
@@ -62,7 +62,9 @@ const ArticleBody = (props) => {
           {props.article ? props.article.title : ""}
         </ArticleTitle>
         <ArticleContent>
-          {props.article ? props.article.content : ""}
+          {props.article ? props.article.content.split('\n').map((line) => {
+            return (<>{line}<br/></>)
+          }) : ""}
         </ArticleContent>
         <ArticleBottom>
           <ArticleLike>

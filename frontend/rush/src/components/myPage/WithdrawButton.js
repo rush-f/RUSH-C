@@ -1,5 +1,5 @@
 import React from 'react';
-import withdrawUserApi from "../../api/WithdrawUserApi";
+import withdrawUserApi from "../../api/user/WithdrawUserApi";
 import styled from "styled-components";
 
 const WithdrawButtonStyle = styled.div`

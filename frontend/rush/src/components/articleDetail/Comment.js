@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
 import Profile from "./Profile";
-import changeMyLikeInCommentIdApi from "../../api/ChangeMyLikeInCommentApi";
-import deleteCommentApi from "../../api/DeleteCommentApi";
+import changeMyLikeInCommentIdApi
+  from "../../api/comment/ChangeMyLikeInCommentApi";
+import deleteCommentApi from "../../api/comment/DeleteCommentApi";
 
 const CommentBox = styled.div`
   margin: 0;
-  height: 100px;
+  min-height: 100px;
   border-bottom: 2px solid rgb(90, 155, 213);
   padding: 15px 10px 0 10px;
   display: flex;
@@ -111,7 +112,7 @@ const Comment = ({
         <AuthorName>
           {comment.author.nickName}
         </AuthorName>
-        <div>{comment.content}</div>
+        <div>{comment.content.split('\n').map((line) => {return (<>{line}<br/></>)})}</div>
         <CommentBottom>
           <CommentLike>
             <CommentLikeInner>
