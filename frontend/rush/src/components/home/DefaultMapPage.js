@@ -52,14 +52,21 @@ const DefaultMapPage = (props) => {
   const [isGroupOpened, setIsGroupOpened] = useState(false);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-    });
-    setCenter({
-      lat: () => props.location.state? props.location.state.lat: defaultCenter.lat,
-      lng: () => props.location.state? props.location.state.lng: defaultCenter.lng
-    });
-
+    navigator.geolocation.getCurrentPosition(
+      function success(position) {
+        setDefaultCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+        setCenter({
+          lat: () => props.location.state ? props.location.state.lat : position.coords.latitude,
+          lng: () => props.location.state ? props.location.state.lng : position.coords.longitude
+        });
+      },
+      function failure() {
+        setCenter({
+          lat: () => props.location.state ? props.location.state.lat : defaultCenter.lat,
+          lng: () => props.location.state ? props.location.state.lng : defaultCenter.lng
+        });
+      }
+    );
   },[]);
 
   useEffect(() => {
@@ -107,6 +114,7 @@ const DefaultMapPage = (props) => {
     })
   }, [accessToken]);
 
+  console.log(center.lat() + " " + center.lng())
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
                 loadingElement={<div style={{width: `100%`}}/>}
