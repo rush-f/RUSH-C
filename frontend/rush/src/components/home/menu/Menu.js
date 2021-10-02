@@ -7,6 +7,13 @@ import GroupList from "./group/GroupList";
 import findMyImportantGroupsApi
   from "../../../api/group/FindMyImportantGroupsApi";
 
+const StyledDiv = styled.div`
+  position: relative;
+  height: 50px;
+  margin-top: 15px;
+ 
+`;
+
 const BurgerMenuContents = styled.div`
   width: 90%;
   word-wrap: break-word;
@@ -50,14 +57,35 @@ const Menu = ({
       disableAutoFocus>
       {
         importantGroups.map(importantGroup =>
-          <BurgerMenuContents
-            onClick={() => {
-            setMapType(GROUPED);
-            setGroupId(importantGroup.id);
-            setIsMenuOpen(false);
-          }}>
-            {importantGroup.name}
-          </BurgerMenuContents>
+            <StyledDiv>
+              <BurgerMenuContents
+                style={{
+                  position: "absolute",
+                  top: "-20px",
+
+                }}
+                onClick={() => {
+                setMapType(GROUPED);
+                setGroupId(importantGroup.id);
+                setIsMenuOpen(false);
+              }}>
+                {importantGroup.name}
+              </BurgerMenuContents>
+              <img
+                  src="/groupSetting.png"
+                  alt="my image"
+                  style={{
+                    position: "absolute",
+                    zIndex: 10,
+                    right: "10px",
+                    width: "40px",
+                    height: "20px",
+                    marginTop: "4px",
+                    cursor: "pointer"
+                  }}
+                  onClick={()=>history.push("/groups/" + importantGroup.id)}
+              />
+            </StyledDiv>
         )
       }
       <BurgerMenuContents onClick={() => {
