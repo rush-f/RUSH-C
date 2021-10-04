@@ -7,8 +7,9 @@ import rush.rush.domain.Article;
 import rush.rush.domain.ArticleLike;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
-import rush.rush.exception.NotExistsException;
+import rush.rush.exception.NotLikeExistsException;
 import rush.rush.exception.WrongMapTypeException;
 import rush.rush.repository.ArticleLikeRepository;
 import rush.rush.repository.ArticleRepository;
@@ -47,7 +48,7 @@ public class ArticleLikeService {
 
     private void changeMyLikeOnPublicArticle(Long articleId, Boolean hasILiked, User user) {
         Article article = articleRepository.findByPublicMapTrueAndId(articleId)
-            .orElseThrow(() -> new NotExistsException("존재하지 않는 article ID 입니다."));
+            .orElseThrow(() -> new NotArticleExistsException("존재하지 않는 게시글입니다."));
 
         changeLike(article, user, hasILiked);
     }
@@ -82,6 +83,6 @@ public class ArticleLikeService {
 
     private ArticleLike findLike(Long articleId, Long userId) {
         return articleLikeRepository.findByUserIdAndArticleId(userId, articleId)
-            .orElseThrow(() -> new NotExistsException("해당하는 좋아요는 없습니다"));
+            .orElseThrow(() -> new NotLikeExistsException("해당하는 좋아요는 없습니다"));
     }
 }

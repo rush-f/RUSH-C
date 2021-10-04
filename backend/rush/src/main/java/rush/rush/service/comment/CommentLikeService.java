@@ -9,7 +9,8 @@ import rush.rush.domain.CommentLike;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
 import rush.rush.exception.NotAuthorizedOrExistException;
-import rush.rush.exception.NotExistsException;
+import rush.rush.exception.NotCommentExistException;
+import rush.rush.exception.NotLikeExistsException;
 import rush.rush.exception.WrongMapTypeException;
 import rush.rush.repository.CommentLikeRepository;
 import rush.rush.repository.CommentRepository;
@@ -48,7 +49,7 @@ public class CommentLikeService {
 
     private void changeMyLikeOnPublicComment(Long commentId, Boolean hasILiked, User user) {
         Comment comment = commentRepository.findInPublicArticle(commentId)
-            .orElseThrow(() -> new NotExistsException("존재하지 않는 comment ID 입니다."));
+            .orElseThrow(() -> new NotCommentExistException("존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
     }
@@ -82,6 +83,6 @@ public class CommentLikeService {
 
     private CommentLike findLike(Long commentId, Long userId) {
         return commentLikeRepository.findByUserIdAndCommentId(userId, commentId)
-            .orElseThrow(() -> new NotExistsException("해당하는 좋아요는 없습니다"));
+            .orElseThrow(() -> new NotLikeExistsException("해당하는 좋아요는 없습니다"));
     }
 }

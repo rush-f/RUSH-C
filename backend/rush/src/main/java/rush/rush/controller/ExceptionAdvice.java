@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import rush.rush.dto.ErrorResponse;
 import rush.rush.exception.AlreadyExistedEmailException;
 import rush.rush.exception.AlreadySignedUpException;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.NotAuthorizedRedirectUriException;
-import rush.rush.exception.NotExistsException;
+import rush.rush.exception.NotCommentExistException;
 import rush.rush.exception.NotIncludedMapException;
+import rush.rush.exception.NotInvitationCodeExistsException;
+import rush.rush.exception.NotLikeExistsException;
+import rush.rush.exception.NotUserExistsException;
 import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
 import rush.rush.exception.WrongInputException;
@@ -20,7 +24,8 @@ import rush.rush.exception.WrongMapTypeException;
 public class ExceptionAdvice {
 
     @ExceptionHandler(AlreadyExistedEmailException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyExistException(AlreadyExistedEmailException e) {
+    public ResponseEntity<ErrorResponse> handleAlreadyExistException(
+        AlreadyExistedEmailException e) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
@@ -42,8 +47,39 @@ public class ExceptionAdvice {
             .body(new ErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler(NotExistsException.class)
-    public ResponseEntity<ErrorResponse> handleNotExistsException(NotExistsException e) {
+    @ExceptionHandler(NotUserExistsException.class)
+    public ResponseEntity<ErrorResponse> handleNotUserExistsException(NotUserExistsException e) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NotArticleExistsException.class)
+    public ResponseEntity<ErrorResponse> handleNotArticleExistsException(
+        NotArticleExistsException e) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NotCommentExistException.class)
+    public ResponseEntity<ErrorResponse> handleNotCommentExistException(
+        NotCommentExistException e) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NotLikeExistsException.class)
+    public ResponseEntity<ErrorResponse> handleNotLikeExistsException(NotLikeExistsException e) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NotInvitationCodeExistsException.class)
+    public ResponseEntity<ErrorResponse> handleNotInvitationCodeExistsException(
+        NotInvitationCodeExistsException e) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(new ErrorResponse(e.getMessage()));

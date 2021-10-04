@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.User;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
-import rush.rush.exception.NotExistsException;
 import rush.rush.repository.ArticleRepository;
 
 @Service
@@ -22,7 +22,7 @@ public class DeleteArticleService {
 
     private void validate(Long articleId, User user) {
         Long authorId = articleRepository.findArticleAuthorId(articleId)
-            .orElseThrow(() -> new NotExistsException("ID가 " + articleId + "인 글이 없습니다."));
+            .orElseThrow(() -> new NotArticleExistsException("ID가 " + articleId + "인 글이 없습니다."));
         Long userId = user.getId();
 
         if (!authorId.equals(userId)) {

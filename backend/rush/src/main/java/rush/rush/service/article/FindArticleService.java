@@ -12,8 +12,8 @@ import rush.rush.domain.LocationRange;
 import rush.rush.domain.User;
 import rush.rush.dto.ArticleResponse;
 import rush.rush.dto.ArticleSummaryResponse;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
-import rush.rush.exception.NotExistsException;
 import rush.rush.repository.ArticleRepository;
 
 @Service
@@ -26,7 +26,7 @@ public class FindArticleService {
     public ArticleResponse findPublicArticle(Long id) {
         ArticleResponse articleResponse = articleRepository.findByPublicMapWithLikes(id)
             .orElseThrow(() ->
-                new NotExistsException("id가 " + id + "인 article이 전체지도에 없습니다."));
+                new NotArticleExistsException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
         return articleResponse;
     }
@@ -36,7 +36,7 @@ public class FindArticleService {
         ArticleResponse articleResponse = articleRepository
             .findByPrivateMapWithLikes(id, me.getId())
             .orElseThrow(() ->
-                new NotExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
+                new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
         return articleResponse;
     }
@@ -46,7 +46,8 @@ public class FindArticleService {
         ArticleResponse articleResponse = articleRepository
             .findAsGroupMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
-                new NotAuthorizedOrExistException("id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
+                new NotAuthorizedOrExistException(
+                    "id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
 
         return articleResponse;
     }

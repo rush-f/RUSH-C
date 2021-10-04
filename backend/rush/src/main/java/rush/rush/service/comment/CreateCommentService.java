@@ -10,8 +10,8 @@ import rush.rush.domain.User;
 import rush.rush.dto.AuthorResponse;
 import rush.rush.dto.CommentResponse;
 import rush.rush.dto.CreateCommentRequest;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
-import rush.rush.exception.NotExistsException;
 import rush.rush.exception.WrongMapTypeException;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
@@ -41,7 +41,7 @@ public class CreateCommentService {
     private CommentResponse createOnPublicArticle(Long articleId, User user,
         CreateCommentRequest createCommentRequest) {
         Article article = articleRepository.findByPublicMapTrueAndId(articleId)
-            .orElseThrow(() -> new NotExistsException("존재하지 않는 article ID 입니다."));
+            .orElseThrow(() -> new NotArticleExistsException("존재하지 않는 article ID 입니다."));
 
         Comment savedComment = commentRepository.save(
             Comment.builder()

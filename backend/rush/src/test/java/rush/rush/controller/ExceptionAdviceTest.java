@@ -17,10 +17,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import rush.rush.controller.article.FindArticleController;
 import rush.rush.exception.AlreadyExistedEmailException;
 import rush.rush.exception.AlreadySignedUpException;
+import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.NotAuthorizedRedirectUriException;
-import rush.rush.exception.NotExistsException;
+import rush.rush.exception.NotCommentExistException;
 import rush.rush.exception.NotIncludedMapException;
+import rush.rush.exception.NotInvitationCodeExistsException;
+import rush.rush.exception.NotLikeExistsException;
+import rush.rush.exception.NotUserExistsException;
 import rush.rush.exception.OAuth2AuthenticationProcessingException;
 import rush.rush.exception.WrongGroupIdException;
 import rush.rush.exception.WrongInputException;
@@ -77,9 +81,53 @@ class ExceptionAdviceTest {
     }
 
     @Test
-    void handleNotExistsException() throws Exception {
+    void handleNotUserExistsException() throws Exception {
         when(findArticleController.findMyArticles(any())).thenThrow(
-            new NotExistsException("test"));
+            new NotUserExistsException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleNotArticleExistsException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new NotArticleExistsException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleNotCommentExistException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new NotCommentExistException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleNotLikeExistsException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new NotLikeExistsException("test"));
+
+        mockMvc.perform(get("/articles/mine"))
+            .andDo(print())
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("errorMessage").hasJsonPath());
+    }
+
+    @Test
+    void handleNotInvitationCodeExistsException() throws Exception {
+        when(findArticleController.findMyArticles(any())).thenThrow(
+            new NotInvitationCodeExistsException("test"));
 
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
