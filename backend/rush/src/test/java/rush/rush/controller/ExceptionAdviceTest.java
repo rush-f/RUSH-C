@@ -55,7 +55,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -66,7 +66,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -77,7 +77,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -88,7 +88,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -99,7 +99,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -110,7 +110,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -121,7 +121,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -132,7 +132,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -143,7 +143,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -154,7 +154,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -165,7 +165,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -176,7 +176,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -187,7 +187,7 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 
     @Test
@@ -198,6 +198,6 @@ class ExceptionAdviceTest {
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errorMessage").hasJsonPath());
+            .andExpect(jsonPath("errorMessage").value("test"));
     }
 }
