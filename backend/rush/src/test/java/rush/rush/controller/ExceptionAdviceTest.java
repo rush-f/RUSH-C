@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import rush.rush.controller.article.FindArticleController;
-import rush.rush.exception.AlreadyExistException;
+import rush.rush.exception.AlreadyExistedEmailException;
 import rush.rush.exception.AlreadySignedUpException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.NotAuthorizedRedirectUriException;
@@ -46,7 +46,7 @@ class ExceptionAdviceTest {
     @Test
     void handleAlreadyExistException() throws Exception {
         when(findArticleController.findMyArticles(any())).thenThrow(
-            new AlreadyExistException("test"));
+            new AlreadyExistedEmailException("test"));
 
         mockMvc.perform(get("/articles/mine"))
             .andDo(print())

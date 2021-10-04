@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import rush.rush.dto.ErrorResponse;
-import rush.rush.exception.AlreadyExistException;
+import rush.rush.exception.AlreadyExistedEmailException;
 import rush.rush.exception.AlreadySignedUpException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.NotAuthorizedRedirectUriException;
@@ -19,8 +19,8 @@ import rush.rush.exception.WrongMapTypeException;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyExistException(AlreadyExistException e) {
+    @ExceptionHandler(AlreadyExistedEmailException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyExistException(AlreadyExistedEmailException e) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
