@@ -1,7 +1,7 @@
 ---
 name: Test
 about: 테스트코드만 다루는 경우.
-title: ''
+title: "[TEST]"
 labels: ''
 assignees: ''
 
