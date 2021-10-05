@@ -48,8 +48,10 @@ const createWritingApi = ({title, content, center, publicMap, privateMap,
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         history.push("/login");
         return;
-      }
-      alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
+      } else if(error.response.status === 400 || error.response.status === 404) {
+        alert(error.response.data.errorMessage);
+        return Promise.reject();
+      } else alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
       history.push("/");
     });
 };

@@ -2,7 +2,7 @@ package rush.rush.security.user;
 
 import java.util.Map;
 import rush.rush.domain.AuthProvider;
-import rush.rush.security.OAuth2AuthenticationProcessingException;
+import rush.rush.exception.OAuth2AuthenticationProcessingException;
 
 public class OAuth2UserInfoFactory {
 

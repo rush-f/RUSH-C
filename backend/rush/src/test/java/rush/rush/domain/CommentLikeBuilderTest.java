@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import rush.rush.exception.WrongInputException;
 
 class CommentLikeBuilderTest {
 
@@ -47,7 +48,7 @@ class CommentLikeBuilderTest {
             .id(1L)
             .comment(comment)
             .build())
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(WrongInputException.class);
     }
 
     @Test
@@ -61,7 +62,7 @@ class CommentLikeBuilderTest {
             .comment(comment)
             .user(user)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 
     @Test
@@ -70,7 +71,7 @@ class CommentLikeBuilderTest {
             .id(1L)
             .user(user)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 
     void builder_IfCommentIdIsNull_ThrowException() {
@@ -83,6 +84,6 @@ class CommentLikeBuilderTest {
             .comment(comment)
             .user(user)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 }

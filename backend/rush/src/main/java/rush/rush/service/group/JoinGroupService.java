@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
+import rush.rush.exception.AlreadySignedUpException;
+import rush.rush.exception.NotInvitationCodeExistsException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 
@@ -20,10 +22,11 @@ public class JoinGroupService {
     @Transactional
     public Long join(String invitationCode, User user) {
         Group group = groupRepository.findByInvitationCode(invitationCode)
-            .orElseThrow(() -> new IllegalArgumentException(invitationCode + "는 존재하지 않는 초대코드입니다."));
+            .orElseThrow(
+                () -> new NotInvitationCodeExistsException(invitationCode + "는 존재하지 않는 초대코드입니다."));
 
         if (hasJoined(group.getId(), user.getId())) {
-            throw new IllegalArgumentException("이미 가입된 그룹입니다.");
+            throw new AlreadySignedUpException("이미 가입된 그룹입니다.");
         }
         saveUserGroup(group, user);
 

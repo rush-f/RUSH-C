@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import rush.rush.exception.WrongInputException;
 
 class ArticleGroupBuilderTest {
 
@@ -65,7 +66,7 @@ class ArticleGroupBuilderTest {
         assertThatThrownBy(() -> ArticleGroup.builder()
             .group(group)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 
     @Test
@@ -74,6 +75,6 @@ class ArticleGroupBuilderTest {
         assertThatThrownBy(() -> ArticleGroup.builder()
             .article(article)
             .build()
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongInputException.class);
     }
 }

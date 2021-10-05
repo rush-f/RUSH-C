@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import rush.rush.exception.NotAuthorizedRedirectUriException;
 
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -49,7 +50,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             .orElse(getDefaultTargetUrl());
 
         if(!isAuthorizedRedirectUri(redirectUri)) {
-            throw new BadRequestException(redirectUri + "는 허용되지 않은 redirect uri 입니다.");
+            throw new NotAuthorizedRedirectUriException(redirectUri + "는 허용되지 않은 redirect uri 입니다.");
         }
         String token = tokenProvider.createToken(authentication);
 

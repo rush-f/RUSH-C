@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.UserGroup;
+import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 
@@ -19,7 +20,7 @@ public class DeleteMemberService {
     @Transactional
     public void deleteMember(Long groupId, Long userId) {
         if (!hasJoined(groupId, userId)) {
-            throw new IllegalArgumentException("groupId=" + groupId + "인 그룹이 없거나, "
+            throw new NotAuthorizedOrExistException("groupId=" + groupId + "인 그룹이 없거나, "
                 + "userId=" + userId + "인 사용자에게 "
                 + "groupId=" + groupId + "인 그룹을 탈퇴할 권한이 없습니다.");
         }

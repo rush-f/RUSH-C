@@ -13,6 +13,7 @@ import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
+import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
@@ -109,7 +110,7 @@ public class DeleteMemberSeiviceTest {
     @DisplayName("그룹 탈퇴 - 본인이 아닌데 탈퇴 시도시 예외처리")
     void deleteMember_IfNotUser_ThrowException() {
         assertThatThrownBy(() -> deleteMemberService.deleteMember(group.getId(), 10L))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(NotAuthorizedOrExistException.class);
     }
 
     @Test
@@ -117,7 +118,7 @@ public class DeleteMemberSeiviceTest {
     @DisplayName(" 그룹 탈퇴 - 존재하지 않는 그룹 탈퇴 시도시 예외처리")
     void deleteMember_IfNotExistGroup_ThrowException() {
         assertThatThrownBy(() -> deleteMemberService.deleteMember(10L, user.getId()))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(NotAuthorizedOrExistException.class);
     }
 }
 

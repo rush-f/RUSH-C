@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import rush.rush.exception.WrongInputException;
 
 @Entity
 @Getter
@@ -62,13 +63,13 @@ public class Comment {
 
     private void validate(String content, User user, Article article) {
         if (Objects.isNull(content) || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("내용이 비어있습니다.");
+            throw new WrongInputException("내용이 비어있습니다.");
         }
         if (Objects.isNull(user) || Objects.isNull(user.getId())) {
-            throw new IllegalArgumentException("작성자가 올바르게 지정되지 않았습니다.");
+            throw new WrongInputException("작성자가 올바르게 지정되지 않았습니다.");
         }
         if (Objects.isNull(article) || Objects.isNull(article.getId())) {
-            throw new IllegalArgumentException("글이 올바르게 지정되지 않았습니다.");
+            throw new WrongInputException("글이 올바르게 지정되지 않았습니다.");
         }
     }
 }

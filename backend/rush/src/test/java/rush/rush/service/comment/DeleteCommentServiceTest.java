@@ -13,10 +13,10 @@ import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
 import rush.rush.domain.User;
+import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
-import rush.rush.service.comment.DeleteCommentService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -95,7 +95,7 @@ class DeleteCommentServiceTest {
     void deleteComment_IfNotAuthor_ThrowException() {
         // when & then : 댓글 작성자가 아닌 사람이 댓글 삭제 시도 -> 댓글 삭제 실패
         assertThatThrownBy(() -> deleteCommentService.deleteComment(comment.getId(), articleAuthor))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(NotAuthorizedOrExistException.class);
 
         // then : 댓글이 삭제되지 않았다.
         assertThat(commentRepository.findAllOfPublicArticle(article.getId()))
@@ -107,6 +107,6 @@ class DeleteCommentServiceTest {
     @DisplayName("댓글 삭제 - 존재하지 않는 댓글 삭제 시도시 예외처리")
     void deleteComment_IfNotExistComment_ThrowException() {
         assertThatThrownBy(() -> deleteCommentService.deleteComment(10_000L, commentAuthor))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(NotAuthorizedOrExistException.class);
     }
 }

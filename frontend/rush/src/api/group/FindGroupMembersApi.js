@@ -23,8 +23,10 @@ const findGroupMembersApi = ({ groupId, accessToken, history }) => {
       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
       history.push("/login");
       return Promise.reject();
-    }
-    alert("이유가 뭔지 모르겠지만 그룹원 목록을 불러오는데 실패했음...");
+    } else if(error.response.status === 400 || error.response.status === 404) {
+      alert(error.response.data.errorMessage);
+      return Promise.reject();
+    } else alert("이유가 뭔지 모르겠지만 그룹원 목록을 불러오는데 실패했음...");
   });
 };
 

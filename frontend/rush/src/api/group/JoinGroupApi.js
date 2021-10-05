@@ -31,7 +31,10 @@ const joinGroupApi = ({invitationCode, history}) => {
       history.push("/login");
       return Promise.reject();
     }
-    alert("이유가 뭔지 모르겠지만 그룹 가입에 실패했음...");
+    if (error.response.status === 400 || error.response.status === 404) {
+      alert(error.response.data.errorMessage);
+      return Promise.reject();
+    } else alert("이유가 뭔지 모르겠지만 그룹 가입에 실패했음...");
   });
 };
 

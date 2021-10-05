@@ -8,6 +8,10 @@ import rush.rush.domain.Comment;
 import rush.rush.domain.CommentLike;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
+import rush.rush.exception.NotAuthorizedOrExistException;
+import rush.rush.exception.NotCommentExistException;
+import rush.rush.exception.NotLikeExistsException;
+import rush.rush.exception.WrongMapTypeException;
 import rush.rush.repository.CommentLikeRepository;
 import rush.rush.repository.CommentRepository;
 
@@ -40,19 +44,19 @@ public class CommentLikeService {
         if (mapType == MapType.GROUPED) {
             return commentLikeRepository.findGroupedArticleCommentIdsILiked(articleId, userId);
         }
-        throw new IllegalStateException("MapType 오류 - " + mapType.name());
+        throw new WrongMapTypeException("MapType 오류 - " + mapType.name());
     }
 
     private void changeMyLikeOnPublicComment(Long commentId, Boolean hasILiked, User user) {
         Comment comment = commentRepository.findInPublicArticle(commentId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 comment ID 입니다."));
+            .orElseThrow(() -> new NotCommentExistException("존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
     }
 
     private void changeMyLikeOnPrivateComment(Long commentId, Boolean hasILiked, User user) {
         Comment comment = commentRepository.findInPrivateArticle(commentId, user.getId())
-            .orElseThrow(() -> new IllegalArgumentException(
+            .orElseThrow(() -> new NotAuthorizedOrExistException(
                 "해당 comment 조회 권한이 없거나, 존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
@@ -60,7 +64,7 @@ public class CommentLikeService {
 
     private void changeMyLikeOnGroupedComment(Long commentId, Boolean hasILiked, User user) {
         Comment comment = commentRepository.findInGroupedArticle(commentId, user.getId())
-            .orElseThrow(() -> new IllegalArgumentException(
+            .orElseThrow(() -> new NotAuthorizedOrExistException(
                 "해당 comment 조회 권한이 없거나, 존재하지 않는 comment ID 입니다."));
 
         changeLike(comment, user, hasILiked);
@@ -79,6 +83,6 @@ public class CommentLikeService {
 
     private CommentLike findLike(Long commentId, Long userId) {
         return commentLikeRepository.findByUserIdAndCommentId(userId, commentId)
-            .orElseThrow(() -> new IllegalArgumentException("해당하는 좋아요는 없습니다"));
+            .orElseThrow(() -> new NotLikeExistsException("해당하는 좋아요는 없습니다"));
     }
 }
