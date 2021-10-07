@@ -1,4 +1,4 @@
-package rush.rush.service.article;
+package rush.rush.service.comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,38 +11,43 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.ArticleGroup;
-import rush.rush.domain.ArticleLike;
 import rush.rush.domain.AuthProvider;
+import rush.rush.domain.Comment;
+import rush.rush.domain.CommentLike;
 import rush.rush.domain.Group;
 import rush.rush.domain.MapType;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
-import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
+import rush.rush.exception.NotCommentExistException;
 import rush.rush.exception.NotLikeExistsException;
 import rush.rush.exception.WrongMapTypeException;
 import rush.rush.repository.ArticleGroupRepository;
-import rush.rush.repository.ArticleLikeRepository;
 import rush.rush.repository.ArticleRepository;
+import rush.rush.repository.CommentLikeRepository;
+import rush.rush.repository.CommentRepository;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class ArticleLikeServiceTest {
+class CommentLikeServiceTest {
 
     @Autowired
-    ArticleLikeService articleLikeService;
+    CommentLikeService commentLikeService;
 
     @Autowired
-    ArticleLikeRepository articleLikeRepository;
+    UserRepository userRepository;
 
     @Autowired
     ArticleRepository articleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    CommentRepository commentRepository;
+
+    @Autowired
+    CommentLikeRepository commentLikeRepository;
 
     @Autowired
     GroupRepository groupRepository;
@@ -57,6 +62,9 @@ class ArticleLikeServiceTest {
     private Article publicArticle;
     private Article privateArticle;
     private Article groupedArticle;
+    private Comment publicComment;
+    private Comment privateComment;
+    private Comment groupedComment;
 
     @BeforeEach
     void setUp() {
@@ -119,6 +127,27 @@ class ArticleLikeServiceTest {
                 .important(false)
                 .build()
         );
+        publicComment = commentRepository.save(
+            Comment.builder()
+                .user(user)
+                .content("댓글내용")
+                .article(publicArticle)
+                .build()
+        );
+        privateComment = commentRepository.save(
+            Comment.builder()
+                .user(user)
+                .content("댓글내용")
+                .article(privateArticle)
+                .build()
+        );
+        groupedComment = commentRepository.save(
+            Comment.builder()
+                .user(user)
+                .content("댓글내용")
+                .article(groupedArticle)
+                .build()
+        );
     }
 
     @Test
@@ -127,24 +156,24 @@ class ArticleLikeServiceTest {
     void changeMyLike_IfNotHasILiked() {
         //when & then 좋아요가 없는데 좋아요가 있다고 해서 예외발생
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(publicArticle.getId(), MapType.PUBLIC, true,
+            () -> commentLikeService.changeMyLike(publicComment.getId(), MapType.PUBLIC, true,
                 user))
             .isInstanceOf(NotLikeExistsException.class);
 
         // when    public, private, gropued 3가지 경우 확인
-        articleLikeService.changeMyLike(publicArticle.getId(), MapType.PUBLIC, false, user);
-        articleLikeService.changeMyLike(privateArticle.getId(), MapType.PRIVATE, false, user);
-        articleLikeService.changeMyLike(groupedArticle.getId(), MapType.GROUPED, false, user);
+        commentLikeService.changeMyLike(publicComment.getId(), MapType.PUBLIC, false, user);
+        commentLikeService.changeMyLike(privateComment.getId(), MapType.PRIVATE, false, user);
+        commentLikeService.changeMyLike(groupedComment.getId(), MapType.GROUPED, false, user);
 
         //then
-        assertThat(articleLikeRepository.countOfPublicArticle(publicArticle.getId(), user.getId()))
-            .isEqualTo(1L);
+        assertThat(commentLikeRepository.findPublicArticleCommentIdsILiked(publicArticle.getId(), user.getId()))
+            .hasSize(1);
         assertThat(
-            articleLikeRepository.countOfPrivateArticle(privateArticle.getId(), user.getId()))
-            .isEqualTo(1L);
+            commentLikeRepository.findPrivateArticleCommentIdsILiked(privateArticle.getId(), user.getId()))
+            .hasSize(1);
         assertThat(
-            articleLikeRepository.countOfGroupedArticle(groupedArticle.getId(), user.getId()))
-            .isEqualTo(1L);
+            commentLikeRepository.findGroupedArticleCommentIdsILiked(groupedArticle.getId(), user.getId()))
+            .hasSize(1);
     }
 
     @Test
@@ -152,38 +181,39 @@ class ArticleLikeServiceTest {
     @DisplayName("좋아요 변경 - 좋아요가 있는 경우")
     void changeMyLike_IfHasILiked() {
         //given
-        articleLikeRepository.save(
-            ArticleLike.builder()
+        commentLikeRepository.save(
+            CommentLike.builder()
                 .user(user)
-                .article(publicArticle)
+                .comment(publicComment)
                 .build()
         );
-        articleLikeRepository.save(
-            ArticleLike.builder()
+        commentLikeRepository.save(
+            CommentLike.builder()
                 .user(user)
-                .article(privateArticle)
+                .comment(privateComment)
                 .build()
         );
-        articleLikeRepository.save(
-            ArticleLike.builder()
+        commentLikeRepository.save(
+            CommentLike.builder()
                 .user(user)
-                .article(groupedArticle)
+                .comment(groupedComment)
                 .build()
         );
+
         // when   public, private, gropued 3가지 경우 확인
-        articleLikeService.changeMyLike(publicArticle.getId(), MapType.PUBLIC, true, user);
-        articleLikeService.changeMyLike(privateArticle.getId(), MapType.PRIVATE, true, user);
-        articleLikeService.changeMyLike(groupedArticle.getId(), MapType.GROUPED, true, user);
+        commentLikeService.changeMyLike(publicComment.getId(), MapType.PUBLIC, true, user);
+        commentLikeService.changeMyLike(privateComment.getId(), MapType.PRIVATE, true, user);
+        commentLikeService.changeMyLike(groupedComment.getId(), MapType.GROUPED, true, user);
 
         //then
-        assertThat(articleLikeRepository.countOfPublicArticle(publicArticle.getId(), user.getId()))
-            .isEqualTo(0L);
+        assertThat(commentLikeRepository.findPublicArticleCommentIdsILiked(publicArticle.getId(), user.getId()))
+            .hasSize(0);
         assertThat(
-            articleLikeRepository.countOfPrivateArticle(privateArticle.getId(), user.getId()))
-            .isEqualTo(0L);
+            commentLikeRepository.findPrivateArticleCommentIdsILiked(privateArticle.getId(), user.getId()))
+            .hasSize(0);
         assertThat(
-            articleLikeRepository.countOfGroupedArticle(groupedArticle.getId(), user.getId()))
-            .isEqualTo(0L);
+            commentLikeRepository.findGroupedArticleCommentIdsILiked(groupedArticle.getId(), user.getId()))
+            .hasSize(0);
     }
 
     @Test
@@ -192,23 +222,23 @@ class ArticleLikeServiceTest {
     void changeMyLike_IfWrongMapType() {
         //when & then
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(publicArticle.getId(), MapType.from("test"),
+            () -> commentLikeService.changeMyLike(publicComment.getId(), MapType.from("test"),
                 false, user))
             .isInstanceOf(WrongMapTypeException.class);
     }
 
     @Test
     @Transactional
-    @DisplayName("좋아요 변경 - 해당되는 게시글이 존재하지 않는 경우")
+    @DisplayName("좋아요 변경 - 해당되는 댓글이 존재하지 않는 경우")
     void changeMyLike_IfNotArticleExists() {
         //when & then   public, private, gropued 3가지 경우 확인
-        assertThatThrownBy(() -> articleLikeService.changeMyLike(100L, MapType.PUBLIC, false, user))
-            .isInstanceOf(NotArticleExistsException.class);
+        assertThatThrownBy(() -> commentLikeService.changeMyLike(10L, MapType.PUBLIC, false, user))
+            .isInstanceOf(NotCommentExistException.class);
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(100L, MapType.PRIVATE, false, user))
+            () -> commentLikeService.changeMyLike(10L, MapType.PRIVATE, false, user))
             .isInstanceOf(NotAuthorizedOrExistException.class);
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(100L, MapType.GROUPED, false, user))
+            () -> commentLikeService.changeMyLike(10L, MapType.GROUPED, false, user))
             .isInstanceOf(NotAuthorizedOrExistException.class);
     }
 
@@ -228,11 +258,11 @@ class ArticleLikeServiceTest {
 
         //when & then
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(privateArticle.getId(), MapType.PRIVATE, false,
+            () -> commentLikeService.changeMyLike(privateComment.getId(), MapType.PRIVATE, false,
                 another))
             .isInstanceOf(NotAuthorizedOrExistException.class);
         assertThatThrownBy(
-            () -> articleLikeService.changeMyLike(groupedArticle.getId(), MapType.GROUPED, false,
+            () -> commentLikeService.changeMyLike(groupedComment.getId(), MapType.GROUPED, false,
                 another))
             .isInstanceOf(NotAuthorizedOrExistException.class);
     }
@@ -242,19 +272,22 @@ class ArticleLikeServiceTest {
     @DisplayName("좋아요 확인")
     void hasILiked() {
         //given
-        articleLikeRepository.save(
-            ArticleLike.builder()
+        commentLikeRepository.save(
+            CommentLike.builder()
                 .user(user)
-                .article(publicArticle)
+                .comment(publicComment)
                 .build()
         );
 
         //when & then
         assertThat(
-            articleLikeService.hasILiked(publicArticle.getId(), MapType.PUBLIC, user.getId()))
-            .isEqualTo(true);
+            commentLikeService.hasILiked(publicComment.getId(), MapType.PUBLIC, user.getId()))
+            .hasSize(1);
         assertThat(
-            articleLikeService.hasILiked(privateArticle.getId(), MapType.PRIVATE, user.getId()))
-            .isEqualTo(false);
+            commentLikeService.hasILiked(publicComment.getId(), MapType.PUBLIC, user.getId()).get(0))
+            .isEqualTo(publicComment.getId());
+        assertThat(
+            commentLikeService.hasILiked(privateComment.getId(), MapType.PRIVATE, user.getId()))
+            .hasSize(0);
     }
 }

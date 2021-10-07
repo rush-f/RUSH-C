@@ -28,6 +28,7 @@ class FindMyArticlesServiceTest {
     ArticleRepository articleRepository;
 
     @Test
+    @Transactional
     void findMyArticles() {
         //given
         User user = userRepository.save(
