@@ -1,4 +1,4 @@
-package rush.rush.acceptance.setup;
+package rush.rush.acceptance.fixture;
 
 import static io.restassured.RestAssured.given;
 
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import rush.rush.dto.AuthResponse;
 
-public class AuthSetUp {
+public class AuthFixture {
 
     public static void signUp(String nickName, String email, String password) {
         Map<String, String> body = new HashMap<>();
@@ -31,16 +31,17 @@ public class AuthSetUp {
         body.put("email", email);
         body.put("password", password);
 
-        AuthResponse authResponse = given()
-            .body(body)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+        AuthResponse authResponse =
+            given()
+                .body(body)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .post("/api/auth/login")
+                .post("/api/auth/login")
             .then()
-            .extract()
-            .body()
-            .as(AuthResponse.class);
+                .extract()
+                .body()
+                .as(AuthResponse.class);
 
         return authResponse.getAccessToken();
     }

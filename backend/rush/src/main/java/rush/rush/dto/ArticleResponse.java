@@ -1,6 +1,7 @@
 package rush.rush.dto;
 
 import java.util.Date;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class ArticleResponse {
     private Long totalLikes;
 
     public ArticleResponse(Long id, String title, String content, Double latitude, Double longitude,
-        Long userId, String nickName, String imageUrl, Date createDate, Long totalLikes ){
+        Long userId, String nickName, String imageUrl, Date createDate, Long totalLikes ) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -30,5 +31,31 @@ public class ArticleResponse {
         this.author = new AuthorResponse(userId, nickName, imageUrl);
         this.createDate = createDate;
         this.totalLikes = totalLikes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ArticleResponse that = (ArticleResponse) o;
+
+        return Objects.equals(id, that.id)
+            && Objects.equals(title, that.title)
+            && Objects.equals(content, that.content)
+            && Objects.equals(latitude, that.latitude)
+            && Objects.equals(longitude, that.longitude)
+            && Objects.equals(author, that.author)
+            && Objects.equals(createDate, that.createDate)
+            && Objects.equals(totalLikes, that.totalLikes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            id, title, content, latitude, longitude, author, createDate, totalLikes);
     }
 }
