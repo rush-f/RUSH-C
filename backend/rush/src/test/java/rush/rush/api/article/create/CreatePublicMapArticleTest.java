@@ -42,6 +42,7 @@ public class CreatePublicMapArticleTest {
         token = AuthFixture.login(email, password);
     }
 
+
     @ParameterizedTest
     @DisplayName("전체지도에만 글쓰기")
     @CsvSource({
@@ -59,6 +60,20 @@ public class CreatePublicMapArticleTest {
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,0,0"
     })
     void createPublicArticle(String title, String content, double latitude, double longitude) {
+        /*
+         * POST /api/articles
+         * Content-Type: application/json
+         * Authorization: Bearer 토큰값
+         *
+         * {
+         *   "title": "글제목",  // 1 이상 무한대 이하
+         *   "content": "글내용입니다.", // 1 이상 무한대
+         *   "latitude": 0,  // -90 이상 90 이하
+         *   "longitude": 0, // -180 이상 180 이하
+         *   "publicMap": "true",
+         *   "privateMap": "false"
+         * }
+         */
         Map<String, Object> body = new HashMap<>();
 
         body.put("title", title);
@@ -67,7 +82,6 @@ public class CreatePublicMapArticleTest {
         body.put("longitude", longitude);
         body.put("publicMap", true);
         body.put("privateMap", false);
-
         String location =
             given()
                 .header("Authorization", "Bearer " + token)
@@ -81,9 +95,11 @@ public class CreatePublicMapArticleTest {
                 .extract()
                 .header("location");
 
+        // when : location 헤더 값을 가지고 온누리 발자국 글을 조회한다.
         ArticleResponse savedArticle = ArticleFixture.findPublicArticleById(
             extractArticleIdFrom(location));
 
+        // then : 방금 작성한 글의 글 상세가 조회된다.
         assertThat(savedArticle.getId()).isNotNull();
         assertThat(savedArticle.getTitle()).isEqualTo(title);
         assertThat(savedArticle.getContent()).isEqualTo(content);
