@@ -1,4 +1,4 @@
-package rush.rush.api.article;
+package rush.rush.api.article.create;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +21,7 @@ import rush.rush.api.fixture.AuthFixture;
 import rush.rush.api.fixture.UserFixture;
 import rush.rush.dto.ArticleResponse;
 
+@DisplayName("온누리 발자국에 글쓰기")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreatePublicMapArticleTest {
 
