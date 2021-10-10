@@ -1,4 +1,4 @@
-package rush.rush.acceptance.fixture;
+package rush.rush.api.fixture;
 
 import static io.restassured.RestAssured.given;
 

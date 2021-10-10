@@ -1,4 +1,4 @@
-package rush.rush.acceptance.article;
+package rush.rush.api.article;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,9 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import rush.rush.acceptance.fixture.ArticleFixture;
-import rush.rush.acceptance.fixture.AuthFixture;
-import rush.rush.acceptance.fixture.UserFixture;
+import rush.rush.api.fixture.ArticleFixture;
+import rush.rush.api.fixture.AuthFixture;
+import rush.rush.api.fixture.UserFixture;
 import rush.rush.dto.ArticleResponse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
