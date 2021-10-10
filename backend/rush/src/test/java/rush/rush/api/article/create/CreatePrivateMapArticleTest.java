@@ -52,7 +52,6 @@ public class CreatePrivateMapArticleTest {
 
         AuthFixture.signUp(anotherNickName, anotherEmail, anotherPassword);
         anotherToken = AuthFixture.login(anotherEmail, anotherPassword);
-        System.out.println();
     }
 
     @ParameterizedTest
@@ -64,7 +63,7 @@ public class CreatePrivateMapArticleTest {
         "a,a,90,180",
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,0,0"
     })
-    void createPublicArticle(String title, String content, double latitude, double longitude) {
+    void createPrivateArticle(String title, String content, double latitude, double longitude) {
         Map<String, Object> body = new HashMap<>();
 
         body.put("title", title);
@@ -81,6 +80,7 @@ public class CreatePrivateMapArticleTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
+                .log().all()
                 .post("/api/articles")
             .then()
                 .statusCode(HttpStatus.CREATED.value())
@@ -102,14 +102,13 @@ public class CreatePrivateMapArticleTest {
         assertThat(savedArticle.getTotalLikes()).isZero();
 
         // when 타인이 조회 시도  then 조회 실패
-        Object o = given()
+        given()
             .header("Authorization", "Bearer " + anotherToken)
         .when()
+            .log().all()
             .get("/api/articles/private/" + articleId)
         .then()
-            .extract()
-            .body().jsonPath();
-        System.out.println();
+            .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @DisplayName("위도 or 경도가 너무 클 때 값 자동조정")

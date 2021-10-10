@@ -20,8 +20,8 @@ public class AuthFixture {
             .body(body)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON_VALUE)
-            .when()
-        .post("/api/auth/signup")
+        .when()
+            .post("/api/auth/signup")
         .then()
             .statusCode(HttpStatus.CREATED.value());
     }
