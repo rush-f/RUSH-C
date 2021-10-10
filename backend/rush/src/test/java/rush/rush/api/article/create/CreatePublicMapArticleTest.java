@@ -44,7 +44,6 @@ public class CreatePublicMapArticleTest {
 
 
     @ParameterizedTest
-    @DisplayName("전체지도에만 글쓰기")
     @CsvSource({
         // 제목&내용 : 최소 글자수(1자, 공백X), 위도&경도 : 최솟값
         "a,a,-90,-180",
@@ -110,7 +109,7 @@ public class CreatePublicMapArticleTest {
         assertThat(savedArticle.getTotalLikes()).isZero();
     }
 
-    @DisplayName("전체지도에만 글쓰기 - 위도 or 경도가 너무 클 때 값 자동조정")
+    @DisplayName("위도 or 경도가 너무 클 때 값 자동조정")
     @ParameterizedTest
     @CsvSource({
         "-91, -90, -100, -100",      // 위도가 너무 작음 -> 위도 -90으로 자동조정
@@ -163,7 +162,7 @@ public class CreatePublicMapArticleTest {
     }
 
     @ParameterizedTest
-    @DisplayName("전체지도에만 글쓰기 - 토큰이 잘못된 경우 401 Unauthorized 응답")
+    @DisplayName("토큰이 잘못된 경우 401 Unauthorized 응답")
     @ValueSource(strings = {"", "말도 안되는 토큰"})
     void createPublicArticle_IfTokenIsWrong_Response401(String wrongToken) {
         final String title = "글제목";
