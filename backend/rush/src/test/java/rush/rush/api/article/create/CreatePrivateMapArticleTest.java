@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,14 @@ import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
 import rush.rush.api.fixture.UserFixture;
 import rush.rush.dto.ArticleResponse;
+import rush.rush.repository.ArticleRepository;
 
-@DisplayName("온누리 발자국에 글쓰기")
+@DisplayName("나만의 발자국에 글쓰기")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreatePublicMapArticleTest {
+public class CreatePrivateMapArticleTest {
 
-    private String token;
+    private String writerToken;
+    private String anotherToken;
 
     @LocalServerPort
     protected int port;
@@ -34,14 +37,23 @@ public class CreatePublicMapArticleTest {
     void setUp() {
         RestAssured.port = port;
 
+        /* 글 작성자 */
         final String nickName = "김예림";
         final String email = "test@email.com";
         final String password = "password";
 
         AuthFixture.signUp(nickName, email, password);
-        token = AuthFixture.login(email, password);
-    }
+        writerToken = AuthFixture.login(email, password);
 
+        /* 타인 */
+        final String anotherNickName = "이종성";
+        final String anotherEmail = "test1@email.com";
+        final String anotherPassword = "testPassword";
+
+        AuthFixture.signUp(anotherNickName, anotherEmail, anotherPassword);
+        anotherToken = AuthFixture.login(anotherEmail, anotherPassword);
+        System.out.println();
+    }
 
     @ParameterizedTest
     @CsvSource({
@@ -53,31 +65,18 @@ public class CreatePublicMapArticleTest {
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,0,0"
     })
     void createPublicArticle(String title, String content, double latitude, double longitude) {
-        /*
-         * POST /api/articles
-         * Content-Type: application/json
-         * Authorization: Bearer 토큰값
-         *
-         * {
-         *   "title": "글제목",  // 1 이상 무한대 이하
-         *   "content": "글내용입니다.", // 1 이상 무한대
-         *   "latitude": 0,  // -90 이상 90 이하
-         *   "longitude": 0, // -180 이상 180 이하
-         *   "publicMap": "true",
-         *   "privateMap": "false"
-         * }
-         */
         Map<String, Object> body = new HashMap<>();
 
         body.put("title", title);
         body.put("content", content);
         body.put("latitude", latitude);
         body.put("longitude", longitude);
-        body.put("publicMap", true);
-        body.put("privateMap", false);
+        body.put("publicMap", false);
+        body.put("privateMap", true);    // 나만의 발자국에만 글쓰기
+
         String location =
             given()
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", "Bearer " + writerToken)
                 .body(body)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -88,11 +87,10 @@ public class CreatePublicMapArticleTest {
                 .extract()
                 .header("location");
 
-        // when : location 헤더 값을 가지고 온누리 발자국 글을 조회한다.
-        ArticleResponse savedArticle = ArticleFixture.findPublicArticle(
-            extractArticleIdFrom(location));
+        // when 글 작성자가 조회 시도 then 조회 성공
+        Long articleId = extractArticleIdFrom(location);
+        ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(articleId, writerToken);
 
-        // then : 방금 작성한 글의 글 상세가 조회된다.
         assert savedArticle != null;
         assertThat(savedArticle.getId()).isNotNull();
         assertThat(savedArticle.getTitle()).isEqualTo(title);
@@ -102,6 +100,16 @@ public class CreatePublicMapArticleTest {
         assertThat(savedArticle.getLatitude()).isEqualTo(latitude);
         assertThat(savedArticle.getLongitude()).isEqualTo(longitude);
         assertThat(savedArticle.getTotalLikes()).isZero();
+
+        // when 타인이 조회 시도  then 조회 실패
+        Object o = given()
+            .header("Authorization", "Bearer " + anotherToken)
+        .when()
+            .get("/api/articles/private/" + articleId)
+        .then()
+            .extract()
+            .body().jsonPath();
+        System.out.println();
     }
 
     @DisplayName("위도 or 경도가 너무 클 때 값 자동조정")
@@ -116,7 +124,7 @@ public class CreatePublicMapArticleTest {
         "-100, -90, 181, 180",       // 위도가 너무 작고 경도가 너무 큼 -> 위도 -90, 경도 180
         "100, 90, -181, -180",       // 위도가 너무 크고 경도가 너무 작음 -> 위도 90, 경도 -180
     })
-    void createPublicArticle_IfLatitudeOrLongitudeOver_AutomaticallyAdjusted(
+    void createPrivateArticle_IfLatitudeOrLongitudeOver_AutomaticallyAdjusted(
             double latitude, double expectedLatitude, double longitude, double expectedLongitude) {
         final String title = "글제목";
         final String content = "글 내용입니다.ㅎ";
@@ -127,12 +135,12 @@ public class CreatePublicMapArticleTest {
         body.put("content", content);
         body.put("latitude", latitude);
         body.put("longitude", longitude);
-        body.put("publicMap", true);
-        body.put("privateMap", false);
+        body.put("publicMap", false);
+        body.put("privateMap", true);    // 나만의 발자국에만 글쓰기
 
         String location =
             given()
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", "Bearer " + writerToken)
                 .body(body)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -143,8 +151,8 @@ public class CreatePublicMapArticleTest {
                 .extract()
                 .header("location");
 
-        ArticleResponse savedArticle = ArticleFixture.findPublicArticle(
-            extractArticleIdFrom(location));
+        ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(
+            extractArticleIdFrom(location), writerToken);
 
         assertThat(savedArticle.getId()).isNotNull();
         assertThat(savedArticle.getTitle()).isEqualTo(title);
@@ -159,7 +167,7 @@ public class CreatePublicMapArticleTest {
     @ParameterizedTest
     @DisplayName("토큰이 잘못된 경우 401 Unauthorized 응답")
     @ValueSource(strings = {"", "말도 안되는 토큰"})
-    void createPublicArticle_IfTokenIsWrong_Response401(String wrongToken) {
+    void createPrivateArticle_IfTokenIsWrong_Response401(String wrongToken) {
         final String title = "글제목";
         final String content = "글내용";
         final double latitude = 45.0;
@@ -171,8 +179,8 @@ public class CreatePublicMapArticleTest {
         body.put("content", content);
         body.put("latitude", latitude);
         body.put("longitude", longitude);
-        body.put("publicMap", true);
-        body.put("privateMap", false);
+        body.put("publicMap", false);
+        body.put("privateMap", true);    // 나만의 발자국에만 글쓰기
 
         given()
             .header("Authorization", "Bearer " + wrongToken)
@@ -192,7 +200,9 @@ public class CreatePublicMapArticleTest {
     }
 
     @AfterEach
-    void rollBack() {
-        UserFixture.withdraw(token);
+    void rollBack(@Autowired ArticleRepository articleRepository) {
+        UserFixture.withdraw(writerToken);
+        UserFixture.withdraw(anotherToken);
+        articleRepository.deleteAll();
     }
 }

@@ -33,12 +33,8 @@ public class FindArticleService {
 
     @Transactional(readOnly = true)
     public ArticleResponse findPrivateArticle(Long id, User me) {
-        ArticleResponse articleResponse = articleRepository
-            .findByPrivateMapWithLikes(id, me.getId())
-            .orElseThrow(() ->
-                new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
-
-        return articleResponse;
+        return articleRepository.findByPrivateMapWithLikes(id, me.getId())
+            .orElseThrow(() -> new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
     }
 
     @Transactional(readOnly = true)
