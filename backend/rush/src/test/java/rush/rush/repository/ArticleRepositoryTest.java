@@ -162,9 +162,9 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // when
         Optional<ArticleResponse> articleResponse = articleRepository
-            .findByPublicMapWithLikes(article1.getId());
+            .findPublicMapArticleWithLikes(article1.getId());
         Optional<ArticleResponse> articleResponse2 = articleRepository
-            .findByPublicMapWithLikes(article2.getId());
+            .findPublicMapArticleWithLikes(article2.getId());
 
         // then
         assertThat(articleResponse.isPresent()).isTrue();

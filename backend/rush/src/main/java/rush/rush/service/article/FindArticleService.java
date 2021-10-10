@@ -24,7 +24,7 @@ public class FindArticleService {
 
     @Transactional(readOnly = true)
     public ArticleResponse findPublicArticle(Long id) {
-        ArticleResponse articleResponse = articleRepository.findByPublicMapWithLikes(id)
+        ArticleResponse articleResponse = articleRepository.findPublicMapArticleWithLikes(id)
             .orElseThrow(() ->
                 new NotArticleExistsException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
@@ -34,7 +34,7 @@ public class FindArticleService {
     @Transactional(readOnly = true)
     public ArticleResponse findPrivateArticle(Long id, User me) {
         ArticleResponse articleResponse = articleRepository
-            .findByPrivateMapWithLikes(id, me.getId())
+            .findPrivateMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
 
@@ -44,7 +44,7 @@ public class FindArticleService {
     @Transactional(readOnly = true)
     public ArticleResponse findGroupArticle(Long id, User me) {
         ArticleResponse articleResponse = articleRepository
-            .findAsGroupMapArticleWithLikes(id, me.getId())
+            .findGroupMapArticleWithLikes(id, me.getId())
             .orElseThrow(() ->
                 new NotAuthorizedOrExistException(
                     "id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));
