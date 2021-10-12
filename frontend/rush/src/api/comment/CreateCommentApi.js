@@ -24,6 +24,7 @@ const createCommentApi = (content, articleId, mapType, accessToken, history) => 
         return Promise.reject();
       } else if(error.response.status === 400 || error.response.status === 404) {
         alert(error.response.data.errorMessage);
+        history.push("/");
         return Promise.reject();
       } else alert("이유가 뭔지 모르겠지만 댓글작성 실패했음.");
     });

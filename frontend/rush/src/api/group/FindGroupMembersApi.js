@@ -25,6 +25,7 @@ const findGroupMembersApi = ({ groupId, accessToken, history }) => {
       return Promise.reject();
     } else if(error.response.status === 400 || error.response.status === 404) {
       alert(error.response.data.errorMessage);
+      history.push("/");
       return Promise.reject();
     } else alert("이유가 뭔지 모르겠지만 그룹원 목록을 불러오는데 실패했음...");
   });

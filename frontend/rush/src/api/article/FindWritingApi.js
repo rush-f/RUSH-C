@@ -24,6 +24,7 @@ const findWritingApi = (articleId, mapType, history) => {
         return Promise.reject();
       } else if(error.response.status === 400 || error.response.status === 404) {
         alert(error.response.data.errorMessage);
+        history.push("/");
         return Promise.reject();
       } else alert("게시 글 가져오기에 실패했음...");
     });

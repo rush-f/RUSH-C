@@ -34,6 +34,7 @@ const createGroupApi = ({groupName, history}) => {
       history.push("/login");
     } else if(error.response.status === 400 || error.response.status === 404) {
       alert(error.response.data.errorMessage);
+      history.push("/");
       return Promise.reject();
     } else {
       alert("그룹 가입 실패");
