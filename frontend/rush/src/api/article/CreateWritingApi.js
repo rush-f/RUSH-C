@@ -50,6 +50,7 @@ const createWritingApi = ({title, content, center, publicMap, privateMap,
         return;
       } else if(error.response.status === 400 || error.response.status === 404) {
         alert(error.response.data.errorMessage);
+        history.push("/");
         return Promise.reject();
       } else alert("이유가 뭔지 모르겠지만 글쓰기 실패했음. 일단 홈화면으로...");
       history.push("/");

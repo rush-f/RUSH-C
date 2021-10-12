@@ -114,7 +114,6 @@ const DefaultMapPage = (props) => {
     })
   }, [accessToken]);
 
-  console.log(center.lat() + " " + center.lng())
   return (<>
     <DefaultMap googleMapURL={CLIENT_ID}
                 loadingElement={<div style={{width: `100%`}}/>}
