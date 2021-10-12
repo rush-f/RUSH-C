@@ -1,7 +1,7 @@
 import axios from "axios";
 import {BACKEND_ADDRESS} from "../../constants/ADDRESS";
 
-const deleteArticleApi = ({articleId, accessToken, markerLat, markerLng, history}) => {
+const deleteArticleApi = ({articleId, accessToken, history}) => {
   if (!accessToken) {
     alert("로그인이 필요한 서비스입니다.")
     history.push('/login');
@@ -16,10 +16,7 @@ const deleteArticleApi = ({articleId, accessToken, markerLat, markerLng, history
   .then(response => {
     if (response.status === 204) {
       alert("글이 삭제되었습니다 :)");
-      history.push({
-        pathname:"/",
-        state: {lat: markerLat, lng: markerLng}
-      });
+      history.push("/");
     }
   })
   .catch(error => {
