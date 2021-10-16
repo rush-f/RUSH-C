@@ -1,23 +1,18 @@
 package rush.rush.api.article.create;
 
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import rush.rush.api.ApiTest;
 import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
-import rush.rush.api.fixture.Database;
 import rush.rush.api.util.LocationHeaderUtil;
 import rush.rush.dto.ArticleResponse;
-import rush.rush.repository.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +21,9 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("온누리 발자국에 글쓰기")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreatePublicMapArticleTest {
+public class CreatePublicMapArticleTest extends ApiTest {
 
     private String token;
-
-    @LocalServerPort
-    protected int port;
 
     @BeforeEach
     void setUp() {
@@ -187,24 +178,5 @@ public class CreatePublicMapArticleTest {
             .post("/api/articles")
         .then()
             .statusCode(HttpStatus.UNAUTHORIZED.value());
-    }
-
-    @AfterEach
-    void rollBack(@Autowired ArticleGroupRepository articleGroupRepository,
-                  @Autowired UserGroupRepository userGroupRepository,
-                  @Autowired CommentLikeRepository commentLikeRepository,
-                  @Autowired ArticleLikeRepository articleLikeRepository,
-                  @Autowired CommentRepository commentRepository,
-                  @Autowired ArticleRepository articleRepository,
-                  @Autowired GroupRepository groupRepository,
-                  @Autowired UserRepository userRepository) {
-        Database.clearAll(articleGroupRepository);
-        Database.clearAll(userGroupRepository);
-        Database.clearAll(commentLikeRepository);
-        Database.clearAll(articleLikeRepository);
-        Database.clearAll(commentRepository);
-        Database.clearAll(articleRepository);
-        Database.clearAll(groupRepository);
-        Database.clearAll(userRepository);
     }
 }
