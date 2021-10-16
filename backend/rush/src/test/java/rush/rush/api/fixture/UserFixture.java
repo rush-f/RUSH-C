@@ -1,9 +1,9 @@
 package rush.rush.api.fixture;
 
-import static io.restassured.RestAssured.given;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import static io.restassured.RestAssured.given;
 
 public class UserFixture {
 
@@ -14,7 +14,7 @@ public class UserFixture {
             .accept(MediaType.APPLICATION_JSON_VALUE)
         .when()
             .delete("/api/users/me")
-            .then()
+        .then()
             .statusCode(HttpStatus.NO_CONTENT.value());
     }
 }
