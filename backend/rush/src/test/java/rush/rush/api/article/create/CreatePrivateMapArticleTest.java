@@ -1,11 +1,6 @@
 package rush.rush.api.article.create;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import io.restassured.RestAssured;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,9 +14,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
-import rush.rush.api.fixture.UserFixture;
+import rush.rush.api.fixture.Database;
+import rush.rush.api.util.LocationHeaderUtil;
 import rush.rush.dto.ArticleResponse;
-import rush.rush.repository.ArticleRepository;
+import rush.rush.repository.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("나만의 발자국에 글쓰기")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -88,7 +90,7 @@ public class CreatePrivateMapArticleTest {
                 .header("location");
 
         // when 글 작성자가 조회 시도 then 조회 성공
-        Long articleId = extractArticleIdFrom(location);
+        Long articleId = LocationHeaderUtil.extractIdFrom(location);
         ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(articleId, writerToken);
 
         assert savedArticle != null;
@@ -151,7 +153,7 @@ public class CreatePrivateMapArticleTest {
                 .header("location");
 
         ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(
-            extractArticleIdFrom(location), writerToken);
+            LocationHeaderUtil.extractIdFrom(location), writerToken);
 
         assertThat(savedArticle.getId()).isNotNull();
         assertThat(savedArticle.getTitle()).isEqualTo(title);
@@ -199,9 +201,21 @@ public class CreatePrivateMapArticleTest {
     }
 
     @AfterEach
-    void rollBack(@Autowired ArticleRepository articleRepository) {
-        UserFixture.withdraw(writerToken);
-        UserFixture.withdraw(anotherToken);
-        articleRepository.deleteAll();
+    void rollBack(@Autowired ArticleGroupRepository articleGroupRepository,
+                  @Autowired UserGroupRepository userGroupRepository,
+                  @Autowired CommentLikeRepository commentLikeRepository,
+                  @Autowired ArticleLikeRepository articleLikeRepository,
+                  @Autowired CommentRepository commentRepository,
+                  @Autowired ArticleRepository articleRepository,
+                  @Autowired GroupRepository groupRepository,
+                  @Autowired UserRepository userRepository) {
+        Database.clearAll(articleGroupRepository);
+        Database.clearAll(userGroupRepository);
+        Database.clearAll(commentLikeRepository);
+        Database.clearAll(articleLikeRepository);
+        Database.clearAll(commentRepository);
+        Database.clearAll(articleRepository);
+        Database.clearAll(groupRepository);
+        Database.clearAll(userRepository);
     }
 }

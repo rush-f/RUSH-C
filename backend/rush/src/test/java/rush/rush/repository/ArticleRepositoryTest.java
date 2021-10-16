@@ -153,9 +153,9 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // when
         Optional<ArticleResponse> articleResponse = articleRepository
-            .findPublicMapArticle(article1.getId());
+            .findPublicArticle(article1.getId());
         Optional<ArticleResponse> articleResponse2 = articleRepository
-            .findPublicMapArticle(article2.getId());
+            .findPublicArticle(article2.getId());
 
         // then
         assertThat(articleResponse.isPresent()).isTrue();
