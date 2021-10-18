@@ -1,9 +1,5 @@
 package rush.rush.service.article;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +12,11 @@ import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.ArticleRepository;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class FindArticleService {
@@ -24,7 +25,7 @@ public class FindArticleService {
 
     @Transactional(readOnly = true)
     public ArticleResponse findPublicArticle(Long id) {
-        ArticleResponse articleResponse = articleRepository.findPublicMapArticleWithLikes(id)
+        ArticleResponse articleResponse = articleRepository.findPublicArticle(id)
             .orElseThrow(() ->
                 new NotArticleExistsException("id가 " + id + "인 article이 전체지도에 없습니다."));
 
@@ -33,18 +34,14 @@ public class FindArticleService {
 
     @Transactional(readOnly = true)
     public ArticleResponse findPrivateArticle(Long id, User me) {
-        ArticleResponse articleResponse = articleRepository
-            .findPrivateMapArticleWithLikes(id, me.getId())
-            .orElseThrow(() ->
-                new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
-
-        return articleResponse;
+        return articleRepository.findPrivateArticle(id, me.getId())
+            .orElseThrow(() -> new NotArticleExistsException("id가 " + id + "인 article이 개인지도에 없습니다."));
     }
 
     @Transactional(readOnly = true)
     public ArticleResponse findGroupArticle(Long id, User me) {
         ArticleResponse articleResponse = articleRepository
-            .findGroupMapArticleWithLikes(id, me.getId())
+            .findGroupedArticle(id, me.getId())
             .orElseThrow(() ->
                 new NotAuthorizedOrExistException(
                     "id가 " + id + "인 article이 없거나, 해당 글을 볼 권한이 없습니다."));

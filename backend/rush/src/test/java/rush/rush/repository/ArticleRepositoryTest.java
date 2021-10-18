@@ -1,25 +1,16 @@
 package rush.rush.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static rush.rush.repository.SetUpMethods.persistArticle;
-import static rush.rush.repository.SetUpMethods.persistArticleGroup;
-import static rush.rush.repository.SetUpMethods.persistArticleLike;
-import static rush.rush.repository.SetUpMethods.persistComment;
-import static rush.rush.repository.SetUpMethods.persistGroup;
-import static rush.rush.repository.SetUpMethods.persistUser;
-import static rush.rush.repository.SetUpMethods.persistUserGroup;
-
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.Article;
-import rush.rush.domain.ArticleGroup;
-import rush.rush.domain.Comment;
-import rush.rush.domain.Group;
-import rush.rush.domain.User;
+import rush.rush.domain.*;
 import rush.rush.dto.ArticleResponse;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.*;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
@@ -162,9 +153,9 @@ class ArticleRepositoryTest extends RepositoryTest {
 
         // when
         Optional<ArticleResponse> articleResponse = articleRepository
-            .findPublicMapArticleWithLikes(article1.getId());
+            .findPublicArticle(article1.getId());
         Optional<ArticleResponse> articleResponse2 = articleRepository
-            .findPublicMapArticleWithLikes(article2.getId());
+            .findPublicArticle(article2.getId());
 
         // then
         assertThat(articleResponse.isPresent()).isTrue();

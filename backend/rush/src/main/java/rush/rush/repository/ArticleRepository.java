@@ -1,14 +1,15 @@
 package rush.rush.repository;
 
-import java.util.List;
-import java.util.Optional;
-import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
 import rush.rush.dto.ArticleResponse;
+
+import javax.persistence.QueryHint;
+import java.util.List;
+import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -47,7 +48,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join article.user user "
         + "where article.publicMap = true and article.id = :articleId "
         + "group by article.id")
-    Optional<ArticleResponse> findPublicMapArticleWithLikes(@Param("articleId") Long articleId);
+    Optional<ArticleResponse> findPublicArticle(@Param("articleId") Long articleId);
 
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
         + "article.content, "
@@ -62,8 +63,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join article.user user "
         + "where article.privateMap = true and article.id = :articleId and user.id = :userId "
         + "group by article.id")
-    Optional<ArticleResponse> findPrivateMapArticleWithLikes(@Param("articleId") Long articleId,
-        @Param("userId") Long userId);
+    Optional<ArticleResponse> findPrivateArticle(@Param("articleId") Long articleId, @Param("userId") Long userId);
 
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
         + "article.content, "
@@ -82,8 +82,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "inner join article.user user "
         + "where article.id = :articleId and groupmember.id = :userId "
         + "group by article.id")
-    Optional<ArticleResponse> findGroupMapArticleWithLikes(@Param("articleId") Long articleId,
-        @Param("userId") Long userId);
+    Optional<ArticleResponse> findGroupedArticle(@Param("articleId") Long articleId,
+                                                 @Param("userId") Long userId);
 
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Article> findByPublicMapTrueAndId(Long articleId);
