@@ -4,6 +4,7 @@ import Profile from "./Profile";
 import changeMyLikeInCommentIdApi
   from "../../api/comment/ChangeMyLikeInCommentApi";
 import deleteCommentApi from "../../api/comment/DeleteCommentApi";
+import CommentCreateDate from "../../util/CommentCreateDate";
 
 const CommentBox = styled.div`
   margin: 0;
@@ -80,6 +81,7 @@ const DeleteComment = styled.div`
   color: #777777;
   display: inline-block;
   font-size: 13px;
+  cursor: pointer;
 `;
 
 const Comment = ({
@@ -112,6 +114,7 @@ const Comment = ({
         <AuthorName>
           {comment.author.nickName}
         </AuthorName>
+        <CommentCreateDate iso8601format={comment.createDate}/>
         <div>{comment.content.split('\n').map((line) => {return (<>{line}<br/></>)})}</div>
         <CommentBottom>
           <CommentLike>
