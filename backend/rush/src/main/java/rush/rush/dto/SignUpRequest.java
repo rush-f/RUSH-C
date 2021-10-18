@@ -1,6 +1,5 @@
 package rush.rush.dto;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,6 @@ public class SignUpRequest {
     private String nickName;
 
     @NotBlank
-    @Email
     private String email;
 
     @NotBlank

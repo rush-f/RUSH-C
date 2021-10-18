@@ -6,7 +6,14 @@ import {ACCESS_TOKEN} from "../../constants/SessionStorage";
 const findWritingApi = (articleId, mapType, history) => {
   if (mapType === PUBLIC) {
     return axios.get(BACKEND_ADDRESS + "/articles/" + mapType + "/" + articleId)
-      .then(response => response.data);
+      .then(response => response.data)
+        .catch(error => {
+          if (error.response.status === 400 || error.response.status === 404) {
+            alert(error.response.data.errorMessage);
+            history.push("/");
+            return Promise.reject();
+          } else alert("게시 글 가져오기에 실패했음...");
+        });
   }
   // 개인지도 or 그룹지도
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);

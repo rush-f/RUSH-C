@@ -18,7 +18,7 @@ const signUpApi = (email, password, nickName, history) => {
   })
   .catch(error => {
     if (error.response.status === 401 || error.response.status === 400) {
-      alert(error.response.data.errorMessage ? error.response.data.errorMessage: "이메일 형식이 잘못되었습니다.");
+      alert(error.response.data.errorMessage);
       return Promise.reject();
     }
     alert("뭔지 모르지만 회원가입실패?! 홈으로..");

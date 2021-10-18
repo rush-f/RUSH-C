@@ -46,7 +46,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         + "count(articleLikes)) from Article article "
         + "left join article.articleLikes articleLikes "
         + "inner join article.user user "
-        + "where article.publicMap = true and article.id = :articleId")
+        + "where article.publicMap = true and article.id = :articleId "
+        + "group by article.id")
     Optional<ArticleResponse> findPublicArticle(@Param("articleId") Long articleId);
 
     @Query("select distinct new rush.rush.dto.ArticleResponse(article.id, article.title, "
