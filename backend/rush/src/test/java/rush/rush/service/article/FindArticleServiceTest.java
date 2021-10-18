@@ -69,7 +69,7 @@ class FindArticleServiceTest {
                 .user(user)
                 .title("글제목")
                 .content("내용내용")
-                .latitude(100.0)
+                .latitude(70.0)
                 .longitude(100.0)
                 .publicMap(true)
                 .privateMap(false)
@@ -80,7 +80,7 @@ class FindArticleServiceTest {
                 .user(user)
                 .title("글제목")
                 .content("내용내용")
-                .latitude(100.0)
+                .latitude(70.0)
                 .longitude(100.0)
                 .publicMap(false)
                 .privateMap(true)
@@ -91,7 +91,7 @@ class FindArticleServiceTest {
                 .user(user)
                 .title("글제목")
                 .content("내용내용")
-                .latitude(100.0)
+                .latitude(70.0)
                 .longitude(100.0)
                 .publicMap(false)
                 .privateMap(false)
@@ -209,7 +209,7 @@ class FindArticleServiceTest {
     void findPublicMapArticles() {
         //when
         List<ArticleSummaryResponse> articles1 = findArticleService
-            .findPublicMapArticles(100.0, 5.0, 100.0, 5.0);
+            .findPublicMapArticles(70.0, 5.0, 100.0, 5.0);
         List<ArticleSummaryResponse> articles2 = findArticleService
             .findPublicMapArticles(0.0, 5.0, 0.0, 5.0);
 
@@ -224,7 +224,7 @@ class FindArticleServiceTest {
     void findPrivateMapArticles() {
         //when
         List<ArticleSummaryResponse> articles1 = findArticleService
-            .findPrivateMapArticles(100.0, 5.0, 100.0, 5.0, user);
+            .findPrivateMapArticles(70.0, 5.0, 100.0, 5.0, user);
         List<ArticleSummaryResponse> articles2 = findArticleService
             .findPrivateMapArticles(0.0, 5.0, 0.0, 5.0, user);
 
@@ -239,7 +239,7 @@ class FindArticleServiceTest {
     void findGroupedMapArticles() {
         //when
         List<ArticleSummaryResponse> articles1 = findArticleService
-            .findGroupedMapArticles(group.getId(), 100.0, 5.0, 100.0, 5.0, user);
+            .findGroupedMapArticles(group.getId(), 70.0, 5.0, 100.0, 5.0, user);
         List<ArticleSummaryResponse> articles2 = findArticleService
             .findGroupedMapArticles(group.getId(), 0.0, 5.0, 0.0, 5.0, user);
 
