@@ -21,7 +21,7 @@ public class ArticleResponse {
     private Long totalLikes;
 
     public ArticleResponse(Long id, String title, String content, Double latitude, Double longitude,
-        Long userId, String nickName, String imageUrl, Date createDate, Long totalLikes ) {
+        Long userId, String nickName, String imageUrl, Date createDate, Long totalLikes ){
         this.id = id;
         this.title = title;
         this.content = content;

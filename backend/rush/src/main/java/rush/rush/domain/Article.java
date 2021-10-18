@@ -78,21 +78,12 @@ public class Article {
         this.id = id;
         this.title = title;
         this.content = content;
-
-        // Todo: 리팩토링 필요
-        if (latitude < -90) { this.latitude = -90.0; }
-        else if (latitude > 90) { this.latitude = 90.0; }
-        else { this.latitude = latitude; }
-
-        if (longitude < -180) { this.longitude = -180.0; }
-        else if (longitude > 180) { this.longitude = 180.0; }
-        else { this.longitude = longitude; }
-
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.user = user;
         this.publicMap = publicMap;
         this.privateMap = privateMap;
         this.createDate = createDate;
-
         if (Objects.nonNull(articleGroups)) {
             this.articleGroups = articleGroups;
         }
