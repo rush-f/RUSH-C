@@ -27,7 +27,7 @@ const CompleteButton = ({isChangeContentModalOpened, newContent, accessToken, ar
         fontFamily: "'Gowun Dodum', sans-serif",
         color: "#445566"
       }}
-    > 내용 수정하기 </button>
+    > 수정하기 </button>
     }
   </>;
 };
