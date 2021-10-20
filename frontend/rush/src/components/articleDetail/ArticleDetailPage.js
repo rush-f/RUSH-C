@@ -14,6 +14,7 @@ import checkHasILikedApi from "../../api/article/CheckHasILikedApi";
 import checkHasIlikedInCommentApi
   from "../../api/comment/CheckHasIlikedInCommentApi";
 import findMyIdApi from "../../api/user/FindMyIdApi";
+import ChangeContentModal from "./editContent/ChangeContentModal";
 
 const ArticleDetailPage = (props) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN);
@@ -28,6 +29,7 @@ const ArticleDetailPage = (props) => {
   const [changeTotalLikesInComment, setChangeTotalLikesListInComment] = useState([]);
   const [myId, setMyId] = useState(null);
   const [groupId, setGroupId] = useState(props.location.state ? props.location.state.groupId : 0);
+  const [isChangeContentModalOpened, setIsChangeContentModalOpeneded] = useState(false);
 
   const onCommentLikeClicked = (commentId) => {
     if (hasILikedListInComment.includes(commentId)) {
@@ -117,6 +119,7 @@ const ArticleDetailPage = (props) => {
             setHasILiked={setHasILiked}
             history={props.history}
             isMyArticle={article? article.author.id === myId : false}
+            setIsChangeContentModalOpened={setIsChangeContentModalOpeneded}
           />
         </PostBox>
         <CommentsBox>
