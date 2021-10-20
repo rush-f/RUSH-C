@@ -1,16 +1,25 @@
 package rush.rush.repository;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.*;
-import rush.rush.dto.ArticleResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static rush.rush.repository.SetUpMethods.persistArticle;
+import static rush.rush.repository.SetUpMethods.persistArticleGroup;
+import static rush.rush.repository.SetUpMethods.persistArticleLike;
+import static rush.rush.repository.SetUpMethods.persistComment;
+import static rush.rush.repository.SetUpMethods.persistGroup;
+import static rush.rush.repository.SetUpMethods.persistUser;
+import static rush.rush.repository.SetUpMethods.persistUserGroup;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static rush.rush.repository.SetUpMethods.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import rush.rush.domain.Article;
+import rush.rush.domain.ArticleGroup;
+import rush.rush.domain.Comment;
+import rush.rush.domain.Group;
+import rush.rush.domain.User;
+import rush.rush.dto.ArticleResponse;
 
 class ArticleRepositoryTest extends RepositoryTest {
 
@@ -279,6 +288,23 @@ class ArticleRepositoryTest extends RepositoryTest {
         // then
         assertThat(articleAuthorId.isPresent()).isTrue();
         assertThat(articleAuthorId.get()).isEqualTo(user.getId());
+    }
+
+    @Test
+    @Transactional
+    void editArticleContent(){
+        //given
+        User user = persistUser(testEntityManager, "test@email.com");
+        Article article = persistArticle(testEntityManager, user, true, false, 0.0, 0.0);
+        String newContent = "새로운 내용이다!";
+
+        //when
+        articleRepository.editArticleContent(article.getId(), newContent);
+        testEntityManager.clear();
+
+        //then
+        Article result = testEntityManager.find(Article.class, article.getId());
+        assertThat(result.getContent()).isEqualTo(newContent);
     }
 
     @Test

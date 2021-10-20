@@ -1,15 +1,15 @@
 package rush.rush.repository;
 
+import java.util.List;
+import java.util.Optional;
+import javax.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import rush.rush.domain.Article;
 import rush.rush.dto.ArticleResponse;
-
-import javax.persistence.QueryHint;
-import java.util.List;
-import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -111,4 +111,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select distinct article.user.id from Article article where article.id = :articleId")
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<Long> findArticleAuthorId(@Param("articleId") Long articleId);
+
+    @Modifying
+    @Query("update Article a set a.content = :newContent where a.id = :articleId")
+    void editArticleContent(@Param("articleId") Long articleId, @Param("newContent") String newContent);
 }
