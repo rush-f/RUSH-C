@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Modal from "react-modal";
 import CancelButton from "./CancelButton";
+import NewContentTextarea from "./NewContentTextarea";
+import CompleteButton from "./CompleteButton";
 
 const ChangeContentModal = ({isChangeContentModalOpened, setIsChangeContentModalOpened, accessToken, articleId}) => {
   const [newContent, setNewContent] = useState("");
@@ -26,6 +28,17 @@ const ChangeContentModal = ({isChangeContentModalOpened, setIsChangeContentModal
       <CancelButton
         setIsChangeContentModalOpened={setIsChangeContentModalOpened}
         setNewContent={setNewContent}
+      />
+      <NewContentTextarea
+        value={newContent}
+        onChange={e => setNewContent(e.target.value)}
+        placeholder={"내용을 작성해주세요"}
+      />
+      <CompleteButton
+          isChangeContentModalOpened={isChangeContentModalOpened}
+          newContent={newContent}
+          accessToken={accessToken}
+          articleId={articleId}
       />
     </Modal>
   );
