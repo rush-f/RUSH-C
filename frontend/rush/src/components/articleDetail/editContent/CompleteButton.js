@@ -1,14 +1,21 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
+import editArticleContentApi from "../../../api/article/EditArticleContentApi";
 
-const CompleteButton = (props) => {
+const CompleteButton = ({isChangeContentModalOpened, newContent, accessToken, articleId, history}) => {
   return <>
-    {props.isChangeContentModalOpened && <button
+    {isChangeContentModalOpened && <button
       onClick={() => {
-        if (!props.newContent) {
+        if (!newContent) {
           alert("수정할 내용을 작성해주세요!");
           return;
         }
+        editArticleContentApi({
+          newContent,
+          accessToken,
+          articleId,
+          history
+        });
       }}
       style={{
         backgroundColor: "#00000000",

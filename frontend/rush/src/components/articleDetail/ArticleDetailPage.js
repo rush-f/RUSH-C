@@ -97,6 +97,7 @@ const ArticleDetailPage = (props) => {
           setIsChangeContentModalOpened={setIsChangeContentModalOpeneded}
           accessToken={accessToken}
           articleId={articleId}
+          history={props.history}
       />
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
         <PostBox>

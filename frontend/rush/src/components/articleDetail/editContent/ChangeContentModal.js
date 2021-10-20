@@ -4,7 +4,13 @@ import CancelButton from "./CancelButton";
 import NewContentTextarea from "./NewContentTextarea";
 import CompleteButton from "./CompleteButton";
 
-const ChangeContentModal = ({isChangeContentModalOpened, setIsChangeContentModalOpened, accessToken, articleId}) => {
+const ChangeContentModal = ({
+  isChangeContentModalOpened,
+  setIsChangeContentModalOpened,
+  accessToken,
+  articleId,
+  history
+}) => {
   const [newContent, setNewContent] = useState("");
 
   return (
@@ -39,6 +45,7 @@ const ChangeContentModal = ({isChangeContentModalOpened, setIsChangeContentModal
           newContent={newContent}
           accessToken={accessToken}
           articleId={articleId}
+          history={history}
       />
     </Modal>
   );
