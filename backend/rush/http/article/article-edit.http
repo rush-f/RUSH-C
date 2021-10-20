@@ -1,0 +1,8 @@
+###
+PUT http://localhost:8080/api/articles/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI1MDI1MjQ1LCJleHAiOjE2MjUwMjcwN
+
+{
+  "newContent": "새로운 글내용"
+}
