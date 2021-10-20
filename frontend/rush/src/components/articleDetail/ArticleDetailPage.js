@@ -92,6 +92,12 @@ const ArticleDetailPage = (props) => {
 
   return (
     <Outside>
+      <ChangeContentModal
+          isChangeContentModalOpened={isChangeContentModalOpened}
+          setIsChangeContentModalOpened={setIsChangeContentModalOpeneded}
+          accessToken={accessToken}
+          articleId={articleId}
+      />
       <DisplayBox style={{height: WindowSize().height - 50, marginTop: 15}}>
         <PostBox>
           <ArticleMeta
