@@ -281,13 +281,13 @@ class CommentLikeServiceTest {
 
         //when & then
         assertThat(
-            commentLikeService.hasILiked(publicComment.getId(), MapType.PUBLIC, user.getId()))
+            commentLikeService.hasILiked(publicArticle.getId(), MapType.PUBLIC, user.getId()))
             .hasSize(1);
         assertThat(
-            commentLikeService.hasILiked(publicComment.getId(), MapType.PUBLIC, user.getId()).get(0))
+            commentLikeService.hasILiked(publicArticle.getId(), MapType.PUBLIC, user.getId()).get(0))
             .isEqualTo(publicComment.getId());
         assertThat(
-            commentLikeService.hasILiked(privateComment.getId(), MapType.PRIVATE, user.getId()))
+            commentLikeService.hasILiked(privateArticle.getId(), MapType.PRIVATE, user.getId()))
             .hasSize(0);
     }
 }
