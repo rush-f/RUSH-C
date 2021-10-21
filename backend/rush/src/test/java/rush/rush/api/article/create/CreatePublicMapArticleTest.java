@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import rush.rush.api.ApiTest;
-import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
+import rush.rush.api.fixture.FindArticleFixture;
 import rush.rush.api.util.LocationHeaderUtil;
 import rush.rush.dto.ArticleResponse;
 
@@ -36,7 +36,6 @@ public class CreatePublicMapArticleTest extends ApiTest {
         AuthFixture.signUp(nickName, email, password);
         token = AuthFixture.login(email, password);
     }
-
 
     @ParameterizedTest
     @CsvSource({
@@ -84,7 +83,7 @@ public class CreatePublicMapArticleTest extends ApiTest {
                 .header("location");
 
         // when : location 헤더 값을 가지고 온누리 발자국 글을 조회한다.
-        ArticleResponse savedArticle = ArticleFixture.findPublicArticle(
+        ArticleResponse savedArticle = FindArticleFixture.findPublicArticle(
             LocationHeaderUtil.extractIdFrom(location));
 
         // then : 방금 작성한 글의 글 상세가 조회된다.
@@ -138,7 +137,7 @@ public class CreatePublicMapArticleTest extends ApiTest {
                 .extract()
                 .header("location");
 
-        ArticleResponse savedArticle = ArticleFixture.findPublicArticle(
+        ArticleResponse savedArticle = FindArticleFixture.findPublicArticle(
                 LocationHeaderUtil.extractIdFrom(location));
 
         assertThat(savedArticle.getId()).isNotNull();
