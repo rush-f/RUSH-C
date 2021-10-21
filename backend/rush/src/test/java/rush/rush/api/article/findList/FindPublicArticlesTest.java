@@ -12,7 +12,6 @@ import rush.rush.api.fixture.CreateArticleFixture;
 import rush.rush.dto.ArticleSummaryResponse;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -20,8 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("온누리 발자국 글 목록 조회")
 public class FindPublicArticlesTest extends ApiTest {
-
-    private List<String> tokens = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -50,7 +47,6 @@ public class FindPublicArticlesTest extends ApiTest {
             double longitude = -180 + 40 * i;
             CreateArticleFixture.createArticle(token, "제목" + i, "내용" + "i", latitude, longitude, true, false, null);
         }
-        this.tokens = Collections.unmodifiableList(tokens);
     }
 
     @ParameterizedTest
@@ -65,6 +61,7 @@ public class FindPublicArticlesTest extends ApiTest {
         "0,90,10,70,4",        // 경도  -60 이상  80 이하
         "0,90,10,70,4",        // 경도  -60 이상  80 이하
         "0,90,0,20,2",         // 경도  -20 이상  20 이하
+        "0,1000,0,1000,10"     // 경도, 위도 모두 최대 범위 벗어나기
     })
     void findPublicArticle(double latitude, double latitudeRange, double longitude, double longitudeRange, int articleCount) {
         List<ArticleSummaryResponse> result =
