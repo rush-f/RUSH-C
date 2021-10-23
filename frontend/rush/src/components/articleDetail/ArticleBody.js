@@ -3,6 +3,7 @@ import ArticleTitle from "./ArticleTitle";
 import styled from "styled-components";
 import changeMyLikeApi from "../../api/article/ChangeMyLikeApi";
 import DeleteButton from "./DeleteButton";
+import EditButton from "./editContent/EditButton";
 
 const ArticleContent = styled.div`
   font-size: 24px;
@@ -80,6 +81,9 @@ const ArticleBody = (props) => {
           {
             props.isMyArticle? <MyArticleControl>
               <MyArticleControlInner>
+                <EditButton
+                  setIsChangeContentModalOpened={props.setIsChangeContentModalOpened}
+                />
                 <DeleteButton
                   articleId={props.articleId}
                   accessToken={props.accessToken}
