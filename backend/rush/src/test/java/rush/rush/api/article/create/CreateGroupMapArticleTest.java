@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import rush.rush.api.ApiTest;
-import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
+import rush.rush.api.fixture.FindArticleFixture;
 import rush.rush.api.fixture.GroupFixture;
 import rush.rush.api.util.LocationHeaderUtil;
 import rush.rush.dto.ArticleResponse;
@@ -100,7 +100,7 @@ public class CreateGroupMapArticleTest extends ApiTest {
         Long articleId = LocationHeaderUtil.extractIdFrom(location);
 
         // when 글 작성자가 조회 시도, then 조회 성공
-        ArticleResponse savedArticle = ArticleFixture.findGroupArticle(articleId, writerToken);
+        ArticleResponse savedArticle = FindArticleFixture.findGroupArticle(articleId, writerToken);
 
         assert savedArticle != null;
         assertThat(savedArticle.getId()).isNotNull();
@@ -113,7 +113,7 @@ public class CreateGroupMapArticleTest extends ApiTest {
         assertThat(savedArticle.getTotalLikes()).isZero();
 
         // when 그룹원이 조회 시도, then 조회 성공
-        savedArticle = ArticleFixture.findGroupArticle(articleId, groupMemberToken);
+        savedArticle = FindArticleFixture.findGroupArticle(articleId, groupMemberToken);
 
         assert savedArticle != null;
         assertThat(savedArticle.getId()).isNotNull();

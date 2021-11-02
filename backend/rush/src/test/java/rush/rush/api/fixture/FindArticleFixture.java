@@ -5,7 +5,7 @@ import rush.rush.dto.ArticleResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class ArticleFixture {
+public class FindArticleFixture {
 
     public static ArticleResponse findPublicArticle(Long articleId) {
         return

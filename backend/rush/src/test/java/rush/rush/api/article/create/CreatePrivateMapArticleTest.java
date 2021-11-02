@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import rush.rush.api.ApiTest;
-import rush.rush.api.fixture.ArticleFixture;
 import rush.rush.api.fixture.AuthFixture;
+import rush.rush.api.fixture.FindArticleFixture;
 import rush.rush.api.util.LocationHeaderUtil;
 import rush.rush.dto.ArticleResponse;
 
@@ -82,7 +82,7 @@ public class CreatePrivateMapArticleTest extends ApiTest {
 
         // when 글 작성자가 조회 시도 then 조회 성공
         Long articleId = LocationHeaderUtil.extractIdFrom(location);
-        ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(articleId, writerToken);
+        ArticleResponse savedArticle = FindArticleFixture.findPrivateArticle(articleId, writerToken);
 
         assert savedArticle != null;
         assertThat(savedArticle.getId()).isNotNull();
@@ -143,7 +143,7 @@ public class CreatePrivateMapArticleTest extends ApiTest {
                 .extract()
                 .header("location");
 
-        ArticleResponse savedArticle = ArticleFixture.findPrivateArticle(
+        ArticleResponse savedArticle = FindArticleFixture.findPrivateArticle(
             LocationHeaderUtil.extractIdFrom(location), writerToken);
 
         assertThat(savedArticle.getId()).isNotNull();
