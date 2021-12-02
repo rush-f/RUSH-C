@@ -1,29 +1,25 @@
 package rush.rush.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.dto.LoginRequest;
 import rush.rush.dto.SignUpRequest;
 import rush.rush.exception.AlreadyExistedEmailException;
 import rush.rush.repository.UserRepository;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class AuthServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class AuthServiceTest extends ServiceTest {
 
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     AuthService authService;
 
     @Test
-    @Transactional
     @DisplayName("회원가입 후 로그인")
     void login() {
         //given
@@ -37,7 +33,6 @@ class AuthServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("회원가입")
     void signUp() {
         //given

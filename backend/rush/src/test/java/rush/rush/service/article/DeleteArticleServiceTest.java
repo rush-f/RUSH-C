@@ -1,14 +1,9 @@
 package rush.rush.service.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
@@ -16,10 +11,12 @@ import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class DeleteArticleServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class DeleteArticleServiceTest extends ServiceTest {
 
     @Autowired
     DeleteArticleService deleteArticleService;
@@ -57,7 +54,6 @@ class DeleteArticleServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("게시글 삭제")
     void deleteArticle() {
         //when
@@ -68,7 +64,6 @@ class DeleteArticleServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("게시글 삭제 - 해당되는 게시글이 없는 경우")
     void deleteArticle_IfNotExistsArticle() {
         //when & then
@@ -77,7 +72,6 @@ class DeleteArticleServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("게시글 삭제 - 글 작성자가 아닌 경우")
     void deleteArticle_IfNotAuthorized() {
         //given

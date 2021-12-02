@@ -1,39 +1,35 @@
 package rush.rush.service.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
+import rush.rush.dto.ArticleResponse;
 import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserRepository;
-import rush.rush.service.article.EditArticleService;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class EditArticleServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-    @Autowired
-    EntityManager entityManager;
+class EditArticleServiceTest extends ServiceTest {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;
 
     @Autowired
-    EditArticleService editArticleService;
+    private FindArticleService findArticleService;
+
+    @Autowired
+    private EditArticleService editArticleService;
 
     private User user;
     private Article article;
@@ -62,7 +58,6 @@ class EditArticleServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("글내용수정")
     void editArticleContent() {
         //given
@@ -70,15 +65,15 @@ class EditArticleServiceTest {
 
         //when
         editArticleService.editArticleContent(article.getId(), newContent, user);
-        entityManager.clear();
 
         //then
-        assertThat(articleRepository.getOne(article.getId()).getContent())
+        ArticleResponse articleResponse = findArticleService.findPublicArticle(this.article.getId());
+
+        assertThat(articleResponse.getContent())
             .isEqualTo(newContent);
     }
 
     @Test
-    @Transactional
     @DisplayName("글내용수정 - 해당되는 게시글이 없는 경우")
     void deleteArticle_IfNotExistsArticle() {
         //given
@@ -91,7 +86,6 @@ class EditArticleServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("글내용수정 - 글 작성자가 아닌 경우")
     void deleteArticle_IfNotAuthorized() {
         //given

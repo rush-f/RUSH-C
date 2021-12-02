@@ -1,36 +1,22 @@
 package rush.rush.service.comment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.Article;
-import rush.rush.domain.ArticleGroup;
-import rush.rush.domain.AuthProvider;
-import rush.rush.domain.Group;
-import rush.rush.domain.MapType;
-import rush.rush.domain.User;
-import rush.rush.domain.UserGroup;
+import rush.rush.domain.*;
 import rush.rush.dto.CommentResponse;
 import rush.rush.dto.CreateCommentRequest;
 import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.WrongMapTypeException;
-import rush.rush.repository.ArticleGroupRepository;
-import rush.rush.repository.ArticleRepository;
-import rush.rush.repository.CommentRepository;
-import rush.rush.repository.GroupRepository;
-import rush.rush.repository.UserGroupRepository;
-import rush.rush.repository.UserRepository;
+import rush.rush.repository.*;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class CreateCommentServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class CreateCommentServiceTest extends ServiceTest {
 
     @Autowired
     CreateCommentService createCommentService;
@@ -124,7 +110,6 @@ class CreateCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 생성")
     void create() {
         //when
@@ -156,7 +141,6 @@ class CreateCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 생성 - 맵타입이 잘못된 경우")
     void create_IfWrongMapType() {
         //when & then
@@ -167,7 +151,6 @@ class CreateCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 생성 - 존재하지 않는 게시글에 작성을 시도할 경우")
     void create_IfNotArticleExists() {
         //when & then
@@ -186,7 +169,6 @@ class CreateCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 생성 - 해당 게시글에 권한이 없는 유저가 작성을 시도할 경우")
     void create_IfNotAuthorized() {
         //given
