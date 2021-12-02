@@ -1,34 +1,31 @@
 package rush.rush.service.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.dto.MyPageArticleResponse;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class FindMyArticlesServiceTest {
+import java.util.List;
 
-    @Autowired
-    FindMyArticlesService findMyArticlesService;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Autowired
-    UserRepository userRepository;
+class FindMyArticlesServiceTest extends ServiceTest {
 
     @Autowired
-    ArticleRepository articleRepository;
+    private FindMyArticlesService findMyArticlesService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ArticleRepository articleRepository;
 
     @Test
-    @Transactional
     void findMyArticles() {
         //given
         User user = userRepository.save(

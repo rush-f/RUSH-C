@@ -1,14 +1,9 @@
 package rush.rush.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.User;
 import rush.rush.dto.UserImageResponse;
@@ -16,9 +11,10 @@ import rush.rush.dto.UserResponse;
 import rush.rush.exception.NotUserExistsException;
 import rush.rush.repository.UserRepository;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class UserServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class UserServiceTest extends ServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -42,60 +38,55 @@ class UserServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("유저 이미지 찾기")
     void findUserImageUrl() {
-        //when
+        // when
         UserImageResponse userImageResponse = userService.findUserImageUrl(user);
 
-        //then
+        // then
         assertThat(userImageResponse.getImageUrl()).isEqualTo(user.getImageUrl());
     }
 
     @Test
-    @Transactional
     @DisplayName("유저 이미지 찾기 - 해당 유저가 없는 경우")
     void findUserImageUrl_IfNotUserExists() {
-        //when
+        // when
         userRepository.deleteAll();
-        //when & then
+        // when & then
         assertThatThrownBy(() -> userService.findUserImageUrl(user))
             .isInstanceOf(NotUserExistsException.class);
     }
 
     @Test
-    @Transactional
     @DisplayName("유저 찾기")
     void findUser() {
-        //when
+        // when
         UserResponse userResponse = userService.findUser(user);
 
-        //then
+        // then
         assertThat(userResponse.getUserId()).isEqualTo(user.getId());
     }
 
     @Test
-    @Transactional
     @DisplayName("유저 찾기 - 해당 유저가 없는 경우")
     void findUser_IfNotUserExists() {
-        //when
+        // when
         userRepository.deleteAll();
-        //when & then
+        // when & then
         assertThatThrownBy(() -> userService.findUser(user))
             .isInstanceOf(NotUserExistsException.class);
     }
 
     @Test
-    @Transactional
     @DisplayName("회원탈퇴")
     void withdraw() {
-        //when
+        // when
         userService.withdraw(user);
 
-        //then
+        // then
         assertThat(userRepository.findAll()).hasSize(0);
 
-        //when & then  회원 탈퇴시 해당하는 유저가 없는 경우
+        // when & then  회원 탈퇴시 해당하는 유저가 없는 경우
         assertThatThrownBy(() -> userService.withdraw(user))
             .isInstanceOf(NotUserExistsException.class);
     }

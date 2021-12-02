@@ -1,14 +1,9 @@
 package rush.rush.service.group;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
@@ -17,10 +12,12 @@ import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-public class DeleteMemberSeiviceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+public class DeleteMemberServiceTest extends ServiceTest {
 
     @Autowired
     GroupRepository groupRepository;
@@ -62,7 +59,6 @@ public class DeleteMemberSeiviceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("그룹 탈퇴 - 그룹 탈퇴 후 그룹원이 한명이상 남아 있을 경우")
     void deleteMember() {
         //given 다른 그룹원 추가
@@ -92,7 +88,6 @@ public class DeleteMemberSeiviceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("그룹 탈퇴 - 그룹 탈퇴 후 그룹원이 한명도 없을 경우")
     void deleteMember_IfNotMember() {
         //when
@@ -106,7 +101,6 @@ public class DeleteMemberSeiviceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("그룹 탈퇴 - 본인이 아닌데 탈퇴 시도시 예외처리")
     void deleteMember_IfNotUser_ThrowException() {
         assertThatThrownBy(() -> deleteMemberService.deleteMember(group.getId(), 10L))
@@ -114,11 +108,9 @@ public class DeleteMemberSeiviceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName(" 그룹 탈퇴 - 존재하지 않는 그룹 탈퇴 시도시 예외처리")
     void deleteMember_IfNotExistGroup_ThrowException() {
         assertThatThrownBy(() -> deleteMemberService.deleteMember(10L, user.getId()))
             .isInstanceOf(NotAuthorizedOrExistException.class);
     }
 }
-

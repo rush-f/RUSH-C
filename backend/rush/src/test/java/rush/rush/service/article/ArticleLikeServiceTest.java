@@ -1,36 +1,21 @@
 package rush.rush.service.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-import rush.rush.domain.Article;
-import rush.rush.domain.ArticleGroup;
-import rush.rush.domain.ArticleLike;
-import rush.rush.domain.AuthProvider;
-import rush.rush.domain.Group;
-import rush.rush.domain.MapType;
-import rush.rush.domain.User;
-import rush.rush.domain.UserGroup;
+import rush.rush.domain.*;
 import rush.rush.exception.NotArticleExistsException;
 import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.exception.NotLikeExistsException;
 import rush.rush.exception.WrongMapTypeException;
-import rush.rush.repository.ArticleGroupRepository;
-import rush.rush.repository.ArticleLikeRepository;
-import rush.rush.repository.ArticleRepository;
-import rush.rush.repository.GroupRepository;
-import rush.rush.repository.UserGroupRepository;
-import rush.rush.repository.UserRepository;
+import rush.rush.repository.*;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class ArticleLikeServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class ArticleLikeServiceTest extends ServiceTest {
 
     @Autowired
     ArticleLikeService articleLikeService;
@@ -122,7 +107,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 변경 - 좋아요가 없는 경우")
     void changeMyLike_IfNotHasILiked() {
         //when & then 좋아요가 없는데 좋아요가 있다고 해서 예외발생
@@ -148,7 +132,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 변경 - 좋아요가 있는 경우")
     void changeMyLike_IfHasILiked() {
         //given
@@ -187,7 +170,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 변경 - 맵타입이 잘못된 경우")
     void changeMyLike_IfWrongMapType() {
         //when & then
@@ -198,7 +180,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 변경 - 해당되는 게시글이 존재하지 않는 경우")
     void changeMyLike_IfNotArticleExists() {
         //when & then   public, private, gropued 3가지 경우 확인
@@ -213,7 +194,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 변경 - 권한이 없는 유저가 좋아요 변경을 시도하는 경우")
     void changeMyLike_IfNotAuthorized() {
         //given
@@ -238,7 +218,6 @@ class ArticleLikeServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("좋아요 확인")
     void hasILiked() {
         //given

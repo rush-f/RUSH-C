@@ -1,14 +1,9 @@
 package rush.rush.service.comment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
@@ -17,10 +12,12 @@ import rush.rush.exception.NotAuthorizedOrExistException;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class DeleteCommentServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class DeleteCommentServiceTest extends ServiceTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -78,7 +75,6 @@ class DeleteCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 삭제")
     void deleteComment() {
         // when : 댓글을 삭제한다.
@@ -90,7 +86,6 @@ class DeleteCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 삭제 - 본인 댓글이 아닌데 삭제 시도시 예외처리")
     void deleteComment_IfNotAuthor_ThrowException() {
         // when & then : 댓글 작성자가 아닌 사람이 댓글 삭제 시도 -> 댓글 삭제 실패
@@ -103,7 +98,6 @@ class DeleteCommentServiceTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("댓글 삭제 - 존재하지 않는 댓글 삭제 시도시 예외처리")
     void deleteComment_IfNotExistComment_ThrowException() {
         assertThatThrownBy(() -> deleteCommentService.deleteComment(10_000L, commentAuthor))

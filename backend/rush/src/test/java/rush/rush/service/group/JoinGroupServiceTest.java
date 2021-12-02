@@ -1,13 +1,8 @@
 package rush.rush.service.group;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
@@ -16,10 +11,12 @@ import rush.rush.exception.NotInvitationCodeExistsException;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class JoinGroupServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class JoinGroupServiceTest extends ServiceTest {
 
     @Autowired
     JoinGroupService joinGroupService;
@@ -34,7 +31,6 @@ class JoinGroupServiceTest {
     UserGroupRepository userGroupRepository;
 
     @Test
-    @Transactional
     @DisplayName("그룹가입")
     void join() {
         //given

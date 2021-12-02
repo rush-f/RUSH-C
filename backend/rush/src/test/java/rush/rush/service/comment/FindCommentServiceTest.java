@@ -1,12 +1,7 @@
 package rush.rush.service.comment;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-import java.util.List;
-import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import rush.rush.domain.Article;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Comment;
@@ -15,11 +10,13 @@ import rush.rush.dto.CommentResponse;
 import rush.rush.repository.ArticleRepository;
 import rush.rush.repository.CommentRepository;
 import rush.rush.repository.UserRepository;
-import rush.rush.service.comment.FindCommentService;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class FindCommentServiceTest {
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+class FindCommentServiceTest extends ServiceTest {
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -34,7 +31,6 @@ class FindCommentServiceTest {
     private FindCommentService findCommentService;
 
     @Test
-    @Transactional
     void findCommentsByArticleId() {
         // given
         User user = User.builder()

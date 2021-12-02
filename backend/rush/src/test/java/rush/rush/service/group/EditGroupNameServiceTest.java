@@ -1,39 +1,36 @@
 package rush.rush.service.group;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import rush.rush.domain.AuthProvider;
 import rush.rush.domain.Group;
 import rush.rush.domain.User;
 import rush.rush.domain.UserGroup;
+import rush.rush.dto.GroupResponse;
 import rush.rush.repository.GroupRepository;
 import rush.rush.repository.UserGroupRepository;
 import rush.rush.repository.UserRepository;
+import rush.rush.service.ServiceTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-class EditGroupNameServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Autowired
-    EntityManager entityManager;
+class EditGroupNameServiceTest extends ServiceTest {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    GroupRepository groupRepository;
+    private GroupRepository groupRepository;
 
     @Autowired
-    UserGroupRepository userGroupRepository;
+    private UserGroupRepository userGroupRepository;
 
     @Autowired
-    EditGroupNameService editGroupNameService;
+    private FindGroupService findGroupService;
+
+    @Autowired
+    private EditGroupNameService editGroupNameService;
 
     private User user;
     private Group group;
@@ -62,16 +59,15 @@ class EditGroupNameServiceTest {
     }
 
     @Test
-    @Transactional
     void editGroupName() {
-        //given
+        // given
         String newName = "변경된 그룹이름";
 
-        //when
+        // when
         editGroupNameService.editGroupName(group.getId(), newName, user);
-        entityManager.clear();
-        //then
-        assertThat(groupRepository.getOne(group.getId()).getName())
-            .isEqualTo(newName);
+
+        // then
+        GroupResponse groupResponse = findGroupService.findOne(group.getId(), user);
+        assertThat(groupResponse.getName()).isEqualTo(newName);
     }
 }
