@@ -18,4 +18,5 @@ public class MyPageArticleResponse {
     private Date createDate;
     private Long totalLikes;
     private Long totalComments;
+    private Long groupId;
 }
