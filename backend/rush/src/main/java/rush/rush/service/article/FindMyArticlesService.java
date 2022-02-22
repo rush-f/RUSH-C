@@ -27,7 +27,8 @@ public class FindMyArticlesService {
                 article.isPrivateMap(),
                 article.getCreateDate(),
                 article.getArticleLikes().stream().count(),
-                article.getComments().stream().count()
+                article.getComments().stream().count(),
+                article.getArticleGroups().isEmpty() ? 0 : article.getArticleGroups().get(0).getId()
             ))
             .collect(Collectors.toUnmodifiableList());
     }

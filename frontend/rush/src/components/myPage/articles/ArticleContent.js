@@ -58,7 +58,11 @@ const ArticleContent = (props) => {
       props.history.push('/articles/public/'+props.article.id);
     else if(privateMap)
       props.history.push('/articles/private/'+props.article.id);
-    else props.history.push('/articles/grouped/'+props.article.id)
+    else
+      props.history.push({
+        pathname: '/articles/grouped/'+props.article.id,
+        state: {groupId: props.article.groupId}
+      })
   };
 
   return (
