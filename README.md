@@ -1,5 +1,5 @@
 # 🐾 발자국
-https://seoultechfootprint.shop
+https://seoultechfootprint.shop //현재 배포 임시 중단
 
 
 ## ✨서비스 소개
