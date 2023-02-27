@@ -19,12 +19,17 @@ https://seoultechfootprint.shop //현재 배포 임시 중단
 
 
 
-## 구현 사진 
+## 실행 사진 
 ![사진1](https://user-images.githubusercontent.com/45135492/221583966-f03173e2-75f8-4eef-be13-2c890318f45d.JPG)
+
 ![사진2](https://user-images.githubusercontent.com/45135492/221583978-e2be971b-a94e-4a7b-8c40-ec3dbffd12d0.JPG)
+
 ![사진3](https://user-images.githubusercontent.com/45135492/221583997-9b64f717-3706-4f42-98b3-ae18a3c36e0e.JPG)
+
 ![사진4](https://user-images.githubusercontent.com/45135492/221584022-1b9bc444-c4ff-4f7c-a4f3-551f1f020ca6.JPG)
+
 ![사진5](https://user-images.githubusercontent.com/45135492/221584039-01b1f03d-ed4f-4b80-bfcf-60a262190d9f.JPG)
+
 ![사진6](https://user-images.githubusercontent.com/45135492/221583939-7121418c-1c1b-45e7-bd98-778003de78bc.JPG)
 
 
