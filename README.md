@@ -33,7 +33,8 @@ https://seoultechfootprint.shop //현재 배포 임시 중단
 ![사진6](https://user-images.githubusercontent.com/45135492/221583939-7121418c-1c1b-45e7-bd98-778003de78bc.JPG)
 
 
-https://photos.app.goo.gl/b9dPhogGqKpaXQ2L7
+
+- 시연영상 링크: https://photos.app.goo.gl/b9dPhogGqKpaXQ2L7
 
 
 
