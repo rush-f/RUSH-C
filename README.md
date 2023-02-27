@@ -11,7 +11,7 @@ https://seoultechfootprint.shop //현재 배포 임시 중단
 - 김해담솔 👨🏽‍✈️ https://github.com/khdscor  
 
 
-## ERD
+## 🔰 ERD
 ![image](https://user-images.githubusercontent.com/45135492/221581372-657e42e5-5cd5-439f-99e5-eb2be5f5c513.png)
 
 
